@@ -1,0 +1,45 @@
+{
+ "tag": "base-v1.1",
+ "ckpt": null,
+ "dev_runs": "30-37",
+ "baseline_compatibility": {
+  "fc_cos": {
+   "n": 2400,
+   "mean": 1.0,
+   "p50": 1.0,
+   "p10": 1.0,
+   "min": 1.0
+  },
+  "sh_cos_vs_engine": {
+   "n": 2100,
+   "mean": 0.9999,
+   "p50": 0.9999,
+   "p10": 0.9998,
+   "min": 0.9993
+  },
+  "top16_vs_engine": {
+   "n": 2100,
+   "mean": 15.7633,
+   "p50": 16.0,
+   "p10": 15.0,
+   "min": 14.0
+  },
+  "floor_diagnostic": {
+   "top16_mean>=14": true,
+   "top16_p10>=12": true
+  }
+ },
+ "speculation_quality": {
+  "recall": 0.9823,
+  "top1": 0.8347,
+  "mean_rank": 1.404,
+  "mean_margin": 5.35,
+  "own_walk_k": 0.1194,
+  "engine_k": 3.9855
+ },
+ "n_steps": 300,
+ "gates": {
+  "recall>=0.95": true,
+  "top1>=0.80": true
+ }
+}

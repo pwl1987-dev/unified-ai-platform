@@ -1,0 +1,47 @@
+arm=b1-1 train_runs=38 dev_runs=8 train_sup_steps=1630
+DEV baseline proxies: {'top1': 0.8625, 'recall': 0.9763, 'margin': 6.3738, 'loss': 4.747}
+  step 50 17s
+  step 100 34s
+  step 150 51s
+  step 200 67s
+  step 250 84s
+  step 300 101s
+  step 350 118s
+  step 400 134s
+  step 450 151s
+  step 500 168s
+CKPT 500: dev={'top1': 0.8786, 'recall': 0.9908, 'margin': 6.1772, 'loss': 3.6502} improved=True
+  step 550 189s
+  step 600 206s
+  step 650 223s
+  step 700 240s
+  step 750 256s
+  step 800 273s
+  step 850 290s
+  step 900 306s
+  step 950 323s
+  step 1000 340s
+CKPT 1000: dev={'top1': 0.8818, 'recall': 0.9908, 'margin': 6.3863, 'loss': 3.4578} improved=True
+  step 1050 362s
+  step 1100 378s
+  step 1150 395s
+  step 1200 412s
+  step 1250 429s
+  step 1300 446s
+  step 1350 463s
+  step 1400 479s
+  step 1450 496s
+  step 1500 513s
+CKPT 1500: dev={'top1': 0.8866, 'recall': 0.9908, 'margin': 6.6884, 'loss': 3.4077} improved=True
+  step 1550 534s
+  step 1600 551s
+  step 1650 568s
+  step 1700 584s
+  step 1750 601s
+  step 1800 618s
+  step 1850 635s
+  step 1900 651s
+  step 1950 668s
+  step 2000 685s
+CKPT 2000: dev={'top1': 0.8882, 'recall': 0.9908, 'margin': 7.0279, 'loss': 3.396} improved=True
+BEST: {'recall': 0.9908, 'top1': 0.8882, 'margin': 7.0279, 'ckpt': 2000}

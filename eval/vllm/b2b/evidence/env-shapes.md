@@ -13,3 +13,7 @@ EXTRA_ARGS 等）逐项相同。
 
 lean 存在的原因：bf16 drafter 3.6GB + 固定 KV 4.86GB 在 23.5GB 单卡装不下
 （B1-C/B2-A 同一先例：b2a REPORT「b0 配置实测可跑」）。
+
+五相位 env 实件归档在 `envs/`：`env-*.env` = certified 形制（certified 对照 W/Q 用），
+`env2-*.env` = lean 形制（五相位主跑用；文件内为「基线块+certified 块+lean 追加块」，
+后者覆盖前者）；生产基线原件见 `../../p0/arms/prod.env.bak`（DRAFT=recal）。

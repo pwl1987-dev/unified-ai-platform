@@ -1,0 +1,3 @@
+112.9 tok/s | 2.72 tok/step | 24.1 ms/step | 24.6%/tok | 512 tok
+121.1 tok/s | 2.91 tok/step | 24.0 ms/step | 27.3%/tok | 512 tok
+109.6 tok/s | 2.63 tok/step | 24.0 ms/step | 23.3%/tok | 512 tok

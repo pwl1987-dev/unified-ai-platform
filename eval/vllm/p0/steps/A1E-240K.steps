@@ -1,0 +1,3 @@
+113.2 tok/s | 2.57 tok/step | 22.7 ms/step | 22.4%/tok | 512 tok | pos 129/70/38/30/23/14/8
+118.6 tok/s | 2.68 tok/step | 22.6 ms/step | 23.9%/tok | 512 tok | pos 126/73/48/29/21/15/8
+118.4 tok/s | 2.68 tok/step | 22.6 ms/step | 23.9%/tok | 512 tok | pos 125/74/48/29/21/15/8

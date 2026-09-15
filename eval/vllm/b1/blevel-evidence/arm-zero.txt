@@ -1,0 +1,38 @@
+arm=zero train_runs=38 dev_runs=8 train_sup_steps=1630
+DEV baseline proxies: {'top1': 0.8625, 'recall': 0.9763, 'margin': 6.3738, 'loss': 4.747}
+  step 50 8s
+  step 100 16s
+  step 150 24s
+  step 200 32s
+  step 250 40s
+  step 300 47s
+  step 350 55s
+  step 400 63s
+  step 450 71s
+  step 500 79s
+CKPT 500: dev={'top1': 0.8625, 'recall': 0.9763, 'margin': 6.3738, 'loss': 4.747} improved=True
+  step 550 91s
+  step 600 99s
+  step 650 107s
+  step 700 115s
+  step 750 123s
+  step 800 131s
+  step 850 138s
+  step 900 146s
+  step 950 154s
+  step 1000 162s
+CKPT 1000: dev={'top1': 0.8625, 'recall': 0.9763, 'margin': 6.3738, 'loss': 4.747} improved=False
+  step 1050 174s
+  step 1100 182s
+  step 1150 190s
+  step 1200 198s
+  step 1250 206s
+  step 1300 213s
+  step 1350 221s
+  step 1400 229s
+  step 1450 237s
+  step 1500 245s
+CKPT 1500: dev={'top1': 0.8625, 'recall': 0.9763, 'margin': 6.3738, 'loss': 4.747} improved=False
+EARLY STOP at 1500 (patience 2)
+zero-update assert: OK
+BEST: {'recall': 0.9763, 'top1': 0.8625, 'margin': 6.3738, 'ckpt': 500}

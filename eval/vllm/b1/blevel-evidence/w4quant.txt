@@ -1,0 +1,10 @@
+  int4 fc: rel err 0.1312
+  int4 layers.0.mlp.down_proj: rel err 0.1540
+  int4 layers.0.mlp.gate_proj: rel err 0.1620
+  int4 layers.0.mlp.up_proj: rel err 0.1623
+  int4 layers.0.self_attn.k_proj: rel err 0.1858
+  int4 layers.0.self_attn.o_proj: rel err 0.1513
+  int4 layers.0.self_attn.q_proj: rel err 0.1789
+  int4 layers.0.self_attn.v_proj: rel err 0.1760
+quantized 36 matrices in 32s; mean rel err 0.1504
+wrote models/Qwen3.8-27B-DFlash2-b1-w4/ (1.19 GiB)

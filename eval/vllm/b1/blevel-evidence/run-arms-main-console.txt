@@ -1,0 +1,31 @@
+=== ARM zero 17:41:10 ===
+EARLY STOP at 1500 (patience 2)
+zero-update assert: OK
+BEST: {'recall': 0.9763, 'top1': 0.8625, 'margin': 6.3738, 'ckpt': 500}
+gate zero-0500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': True, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 15.7633 0.9823 5.35
+gate zero-1000: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': True, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 15.7633 0.9823 5.35
+gate zero-1500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': True, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 15.7633 0.9823 5.35
+=== ARM b1-1 17:46:26 ===
+  step 2000 685s
+CKPT 2000: dev={'top1': 0.8882, 'recall': 0.9908, 'margin': 7.0279, 'loss': 3.396} improved=True
+BEST: {'recall': 0.9908, 'top1': 0.8882, 'margin': 7.0279, 'ckpt': 2000}
+gate b1-1-0500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 14.9748 0.9887 5.224
+gate b1-1-1000: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': False, 'dev_recall>=base': True} 14.5605 0.9903 5.349
+gate b1-1-1500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': False, 'dev_recall>=base': True} 14.2586 0.9895 5.602
+gate b1-1-2000: {'top16_mean>=14': False, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': False, 'dev_recall>=base': True} 13.9114 0.9895 5.873
+=== ARM b1-2 17:59:23 ===
+  step 2000 672s
+CKPT 2000: dev={'top1': 0.888, 'recall': 0.9908, 'margin': 6.4715, 'loss': 3.7216} improved=True
+BEST: {'recall': 0.9908, 'top1': 0.888, 'margin': 6.4715, 'ckpt': 2000}
+gate b1-2-0500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 14.9448 0.9887 5.177
+gate b1-2-1000: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': False, 'dev_recall>=base': True} 14.4757 0.9903 5.194
+gate b1-2-1500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': False, 'dev_recall>=base': True} 14.1419 0.9903 5.3
+gate b1-2-2000: {'top16_mean>=14': False, 'top16_p10>=12': True, 'top16_mean>=base-0.4': False, 'top16_p10>=base-1': False, 'dev_recall>=base': True} 13.8195 0.9903 5.445
+=== ARM b1-3 18:12:10 ===
+CKPT 1500: dev={'top1': 0.8625, 'recall': 0.9763, 'margin': 6.3738, 'loss': 4.3053} improved=False
+EARLY STOP at 1500 (patience 2)
+BEST: {'recall': 0.9763, 'top1': 0.8625, 'margin': 6.3738, 'ckpt': 500}
+gate b1-3-0500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': True, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 15.7633 0.9823 5.35
+gate b1-3-1000: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': True, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 15.7633 0.9823 5.35
+gate b1-3-1500: {'top16_mean>=14': True, 'top16_p10>=12': True, 'top16_mean>=base-0.4': True, 'top16_p10>=base-1': True, 'dev_recall>=base': True} 15.7633 0.9823 5.35
+=== ALL ARMS DONE 18:18:02 ===
