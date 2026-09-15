@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-15",
+  "runtime": {
+    "vllm": "0.27.1",
+    "torch": "2.13.0+cu129",
+    "cuda": "12.9"
+  },
+  "gpu": "GPU2 RTX 4090",
+  "max_model_len": 32768,
+  "max_num_seqs": 1,
+  "prefix_cache": true,
+  "speculative_decoding": false,
+  "fixture": "ulmus p565/g512 streaming decode",
+  "decode_tok_s": [
+    57.6851206091022,
+    57.689439068110815,
+    57.68428501659453
+  ],
+  "decode_tok_s_median": 57.6851206091022,
+  "prefill_prompt_tokens": 4129,
+  "prefill_tok_s": 2887.341243907909,
+  "engine_init_s_approx": 163,
+  "torch_compile_s": 86.88,
+  "comparison_to_vllm_0_28_cu130": {
+    "decode_gain_pct": 0.4654,
+    "conclusion": "decode/prefill effectively tied; 0.28 startup materially faster"
+  }
+}

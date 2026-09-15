@@ -28,9 +28,20 @@ Harness: existing `inference/vllm/bench/ulmus_validate.py`, p565/g512 streaming 
 
 The benchmark helper's board-power sampler queries the first visible GPU rather than GPU2, so its reported power fields are invalid for this run and are deliberately excluded from the qualification result.
 
+## Same-card vLLM 0.27.1/cu129 target-only baseline
+
+The exact same target, GPU2, 32K max context, max-seqs=1, prefix-cache setting and p565/g512 harness were then run on the current 0.27.1/cu129 image without speculative decoding.
+
+- decode runs: 57.6851 / 57.6894 / 57.6843 tok/s
+- decode median: **57.6851 tok/s**
+- 4K prefill fixture: 4,129 actual prompt tokens, **2887.34 tok/s**
+- engine init: ~163 s total; torch.compile ~86.9 s
+
+Against 0.28/cu130, target-only decode changes from 57.6851 to 57.9536 tok/s (**+0.47%**); prefill is effectively identical. The material observed improvement is startup/compile time: ~163 s -> ~114 s.
+
 ## Interpretation
 
-57.95 tok/s is a **target-only engine/runtime datum**. It must not be compared directly with the current ~130 tok/s production figure because that figure uses DFlash2 k=7. The purpose of this result is to isolate the 0.28/cu130 base runtime.
+57.95 tok/s is a **target-only engine/runtime datum**. It must not be compared directly with the current ~130 tok/s production figure because that figure uses DFlash2 k=7. The same-card A/B shows that CUDA13/vLLM 0.28 alone does **not** provide a material single-stream decode gain over 0.27.1/cu129; the next decisive test is native DFlash2 on 0.28/cu130.
 
 The replacement baseline is therefore two-tiered:
 
@@ -41,7 +52,8 @@ FastLLM must beat the strongest deployable vLLM result, not merely the legacy 0.
 
 ## Current task / next task
 
-- Current: obtain vLLM 0.27.1/cu129 target-only p565/g512 on the same cards/fixture and normalize vision residency/power policy.
-- Next: migrate the minimum DFlash2-required patches to the 0.28 sandbox and qualify p565/g512, long-context and safety.
+- Completed: vLLM 0.27.1/cu129 same-card target-only baseline; decode is effectively tied with 0.28/cu130 (+0.47% for 0.28), while 0.28 starts/compiles materially faster.
+- Current: start vLLM 0.28/cu130 with its **native DFlash2** implementation plus the minimum existing embed-quant overlay and the production recalibrated W4A16 drafter.
+- Next: only if native DFlash2 fails, port the smallest demonstrated compatibility gap; then qualify p565/g512, long-context and safety.
 - Then: use the best deployable vLLM result as the FastLLM replacement threshold.
 - No production configuration change is authorized by this report.

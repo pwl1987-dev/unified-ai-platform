@@ -118,7 +118,7 @@ int4 噪声实现上的补偿学习过拟合 TRAIN 上下文；干净函数训�
 
 **2026-09-15 第一门已过（target-only）**：`vLLM 0.28.0 + torch 2.13.0+cu130` 在同一现役 coding-v1.1 W4A16 上复测。stock 0.28 因 INT8 embedding packed 权重加载失败；仅迁移既有 `qwen3_5-embed-quant.patch` 的最小逻辑后完整加载并 API Ready。优化路径 p565/g512 三次中位 **57.95 tok/s**，4K prefill **2887 tok/s**。此数字无 DFlash2，只用于 runtime 底座比较；详见 `eval/vllm/cuda13/REPORT.md`。
 
-下一步顺序冻结为：① 0.27.1/cu129 同权重 target-only 同夹具基线；② 0.28/cu130 迁移 DFlash2 所需最小补丁并重验；③ 长上下文/前缀缓存/质量/稳定性；④ 以**可部署的最强 vLLM**作为 FastLLM 替代门槛。其余 28 补丁与 KVarN 只按实际需要迁移，不机械全搬。
+同卡 target-only 对照已补齐：0.27.1/cu129 **57.685 tok/s** / 4K prefill **2887.34 tok/s**，0.28/cu130 **57.954 tok/s** / **2887.23 tok/s**，decode 仅 **+0.47%**、prefill 持平；0.28 的已见收益主要是 engine init ~163s→~114s。下一步直接测试 0.28 **原生 DFlash2** + 现役 recal drafter；只有真实失败才迁移最小补丁。随后做长上下文/前缀缓存/质量/稳定性，并以**可部署的最强 vLLM**作为 FastLLM 替代门槛。
 
 原生 cu13 环境配方继续见 `inference/vllm/build/cu130-driver580/`。收益假设仍包括更新 kernel、上游 spec-decode 修复与 262K 显存布局变化，但必须以实测资格门为准。
 

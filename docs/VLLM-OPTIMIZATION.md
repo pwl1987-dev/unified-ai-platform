@@ -64,7 +64,7 @@ FLA 碎片缘）→ **130.3 定型**。三级认证：5 探针质量 / 满窗 24
 2. **drafter 深度重训（新首选）**：fc + CandidateSelector（码本 rank=256，254MB）为可导出面，
    在线蒸馏（引擎挂钩目标隐状态+真 token，无需落盘特征）；3.04→3.5 ≈ 130→150，
    不依赖任何确定性修复。DFlash2 无现成训练器，需自写。
-3. vLLM 0.28 栈升级：**2026-09-15 target-only 第一门 PASS**。同现役 W4A16 在 stock 0.28 因 INT8 embed packed 权重加载失败；最小迁移 `qwen3_5-embed-quant.patch` 后 API Ready，p565/g512 中位 57.95 tok/s（无 DFlash2）。下一步先补 0.27.1/cu129 同口径 baseline，再迁移 DFlash2 必需补丁；详见 `eval/vllm/cuda13/REPORT.md`。
+3. vLLM 0.28 栈升级：**2026-09-15 target-only 第一门 PASS**。同现役 W4A16 在 stock 0.28 因 INT8 embed packed 权重加载失败；最小迁移 `qwen3_5-embed-quant.patch` 后 API Ready，p565/g512 中位 57.95 tok/s（无 DFlash2）。同卡 0.27.1/cu129 baseline 已补：57.685 tok/s，4K prefill 2887.34 tok/s；0.28/cu130 decode 仅 +0.47%、prefill 持平，但启动/compile 更快。0.28 已确认原生包含 DFlash2，下一步直接以原生 DFlash2 + 现役 recal drafter 启动，失败后才迁移最小缺口；详见 `eval/vllm/cuda13/REPORT.md`。
 
 ## 附：工具
 
