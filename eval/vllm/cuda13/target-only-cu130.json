@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-15",
+  "status": "target-only-compatibility-pass",
+  "runtime": {
+    "vllm": "0.28.0",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "driver": "580.173.02",
+    "gpu": "RTX 4090 24GB",
+    "power_limit_w": 450
+  },
+  "target": {
+    "name": "Qwen3.8-27B-coding-v1.1-W4A16",
+    "format": "AutoRound compressed-tensors W4A16 + INT8 embed/lm_head"
+  },
+  "compatibility": {
+    "stock_vllm_0_28": "fail",
+    "stock_failure": "embed_tokens.weight_packed has no target parameter",
+    "patched_overlay": "pass",
+    "patch_sha256": "0a1b9ca06798c1aef582995de5a0beb3ad9a22a54cdbd2361986563a9c7a980e"
+  },
+  "benchmark": {
+    "fixture": "ulmus p565/g512 streaming decode",
+    "speculative_decoding": false,
+    "decode_tok_s": [57.50330739865469, 57.955006889067036, 57.95357320069344],
+    "decode_tok_s_median": 57.95357320069344,
+    "prefill_prompt_tokens": 4129,
+    "prefill_tok_s": 2887.2271649284125
+  },
+  "notes": [
+    "Harness power fields excluded because sampler queried GPU0 instead of GPU2.",
+    "Do not compare target-only 57.95 tok/s directly with the ~130 tok/s DFlash2 production result.",
+    "Production services were not restarted or modified."
+  ]
+}

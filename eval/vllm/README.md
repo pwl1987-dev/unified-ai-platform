@@ -13,3 +13,4 @@
 - `quality_ab_v11.py` / `quality_ab_analyze.py`：双引擎 10 任务质量 A/B（temp0 / enable_thinking
   显式 / max_tokens 8192；ast 语法检查 + 单测执行 + 并排报告）
 - `quality_ab_head4_vs_head8.md`：int4 头判死判决书（四轮校准退化表）
+- `cuda13/`：**vLLM 0.28 + CUDA13 资格测试**。2026-09-15 已在同一现役 W4A16 上完成 target-only 兼容门：stock 0.28 因 INT8 embed packed 权重加载失败；复用 `qwen3_5-embed-quant.patch` 的最小 overlay 后 API Ready。p565/g512 三次中位 **57.95 tok/s**（无 speculative decoder）；详见 `cuda13/REPORT.md`。

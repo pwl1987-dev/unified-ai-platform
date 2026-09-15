@@ -26,5 +26,7 @@ $V/bin/vllm serve <model> --port 801X ...
 ## 与 27B 主力栈的关系
 
 此环境用于 ASR/小型多模态服务化（Qwen3-ASR 原生 `/v1/audio/transcriptions`，45s 分片 bug 已修）。
-**27B 主力投机解码栈仍在 0.27.1-cu129 镜像**（28 补丁 + KVarN + DFlash2 尚未在 0.28 重验——
-迁移计划见 `docs/ROADMAP.md` 方向 C）。
+
+**2026-09-15 27B 迁移实测更新**：同一现役 W4A16 checkpoint 在 stock 0.28 上因 INT8 embedding 的 `weight_packed` 无目标参数而加载失败；隔离 overlay 复用现有 `qwen3_5-embed-quant.patch` 逻辑后，target-only 已完整加载并 API Ready，p565/g512 三次中位 **57.95 tok/s**。该数字不含 DFlash2，不能和现产约 130 tok/s 直接比较。原始结果与后续任务见 `eval/vllm/cuda13/REPORT.md`。
+
+**27B 主力投机解码栈仍在 0.27.1-cu129 镜像**；DFlash2/KVarN 与其余必需补丁尚未完成 0.28 生产资格重验，迁移计划见 `docs/ROADMAP.md` 方向 C。
