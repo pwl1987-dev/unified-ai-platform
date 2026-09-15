@@ -27,6 +27,8 @@ $V/bin/vllm serve <model> --port 801X ...
 
 此环境用于 ASR/小型多模态服务化（Qwen3-ASR 原生 `/v1/audio/transcriptions`，45s 分片 bug 已修）。
 
-**2026-09-15 27B 迁移实测更新**：同一现役 W4A16 checkpoint 在 stock 0.28 上因 INT8 embedding 的 `weight_packed` 无目标参数而加载失败；隔离 overlay 复用现有 `qwen3_5-embed-quant.patch` 逻辑后，target-only 已完整加载并 API Ready，p565/g512 三次中位 **57.95 tok/s**。该数字不含 DFlash2，不能和现产约 130 tok/s 直接比较。原始结果与后续任务见 `eval/vllm/cuda13/REPORT.md`。
+**2026-09-15 27B 迁移实测更新**：同一现役 W4A16 checkpoint 在 stock 0.28 上因 INT8 embedding 的 `weight_packed` 无目标参数而加载失败；隔离 overlay 复用现有 `qwen3_5-embed-quant.patch` 逻辑后，target-only 已完整加载并 API Ready，p565/g512 三次中位 **57.95 tok/s**。同卡 0.27.1/cu129 target-only 为 57.685 tok/s，说明底座 decode 基本持平。
 
-**27B 主力投机解码栈仍在 0.27.1-cu129 镜像**；DFlash2/KVarN 与其余必需补丁尚未完成 0.28 生产资格重验，迁移计划见 `docs/ROADMAP.md` 方向 C。
+0.28 已原生包含 DFlash2。现役 recal W4A16 drafter 在 CUDA13 上只暴露两个额外兼容缺口：量化 qkv 的 context-K/V 需要 pack-quantized 解量化；candidate-selector 的 `flashinfer.top_k` JIT 会撞 CCCL/toolkit-header 冲突，资格 arm 用 `VLLM_DFLASH2_TORCH_TOPK=1` 强制 `torch.topk`。应用这两个最小 sandbox 修补后 32K text-only boot-1 API Ready，p565/g512 中位 **141.61 tok/s**，draft-token acceptance **32.08%**。补丁见本目录 `vllm028-dflash2-w4a16.patch`，原始数据与后续门见 `eval/vllm/cuda13/REPORT.md`。
+
+**27B 生产主力仍保持 0.27.1-cu129 不动**；当前只进入 0.28/cu130 独立 fresh-boot 重复性门，尚未授权生产切换。

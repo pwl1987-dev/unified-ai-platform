@@ -39,6 +39,19 @@ The exact same target, GPU2, 32K max context, max-seqs=1, prefix-cache setting a
 
 Against 0.28/cu130, target-only decode changes from 57.6851 to 57.9536 tok/s (**+0.47%**); prefill is effectively identical. The material observed improvement is startup/compile time: ~163 s -> ~114 s.
 
+## Native DFlash2 / cu130 — boot 1 qualification
+
+vLLM 0.28 already contains native `DFlash2DraftModel` and the V2 DFlash2 speculator, so the 0.27.1 DFlash2 backport was **not** migrated wholesale. The production recalibrated W4A16 drafter exposed only two demonstrated gaps in the 0.28/cu130 sandbox:
+
+1. compressed-tensors W4A16 `qkv_proj` has no dense `.weight`; DFlash context-K/V precompute therefore needs the existing pack-quantized K/V-row dequantization logic;
+2. DFlash2 candidate-selector `flashinfer.top_k` JIT fails under this cu130 environment with a CCCL/toolkit-header mismatch, so this arm forces the selector to `torch.topk`.
+
+With those two minimal compatibility changes plus the existing Qwen3.5 quantized-embedding fix, 0.28/cu130 loads target 7/7 shards + recal drafter 1/1 shard, captures target and DFlash2 CUDA graphs, and reaches API Ready.
+
+32K text-only boot-1 p565/g512 qualification: **141.6137 tok/s median** (141.7234 / 141.6137 / 141.5426); 4K prefill **2883.92 tok/s**. The benchmark delta recorded 236 draft steps, 1652 draft tokens and 530 accepted draft tokens (**32.08% draft-token acceptance**), with accepted positions 175/116/89/58/35/30/27. Raw data: `dflash2-cu130-boot1.json`.
+
+This is a qualification datum, not yet the production verdict: it is 32K + text-only and must survive independent fresh boots before comparison at the 245760 production context/vision shape. Harness power fields remain invalid because the helper samples GPU0; board power is handled separately.
+
 ## Interpretation
 
 57.95 tok/s is a **target-only engine/runtime datum**. It must not be compared directly with the current ~130 tok/s production figure because that figure uses DFlash2 k=7. The same-card A/B shows that CUDA13/vLLM 0.28 alone does **not** provide a material single-stream decode gain over 0.27.1/cu129; the next decisive test is native DFlash2 on 0.28/cu130.

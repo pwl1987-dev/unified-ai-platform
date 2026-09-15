@@ -1,0 +1,56 @@
+--- a/model_executor/models/qwen3_dflash.py
++++ b/model_executor/models/qwen3_dflash.py
+@@ -375,6 +375,24 @@
+         return hidden_states, residual
+
+
++def _dense_kv_rows(attn: nn.Module) -> torch.Tensor:
++    """Return dense K/V rows from dense or pack-quantized qkv_proj."""
++    qkv = attn.qkv_proj
++    w = getattr(qkv, "weight", None)
++    if w is not None and w.dim() == 2:
++        return w[attn.q_size :]
++    packed, scale = qkv.weight_packed, qkv.weight_scale
++    out_f, in_f = int(packed.shape[0]), int(qkv.input_size)
++    bits = 32 * packed.shape[1] // in_f
++    from compressed_tensors.compressors.pack_quantized.base import unpack_from_int32
++    q = unpack_from_int32(packed.data, bits, torch.Size([out_f, in_f]), packed_dim=1)
++    group = in_f // scale.shape[1]
++    dense = (q.to(torch.float32).reshape(out_f, in_f // group, group)
++             * scale.to(torch.float32)[..., None]).reshape(out_f, in_f)
++    dtype = scale.dtype if scale.dtype.is_floating_point else torch.bfloat16
++    return dense.to(dtype)[attn.q_size :]
++
++
+ @support_torch_compile
+ class DFlashQwen3Model(nn.Module):
+     decoder_layer_cls = DFlashQwen3DecoderLayer
+@@ -487,7 +505,7 @@
+         self._hidden_norm_weight = self.hidden_norm.weight.data
+
+         # KV projection weights: [num_layers * 2 * kv_size, hidden_size]
+-        kv_weights = [a.qkv_proj.weight[a.q_size :] for a in layers_attn]
++        kv_weights = [_dense_kv_rows(a) for a in layers_attn]
+         self._fused_kv_weight = torch.cat(kv_weights, dim=0)
+         if has_bias:
+             kv_biases = [a.qkv_proj.bias[a.q_size :] for a in layers_attn]
+--- a/model_executor/layers/logits_processor.py
++++ b/model_executor/layers/logits_processor.py
+@@ -4,6 +4,7 @@
+
+ from collections.abc import Callable
+ from functools import cache
++import os
+
+ import torch
+ import torch.nn.functional as F
+@@ -32,6 +33,9 @@
+     The top-k spans the vocabulary, where the radix kernel is about twice
+     torch.topk.
+     """
++    if os.environ.get("VLLM_DFLASH2_TORCH_TOPK", "0") == "1":
++        logger.info_once("VLLM_DFLASH2_TORCH_TOPK=1; vocab top-k uses torch.topk")
++        return None
+     if not current_platform.is_cuda():
+         return None
+     if not has_flashinfer():

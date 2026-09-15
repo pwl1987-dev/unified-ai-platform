@@ -1,0 +1,98 @@
+{
+  "benchmark": {
+    "decode_power_w_median": 14.342857142857143,
+    "decode_rows": [
+      {
+        "cached_tokens": 0,
+        "completion_tokens": 235,
+        "decode_s": 1.6511040009791031,
+        "decode_tok_s": 141.72335592502847,
+        "mean_board_power_w": 14.120000000000001,
+        "mean_prefill_board_power_w": 13.82,
+        "prefill_tok_s": 2557.1729670365294,
+        "prompt_tokens": 565,
+        "total_s": 1.8721168920164928,
+        "ttft_s": 0.22094711905810982
+      },
+      {
+        "cached_tokens": 0,
+        "completion_tokens": 235,
+        "decode_s": 1.6523822909221053,
+        "decode_tok_s": 141.6137181362657,
+        "mean_board_power_w": 14.342857142857143,
+        "mean_prefill_board_power_w": 14.36,
+        "prefill_tok_s": 2543.804848265685,
+        "prompt_tokens": 565,
+        "total_s": 1.8745748089859262,
+        "ttft_s": 0.22210823302157223
+      },
+      {
+        "cached_tokens": 0,
+        "completion_tokens": 235,
+        "decode_s": 1.6532129989936948,
+        "decode_tok_s": 141.54255993779086,
+        "mean_board_power_w": 14.4825,
+        "mean_prefill_board_power_w": 14.32,
+        "prefill_tok_s": 2538.9966400448584,
+        "prompt_tokens": 565,
+        "total_s": 1.8758431690512225,
+        "ttft_s": 0.22252884902991354
+      }
+    ],
+    "decode_tok_s_median": 141.6137181362657,
+    "prefill": {
+      "cached_tokens": 0,
+      "completion_tokens": 1,
+      "decode_s": 1e-09,
+      "decode_tok_s": 0.0,
+      "mean_board_power_w": null,
+      "mean_prefill_board_power_w": 14.678571428571429,
+      "prefill_tok_s": 2883.9199122364666,
+      "prompt_tokens": 4129,
+      "total_s": 1.431837095064111,
+      "ttft_s": 1.4317318530520424
+    }
+  },
+  "spec_metrics_after": {
+    "accepted_per_pos": {
+      "0": 675.0,
+      "1": 459.0,
+      "2": 357.0,
+      "3": 251.0,
+      "4": 164.0,
+      "5": 117.0,
+      "6": 96.0
+    },
+    "spec_decode_num_accepted_tokens_total": 2119.0,
+    "spec_decode_num_draft_tokens_total": 6657.0,
+    "spec_decode_num_drafts_total": 951.0
+  },
+  "spec_metrics_before": {
+    "accepted_per_pos": {
+      "0": 500.0,
+      "1": 343.0,
+      "2": 268.0,
+      "3": 193.0,
+      "4": 129.0,
+      "5": 87.0,
+      "6": 69.0
+    },
+    "spec_decode_num_accepted_tokens_total": 1589.0,
+    "spec_decode_num_draft_tokens_total": 5005.0,
+    "spec_decode_num_drafts_total": 715.0
+  },
+  "spec_metrics_delta": {
+    "accepted_per_pos": {
+      "0": 175.0,
+      "1": 116.0,
+      "2": 89.0,
+      "3": 58.0,
+      "4": 35.0,
+      "5": 30.0,
+      "6": 27.0
+    },
+    "spec_decode_num_accepted_tokens_total": 530.0,
+    "spec_decode_num_draft_tokens_total": 1652.0,
+    "spec_decode_num_drafts_total": 236.0
+  }
+}
