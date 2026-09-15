@@ -52,6 +52,12 @@ With those two minimal compatibility changes plus the existing Qwen3.5 quantized
 
 This is a qualification datum, not yet the production verdict: it is 32K + text-only and must survive independent fresh boots before comparison at the 245760 production context/vision shape. Harness power fields remain invalid because the helper samples GPU0; board power is handled separately.
 
+## Fresh-boot repeatability gate
+
+Three independent GPU2 process boots of the same 32K text-only DFlash2 arm produced decode medians **141.6137 / 141.6538 / 141.6070 tok/s**. Mean **141.6248 tok/s**, sample stdev **0.0253 tok/s**; total range **0.0468 tok/s = 0.033% of mean**. Draft-token acceptance was exactly **32.082%** on all three deterministic fixture runs.
+
+Verdict: **PASS — no boot-level bimodality observed in this 3-boot qualification window.** This closes the specific 0.27-era boot-mode concern for the current 32K arm, but does not yet prove the 245760 production shape. Raw files: `dflash2-cu130-boot{1,2,3}.json`; aggregate: `dflash2-cu130-fresh-boots-summary.json`.
+
 ## Interpretation
 
 57.95 tok/s is a **target-only engine/runtime datum**. It must not be compared directly with the current ~130 tok/s production figure because that figure uses DFlash2 k=7. The same-card A/B shows that CUDA13/vLLM 0.28 alone does **not** provide a material single-stream decode gain over 0.27.1/cu129; the next decisive test is native DFlash2 on 0.28/cu130.
@@ -66,7 +72,7 @@ FastLLM must beat the strongest deployable vLLM result, not merely the legacy 0.
 ## Current task / next task
 
 - Completed: vLLM 0.27.1/cu129 same-card target-only baseline; decode is effectively tied with 0.28/cu130 (+0.47% for 0.28), while 0.28 starts/compiles materially faster.
-- Current: start vLLM 0.28/cu130 with its **native DFlash2** implementation plus the minimum existing embed-quant overlay and the production recalibrated W4A16 drafter.
-- Next: only if native DFlash2 fails, port the smallest demonstrated compatibility gap; then qualify p565/g512, long-context and safety.
-- Then: use the best deployable vLLM result as the FastLLM replacement threshold.
+- Completed: native DFlash2 + recal W4A16 compatibility and 3-fresh-boot repeatability gate; 32K decode mean 141.625 tok/s with only 0.033% total boot range, no bimodality observed.
+- Current: measure the 0.28/cu130 long-context capacity gap against the exact 245760 production target and identify whether KVarN / KV-layout migration is mandatory before performance qualification.
+- Next: qualify the minimum long-context memory path, then run 245760 prefix-cache/quality/stability and use the strongest deployable vLLM result as the FastLLM replacement threshold.
 - No production configuration change is authorized by this report.

@@ -1,0 +1,26 @@
+{
+  "arm": "vLLM 0.28.0 + cu130 + native DFlash2 k=7 + recal W4A16",
+  "context": 32768,
+  "date": "2026-09-15",
+  "decode_mean_tok_s": 141.62483634631255,
+  "decode_range_pct_of_mean": 0.033014613089242605,
+  "decode_range_tok_s": 0.04675689175800812,
+  "decode_stdev_tok_s": 0.025283644470323004,
+  "draft_token_acceptance_pct": [
+    32.082324455205814,
+    32.082324455205814,
+    32.082324455205814
+  ],
+  "fresh_boot_decode_medians_tok_s": [
+    141.6137181362657,
+    141.65377389721496,
+    141.60701700545695
+  ],
+  "fresh_boot_prefill_tok_s": [
+    2883.9199122364666,
+    2886.102206058739,
+    2842.377415038827
+  ],
+  "language_model_only": true,
+  "verdict": "PASS-no-boot-bimodality-observed"
+}

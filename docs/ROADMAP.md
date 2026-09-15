@@ -118,7 +118,7 @@ int4 噪声实现上的补偿学习过拟合 TRAIN 上下文；干净函数训�
 
 **2026-09-15 第一门已过（target-only）**：`vLLM 0.28.0 + torch 2.13.0+cu130` 在同一现役 coding-v1.1 W4A16 上复测。stock 0.28 因 INT8 embedding packed 权重加载失败；仅迁移既有 `qwen3_5-embed-quant.patch` 的最小逻辑后完整加载并 API Ready。优化路径 p565/g512 三次中位 **57.95 tok/s**，4K prefill **2887 tok/s**。此数字无 DFlash2，只用于 runtime 底座比较；详见 `eval/vllm/cuda13/REPORT.md`。
 
-同卡 target-only 对照已补齐：0.27.1/cu129 **57.685 tok/s** / 4K prefill **2887.34 tok/s**，0.28/cu130 **57.954 tok/s** / **2887.23 tok/s**，decode 仅 **+0.47%**、prefill 持平；0.28 的已见收益主要是 engine init ~163s→~114s。0.28 **原生 DFlash2** + 现役 recal W4A16 drafter 的 32K text-only boot-1 已 API Ready，最小兼容仅需量化 qkv K/V 解量化与 CUDA13 candidate-selector `torch.topk` fallback；p565/g512 中位 **141.61 tok/s**，draft-token acceptance **32.08%**。当前门改为 ≥3 个独立 fresh boot 检查 boot-level 双峰；通过后再升 245760/视觉/前缀缓存/质量/稳定性，并以**可部署的最强 vLLM**作为 FastLLM 替代门槛。
+同卡 target-only 对照已补齐：0.27.1/cu129 **57.685 tok/s** / 4K prefill **2887.34 tok/s**，0.28/cu130 **57.954 tok/s** / **2887.23 tok/s**，decode 仅 **+0.47%**、prefill 持平；0.28 的已见收益主要是 engine init ~163s→~114s。0.28 **原生 DFlash2** + 现役 recal W4A16 drafter 的 32K text-only boot-1 已 API Ready，最小兼容仅需量化 qkv K/V 解量化与 CUDA13 candidate-selector `torch.topk` fallback；p565/g512 中位 **141.61 tok/s**，draft-token acceptance **32.08%**。3 个独立 fresh boot 已通过：141.614 / 141.654 / 141.607 tok/s，三次 draft-token acceptance 均 32.082%，总跨度仅 0.033%，未观察到旧 0.27 的 boot-level 双峰。当前进入 245760 长上下文容量差距/KVarN 必要性门；通过后再做视觉/前缀缓存/质量/稳定性，并以**可部署的最强 vLLM**作为 FastLLM 替代门槛。
 
 原生 cu13 环境配方继续见 `inference/vllm/build/cu130-driver580/`。收益假设仍包括更新 kernel、上游 spec-decode 修复与 262K 显存布局变化，但必须以实测资格门为准。
 
