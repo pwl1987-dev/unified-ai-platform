@@ -64,7 +64,7 @@ FLA 碎片缘）→ **130.3 定型**。三级认证：5 探针质量 / 满窗 24
 2. **drafter 深度重训（新首选）**：fc + CandidateSelector（码本 rank=256，254MB）为可导出面，
    在线蒸馏（引擎挂钩目标隐状态+真 token，无需落盘特征）；3.04→3.5 ≈ 130→150，
    不依赖任何确定性修复。DFlash2 无现成训练器，需自写。
-3. vLLM 0.28 栈升级：**target-only PASS + native DFlash2 boot-1 PASS**。target-only 同卡 0.27.1/cu129→0.28/cu130 为 57.685→57.954 tok/s（+0.47%，prefill 持平）。0.28 原生 DFlash2 + 现役 recal W4A16 drafter 只需量化 qkv K/V 解量化与 CUDA13 candidate-selector `torch.topk` fallback 即 API Ready；32K text-only p565/g512 中位 **141.61 tok/s**、draft-token acceptance **32.08%**。3 个 fresh boot 已通过：141.614 / 141.654 / 141.607 tok/s，decode 总跨度仅 0.033%，三次 draft-token acceptance 均 32.082%，未观察到 boot-level 双峰。下一门改为 245760 容量/KVarN 必要性与生产形制；详见 `eval/vllm/cuda13/REPORT.md`。
+3. vLLM 0.28 栈升级：**target-only PASS + native DFlash2 boot-1 PASS**。target-only 同卡 0.27.1/cu129→0.28/cu130 为 57.685→57.954 tok/s（+0.47%，prefill 持平）。0.28 原生 DFlash2 + 现役 recal W4A16 drafter 只需量化 qkv K/V 解量化与 CUDA13 candidate-selector `torch.topk` fallback 即 API Ready；32K text-only p565/g512 中位 **141.61 tok/s**、draft-token acceptance **32.08%**。3 个 fresh boot 已通过：141.614 / 141.654 / 141.607 tok/s，decode 总跨度仅 0.033%，三次 draft-token acceptance 均 32.082%，未观察到 boot-level 双峰。245760 原生 KV 容量门已 FAIL：20.36 GiB 需求 vs 4.91 GiB 可用；43,264 已实测为 API-ready ceiling。下一门是 0.28/cu130 的最小 KVarN/hybrid-KV 迁移，目标恢复 245760；详见 `eval/vllm/cuda13/REPORT.md`。
 
 ## 附：工具
 

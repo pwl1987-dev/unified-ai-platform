@@ -58,6 +58,14 @@ Three independent GPU2 process boots of the same 32K text-only DFlash2 arm produ
 
 Verdict: **PASS — no boot-level bimodality observed in this 3-boot qualification window.** This closes the specific 0.27-era boot-mode concern for the current 32K arm, but does not yet prove the 245760 production shape. Raw files: `dflash2-cu130-boot{1,2,3}.json`; aggregate: `dflash2-cu130-fresh-boots-summary.json`.
 
+## Native long-context capacity gate
+
+The same 0.28/cu130 native-DFlash2 arm was started at the exact production target `max_model_len=245760`, still text-only and without KVarN. Engine initialization failed at KV-cache sizing: **20.36 GiB KV cache required vs 4.91 GiB available**. vLLM estimated the maximum model length at **43,264 tokens**.
+
+That estimate was then tested directly. `max_model_len=43264` reaches API Ready; vLLM allocates **43,545 KV-cache tokens** and reports **1.01x** maximum concurrency for a 43,264-token request. Therefore **43,264 is an observed native-KV startup ceiling**, not merely an estimate. It is not a recommended production setting because only 281 KV tokens remain above the configured maximum.
+
+Conclusion: the model itself has not lost context capability; the missing layer is the 0.27 production stack's KVarN/hybrid-KV memory path. Native 0.28/cu130 cannot approach 245760 on one 24-GB 4090 without migrating that capability. Raw summary: `native-long-context-capacity.json`.
+
 ## Interpretation
 
 57.95 tok/s is a **target-only engine/runtime datum**. It must not be compared directly with the current ~130 tok/s production figure because that figure uses DFlash2 k=7. The same-card A/B shows that CUDA13/vLLM 0.28 alone does **not** provide a material single-stream decode gain over 0.27.1/cu129; the next decisive test is native DFlash2 on 0.28/cu130.
@@ -73,6 +81,7 @@ FastLLM must beat the strongest deployable vLLM result, not merely the legacy 0.
 
 - Completed: vLLM 0.27.1/cu129 same-card target-only baseline; decode is effectively tied with 0.28/cu130 (+0.47% for 0.28), while 0.28 starts/compiles materially faster.
 - Completed: native DFlash2 + recal W4A16 compatibility and 3-fresh-boot repeatability gate; 32K decode mean 141.625 tok/s with only 0.033% total boot range, no bimodality observed.
-- Current: measure the 0.28/cu130 long-context capacity gap against the exact 245760 production target and identify whether KVarN / KV-layout migration is mandatory before performance qualification.
-- Next: qualify the minimum long-context memory path, then run 245760 prefix-cache/quality/stability and use the strongest deployable vLLM result as the FastLLM replacement threshold.
+- Completed: native long-context capacity gate. 245760 needs 20.36 GiB KV but only 4.91 GiB is available; 43,264 is the validated native-KV API-ready ceiling (43,545 KV tokens, 1.01x concurrency).
+- Current: port the minimum 0.27 KVarN/hybrid-KV capability into an isolated 0.28/cu130 overlay; first gates are import/config/KV-init, not performance.
+- Next: restore 245760 capacity, then qualify prefix-cache/quality/stability and use the strongest deployable vLLM result as the FastLLM replacement threshold.
 - No production configuration change is authorized by this report.

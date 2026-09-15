@@ -1,0 +1,24 @@
+{
+  "conclusion": "native KV path is insufficient for 245760; KVarN/hybrid-KV migration is mandatory for production-context parity",
+  "date": "2026-09-15",
+  "drafter": "Qwen3.8-27B-DFlash2-W4A16-recal",
+  "gpu": "RTX 4090 24GB",
+  "gpu_memory_utilization": 0.95,
+  "language_model_only": true,
+  "requested_245760": {
+    "kv_available_gib": 4.91,
+    "kv_required_gib": 20.36,
+    "status": "FAIL-KV-capacity",
+    "vllm_estimated_max_model_len": 43264
+  },
+  "runtime": "vLLM 0.28.0 + torch 2.13.0+cu130",
+  "spec": "native DFlash2 k=7",
+  "target": "Qwen3.8-27B-coding-v1.1-W4A16",
+  "validated_43264": {
+    "gpu_kv_cache_tokens": 43545,
+    "kv_available_gib": 4.91,
+    "max_concurrency": 1.01,
+    "max_model_len": 43264,
+    "status": "PASS-API-ready"
+  }
+}
