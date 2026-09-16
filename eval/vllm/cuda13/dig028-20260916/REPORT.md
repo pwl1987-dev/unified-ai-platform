@@ -84,3 +84,25 @@ ngram 同类，ngram_gpu 已三重否决）；P-EAGLE/FastMTP（需自训 head�
 证据下 24GB 单卡 32K 形制的局部最优**；所有廉价杠杆已穷尽，剩余上行只存在于
 ①生产切换本身（0.28 vs 0.27.1 生产镜像）②多并发场景重测（C4+，cudagraph/池参数可能在
 那里有戏）③新 drafter 架构（EAGLE-3.1 类，需训练线）。
+
+## 第三夜（2026-09-17 晨）：并行 GPU 战役 —— 并发/CG/多卡 TP2（commit 530f6ad）
+
+> 用户指示：闲置 GPU 并行测试 + 性能测试 + 多卡测试。三臂并行（P1=GPU2 CG16/MS4、
+> P2=GPU7 CG8/MS4、P3=GPU3+4 TP2/MS4，各独立 cache 并行 boot），bench_conc.py 并发 fixture
+> + 标准 fixture 交叉校准。注意 bench_conc 的 aggregate/per-stream 含 TTFT，纯 decode 以
+> run_fixture 口径为准。
+
+| 臂 | C1 纯 decode | C4 aggregate（含TTFT） | 判定 |
+|---|---:|---:|---|
+| 单卡 MS4（CG16 / CG8 双胞胎） | 127.31 / **126.95**（逐位级一致） | 200.0 / 197.5 | CG 在 C4 也无差；**MS4 本身对单流收 ~5% 税**（vs MS1 的 133.5） |
+| **TP2（GPU3+4）** | **177.26（+32.8% vs 单卡最优 133.5）**，接受率 32.96% | 149.6 | **单流大胜**；C4 aggregate 反而低于单卡（allreduce×并发税） |
+| TP2 @245760（220K prompt C1） | **TTFT 96.2s（vs 单卡 0.28 的 186.2s = 1.93×）**；decode 39.5 tok/s@220K | — | 预填近线性加速；KV 池翻倍余量；长 ctx decode 的单卡同点对照缺测（遗留） |
+
+**机理**：batch=1 decode 是带宽瓶颈，TP2 每卡只读一半权重（~9GB/步），PCIe allreduce
+每步仅 ~2.6MB——读带宽近 2× 并行；接受率还回升到 32.96%（≈native KV 水平，TP 数值路径
+差异，未深究）。C4 时 verify 计算量上去后 allreduce 税变重，TP2 aggregate 反而落后单卡。
+
+**结论**：TP2 是单流延迟敏感场景（编码助手/终审通道）的**最优拓扑**（+33% decode、TTFT
+近 2×、KV 翻倍）；单卡仍是并发聚合场景最优。这直接改写生产拓扑选项：8 卡可容纳
+2×TP2 对 + llama.cpp 双副本。遗留：TP2 长上下文 decode 的单卡对照；TP2+245K 的多 needle
+精度门；C8/C2 中间点。
