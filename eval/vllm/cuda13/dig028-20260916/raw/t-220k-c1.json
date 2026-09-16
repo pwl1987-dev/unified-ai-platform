@@ -1,0 +1,22 @@
+{
+ "profile": "t-220k-c1",
+ "concurrency": 1,
+ "max_tokens": 128,
+ "span_s": 98.99,
+ "aggregate_tok_s": 1.3,
+ "per_stream_decode_tok_s": [
+  1.3
+ ],
+ "ttft_s": [
+  96.468
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 96.468,
+   "wall_s": 98.99,
+   "completion_tokens": 128,
+   "decode_tok_s": 1.3
+  }
+ }
+}

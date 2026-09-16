@@ -1,0 +1,46 @@
+{
+ "profile": "s32k-c4",
+ "concurrency": 4,
+ "max_tokens": 256,
+ "span_s": 4.9,
+ "aggregate_tok_s": 198.1,
+ "per_stream_decode_tok_s": [
+  45.2,
+  54.3,
+  52.6,
+  50.2
+ ],
+ "ttft_s": [
+  1.056,
+  1.004,
+  1.057,
+  1.057
+ ],
+ "errors": [],
+ "detail": {
+  "2": {
+   "ttft_s": 1.056,
+   "wall_s": 4.71,
+   "completion_tokens": 213,
+   "decode_tok_s": 45.2
+  },
+  "1": {
+   "ttft_s": 1.004,
+   "wall_s": 4.71,
+   "completion_tokens": 256,
+   "decode_tok_s": 54.3
+  },
+  "3": {
+   "ttft_s": 1.057,
+   "wall_s": 4.87,
+   "completion_tokens": 256,
+   "decode_tok_s": 52.6
+  },
+  "0": {
+   "ttft_s": 1.057,
+   "wall_s": 4.9,
+   "completion_tokens": 246,
+   "decode_tok_s": 50.2
+  }
+ }
+}

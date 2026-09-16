@@ -1,0 +1,30 @@
+{
+ "profile": "s32k-c2",
+ "concurrency": 2,
+ "max_tokens": 256,
+ "span_s": 7.24,
+ "aggregate_tok_s": 68.0,
+ "per_stream_decode_tok_s": [
+  33.9,
+  35.4
+ ],
+ "ttft_s": [
+  3.001,
+  3.054
+ ],
+ "errors": [],
+ "detail": {
+  "1": {
+   "ttft_s": 3.001,
+   "wall_s": 6.95,
+   "completion_tokens": 236,
+   "decode_tok_s": 33.9
+  },
+  "0": {
+   "ttft_s": 3.054,
+   "wall_s": 7.24,
+   "completion_tokens": 256,
+   "decode_tok_s": 35.4
+  }
+ }
+}

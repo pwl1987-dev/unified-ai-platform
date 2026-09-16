@@ -1,0 +1,46 @@
+{
+ "profile": "t32k-c4",
+ "concurrency": 4,
+ "max_tokens": 256,
+ "span_s": 6.22,
+ "aggregate_tok_s": 155.3,
+ "per_stream_decode_tok_s": [
+  40.2,
+  46.0,
+  40.6,
+  41.2
+ ],
+ "ttft_s": [
+  0.96,
+  0.961,
+  0.961,
+  0.677
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 0.96,
+   "wall_s": 5.31,
+   "completion_tokens": 213,
+   "decode_tok_s": 40.2
+  },
+  "3": {
+   "ttft_s": 0.961,
+   "wall_s": 5.56,
+   "completion_tokens": 256,
+   "decode_tok_s": 46.0
+  },
+  "1": {
+   "ttft_s": 0.961,
+   "wall_s": 5.93,
+   "completion_tokens": 241,
+   "decode_tok_s": 40.6
+  },
+  "2": {
+   "ttft_s": 0.677,
+   "wall_s": 6.22,
+   "completion_tokens": 256,
+   "decode_tok_s": 41.2
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "profile": "t-128k-c1",
+ "concurrency": 1,
+ "max_tokens": 128,
+ "span_s": 49.35,
+ "aggregate_tok_s": 2.6,
+ "per_stream_decode_tok_s": [
+  2.6
+ ],
+ "ttft_s": [
+  47.71
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 47.71,
+   "wall_s": 49.35,
+   "completion_tokens": 128,
+   "decode_tok_s": 2.6
+  }
+ }
+}

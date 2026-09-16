@@ -1,0 +1,22 @@
+{
+ "profile": "t32k-c1",
+ "concurrency": 1,
+ "max_tokens": 256,
+ "span_s": 2.9,
+ "aggregate_tok_s": 88.2,
+ "per_stream_decode_tok_s": [
+  88.2
+ ],
+ "ttft_s": [
+  0.702
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 0.702,
+   "wall_s": 2.9,
+   "completion_tokens": 256,
+   "decode_tok_s": 88.2
+  }
+ }
+}

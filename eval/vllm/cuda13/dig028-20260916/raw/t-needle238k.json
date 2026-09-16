@@ -1,0 +1,9 @@
+{
+ "profile": "t-needle238k",
+ "prompt_tokens": 238000,
+ "ttft_s": 107.8,
+ "wall_s": 108.4,
+ "needles_hit": "5/5",
+ "PASS": true,
+ "answer_head": "```\n728557,287487,523601,499248,309794\n```"
+}
