@@ -1,0 +1,11 @@
+These files were produced during a period where commands resolved to the stable ftllm 0.1.8.2 native library instead of the current-source probe. Do not use them for current-source conclusions.
+tp2-131200-graph0-api.log
+tp4-131200-graph0-api.log
+tp2-c2-64k-api.log
+tp2-c2-64k-pool64-api.log
+tp4-c2-64k-pool64-api.log
+tp2-245760-graph0-api.log
+tp2-196608-graph0-api.log
+tp2-163840-graph0-api.log
+tp2-147456-graph0-api.log
+tp2-139264-graph0-api.log

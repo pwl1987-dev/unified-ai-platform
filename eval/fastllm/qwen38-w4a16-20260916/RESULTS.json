@@ -1,0 +1,24 @@
+{
+  "runtime_sha256": "e29752af9e353bd39eb2adf6202f57b437ad29215c94506c07198d173be3f445",
+  "pinned_upstream": "74d36383312421e8316501aa46f7c002c8e490d9",
+  "tp2_127k": {
+    "file": "tp2-cudaembed-127k-multineedle-v2-20260916.json",
+    "accuracy": "5/5",
+    "ttft_s": 119.95349335495848,
+    "approx_decode_tok_s": 55.03835783530621
+  },
+  "tp4_127k": {
+    "file": "tp4-127k-multineedle-v2-20260916.json",
+    "accuracy": "5/5",
+    "ttft_s": 88.92614551295992,
+    "approx_decode_tok_s": 73.67953032501882
+  },
+  "tp2_128k_capacity": "PASS",
+  "tp4_128k_capacity": "PASS",
+  "tp3_128k": "FAIL I32/allocator",
+  "tp5_128k": "FAIL I32",
+  "tp6_128k": "FAIL I32/allocator",
+  "tp2_131200": "FAIL I32/allocator",
+  "tp4_131200": "FAIL I32",
+  "tp2_max_batch2_64k": "FAIL startup I32"
+}

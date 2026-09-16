@@ -1,0 +1,8 @@
+{
+  "USE_CUDA": true,
+  "USE_ROCM": false,
+  "USE_NUMAS": true,
+  "USE_TFACC": false,
+  "USE_TOPS": false,
+  "USE_IVCOREX": false
+}
