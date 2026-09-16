@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "target_content_tokens": 127000,
+      "content_tokens": 127000,
+      "prompt_tokens": 127011,
+      "completion_tokens": 64,
+      "codes": [
+        "K1-127000-ZX127",
+        "K2-127000-ZX164",
+        "K3-127000-ZX201",
+        "K4-127000-ZX238",
+        "K5-127000-ZX275"
+      ],
+      "output": "K1-127000-ZX127, K2-127000-ZX164, K3-127000-ZX201, K4-127000-ZX238, K5-1",
+      "ordered_all_found": false,
+      "exact_format": false,
+      "ttft_s": 85.44138851901516,
+      "total_s": 86.1312982380623,
+      "error": null
+    },
+    {
+      "target_content_tokens": 223000,
+      "content_tokens": 223000,
+      "prompt_tokens": 223011,
+      "completion_tokens": 64,
+      "codes": [
+        "K1-223000-ZX223",
+        "K2-223000-ZX260",
+        "K3-223000-ZX297",
+        "K4-223000-ZX334",
+        "K5-223000-ZX371"
+      ],
+      "output": "K1-223000-ZX223, K2-223000-ZX260, K3-223000-ZX334, K4-223000-ZX371, K5-2",
+      "ordered_all_found": false,
+      "exact_format": false,
+      "ttft_s": 186.06599188200198,
+      "total_s": 187.30960952991154,
+      "error": null
+    },
+    {
+      "target_content_tokens": 239000,
+      "content_tokens": 239000,
+      "prompt_tokens": 239011,
+      "completion_tokens": 64,
+      "codes": [
+        "K1-239000-ZX239",
+        "K2-239000-ZX276",
+        "K3-239000-ZX313",
+        "K4-239000-ZX350",
+        "K5-239000-ZX387"
+      ],
+      "output": "K1-239000-ZX239, K2-239000-ZX276, K3-239000-ZX313, K4-239000-ZX350, K5-2",
+      "ordered_all_found": false,
+      "exact_format": false,
+      "ttft_s": 206.15515482600313,
+      "total_s": 207.46837481798138,
+      "error": null
+    }
+  ],
+  "all_accuracy_pass": false
+}

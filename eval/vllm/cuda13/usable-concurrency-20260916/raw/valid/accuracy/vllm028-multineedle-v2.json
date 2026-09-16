@@ -1,0 +1,63 @@
+{
+  "suite": "multineedle-v2-random",
+  "results": [
+    {
+      "target_content_tokens": 127000,
+      "content_tokens": 127000,
+      "prompt_tokens": 127011,
+      "completion_tokens": 72,
+      "codes": [
+        "R1-B289D-0725D8",
+        "R2-3C49D-CCB06A",
+        "R3-44F3E-88A8C6",
+        "R4-931D9-9E7DE2",
+        "R5-E0C16-663B5B"
+      ],
+      "output": "R1-B289D-0725D8,R2-3C49D-CCB06A,R3-44F3E-88A8C6,R4-931D9-9E7DE2,R5-E0C16-663B5B",
+      "ordered_all_found": true,
+      "exact_format": true,
+      "ttft_s": 84.38393715396523,
+      "total_s": 86.52286905201618,
+      "error": null
+    },
+    {
+      "target_content_tokens": 223000,
+      "content_tokens": 223000,
+      "prompt_tokens": 223011,
+      "completion_tokens": 68,
+      "codes": [
+        "R1-6E755-79EDDD",
+        "R2-89700-9F3A48",
+        "R3-55E1D-C7353C",
+        "R4-FC8AA-83A2E6",
+        "R5-1DC2A-A8BD91"
+      ],
+      "output": "R1-6E755-79EDDD,R2-89700-9F3A48,R3-55E1D-C7353C,R4-FC8AA-83A2E6,R5-1DC2A-A8BD91",
+      "ordered_all_found": true,
+      "exact_format": true,
+      "ttft_s": 186.20203173498157,
+      "total_s": 188.9943033780437,
+      "error": null
+    },
+    {
+      "target_content_tokens": 239000,
+      "content_tokens": 239000,
+      "prompt_tokens": 239011,
+      "completion_tokens": 68,
+      "codes": [
+        "R1-29399-65A6A5",
+        "R2-435EC-0A60DF",
+        "R3-16E68-EAC863",
+        "R4-B1CBF-5E3FB8",
+        "R5-9C81D-63CC84"
+      ],
+      "output": "R1-29399-65A6A5,R2-435EC-0A60DF,R3-16E68-EAC863,R4-B1CBF-5E3FB8,R5-9C81D-63CC84",
+      "ordered_all_found": true,
+      "exact_format": true,
+      "ttft_s": 206.28206151898485,
+      "total_s": 209.76189916196745,
+      "error": null
+    }
+  ],
+  "all_accuracy_pass": true
+}

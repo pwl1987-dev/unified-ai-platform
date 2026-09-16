@@ -1,0 +1,58 @@
+{
+  "all_requests_ok": true,
+  "concurrency": 2,
+  "constructed_prompt_tokens": [
+    128000,
+    128000
+  ],
+  "full_resident_concurrency": false,
+  "max_kv_usage": 0.6859756097560976,
+  "max_running": 1.0,
+  "max_tokens": 32,
+  "max_waiting": 1.0,
+  "max_waiting_capacity": 1.0,
+  "metrics_after": {
+    "kv": 0.0,
+    "preempt": 0.0,
+    "running": 0.0,
+    "waiting": 0.0,
+    "waiting_capacity": 0.0
+  },
+  "metrics_before": {
+    "kv": 0.0,
+    "preempt": 0.0,
+    "running": 0.0,
+    "waiting": 0.0,
+    "waiting_capacity": 0.0
+  },
+  "preemptions_delta": 0.0,
+  "rows": [
+    {
+      "completion_tokens": 32,
+      "decode_s": 0.8262740639038384,
+      "decode_tok_s": 37.51781806333906,
+      "error": null,
+      "label": "A",
+      "ok": true,
+      "prompt_tokens": 127960,
+      "total_s": 69.31632948899642,
+      "ttft_s": 68.48999039304908
+    },
+    {
+      "completion_tokens": 32,
+      "decode_s": 1.1100274659693241,
+      "decode_tok_s": 27.92723689312449,
+      "error": null,
+      "label": "B",
+      "ok": true,
+      "prompt_tokens": 127960,
+      "total_s": 150.10694097401574,
+      "ttft_s": 148.99685865896754
+    }
+  ],
+  "server_alive_after": true,
+  "status": "PASS",
+  "target_constructed_tokens": 128000,
+  "usable": true,
+  "wall_s": 150.11315335996915
+}

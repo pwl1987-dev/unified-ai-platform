@@ -1,0 +1,345 @@
+{
+  "date": "2026-09-16",
+  "priority": [
+    "context length >=128K",
+    "resident concurrency",
+    "accuracy",
+    "TTFT"
+  ],
+  "baseline": {
+    "max_model_len": 245760,
+    "kv_cache_bytes": 4820000000,
+    "kv_cache_dtype": "kvarn_k4v2_g128",
+    "dflash2_draft_tokens": 7,
+    "max_num_batched_tokens": 2048,
+    "cuda_graph_capture": 8,
+    "text_only": true
+  },
+  "matrix": [
+    {
+      "file": "vllm027-c1-224000.json",
+      "version": "027",
+      "c": 1,
+      "target": 224000,
+      "prompt_tokens": [
+        223960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": true,
+      "max_running": 1.0,
+      "kv_peak": 0.9542682926829268,
+      "preemptions": 0.0,
+      "wall_s": 184.49326468701474,
+      "ttft_median_s": 183.4411299310159
+    },
+    {
+      "file": "vllm027-c1-240000.json",
+      "version": "027",
+      "c": 1,
+      "target": 240000,
+      "prompt_tokens": [
+        239960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": true,
+      "max_running": 1.0,
+      "kv_peak": 0.9969512195121951,
+      "preemptions": 0.0,
+      "wall_s": 204.75584058009554,
+      "ttft_median_s": 203.65374204190448
+    },
+    {
+      "file": "vllm027-c2-112000.json",
+      "version": "027",
+      "c": 2,
+      "target": 112000,
+      "prompt_tokens": [
+        111960,
+        111960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.6432926829268293,
+      "preemptions": 0.0,
+      "wall_s": 143.55703009304125,
+      "ttft_median_s": 106.8449256309541
+    },
+    {
+      "file": "vllm027-c2-128000.json",
+      "version": "027",
+      "c": 2,
+      "target": 128000,
+      "prompt_tokens": [
+        127960,
+        127960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.6859756097560976,
+      "preemptions": 0.0,
+      "wall_s": 171.54256191896275,
+      "ttft_median_s": 127.83254347695038
+    },
+    {
+      "file": "vllm027-c2-160000.json",
+      "version": "027",
+      "c": 2,
+      "target": 160000,
+      "prompt_tokens": [
+        159960,
+        159960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.7774390243902439,
+      "preemptions": 0.0,
+      "wall_s": 232.26717534207273,
+      "ttft_median_s": 173.17552589304978
+    },
+    {
+      "file": "vllm027-c2-96000.json",
+      "version": "027",
+      "c": 2,
+      "target": 96000,
+      "prompt_tokens": [
+        95960,
+        95960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.5945121951219512,
+      "preemptions": 0.0,
+      "wall_s": 117.20261378295254,
+      "ttft_median_s": 87.28555733303074
+    },
+    {
+      "file": "vllm028-c1-224000.json",
+      "version": "028",
+      "c": 1,
+      "target": 224000,
+      "prompt_tokens": [
+        223960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": true,
+      "max_running": 1.0,
+      "kv_peak": 0.9542682926829268,
+      "preemptions": 0.0,
+      "wall_s": 151.65065823693294,
+      "ttft_median_s": 150.80391323403455
+    },
+    {
+      "file": "vllm028-c1-240000.json",
+      "version": "028",
+      "c": 1,
+      "target": 240000,
+      "prompt_tokens": [
+        239960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": true,
+      "max_running": 1.0,
+      "kv_peak": 0.9969512195121951,
+      "preemptions": 0.0,
+      "wall_s": 168.18364957591984,
+      "ttft_median_s": 166.824384853011
+    },
+    {
+      "file": "vllm028-c2-112000.json",
+      "version": "028",
+      "c": 2,
+      "target": 112000,
+      "prompt_tokens": [
+        111960,
+        111960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.6432926829268293,
+      "preemptions": 0.0,
+      "wall_s": 115.99703706498258,
+      "ttft_median_s": 86.32708363450365
+    },
+    {
+      "file": "vllm028-c2-128000.json",
+      "version": "028",
+      "c": 2,
+      "target": 128000,
+      "prompt_tokens": [
+        127960,
+        127960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.6859756097560976,
+      "preemptions": 0.0,
+      "wall_s": 150.11315335996915,
+      "ttft_median_s": 108.74342452600831
+    },
+    {
+      "file": "vllm028-c2-160000.json",
+      "version": "028",
+      "c": 2,
+      "target": 160000,
+      "prompt_tokens": [
+        159960,
+        159960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.7774390243902439,
+      "preemptions": 0.0,
+      "wall_s": 234.2850367189385,
+      "ttft_median_s": 174.41388975153677
+    },
+    {
+      "file": "vllm028-c2-96000.json",
+      "version": "028",
+      "c": 2,
+      "target": 96000,
+      "prompt_tokens": [
+        95960,
+        95960
+      ],
+      "status": "PASS",
+      "usable": true,
+      "full_resident": false,
+      "max_running": 1.0,
+      "kv_peak": 0.5945121951219512,
+      "preemptions": 0.0,
+      "wall_s": 94.72017315798439,
+      "ttft_median_s": 70.50254097348079
+    }
+  ],
+  "accuracy_v2": {
+    "027": {
+      "file": "vllm027-multineedle-v2.json",
+      "pass": true,
+      "results": [
+        {
+          "prompt_tokens": 127011,
+          "ttft_s": 82.82537804706953,
+          "exact": true,
+          "ordered_all_found": true
+        },
+        {
+          "prompt_tokens": 223011,
+          "ttft_s": 182.09105980501045,
+          "exact": true,
+          "ordered_all_found": true
+        },
+        {
+          "prompt_tokens": 239011,
+          "ttft_s": 202.83681532309856,
+          "exact": true,
+          "ordered_all_found": true
+        }
+      ]
+    },
+    "028": {
+      "file": "vllm028-multineedle-v2.json",
+      "pass": true,
+      "results": [
+        {
+          "prompt_tokens": 127011,
+          "ttft_s": 84.38393715396523,
+          "exact": true,
+          "ordered_all_found": true
+        },
+        {
+          "prompt_tokens": 223011,
+          "ttft_s": 186.20203173498157,
+          "exact": true,
+          "ordered_all_found": true
+        },
+        {
+          "prompt_tokens": 239011,
+          "ttft_s": 206.28206151898485,
+          "exact": true,
+          "ordered_all_found": true
+        }
+      ]
+    }
+  },
+  "resident_min_context": [
+    {
+      "file": "c4-4k-kv4820.json",
+      "c": 4,
+      "full_resident": true,
+      "max_running": 4.0,
+      "kv_peak": 0.9054878048780488,
+      "preemptions": 0.0,
+      "wall_s": 10.612134699011222
+    },
+    {
+      "file": "c6-4k-kv4820.json",
+      "c": 6,
+      "full_resident": false,
+      "max_running": 4.0,
+      "kv_peak": 0.9085365853658537,
+      "preemptions": 0.0,
+      "wall_s": 14.830940634012222
+    },
+    {
+      "file": "c8-4k-kv4820.json",
+      "c": 8,
+      "full_resident": false,
+      "max_running": 4.0,
+      "kv_peak": 0.9085365853658537,
+      "preemptions": 0.0,
+      "wall_s": 19.027011883910745
+    },
+    {
+      "file": "vllm028-highc-c4-4k.json",
+      "c": 4,
+      "full_resident": true,
+      "max_running": 4.0,
+      "kv_peak": 0.9054878048780488,
+      "preemptions": 0.0,
+      "wall_s": 11.612809453043155
+    },
+    {
+      "file": "vllm028-highc-c6-4k.json",
+      "c": 6,
+      "full_resident": false,
+      "max_running": 4.0,
+      "kv_peak": 0.9085365853658537,
+      "preemptions": 0.0,
+      "wall_s": 15.843431200017221
+    },
+    {
+      "file": "vllm028-highc-c8-4k.json",
+      "c": 8,
+      "full_resident": false,
+      "max_running": 4.0,
+      "kv_peak": 0.9085365853658537,
+      "preemptions": 0.0,
+      "wall_s": 19.912561472970992
+    }
+  ],
+  "notes": [
+    "240K is a verified capacity/accuracy boundary but KV peak is ~99.7%; keep operational headroom.",
+    "224K is the main long-context candidate pending fresh-boot TTFT reconciliation.",
+    "C2@128K is safe admitted concurrency but not full-resident: max_running=1 in both versions.",
+    "At ~4K/request both versions reach resident C4; C6/C8 queue above four resident requests.",
+    "accuracy-v1 is archived as invalid because output was truncated and needle values were pattern-inferable."
+  ]
+}
