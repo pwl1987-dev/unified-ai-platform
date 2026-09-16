@@ -1,0 +1,46 @@
+{
+ "profile": "tp2ms4-c4",
+ "concurrency": 4,
+ "max_tokens": 256,
+ "span_s": 6.46,
+ "aggregate_tok_s": 149.6,
+ "per_stream_decode_tok_s": [
+  38.6,
+  44.3,
+  39.1,
+  39.7
+ ],
+ "ttft_s": [
+  0.976,
+  0.977,
+  0.977,
+  0.679
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 0.976,
+   "wall_s": 5.51,
+   "completion_tokens": 213,
+   "decode_tok_s": 38.6
+  },
+  "3": {
+   "ttft_s": 0.977,
+   "wall_s": 5.78,
+   "completion_tokens": 256,
+   "decode_tok_s": 44.3
+  },
+  "1": {
+   "ttft_s": 0.977,
+   "wall_s": 6.17,
+   "completion_tokens": 241,
+   "decode_tok_s": 39.1
+  },
+  "2": {
+   "ttft_s": 0.679,
+   "wall_s": 6.45,
+   "completion_tokens": 256,
+   "decode_tok_s": 39.7
+  }
+ }
+}

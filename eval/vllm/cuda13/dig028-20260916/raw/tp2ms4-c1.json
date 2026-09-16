@@ -1,0 +1,22 @@
+{
+ "profile": "tp2ms4-c1",
+ "concurrency": 1,
+ "max_tokens": 256,
+ "span_s": 1.84,
+ "aggregate_tok_s": 139.2,
+ "per_stream_decode_tok_s": [
+  139.3
+ ],
+ "ttft_s": [
+  0.368
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 0.368,
+   "wall_s": 1.84,
+   "completion_tokens": 256,
+   "decode_tok_s": 139.3
+  }
+ }
+}

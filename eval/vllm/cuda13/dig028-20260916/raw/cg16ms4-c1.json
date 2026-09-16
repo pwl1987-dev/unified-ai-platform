@@ -1,0 +1,22 @@
+{
+ "profile": "cg16ms4-c1",
+ "concurrency": 1,
+ "max_tokens": 256,
+ "span_s": 2.2,
+ "aggregate_tok_s": 106.7,
+ "per_stream_decode_tok_s": [
+  106.7
+ ],
+ "ttft_s": [
+  0.364
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 0.364,
+   "wall_s": 2.2,
+   "completion_tokens": 235,
+   "decode_tok_s": 106.7
+  }
+ }
+}

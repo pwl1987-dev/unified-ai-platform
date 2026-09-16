@@ -1,0 +1,46 @@
+{
+ "profile": "cg8ms4-c4",
+ "concurrency": 4,
+ "max_tokens": 256,
+ "span_s": 4.91,
+ "aggregate_tok_s": 197.5,
+ "per_stream_decode_tok_s": [
+  45.9,
+  54.8,
+  52.4,
+  50.1
+ ],
+ "ttft_s": [
+  1.049,
+  0.995,
+  1.049,
+  1.048
+ ],
+ "errors": [],
+ "detail": {
+  "0": {
+   "ttft_s": 1.049,
+   "wall_s": 4.62,
+   "completion_tokens": 212,
+   "decode_tok_s": 45.9
+  },
+  "3": {
+   "ttft_s": 0.995,
+   "wall_s": 4.67,
+   "completion_tokens": 256,
+   "decode_tok_s": 54.8
+  },
+  "1": {
+   "ttft_s": 1.049,
+   "wall_s": 4.88,
+   "completion_tokens": 256,
+   "decode_tok_s": 52.4
+  },
+  "2": {
+   "ttft_s": 1.048,
+   "wall_s": 4.91,
+   "completion_tokens": 246,
+   "decode_tok_s": 50.1
+  }
+ }
+}
