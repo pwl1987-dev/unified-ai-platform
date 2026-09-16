@@ -1,0 +1,30 @@
+GPU busy total: 8.26s over span 10.99s (busy率 75%, 含 prefill)
+ total_ms   count  mean_us  cat/name
+   6883.8   79192     86.9  kernel: void marlin::Marlin
+    181.1   34824      5.2  kernel: void cutlass::Kernel2
+    158.3   12816     12.4  kernel: fused_sigmoid_gating_delta_rule_update_kernel
+    107.5     512    209.9  kernel: _sinkhorn_log_kernel
+     96.1   19458      4.9  kernel: void vllm::act_and_mul_kernel
+     93.7   54366      1.7  kernel: void at::native::elementwise_kernel
+     93.5    4272     21.9  kernel: _kvarn_fused_decode_stage1
+     49.4   24780      2.0  kernel: void at::native::unrolled_elementwise_kernel
+     38.2     240    159.1  kernel: void flash::flash_fwd_kernel
+     37.2   12816      2.9  kernel: _causal_conv1d_update_kernel
+     35.7    1410     25.3  kernel: void flash::flash_fwd_splitkv_kernel
+     26.4   13536      1.9  kernel: triton_poi_fused__to_copy__unsafe_view_add_clone_marlin_gemm_mean_mul_pow_rsqrt_silu_view_
+     26.3    9024      2.9  kernel: triton_red_fused__to_copy_add_fused_add_rms_norm_3
+     20.9    9024      2.3  kernel: triton_red_fused__to_copy_add_fused_add_rms_norm_marlin_gemm_2
+     20.6   16639      1.2  kernel: void cublasLt::splitKreduce_kernel
+     19.3     720     26.8  kernel: chunk_gated_delta_rule_fwd_kernel_h_blockdim64
+     19.3    6671      2.9  kernel: void at::native::index_elementwise_kernel
+     18.9   15852      1.2  kernel: void at::native::vectorized_elementwise_kernel
+     18.0   18972      0.9  kernel: memcpy32_post
+     17.7     720     24.6  kernel: chunk_fwd_kernel_o
+     15.7   13354      1.2  kernel: void at::native::(anonymous namespace)::CatArrayBatchedCopy_vectorized
+     14.2     720     19.8  kernel: merge_16x16_to_64x64_inverse_kernel
+     13.1    4512      2.9  kernel: triton_red_fused__to_copy_add_fused_add_rms_norm_2
+     13.1    4512      2.9  kernel: triton_red_fused__to_copy_add_fused_add_rms_norm_marlin_gemm_4
+     12.3    9976      1.2  gpu_memcpy: Memcpy DtoD (Device -> Device)
+     12.1    4512      2.7  kernel: _fused_qk_rmsnorm_rope_gate_kernel
+     11.7    4272      2.7  kernel: _kvarn_fused_decode_stage2
+     10.5    4512      2.3  kernel: triton_red_fused__to_copy_add_fused_add_rms_norm_marlin_gemm_3

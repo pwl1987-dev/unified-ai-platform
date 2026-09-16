@@ -54,7 +54,33 @@
 `raw/`：各臂 fixture JSON（含 per-pos 接受分布）+ 复述输出文本。`tools/`：boot 器与探针。
 服务器日志未归档（数字均在 JSON；boot 配置见 tools/boot028.sh 与本报告头部配方）。
 
-## 遗留（未测，按价值序）
+## 第二夜（2026-09-17 晨）：配置臂 + 前缀探针 + trace 定素
 
-FULL cudagraph + residue 打表（syv-ai 法，CG=8→FULL）；draft 词表截 40K（须语义门）；
-0.29（Fast Math Mode/ZMQ IPC）；k8+CG16（仅在有证据尾部接受>0 时值得）。
+> 用户指示：把 0.28 的点全部逐步挖完。同 fixture 同纪律（每臂独立钉死 compile cache；
+> <3% 差异不算赢=冷编译方差实测值）。boot 器已参数化（NBT/MAMBA_MODE/KVARN_POOL_MEM_FRAC/EXTRA_ARGS）。
+
+| 臂 | 结果 | 判定 |
+|---|---|---|
+| NBT 2048→8192 | decode 正常，**4K prefill 即把 EngineCore 打死**：FLA `chunk_gated_delta_rule_fwd_h` 工作区 `v_new=empty_like(u)` OOM（差 48MiB）——24GB 余量天花板，非逻辑 bug | ❌ 维持 2048；prefill chunk 杠杆是拿 KV 换的，不值 |
+| mamba-cache-mode align→all | 133.449 / 193 token / per-pos 与 align **逐位相同** | 零效应，维持 align |
+| KVARN_POOL_MEM_FRAC 0.15→0.25 | 133.467 / 逐位相同 | 零效应（C1/32K 下 0.15 池非约束） |
+| partial-tail 前缀探针（4K prompt） | 冷 1.667s / 同文重发 0.829s（−50%）/ **尾部改写 0.981s（−41%）** | ✅ #50507 功能验证通过；GDN state 恢复有底价（做不到纯注意力模型的近零），模板化 prompt 工作流受益实在 |
+| torch profiler trace（rank0, 11s 窗） | **marlin 83%（6.88s/8.26s，79192 次×87µs）；全 trace 无 248K 宽 GEMM**；kvarn decode stage1/2 ≈107ms；GDN update 12816×12.4µs；sinkhorn 512×210µs | ✅ 定素：drafter=codebook 查表架构，**每步无词表级 matmul** |
+
+**词表截 40K 手术：不适用，证据关闭。** syv-ai 的 +15% 来自其 drafter 每步全词表 lm_head；
+我方 DFlash2 selector 是 pred/succ codebook 查表，trace 中不存在对应大核，drafter 整体
+成本 ≤6% 步时（1.4GB 权重读取 ≈1.4ms/22.7ms）——手术无肉。
+
+**热缓存 boot 只需 ~50s（冷编译 ~310s）**：运维数据点，配合第一夜"钉死 VLLM_CACHE_ROOT"
+配方——生产切换后重启成本极低且逐位确定。
+
+**第二夜不做清单（理由）**：FULL cudagraph+residue 打表（MAX_SEQS=1/k=7 时 verify 批恒为 8，
+capture 1..8 已全覆盖，FULL 只在批形状变化时有意义=多并发场景）；CG=16/k=8（pos-7 接受
+0/206，结构性零上行）；0.29 升级（overlay-kvarn 补丁面向 0.28 文件，跨版本重打补丁是独立
+工程，Fast Math/ZMQ 增量对本单流场景预期 <3%）；suffix decoding（需 arctic-inference，
+ngram 同类，ngram_gpu 已三重否决）；P-EAGLE/FastMTP（需自训 head）。
+
+**两夜总结论**：认证配方（k=7/NBT2048/align/0.15/CG8/f16 state/kvarn k4v2）**就是当前
+证据下 24GB 单卡 32K 形制的局部最优**；所有廉价杠杆已穷尽，剩余上行只存在于
+①生产切换本身（0.28 vs 0.27.1 生产镜像）②多并发场景重测（C4+，cudagraph/池参数可能在
+那里有戏）③新 drafter 架构（EAGLE-3.1 类，需训练线）。

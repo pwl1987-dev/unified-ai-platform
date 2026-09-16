@@ -1,0 +1,17 @@
+{
+ "profile": "kvarn25-prefix",
+ "results": {
+  "cold_full": {
+   "ttft_s": 1.667,
+   "cached_tokens": null
+  },
+  "warm_same": {
+   "ttft_s": 0.829,
+   "cached_tokens": null
+  },
+  "tail_modified": {
+   "ttft_s": 0.981,
+   "cached_tokens": null
+  }
+ }
+}
