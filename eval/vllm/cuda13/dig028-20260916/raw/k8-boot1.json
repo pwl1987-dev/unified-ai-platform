@@ -1,0 +1,102 @@
+{
+ "profile": "k8-boot1",
+ "benchmark": {
+  "decode_rows": [
+   {
+    "prompt_tokens": 565,
+    "cached_tokens": 0,
+    "completion_tokens": 193,
+    "ttft_s": 0.6562758459476754,
+    "decode_s": 3.084775900002569,
+    "total_s": 3.741097399033606,
+    "prefill_tok_s": 860.9184742798643,
+    "mean_prefill_board_power_w": 70.17666666666666,
+    "decode_tok_s": 62.24115015934873,
+    "mean_board_power_w": 68.77588235294118
+   },
+   {
+    "prompt_tokens": 565,
+    "cached_tokens": 0,
+    "completion_tokens": 193,
+    "ttft_s": 0.38466680503915995,
+    "decode_s": 3.086716791964136,
+    "total_s": 3.4714266340015456,
+    "prefill_tok_s": 1468.8036310866016,
+    "mean_prefill_board_power_w": 66.34,
+    "decode_tok_s": 62.20201364111114,
+    "mean_board_power_w": 66.405
+   },
+   {
+    "prompt_tokens": 565,
+    "cached_tokens": 0,
+    "completion_tokens": 193,
+    "ttft_s": 0.3805925470078364,
+    "decode_s": 3.0858672379981726,
+    "total_s": 3.466513252002187,
+    "prefill_tok_s": 1484.5272311345777,
+    "mean_prefill_board_power_w": 66.53,
+    "decode_tok_s": 62.21913815208459,
+    "mean_board_power_w": 66.62125
+   }
+  ],
+  "decode_tok_s_median": 62.21913815208459,
+  "decode_power_w_median": 66.62125,
+  "prefill": {
+   "prompt_tokens": 4129,
+   "cached_tokens": 0,
+   "completion_tokens": 1,
+   "ttft_s": 1.627639285987243,
+   "decode_s": 1e-09,
+   "total_s": 1.6276776109589264,
+   "prefill_tok_s": 2536.8028626167984,
+   "mean_prefill_board_power_w": 66.72749999999999,
+   "decode_tok_s": 0.0,
+   "mean_board_power_w": null
+  }
+ },
+ "spec_before": {
+  "spec_decode_num_drafts_total": 0.0,
+  "spec_decode_num_draft_tokens_total": 0.0,
+  "spec_decode_num_accepted_tokens_total": 0.0,
+  "accepted_per_pos": {
+   "0": 0.0,
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0,
+   "7": 0.0
+  }
+ },
+ "spec_after": {
+  "spec_decode_num_drafts_total": 206.0,
+  "spec_decode_num_draft_tokens_total": 1648.0,
+  "spec_decode_num_accepted_tokens_total": 441.0,
+  "accepted_per_pos": {
+   "0": 152.0,
+   "1": 111.0,
+   "2": 81.0,
+   "3": 43.0,
+   "4": 30.0,
+   "5": 15.0,
+   "6": 9.0,
+   "7": 0.0
+  }
+ },
+ "spec_delta": {
+  "accepted_per_pos": {
+   "3": 43,
+   "4": 30,
+   "1": 111,
+   "6": 9,
+   "5": 15,
+   "7": 0,
+   "0": 152,
+   "2": 81
+  },
+  "spec_decode_num_drafts_total": 206,
+  "spec_decode_num_accepted_tokens_total": 441,
+  "spec_decode_num_draft_tokens_total": 1648
+ }
+}

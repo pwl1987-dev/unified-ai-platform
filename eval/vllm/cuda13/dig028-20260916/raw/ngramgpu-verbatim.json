@@ -1,0 +1,9 @@
+{
+ "profile": "ngramgpu-verbatim",
+ "wall_s": 21.02,
+ "completion_tokens": 4096,
+ "decode_tok_s": 194.8,
+ "prompt_report_tokens": 6234,
+ "first_line_present": false,
+ "last_line_present": false
+}

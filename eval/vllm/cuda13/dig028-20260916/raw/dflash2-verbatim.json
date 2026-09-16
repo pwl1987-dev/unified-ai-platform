@@ -1,0 +1,9 @@
+{
+ "profile": "dflash2-verbatim",
+ "wall_s": 24.89,
+ "completion_tokens": 5598,
+ "decode_tok_s": 224.9,
+ "prompt_report_tokens": 6234,
+ "first_line_present": false,
+ "last_line_present": false
+}

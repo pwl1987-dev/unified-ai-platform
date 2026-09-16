@@ -1,0 +1,96 @@
+{
+ "profile": "k6-boot1",
+ "benchmark": {
+  "decode_rows": [
+   {
+    "prompt_tokens": 565,
+    "cached_tokens": 0,
+    "completion_tokens": 190,
+    "ttft_s": 0.6025407150154933,
+    "decode_s": 1.4490356289315969,
+    "total_s": 2.074751661042683,
+    "prefill_tok_s": 937.6959696167121,
+    "mean_prefill_board_power_w": 14.73,
+    "decode_tok_s": 130.4315754743405,
+    "mean_board_power_w": 14.85
+   },
+   {
+    "prompt_tokens": 565,
+    "cached_tokens": 0,
+    "completion_tokens": 190,
+    "ttft_s": 0.3458313449518755,
+    "decode_s": 1.450244917999953,
+    "total_s": 1.8191635450348258,
+    "prefill_tok_s": 1633.7443330321116,
+    "mean_prefill_board_power_w": 14.97,
+    "decode_tok_s": 130.32281489436403,
+    "mean_board_power_w": 14.85
+   },
+   {
+    "prompt_tokens": 565,
+    "cached_tokens": 0,
+    "completion_tokens": 190,
+    "ttft_s": 0.3461100140120834,
+    "decode_s": 1.4503863790305331,
+    "total_s": 1.819494155002758,
+    "prefill_tok_s": 1632.4289304737501,
+    "mean_prefill_board_power_w": 14.91,
+    "decode_tok_s": 130.3101040747027,
+    "mean_board_power_w": 15.237142857142858
+   }
+  ],
+  "decode_tok_s_median": 130.32281489436403,
+  "decode_power_w_median": 14.85,
+  "prefill": {
+   "prompt_tokens": 4129,
+   "cached_tokens": 0,
+   "completion_tokens": 1,
+   "ttft_s": 1.6347060210537165,
+   "decode_s": 1e-09,
+   "total_s": 1.634763968992047,
+   "prefill_tok_s": 2525.836417570961,
+   "mean_prefill_board_power_w": 15.35375,
+   "decode_tok_s": 0.0,
+   "mean_board_power_w": null
+  }
+ },
+ "spec_before": {
+  "spec_decode_num_drafts_total": 0.0,
+  "spec_decode_num_draft_tokens_total": 0.0,
+  "spec_decode_num_accepted_tokens_total": 0.0,
+  "accepted_per_pos": {
+   "0": 0.0,
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0
+  }
+ },
+ "spec_after": {
+  "spec_decode_num_drafts_total": 218.0,
+  "spec_decode_num_draft_tokens_total": 1308.0,
+  "spec_decode_num_accepted_tokens_total": 415.0,
+  "accepted_per_pos": {
+   "0": 162.0,
+   "1": 101.0,
+   "2": 59.0,
+   "3": 40.0,
+   "4": 32.0,
+   "5": 21.0
+  }
+ },
+ "spec_delta": {
+  "spec_decode_num_drafts_total": 218,
+  "spec_decode_num_draft_tokens_total": 1308,
+  "accepted_per_pos": {
+   "1": 101,
+   "5": 21,
+   "3": 40,
+   "2": 59,
+   "0": 162,
+   "4": 32
+  },
+  "spec_decode_num_accepted_tokens_total": 415
+ }
+}
