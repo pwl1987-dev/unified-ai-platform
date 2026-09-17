@@ -92,7 +92,11 @@ def boot(ver: str, cache: str, tag: str, spec: int, extra: str = "") -> tuple[bo
         patch = "a" if spec == 0 else "b"
         cmd_core = (f"setsid bash boot029_nextgen.sh {tag} {PORT} 1 1 "
                     f"--kv-dtype auto --model-len 32768 --spec {spec} --patch {patch} --kv-mem auto")
-    cmd = (f"cd {HERE} && VLLM_CACHE_ROOT={cache} EXTRA_SERVE_ARGS='{extra}' "
+    envv = ""
+    if ver == "29":
+        # unit-c 已移植 0.29：flashinfer.top_k cu130 JIT 失败 → 强制 torch.topk
+        envv = "VLLM_DFLASH2_TORCH_TOPK=1 "
+    cmd = (f"cd {HERE} && {envv}VLLM_CACHE_ROOT={cache} EXTRA_SERVE_ARGS='{extra}' "
            f"{cmd_core} > {SBX}/boot-{tag}.log 2>&1")
     r = subprocess.run(["bash", "-c", cmd], timeout=1800)
     log = os.path.join(SBX, f"log-{tag}")

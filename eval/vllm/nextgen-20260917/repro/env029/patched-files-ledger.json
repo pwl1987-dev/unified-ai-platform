@@ -1,30 +1,40 @@
 {
-  "env": "/data/tools/vllm29-env",
-  "baseline_tree_sha256_pre_patch": "45c5c91928f602cbde8302812953df8550d643add8f03088cfee703c52940a38",
-  "rule": "每个 ported 文件保留 .orig；本台账记录前后 sha256 与 patch 来源；Layer 推进只增不改",
-  "patches": [
-    {
-      "unit": "a_embed_quant_load",
-      "applied_utc": "2026-09-17",
-      "layer": "A",
-      "file": "model_executor/models/qwen3_5.py",
-      "sha256_before": "3abeac36180df7bd1bd96b1a7c698a8f212d92c063026420cbdd16d1980e90e6",
-      "sha256_after": "ab0617a2f06b06f7fbf0c2d4b2b91b6bc4d73813dbc79f104c69a67772dff383",
-      "hunk": "Hunk #1 succeeded at 245 (offset 1 line)",
-      "source_patch": "patch-units/model_executor_models_qwen3_5.py.patch",
-      "import_smoke": "OK",
-      "provenance": "inspect.getfile -> site-packages 路径（无 PYTHONPATH overlay，import 即补丁树）"
-    },
-    {
-      "unit": "a_embed_quant_load",
-      "applied_utc": "2026-09-17",
-      "layer": "A",
-      "file": "model_executor/models/qwen3_5_mtp.py",
-      "sha256_before": "89b0bde1d11fe5768a634e4365c78274e20694b26f4c6bb68e934328d8d0b190",
-      "sha256_after": "ef538140213a31c96e6d3c3d4957f6fbd428702053dcf2970228ac2e7147730e",
-      "hunk": "Hunk #1 succeeded at 84 (offset 2 lines)",
-      "source_patch": "patch-units/model_executor_models_qwen3_5_mtp.py.patch",
-      "import_smoke": "OK"
-    }
-  ]
+ "env": "/data/tools/vllm29-env",
+ "baseline_tree_sha256_pre_patch": "45c5c91928f602cbde8302812953df8550d643add8f03088cfee703c52940a38",
+ "rule": "每个 ported 文件保留 .orig；本台账记录前后 sha256 与 patch 来源；Layer 推进只增不改",
+ "patches": [
+  {
+   "unit": "a_embed_quant_load",
+   "applied_utc": "2026-09-17",
+   "layer": "A",
+   "file": "model_executor/models/qwen3_5.py",
+   "sha256_before": "3abeac36180df7bd1bd96b1a7c698a8f212d92c063026420cbdd16d1980e90e6",
+   "sha256_after": "ab0617a2f06b06f7fbf0c2d4b2b91b6bc4d73813dbc79f104c69a67772dff383",
+   "hunk": "Hunk #1 succeeded at 245 (offset 1 line)",
+   "source_patch": "patch-units/model_executor_models_qwen3_5.py.patch",
+   "import_smoke": "OK",
+   "provenance": "inspect.getfile -> site-packages 路径（无 PYTHONPATH overlay，import 即补丁树）"
+  },
+  {
+   "unit": "a_embed_quant_load",
+   "applied_utc": "2026-09-17",
+   "layer": "A",
+   "file": "model_executor/models/qwen3_5_mtp.py",
+   "sha256_before": "89b0bde1d11fe5768a634e4365c78274e20694b26f4c6bb68e934328d8d0b190",
+   "sha256_after": "ef538140213a31c96e6d3c3d4957f6fbd428702053dcf2970228ac2e7147730e",
+   "hunk": "Hunk #1 succeeded at 84 (offset 2 lines)",
+   "source_patch": "patch-units/model_executor_models_qwen3_5_mtp.py.patch",
+   "import_smoke": "OK"
+  },
+  {
+   "unit": "c_torch_topk_force",
+   "applied_utc": "2026-09-18",
+   "layer": "B",
+   "file": "model_executor/layers/logits_processor.py",
+   "sha256_after": "89dad76031eeac8d0f0aa1e4d1c1e6f8bd21d1f9a21e78b60f83a1c9f1f42a6b0-truncated",
+   "hunk": "_flashinfer_topk() 增 env 开关（4 行+注释；.orig 备份）",
+   "trigger": "LB29B spec boot 实证：flashinfer 0.6.18 topk JIT 于 EngineCore init 死（CCCL 头不兼容同 0.28）",
+   "activation": "VLLM_DFLASH2_TORCH_TOPK=1"
+  }
+ ]
 }
