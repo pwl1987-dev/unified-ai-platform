@@ -114,6 +114,7 @@ def mrv2_evidence(log: str, arm_key: str) -> dict:
 
 
 def main() -> int:
+    os.makedirs(os.path.dirname(OUT_FILE), exist_ok=True)
     doc = json.load(open(OUT_FILE)) if os.path.exists(OUT_FILE) else {}
     for arm in ARMS:
         if arm["key"] in doc and doc[arm["key"]].get("done"):

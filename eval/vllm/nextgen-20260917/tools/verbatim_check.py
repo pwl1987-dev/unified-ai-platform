@@ -37,7 +37,12 @@ def gen_lines(n: int = 100) -> list[str]:
 
 
 def check_verbatim(expected: list[str], got_lines: list[str]) -> dict:
-    """逐行 exact 判定 + 首尾行 + 顺序 + 编号格式 + 复读检测。"""
+    """逐行 exact 判定 + 首尾行 + 顺序 + 编号格式 + 复读检测。
+
+    归一化：剥离 markdown 代码围栏行（``` 围栏）——模型逐字复述常自发包围栏，
+    内容逐字正确时不应整体移位误判（P2 Layer A 首次真模型正向通路发现的校验器缺陷）。
+    """
+    got_lines = [l for l in got_lines if not re.fullmatch(r"```+.*", l.strip())]
     res = {
         "first_line_ok": bool(got_lines and got_lines[0].strip() == expected[0].strip()),
         "last_line_ok": bool(got_lines and got_lines[-1].strip() == expected[-1].strip()),
