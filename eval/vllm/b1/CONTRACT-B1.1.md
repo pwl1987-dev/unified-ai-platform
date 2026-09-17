@@ -64,7 +64,7 @@ SPECULATION QUALITY（唯一参与质量 Gate）
 
 1. fc quantization sensitivity（B2-A，本契约后执行）
 2. fc 更高精度 / calibration
-3. trained-flow Hessian recalibration
+3. 训练流 Hessian 重校准
 4. acceptance 再验证（≥60 FINAL 预注册统计门 + 本契约 A-E 全套）
 5. selector / 深层解冻（仅当 fc 被证明到天花板）
 
