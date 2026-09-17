@@ -1,0 +1,203 @@
+{
+ "experiment_id": "DEBT2-238K",
+ "evidence_kind": "debt-aggregate",
+ "verdict": {
+  "correctness_gate_pass": false,
+  "total_cases": 9,
+  "total_pass": 3,
+  "stability_gate_pass": false,
+  "stability": {
+   "ttft_median_per_boot": {
+    "b1": 107.412,
+    "b2": 107.392,
+    "b3": 107.381
+   },
+   "ttft_drift": 0.00028866209773545435,
+   "kv_peak_per_boot": {},
+   "kv_drift": null,
+   "vram_peak_per_boot": {
+    "b1": 15448,
+    "b2": 15448,
+    "b3": 15448
+   },
+   "vram_drift": 0.0,
+   "zero_preempt_oom_crash": false,
+   "issues": [
+    "b1: 1/3 seed pass",
+    "b2: 1/3 seed pass",
+    "b3: 1/3 seed pass"
+   ]
+  }
+ },
+ "nd220k": {
+  "b1": {
+   "experiment_id": "V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B1-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 96.582,
+   "wall_s": 96.74,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B1-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 15448,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 42.6,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 117.4,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 117.4,
+     "sampler_exit_code": 0,
+     "samples_collected": 967,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 507.0,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 507.0,
+     "sampler_exit_code": 0,
+     "samples_collected": 388,
+     "errors": []
+    }
+   }
+  },
+  "b2": {
+   "experiment_id": "V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B2-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 96.622,
+   "wall_s": 96.78,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B2-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 15448,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 42.6,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 157.7,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 157.7,
+     "sampler_exit_code": 0,
+     "samples_collected": 968,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 514.0,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 514.0,
+     "sampler_exit_code": 0,
+     "samples_collected": 388,
+     "errors": []
+    }
+   }
+  },
+  "b3": {
+   "experiment_id": "V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B3-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 96.484,
+   "wall_s": 96.641,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B3-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 15448,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 49.6,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 119.7,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 119.7,
+     "sampler_exit_code": 0,
+     "samples_collected": 966,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 507.9,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 507.9,
+     "sampler_exit_code": 0,
+     "samples_collected": 388,
+     "errors": []
+    }
+   }
+  }
+ },
+ "boot_isolation_note": "stop() ps--pgid bug: b1 server 未被终止，b2/b3 端口冲突即刻退出，12 次 needle 实际全部落在同一 b1 server；跨 boot 稳定性证据失效，正确性证据有效（同 server 3 次重复、temp=0 确定性复现）",
+ "status": "VALID_FAIL",
+ "evidence_class": "valid",
+ "classification_reason": "QUALITY_FAIL"
+}

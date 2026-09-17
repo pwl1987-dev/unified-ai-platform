@@ -1,0 +1,10 @@
+{
+ "experiment_id": "V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K-NDL-B3-S1",
+ "evidence_kind": "needle-probe",
+ "debt_gate": "A4-220K-needle",
+ "needles_hit": "2/5",
+ "ttft_s": 96.484,
+ "status": "VALID_FAIL",
+ "evidence_class": "valid",
+ "classification_reason": "QUALITY_FAIL"
+}

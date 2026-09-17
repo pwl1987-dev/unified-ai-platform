@@ -1,0 +1,199 @@
+{
+ "experiment_id": "V28-T1-Q0-KVARN-SD7-MS1-NBT2048-C1-L0565-F512-B01-R02",
+ "status": "INVALID",
+ "evidence_class": "invalid",
+ "classification_reason": "HARNESS_ERROR",
+ "created_utc": "2026-09-17T01:15:29Z",
+ "harness_git_sha": "b711902c5f5f9e6347671880cefb03e73f9f9096",
+ "harness_files_sha256": {
+  "bench_nextgen.py": "3d9cf51877cae53a9d12742f3f7b49101302ca6f15f604c35aa3f534363ee37f",
+  "sseparser.py": "bf82c5298588a5a5db8aee79d6fe5c77b08df9a3e2ab6b514384d705b251f2fc",
+  "nvml_bind.py": "0d0f49fef5d17efac061ff5a681dde96eb4811b09ea6a6fbd25f92fbdbd4ee1c"
+ },
+ "host_snapshot_sha256": "6a08a3748937c2ff5df6eb1958b0ea1b06976e6642bfe60dc930f81e6181af39",
+ "env_lock_sha256": "e76f5dd199b4b39e0c440ba1797e9cab8775adb2389273d776e337b3acb90e9b",
+ "gpu": {
+  "cards": [
+   {
+    "uuid": "G"
+   },
+   {
+    "uuid": "P"
+   },
+   {
+    "uuid": "U"
+   },
+   {
+    "uuid": "-"
+   },
+   {
+    "uuid": "4"
+   },
+   {
+    "uuid": "1"
+   },
+   {
+    "uuid": "a"
+   },
+   {
+    "uuid": "1"
+   },
+   {
+    "uuid": "9"
+   },
+   {
+    "uuid": "8"
+   },
+   {
+    "uuid": "6"
+   },
+   {
+    "uuid": "d"
+   },
+   {
+    "uuid": "-"
+   },
+   {
+    "uuid": "e"
+   },
+   {
+    "uuid": "7"
+   },
+   {
+    "uuid": "4"
+   },
+   {
+    "uuid": "5"
+   },
+   {
+    "uuid": "-"
+   },
+   {
+    "uuid": "9"
+   },
+   {
+    "uuid": "e"
+   },
+   {
+    "uuid": "4"
+   },
+   {
+    "uuid": "0"
+   },
+   {
+    "uuid": "-"
+   },
+   {
+    "uuid": "c"
+   },
+   {
+    "uuid": "5"
+   },
+   {
+    "uuid": "2"
+   },
+   {
+    "uuid": "0"
+   },
+   {
+    "uuid": "-"
+   },
+   {
+    "uuid": "0"
+   },
+   {
+    "uuid": "9"
+   },
+   {
+    "uuid": "4"
+   },
+   {
+    "uuid": "9"
+   },
+   {
+    "uuid": "0"
+   },
+   {
+    "uuid": "0"
+   },
+   {
+    "uuid": "8"
+   },
+   {
+    "uuid": "1"
+   },
+   {
+    "uuid": "f"
+   },
+   {
+    "uuid": "d"
+   },
+   {
+    "uuid": "4"
+   },
+   {
+    "uuid": "4"
+   }
+  ],
+  "power_limit_w": null,
+  "initial_temp_c": []
+ },
+ "server": {
+  "port": 19701,
+  "pid": 413184,
+  "pgid": 413169,
+  "tp": 1,
+  "max_num_seqs": 1,
+  "launch_cmd_file": "launch-cmd.txt",
+  "cache_root": "/data/sandbox/nextgen-20260917/cache-anchors-tp1"
+ },
+ "fixture": {
+  "name": "d565",
+  "sha256": "131ca085aced4ec859845cda24ff38aa07f7584eaafa90f7397838ade5b5eea7",
+  "requested_output_tokens": 512,
+  "actual_input_tokens": 565
+ },
+ "recipe": {
+  "runtime": "vllm-0.28.0",
+  "kv_profile": "kvarn_k4v2_g128",
+  "quant": "W4A16-autoround-g128",
+  "spec": "dflash2-k7",
+  "nbt": 2048,
+  "cudagraph": "cg8-custom-ops"
+ },
+ "timing": {
+  "start_utc": "1970-01-12T12:33:59Z",
+  "end_utc": "1970-01-12T12:34:03Z",
+  "duration_s": 4.312
+ },
+ "files": {
+  "raw_events": "raw-events.jsonl",
+  "metrics": "metrics.json",
+  "sampler_metrics": "sampler-metrics.jsonl",
+  "nvml": "nvml-samples.jsonl"
+ },
+ "client_version": "bench_nextgen-1",
+ "validation_errors": [
+  "manifest: $.gpu.cards[0]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[0]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[1]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[1]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[2]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[2]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[3]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[3]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[4]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[4]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[5]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[5]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[6]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[6]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[7]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[7]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[8]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[8]: missing required 'pci_bdf'",
+  "manifest: $.gpu.cards[9]: missing required 'logical_index'",
+  "manifest: $.gpu.cards[9]: missing required 'pci_bdf'"
+ ],
+ "harness_error_note": "run_arm passed char-fragmented uuid list; NVML sampling unbound (0 samples); measurements numerically valid but evidence incomplete — superseded by fresh R01-R03 re-runs"
+}

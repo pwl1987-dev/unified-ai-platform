@@ -42,3 +42,10 @@
 ## 7. 脱敏检查
 
 - 仓库内容不得含密钥/cookie/私密 prompt/不可迁移绝对路径（模型路径为机器约定，已在 §3 声明）。
+
+## 8. 证据压缩变换（2026-09-17 commit #2 前）
+
+- `raw/**/sampler-metrics.jsonl` 单文件 >2MB 者（30 个，原最大 106MB）已 `gzip -9`
+  无损压缩为 `.jsonl.gz`（1.3G→126M；GitHub 单文件 100MB 硬限）。
+  `gunzip -c <file>.gz` 可完整还原；采样统计摘要（interval/missing ratio/exit code）
+  本就记录在各自 `metrics.json` 的 `sampler_stats`，不依赖原始序列。

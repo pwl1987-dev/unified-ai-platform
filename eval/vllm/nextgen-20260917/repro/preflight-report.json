@@ -1,0 +1,133 @@
+{
+ "captured_utc": "2026-09-17T00:52:06Z",
+ "stale_staging": [],
+ "gpu_identity_gate": {
+  "ok": true,
+  "mismatches": {},
+  "logical_to_uuid": {
+   "0": "GPU-5197ebe7-2a96-b8df-3ceb-9618c3473540",
+   "1": "GPU-79be3c3c-7a80-d19e-d65c-990ea5c03646",
+   "2": "GPU-41a1986d-e745-9e40-c520-09490081fd44",
+   "3": "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae",
+   "4": "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e",
+   "5": "GPU-b98c4a80-4488-5d95-92a4-a8b3a9a30950",
+   "6": "GPU-30776c79-cd65-60d6-4b56-69c9b6979449",
+   "7": "GPU-5cf0f8a6-26d7-e5e3-a9f6-5d4d5211258e"
+  }
+ },
+ "gpu_occupancy": [
+  {
+   "logical_index": 0,
+   "uuid": "GPU-5197ebe7-2a96-b8df-3ceb-9618c3473540",
+   "mem_used_mib": 23257,
+   "temp_c": 30,
+   "power_draw_w": 12.24,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 1,
+   "uuid": "GPU-79be3c3c-7a80-d19e-d65c-990ea5c03646",
+   "mem_used_mib": 23108,
+   "temp_c": 34,
+   "power_draw_w": 74.72,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 2,
+   "uuid": "GPU-41a1986d-e745-9e40-c520-09490081fd44",
+   "mem_used_mib": 20,
+   "temp_c": 29,
+   "power_draw_w": 17.53,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 3,
+   "uuid": "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae",
+   "mem_used_mib": 18,
+   "temp_c": 28,
+   "power_draw_w": 17.45,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 4,
+   "uuid": "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e",
+   "mem_used_mib": 17,
+   "temp_c": 30,
+   "power_draw_w": 18.35,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 5,
+   "uuid": "GPU-b98c4a80-4488-5d95-92a4-a8b3a9a30950",
+   "mem_used_mib": 17,
+   "temp_c": 31,
+   "power_draw_w": 23.39,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 6,
+   "uuid": "GPU-30776c79-cd65-60d6-4b56-69c9b6979449",
+   "mem_used_mib": 17,
+   "temp_c": 30,
+   "power_draw_w": 27.61,
+   "power_limit_w": 250.0
+  },
+  {
+   "logical_index": 7,
+   "uuid": "GPU-5cf0f8a6-26d7-e5e3-a9f6-5d4d5211258e",
+   "mem_used_mib": 17,
+   "temp_c": 32,
+   "power_draw_w": 17.02,
+   "power_limit_w": 250.0
+  }
+ ],
+ "experiment_pool_free": true,
+ "clock": {
+  "status": "NTP=yes\nNTPSynchronized=yes",
+  "offset_hint": "unknown"
+ },
+ "cpu": {
+  "governor": "performance"
+ },
+ "host_snapshot_sha256": "6a08a3748937c2ff5df6eb1958b0ea1b06976e6642bfe60dc930f81e6181af39",
+ "env_lock_sha256": "e76f5dd199b4b39e0c440ba1797e9cab8775adb2389273d776e337b3acb90e9b",
+ "model_sha_check": {
+  "reference_manifest": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/cuda13/usable-concurrency-20260916/repro/manifests/model-sha256.txt",
+  "lines": 20,
+  "spot_checks": [
+   {
+    "file": "config.json",
+    "expected": "8a0a93adc5251dd64205cf2c1ac49467365a5c78acc765f160de567da6e23b1e",
+    "actual": "8a0a93adc5251dd64205cf2c1ac49467365a5c78acc765f160de567da6e23b1e",
+    "match": true
+   }
+  ]
+ },
+ "zombie_evidence": {
+  "pid": 292658,
+  "cmdline": "/data/tools/vllm28-env/bin/python -m vllm.entrypoints.cli.main serve /data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128 --served-model-name qwen3.8-27b --host 127.0.0.1 --port 19649 --max-model-len 32768 --gpu-memory-utilization 0.95 --max-num-seqs 1 --max-num-batched-tokens 2048 --mamba-ssm-cache-dtype float16 --mamba-cache-mode align --prefix-match-unit 128 --async-schedulin",
+  "starttime_ticks": "98406165",
+  "state": "S",
+  "user": "lytv",
+  "port_19649_owner_line": "",
+  "identity_match": false,
+  "children": "293193 S    /data/tools/vllm28-env/bin/python -c from multiprocessing.resource_tracker import main;main(72)\n 293194 Z    [VLLM::EngineCor] <defunct>"
+ },
+ "idle_temp_baseline_c": {
+  "2": [
+   29,
+   29,
+   29
+  ],
+  "3": [
+   28,
+   28,
+   28
+  ],
+  "4": [
+   30,
+   30,
+   30
+  ]
+ }
+}

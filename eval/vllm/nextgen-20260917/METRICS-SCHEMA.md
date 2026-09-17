@@ -32,8 +32,10 @@ tpot_s                = (last_token - first_token) / (output_tokens - 1)
   `null_reason = INSUFFICIENT_TOKENS`（禁止 0/NaN/Inf）。
 - `client_observed_decode_tok_s` 是**客户端观测值**：token 到达时刻含 HTTP/SSE flush、
   socket 与客户端调度抖动，不得宣称等同 engine 内部 decode 速率。
-- `output_tokens` 优先取 server `usage.completion_tokens`；client 计数
-  （`client_token_count`）独立记录并交叉核对，不一致时该样本标 `COUNT_MISMATCH`。
+- `output_tokens` 优先取 server `usage.completion_tokens`；客户端 `client_event_count`
+  （SSE content 事件数）独立记录。**投机解码下一个 SSE chunk 可含多个 token，事件数 ≠
+  token 数**——token 等价性由仪器自校验保证（流式/非流式拼接文本逐字一致），
+  `count_mismatch` 仅在退化情形（服务端>0 客户端零事件，或反之）触发。
 
 ## 2. 并发聚合（C>1）
 

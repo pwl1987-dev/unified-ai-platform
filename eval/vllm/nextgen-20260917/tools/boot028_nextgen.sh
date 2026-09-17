@@ -41,7 +41,7 @@ echo "$GOT" | grep -q '"ok": true' || { echo "GPU IDENTITY GATE FAILED — ENV_D
 export CUDA_VISIBLE_DEVICES="$WANT"   # 以 UUID 分配，不依赖逻辑 index
 export CUDA_HOME=$CUDA13 PATH="$CUDA13/bin:$VENV/bin:$PATH" PYTHONPATH="$OVERLAY"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True VLLM_USE_FLASHINFER_SAMPLER=0
-export VLLM_CACHE_ROOT="$SBX/cache-$TAG"          # 每组独立，显式钉死
+export VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-$SBX/cache-$TAG}"   # 可外部钉死复用；默认每组独立
 export VLLM_DFLASH2_TORCH_TOPK=1 KVARN_POOL_MEM_FRAC=0.15 VLLM_V2_CUDAGRAPH_MEM_MIB=1000
 
 if [[ ${COLD_CACHE:-0} == 1 ]]; then

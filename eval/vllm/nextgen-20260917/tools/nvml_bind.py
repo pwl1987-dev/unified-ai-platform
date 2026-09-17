@@ -69,12 +69,12 @@ class NVMLSampler(threading.Thread):
         self.interval_ms = interval_ms
         self.uuids = uuids          # None=全卡；否则只保留这些 UUID 的行
         self.samples: list[dict] = []
-        self._stop = threading.Event()
+        self._halt = threading.Event()
         self.exit_code = 0
         self.errors: list[str] = []
 
     def run(self) -> None:
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             t0 = time.monotonic_ns()
             try:
                 cards = snapshot_gpus()
@@ -88,10 +88,10 @@ class NVMLSampler(threading.Thread):
                     break
             elapsed_ms = (time.monotonic_ns() - t0) / 1e6
             wait_s = max(0.0, self.interval_ms / 1000.0 - elapsed_ms / 1000.0)
-            self._stop.wait(wait_s)
+            self._halt.wait(wait_s)
 
     def stop(self) -> None:
-        self._stop.set()
+        self._halt.set()
         self.join(timeout=10)
 
     def stats(self) -> dict:

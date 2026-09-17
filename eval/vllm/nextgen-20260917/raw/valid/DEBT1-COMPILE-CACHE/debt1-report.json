@@ -1,0 +1,343 @@
+{
+ "groups": {
+  "g1": {
+   "coldness_pre_build": {
+    "resumed": true,
+    "done_steps": [
+     "build",
+     "restart1",
+     "restart2"
+    ]
+   },
+   "steps": [
+    {
+     "exp_id": "V28-T1-CC-G1-BUILD-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      145.057
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      1.4195
+     ]
+    },
+    {
+     "exp_id": "V28-T1-CC-G1-RESTART1-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      144.897
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      0.4633
+     ]
+    },
+    {
+     "exp_id": "V28-T1-CC-G1-RESTART2-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      144.905
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      0.4756
+     ]
+    },
+    {
+     "exp_id": "cc-g1-probe-sweep",
+     "probe_sweep": true,
+     "determinism_probe": {
+      "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+      "completion_tokens": 14,
+      "head": "NEXTGEN-CCDET-CHECK-7f3a。"
+     }
+    }
+   ],
+   "post_cache_manifest_files": 2522,
+   "cache_dir_sha_manifest": {
+    "modelinfos/vllm-model_executor-models-qwen3_5-Qwen3_5ForConditionalGeneration.json": "433f7a79b950ad377edf42e34cc93612cbd0a944703ade34771862e574934a37",
+    "modelinfos/vllm-model_executor-models-qwen3_dflash2-DFlash2Qwen3ForCausalLM.json": "ef60d05a80d39b4d09e44d72d6c26794d4218e7ad103721ced844663f625d17b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/cnu6v6gaqwqriraslsbwbcvwq3gkz2r54frdpuu2ajabdinuvqt3.py": "c8e509c0edc2288b1f07f99cc72dc6b5e76a7c7be73d93ce85c4495b334b8b06",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/8c2d3e890df47b5a1a9dd891b6e84a907b6b5f797407c5f2de54ab3527f7bb64.best_config": "e731f96498095600b9d22c8e8bf0107f80d8da39670dd9844c86b3cbf16f461a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/cnu6v6gaqwqriraslsbwbcvwq3gkz2r54frdpuu2ajabdinuvqt3.kernel_perf": "4812d5c7f7cece0b794bf72213e4cd3de6dcb16975365cec08d05712f6339e13",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.source": "cf7740d093cb96800793829f19555b3f7d6701f0a9028d09ae33282111730f46",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ttir": "558312e24ffdca92e0d6e20d09130e06866ff1ed28b6c2887913df7fccce9daf",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ttgir": "0f86c1471a8a6a8c3ccf123023daf5adf3fd6904b6bc11241f4ad3d9a3df5674",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.llir": "e74a7a4adb89bde4db9699a8103c39f8c4a2b986980faca830b195e436135a64",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ptx": "a0a1427d881e5c269f1cc29370d2a2a6a022789bd83ab31d4ff54dd3ce2ccb50",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.cubin": "20165dd2d8c473194e730ad60777f1890557b7ead07ef2d60f962d0a6372a0c7",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.json": "0da756d0a14f717451482ee3a1add4db88d74d0d652a1691cba82515dc4b4da8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/__grp__triton_.json": "1c4483affd077e997073f9c86161dbc6ff518d474f026a55ca2c47d397161053",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.source": "85deb88ea62b59766969a3b7e578837cc5ab5925cd409984759d1302d2286ffb",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ttir": "7079c1edf80bebd41d2fad51aaeed2b0eb75f3fbf0e59b1388da349b23f06cbd",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ttgir": "93975454fceb6ffbc42dc1b17cb6289484efec0de258413865e447012e50e7d5",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.llir": "6fdb8c783abc122af1338ddd8d496176d209d3b5082ff0789b5a0f7a4303cb82",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ptx": "83df19ad1ae6666ce66ac50afdcfa5a6592a4f89e48585a9e20db290baf747fc",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.cubin": "5f4e6fb6e72e7a23bc4009fe213605c6f36f81ea80cf58f779e956510b849211",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.json": "9131b45e4f70ea3a161a9dfddefe7d9e68d6dff9dbec801216f76829499ce42b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/__grp__triton_.json": "a0d107cc123c50e5a59f716d5833bea92f2e8c23d60f5cbed0907ed1bad6655c",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.source": "6b6063299253609024db77ff33b3abedd3454195e8323747f3d194cf3a3865f5",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ttir": "42928ae2ecdd695fc595baaa9ebf235a821135f2b40058d07c0bf0b30a8333d7",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ttgir": "d83f35fefe742d6cca5754c6419247fd8f223505bd710306a1621290c8d33a1c",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.llir": "686a5596208276213f79b30e624579437c9e5a0688a07727f29582b5f2868268",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ptx": "4913a83ba08b91501b001dd536d0b784ba96f0dea3dc26e50f70026bf893f8d4",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.cubin": "914eca3641f873e11c5993f55b95b148a5485e0886ffadeea7ae73e0f54be87a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.json": "d3a8735e5bb656965f5fe6f8191ba2aa902096f83039ff369419104f1ef115e1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/__grp__triton_.json": "c9a9fe65afc270c3d4ac5d0a1cc416615aae968629e9e87f76ff95b7ab615119",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.source": "cd89962af33bbf1ea8f20323f83c0dd6e0fc8657bc4ffb8f16c9c59f6d0c2799",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ttir": "2dca3601aace2bc3321cda45e9a91a4c9c6bd13162a422a1f720e3af02fce519",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ttgir": "271698aa933ca32500a02247bb0d8d7602f72f29aae2176122675851c6e639b1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.llir": "9dfcd643d6cec19c460f0d482170a03f5bb947a3c65bdb4547386d7f41cf7e19",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ptx": "7d9c3945ac590c095d62cfbb1450b630e61002051b2ba98bef19d0e0533125b1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.cubin": "a56541244640b99d0650ad19e97cf350ee0f3aeeec497d21d1931366cf7b3409",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.json": "61314adf73a509121f5cbec4bf186c57f611801cccbc92afcb3cc39ad883bcca",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/__grp__triton_.json": "af132b6cd69957b080e29a1942b786f01c3c2d17e4efdaa0494b1eb0f82aca24",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.source": "d36e300f80964702701ceb9ce74c8408014f3f6a94ecbb4b02b9ae6fb8cf2389",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ttir": "6ddad7846e07f85333502370cbdeb391b0aac66e565ceed60f760f3c7d93f64b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ttgir": "21ea928e096649f89ed9df10b96bd85a485b54eb7cf75af99492c96dbf8eb48e",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.llir": "93f91c7e6cf74ed8b7348a3b26bdef6bf42e261647384c447cf69c16a270cd5f",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ptx": "e80c654410ce41199b909ebdcd34c6dc41010ace9d09fef3b2fe1f54e005fbd1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.cubin": "1f9d48cb36c48297fcee9c46df93d11c3a99c501ad4a9319eabfb04f4da3689e",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.json": "9efa7069be141f15c71dffed9d409f88d6040f0dd9500d60bc42162ca0efcfe8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/__grp__triton_.json": "e6d19a4b11bdc7022d104367d972a9becbe210b30c183a3f4c559b5d7ef795f9",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.source": "39d160bbac1506e9a849442f910b205f23df3ba8a4a64fc8a16a963b3b4736a6",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ttir": "0115f2ef7bfb3a5ce8c04dc898a695c0d05492e4849423b3fc193a9001bd0e9a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ttgir": "8daa6bbd529572b1074df5d23a7135f0a35313c46f16362284afa918c7522b66",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.llir": "a80a5d486d47837a05d7d04f10d9ad4eb8afbce648149fcf8a43f947cdb4b517",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ptx": "d79f33faae44cb73d27da6e3cafc6ed035f355109fca96b10c123432366ae6d1"
+   }
+  },
+  "g2": {
+   "coldness_pre_build": {
+    "resumed": true,
+    "done_steps": [
+     "build",
+     "restart1",
+     "restart2"
+    ]
+   },
+   "steps": [
+    {
+     "exp_id": "V28-T1-CC-G2-BUILD-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      132.4
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      1.4196
+     ]
+    },
+    {
+     "exp_id": "V28-T1-CC-G2-RESTART1-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      132.413
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      0.4642
+     ]
+    },
+    {
+     "exp_id": "V28-T1-CC-G2-RESTART2-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      132.311
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      0.4675
+     ]
+    },
+    {
+     "exp_id": "cc-g2-probe-sweep",
+     "probe_sweep": true,
+     "determinism_probe": {
+      "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+      "completion_tokens": 14,
+      "head": "NEXTGEN-CCDET-CHECK-7f3a。"
+     }
+    }
+   ],
+   "post_cache_manifest_files": 2522,
+   "cache_dir_sha_manifest": {
+    "modelinfos/vllm-model_executor-models-qwen3_5-Qwen3_5ForConditionalGeneration.json": "433f7a79b950ad377edf42e34cc93612cbd0a944703ade34771862e574934a37",
+    "modelinfos/vllm-model_executor-models-qwen3_dflash2-DFlash2Qwen3ForCausalLM.json": "ef60d05a80d39b4d09e44d72d6c26794d4218e7ad103721ced844663f625d17b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/cnu6v6gaqwqriraslsbwbcvwq3gkz2r54frdpuu2ajabdinuvqt3.py": "c8e509c0edc2288b1f07f99cc72dc6b5e76a7c7be73d93ce85c4495b334b8b06",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/8c2d3e890df47b5a1a9dd891b6e84a907b6b5f797407c5f2de54ab3527f7bb64.best_config": "5037c84bc29901720696ed11d9b2ed2c0e560d59a464331f1a0df1a0af86e742",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/cnu6v6gaqwqriraslsbwbcvwq3gkz2r54frdpuu2ajabdinuvqt3.kernel_perf": "4812d5c7f7cece0b794bf72213e4cd3de6dcb16975365cec08d05712f6339e13",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.source": "b60cecfe31f84944412a75c0bf5ea9678839be42923982c3a4d14dba16041686",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ttir": "87305b08802084bbbf46537f421b082a0178850f93f35b3a1c2254a8ecec840d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ttgir": "2efb50d3dece4fccbfdec3ccfac35a81b9b21961846f7a9afb8ac93ffad4b3d3",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.llir": "c9022b2e7a7709513070b38efc14a7d171978a3058fb16f6c8db3d3327e40213",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ptx": "17f4d999bdc6c7427e2b0215a80e84fbc003271a769061faac6317e06c08a95a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.cubin": "6f5df81411c3cde3777ed241e32928d1773abc9393cdf0a226dadfbafe3d1630",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.json": "0da756d0a14f717451482ee3a1add4db88d74d0d652a1691cba82515dc4b4da8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/__grp__triton_.json": "01515958e8f74258dec7237f98fdae90566efc1634c5293db74b93d7c52b42e8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.source": "f1cba860cd2f4b48bd73f76487091de0ef6d6d1714080cce759914a36dab1dc5",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ttir": "b6eb61992333c1bba5211bcd5c65a169f4fc9b2e3b52406371331862c67d0b6a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ttgir": "bf9688d25d61d48fdb2df34930f390ac1b4ca6cfa6bec89112fbae6b57fc3ca8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.llir": "21176e4c560cf4cb7620e3ccb02200e3494cda2c836126e30fa555af763072f9",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ptx": "63845e1682dca337979713574703bf0a59131f176f7e59175120058ca86a6e84",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.cubin": "574101b6ff8543dcfc1b23efd74cbd4c88c962bf64bcc0ecc5dc1a226555848d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.json": "9131b45e4f70ea3a161a9dfddefe7d9e68d6dff9dbec801216f76829499ce42b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/__grp__triton_.json": "7c8ef5c522341c16770024d205dba949540681c1b3cd8f8cf1eae8e7ad5f20f5",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.source": "56aafdf6e9dc8f08891252626f514d2530b282cccd6881c3afa2b964890d9a6a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ttir": "755a951ae07a0c51b26a44b56e92addccd1277db4a60227d2fbf6dcf57dbca9f",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ttgir": "884eb1c7f5bfae20d905061db3e6be6b9e1408973862e5ddf6547ef0eb5a0530",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.llir": "9841c83deef823d1f0fabc713f4cf4e1071c0aaba2e0a1f5366c2964e5b2c322",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ptx": "46275065c402d8edd3a7f7c76e98f4ba8e2be80cb49848f2a754ae8ee893676f",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.cubin": "9d13115f74084b5ac3efc35f5e0e05109e30d078a92d84b67bb9fe986523140f",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.json": "d3a8735e5bb656965f5fe6f8191ba2aa902096f83039ff369419104f1ef115e1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/__grp__triton_.json": "4873b056ba99f158a7dfc634d2320d98c4d32fe1756e01adc4428d7f24cff856",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.source": "6c9a501bf71569a1337d9810ef08fc44bb978bce9b98b3b8a1cd939d4f0efa1b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ttir": "9b1f79183d0e8f789c25a278dbe110f30e96a3e90e1becb9df182370e27e902e",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ttgir": "1ccc3682b626ef784266370efc043b29a41ef6c6d3f9cc68ddd34717d5f27a9d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.llir": "59a72c594843d5b44e3c73516c337d14252de7d2898501a8ad2eaa7dc2c8db91",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ptx": "bf0f07099f475c401dfb9b9aa9e7316311ad406d79ad3bac7eef27cb8bfa2c14",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.cubin": "c88585d20e60fb86561cfe52518e7fe60ce3d396aef4458819045dd85b70b16d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.json": "61314adf73a509121f5cbec4bf186c57f611801cccbc92afcb3cc39ad883bcca",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/__grp__triton_.json": "125b89bd1c857e5a647a8d558fb18893062a1078ab637c56f24e9a1aa7eba426",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.source": "eed3effd9b024a88066525988230b9ff9c1a8878acfa03b54f76cf3ec5f6fcc9",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ttir": "d14949d5ab828adecd8e089f317637629ea0f6dc418de9f081106d02fa835f3c",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ttgir": "fab3013f373585474eb0bce21d7b0dde420c458c321d10941b4463c22129c9c4",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.llir": "d7c2315529bd211490d94b09cc54ec30d90ada2f03684324e9b919967f4525ec",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ptx": "264b4f19e758c7e39c77fe949eedb9148f7c8393cc1bfc3ddc00110e6fc158aa",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.cubin": "37b176567702602326d5f76b3e38342c3040fcf18c1d00abccb4f3b057e864c1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.json": "9efa7069be141f15c71dffed9d409f88d6040f0dd9500d60bc42162ca0efcfe8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/__grp__triton_.json": "8985ed5d1f94ba13f7766596e37d09365eead47fd76d2ac1008237c088f5c0ae",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.source": "3150bb5227435efff449ccf1be26a39adc9bb7114544ad3ac63a985c58bd8582",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ttir": "ca9834a2007c8c22f45d5ebf34719eb9539d25f33e45d57d2f85402b8f881fa1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ttgir": "3d531d6d5ca714d558d595d36f5e72198d09cb086073e42802c716569b529d9a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.llir": "3109e2f63e788f18bc630c6c23523925d845207d403312301a4a24a998cf69ed",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ptx": "b8cc6a490d1aeaa60e4d8dcd9559e6f131956497ad184aab57115d0812546343"
+   }
+  },
+  "g3": {
+   "coldness_pre_build": {
+    "resumed": true,
+    "done_steps": [
+     "build",
+     "restart1",
+     "restart2"
+    ]
+   },
+   "steps": [
+    {
+     "exp_id": "V28-T1-CC-G3-BUILD-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      132.539
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      1.4235
+     ]
+    },
+    {
+     "exp_id": "V28-T1-CC-G3-RESTART1-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      145.44
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      0.4769
+     ]
+    },
+    {
+     "exp_id": "V28-T1-CC-G3-RESTART2-D565-F512",
+     "resumed_from_evidence": true,
+     "client_observed_decode_tok_s": [
+      132.448
+     ],
+     "output_tokens": [
+      512
+     ],
+     "ttft_s": [
+      0.4674
+     ]
+    },
+    {
+     "exp_id": "cc-g3-probe-sweep",
+     "probe_sweep": true,
+     "determinism_probe": {
+      "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+      "completion_tokens": 14,
+      "head": "NEXTGEN-CCDET-CHECK-7f3a。"
+     }
+    }
+   ],
+   "post_cache_manifest_files": 2522,
+   "cache_dir_sha_manifest": {
+    "modelinfos/vllm-model_executor-models-qwen3_5-Qwen3_5ForConditionalGeneration.json": "433f7a79b950ad377edf42e34cc93612cbd0a944703ade34771862e574934a37",
+    "modelinfos/vllm-model_executor-models-qwen3_dflash2-DFlash2Qwen3ForCausalLM.json": "ef60d05a80d39b4d09e44d72d6c26794d4218e7ad103721ced844663f625d17b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/cnu6v6gaqwqriraslsbwbcvwq3gkz2r54frdpuu2ajabdinuvqt3.py": "c8e509c0edc2288b1f07f99cc72dc6b5e76a7c7be73d93ce85c4495b334b8b06",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/8c2d3e890df47b5a1a9dd891b6e84a907b6b5f797407c5f2de54ab3527f7bb64.best_config": "5037c84bc29901720696ed11d9b2ed2c0e560d59a464331f1a0df1a0af86e742",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/nu/cnu6v6gaqwqriraslsbwbcvwq3gkz2r54frdpuu2ajabdinuvqt3.kernel_perf": "4812d5c7f7cece0b794bf72213e4cd3de6dcb16975365cec08d05712f6339e13",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.source": "58be9d2246c6a833e97ae8ad164e317b0b177bcdc425484dd7c6343513009d3e",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ttir": "e5b6683d13f1d7714f6a304693a91dc164745a65cd91e8f19bcc49f5af38dc38",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ttgir": "c7ba5bf9046938377185c158d5e2d71c1810a761da274721a05d44e34e3b53eb",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.llir": "07735ed6ed7ddc38d68c709f5677d5251184d5045ca0449bf400230260aef968",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.ptx": "79db28381e508b09fad87b623b3cd5f519aef6f484f4571a6580ecfbf066faf4",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.cubin": "83d477cb459177310be8ca1c2b25dd3151312772dae59af6efd15fa8832537d9",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/triton_.json": "0da756d0a14f717451482ee3a1add4db88d74d0d652a1691cba82515dc4b4da8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/FRDPOMMMCALPE2SXLOOWUH2IOL7M466XQ4MEZO76KR43753M5FTQ/__grp__triton_.json": "f51b8478315369f51fd8a230d5036f73b964c79072dceba57f36b5a18d1a9263",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.source": "4f05e8fbbef629445a9c270df501982c5236b01475b4096ebd1ec47620887a1d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ttir": "efa88b30f10f640aa8c6065632ef6bb90c1f4858d7d81759f72a43f6832b49b5",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ttgir": "e0262e4d98e86661e04a3986816d219fa9969bbdb38a4928c4e9657c2f6aefde",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.llir": "d038e2bbb5dfd046b3c4a46cd0f6ccd7212b711322a7022916efd6165c3a7167",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.ptx": "6d8a9fed5cbd9eb85dd98002b475ff5b81d6bf314b45b73fd19ca6d029b539c6",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.cubin": "c231ed57491a98e9a31c7e8e2d9b7bdaaabd613cd42dcd125cadf4d79fc7e411",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/triton_.json": "9131b45e4f70ea3a161a9dfddefe7d9e68d6dff9dbec801216f76829499ce42b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/BERCGWDDOOFK7OYJA6GNSQHHNCXQKMBCTOBHZRHEQGAL2UGVZR2Q/__grp__triton_.json": "2738240a24bd0aa4e19ab2ec4a60ab093d6e92103f783eb005cbd11e8495d0b1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.source": "2f68ddb554b31604b29e4a8b319d669da42472775e54d61ff81f7dd8f9d8e13b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ttir": "b16b570d2261af7b674e4ed87c6b5fd2547db64c3f93d39882afd84958a63990",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ttgir": "357e796fe68f335c6781b3c4d31f347a45f48bef3a446ea91e07e04571559b2b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.llir": "d26462dbf803a3978f93bf579fca3f8268a39b0ed59ad74ff86a5de3c97e97f6",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.ptx": "dce697f7ac61f08df0fa59f4d4fe1c62f02b5f1fdc580855379674f7fabf543d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.cubin": "05a2f3908703f0a6193a3774bca4872b55b95bb692cd46c99e78e3350927ab04",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/triton_.json": "d3a8735e5bb656965f5fe6f8191ba2aa902096f83039ff369419104f1ef115e1",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/WHIFQ4DDAG74ODYVMFOIC6FX6T2JUQOCIDUEMEBEHTZE3XBB6W5Q/__grp__triton_.json": "db04ee635a30e8443201eaf4ccec88903f1104e303eb59ad683282d6b276cfd9",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.source": "35e59aca17b5aec34d588c9b4d728911c5e3b7454a468b6890bf5337b112defc",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ttir": "052b5e04b13e63223cc6e9686a5e5a40fa4c6c20cf9b0138f1f859d4dc0647f3",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ttgir": "fb6e663db5f9afcd514e66dac083c398f428c617ae796c87b4c461fa160e0462",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.llir": "f03a9e4d597e5ef49e10d442c56e6eec2c52f8730cdb8aad8ad7816d07c9139a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.ptx": "f22a082602af39db276615ed76f72f6a2f68abc4797e1337526a7d4bfc029a6a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.cubin": "00d3ccbd0cbee84c4d2fbd144a3d68547dd1fb0edbbd8048e45786a3f25f536d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/triton_.json": "61314adf73a509121f5cbec4bf186c57f611801cccbc92afcb3cc39ad883bcca",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/QETJ6MMVKDZHOTIPTBRBTBHG4QXJNTXBVSCNCPPRJZTL7UKUJNXQ/__grp__triton_.json": "0823ae1874a53d66e985cbe36bf4f2b6995ce955382503d0fecd63cc7f17a351",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.source": "8142558552ab30af36e373d576e9272725f6c7aabf36a0d14fb83591ab17566b",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ttir": "afe92262834c9ce06daff5c1af2997e51f216ca88131f5dd2cb62c2d54b62ae5",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ttgir": "855ba8be8f105abb535548463f5047a1ba87dc32525eef1c0fff34a920dbc6a8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.llir": "cd5c7602a45e44828b9c62c761068f111300ecf9ace2892d3caa4932612fa841",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.ptx": "5fa8734aba24aa54cb25ed6bbdc039595981ddd7a390bba4a0b5926681ca95e2",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.cubin": "71f4f24673b3deb14954ac0ef351e1bef7a7f4e45c145ec196bf82e7ee6f0c60",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/triton_.json": "9efa7069be141f15c71dffed9d409f88d6040f0dd9500d60bc42162ca0efcfe8",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/OLIRLGRPWZFST7LQKUIJJINFYRGCX4VHTBR3KVJVYVXZF6RA4QHQ/__grp__triton_.json": "b8f19c2ae72d079aab2ba48c6655d15a7881d63767b3299f4497fbac1a952812",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.source": "b91fe4a4d018e3c3c760f58b5ba3aab4c46573f1285791f1c7ad665aa1536df4",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ttir": "85553e38aa3d46863c7dbcc79be4fe6f35aac73e8f76f422fdaf85440a47a73d",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ttgir": "dbb6eb34845de32b7cbf3e1c69be716d21374396425520ed5bdc94db9371d520",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.llir": "119ee0afae01c314c7af77da652066fb3595ebf13d6709cc82b645d36b0cf98a",
+    "torch_compile_cache/torch_aot_compile/d5dfa4b830dda58682864cdc4a984dfc2e38b8e974f2f0819e9811cf33b581c0/inductor_cache/triton/0/Y6R7XNCXO2RI3FDVTGWHEXOYIJ2IUNWGIDTJQVNXHXMMINBMC5LQ/triton_.ptx": "0ae37448cb238c6d9067d2addbef65eeee79f2b3ac85c388803933c56fb29c18"
+   }
+  }
+ }
+}

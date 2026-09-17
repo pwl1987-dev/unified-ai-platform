@@ -1,0 +1,18 @@
+{
+ "captured_utc": "2026-09-17T00:52:13Z",
+ "venv": "/data/tools/vllm28-env",
+ "overlay_pythonpath": "/data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn",
+ "versions": {
+  "torch": "2.13.0+cu130",
+  "vllm": "0.28.0",
+  "flashinfer": "0.6.16.post3",
+  "triton": "3.7.1",
+  "python": "3.12.3"
+ },
+ "nccl_lib": "libnccl.so.2",
+ "pip_freeze_sha256": null,
+ "compiler": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+ "glibc": "2.39",
+ "apt_lock_sha256": null,
+ "model_sha_manifest": "eval/vllm/cuda13/usable-concurrency-20260916/repro/manifests/model-sha256.txt"
+}

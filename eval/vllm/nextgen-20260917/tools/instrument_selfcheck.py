@@ -44,6 +44,7 @@ def main() -> int:
     t0 = time.monotonic_ns()
     parser = SSEParser()
     first_header = first_token = None
+    stream_text_parts: list[str] = []
     with urllib.request.urlopen(req, timeout=120) as r:
         t_hdr = (time.monotonic_ns() - t0) / 1e9
         while True:
@@ -54,16 +55,19 @@ def main() -> int:
                 if ev["kind"] != "data" or ev.get("malformed"):
                     continue
                 c = extract_content(ev["json"])
-                if c and first_token is None:
-                    first_token = (time.monotonic_ns() - t0) / 1e9
+                if c:
+                    stream_text_parts.append(c)
+                    if first_token is None:
+                        first_token = (time.monotonic_ns() - t0) / 1e9
     parser.flush()
     usage = None
     for ev in parser.events:
         if ev["kind"] == "data" and isinstance(ev.get("json"), dict) and ev["json"].get("usage"):
             usage = ev["json"]["usage"]
-    stream_client_tokens = sum(1 for ev in parser.events
-                               if ev["kind"] == "data" and not ev.get("malformed")
-                               and extract_content(ev.get("json", {})))
+    stream_text = "".join(stream_text_parts)
+    # 注意：spec decode 下一个 SSE chunk 可含多个 token，
+    # chunk 数 ≠ token 数；token 等价性由"流式/非流式拼接文本一致"保证
+    client_event_count = len(stream_text_parts)
 
     # non-streaming
     payload2 = {**base, "stream": False}
@@ -73,29 +77,35 @@ def main() -> int:
     with urllib.request.urlopen(req2, timeout=120) as r2:
         obj = json.load(r2)
     ns_usage = obj.get("usage") or {}
-    ns_text_len = len((obj.get("choices") or [{}])[0].get("message", {}).get("content") or "")
+    ns_text = (obj.get("choices") or [{}])[0].get("message", {}).get("content") or ""
 
     report = {
         "stream": {
             "ttfb_s": round(t_hdr, 4),
             "ttft_s": round(first_token, 4) if first_token else None,
-            "client_token_chunks": stream_client_tokens,
+            "client_event_count": client_event_count,
             "server_completion_tokens": (usage or {}).get("completion_tokens"),
             "server_prompt_tokens": (usage or {}).get("prompt_tokens"),
         },
         "non_stream": {
             "server_completion_tokens": ns_usage.get("completion_tokens"),
             "server_prompt_tokens": ns_usage.get("prompt_tokens"),
-            "content_char_len": ns_text_len,
+            "content_char_len": len(ns_text),
         },
+        "stream_text_sha256": __import__("hashlib").sha256(
+            stream_text.encode()).hexdigest(),
+        "nonstream_text_sha256": __import__("hashlib").sha256(
+            ns_text.encode()).hexdigest(),
     }
     report["checks"] = {
-        "stream_count_matches_usage":
-            (usage or {}).get("completion_tokens") == stream_client_tokens,
+        "stream_vs_nonstream_text_match": stream_text == ns_text,
         "prompt_tokens_consistent_modes":
             (usage or {}).get("prompt_tokens") == ns_usage.get("prompt_tokens"),
+        "completion_tokens_consistent_modes":
+            (usage or {}).get("completion_tokens") == ns_usage.get("completion_tokens"),
         "ttfb_le_ttft": first_token is None or t_hdr <= first_token,
         "usage_present_stream": usage is not None,
+        "nonempty_stream_text": len(stream_text) > 0,
     }
     all_ok = all(report["checks"].values())
     report["PASS"] = all_ok

@@ -20,6 +20,15 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from gen_fixtures import make_needle_fixture  # noqa: E402
+from bench_nextgen import MetricsSampler  # noqa: E402
+import nvml_bind  # noqa: E402
+
+
+def _kv_peak(msamp) -> float | None:
+    vals = [s["parsed"].get("kv_cache_usage_perc") or s["parsed"].get("gpu_cache_usage_perc")
+            for s in msamp.samples]
+    vals = [v for v in vals if v is not None]
+    return max(vals) if vals else None
 
 
 def main() -> int:
@@ -31,6 +40,8 @@ def main() -> int:
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--max-tokens", type=int, default=64)
     ap.add_argument("--salt-namespace", default="formal")
+    ap.add_argument("--gpu-uuids", default="")
+    ap.add_argument("--preempt-baseline", type=float, default=0)
     args = ap.parse_args()
 
     doc, needles = make_needle_fixture(args.prompt_tokens, args.seed)
@@ -47,6 +58,11 @@ def main() -> int:
     req = urllib.request.Request(args.api + "/chat/completions",
                                  data=json.dumps(payload).encode(),
                                  headers={"Content-Type": "application/json"})
+    metrics_url = args.api.rsplit("/v1", 1)[0] + "/metrics"
+    msamp = MetricsSampler(metrics_url, interval_ms=100)
+    uuids = [u for u in (args.gpu_uuids or "").split(",") if u] or None
+    nsamp = nvml_bind.NVMLSampler(interval_ms=500, uuids=uuids)
+    msamp.start(); nsamp.start()
     t0 = time.monotonic_ns()
     first, chunks, usage = None, [], None
     with urllib.request.urlopen(req, timeout=900) as r:
@@ -65,9 +81,14 @@ def main() -> int:
             if obj.get("usage"):
                 usage = obj["usage"]
     wall = (time.monotonic_ns() - t0) / 1e9
+    msamp.stop(); nsamp.stop()
     text = "".join(chunks)
     per_needle = {c: (c in text) for c in needles}
     hits = sum(per_needle.values())
+    vram_peak = max((s["mem_used_mib"] for s in nsamp.samples), default=None)
+    preempt_seen = any(
+        (s["parsed"].get("num_preemptions") or 0) > (args.preempt_baseline or 0)
+        for s in msamp.samples if s["parsed"].get("num_preemptions") is not None)
     report = {
         "experiment_id": args.experiment_id,
         "prompt_tokens_target": args.prompt_tokens,
@@ -80,12 +101,23 @@ def main() -> int:
         "needles_hit": f"{hits}/5", "per_needle": per_needle,
         "PASS": hits == 5, "answer": text[:200],
         "cache_salt": salt,
+        "kv_usage_peak": _kv_peak(msamp),
+        "vram_peak_mib": vram_peak,
+        "preempt_observed": preempt_seen,
+        "sampler_stats": {"metrics_endpoint": msamp.stats(), "nvml": nsamp.stats()},
     }
     os.makedirs(args.out_dir, exist_ok=True)
     with open(os.path.join(args.out_dir, "needle-result.json"), "w") as f:
         json.dump(report, f, indent=1, ensure_ascii=False)
+    with open(os.path.join(args.out_dir, "sampler-metrics.jsonl"), "w") as f:
+        for s in msamp.samples:
+            f.write(json.dumps(s, ensure_ascii=False) + "\n")
+    with open(os.path.join(args.out_dir, "nvml-samples.jsonl"), "w") as f:
+        for s in nsamp.samples:
+            f.write(json.dumps(s, ensure_ascii=False) + "\n")
     print(json.dumps({k: report[k] for k in
-                      ("experiment_id", "needles_hit", "PASS", "ttft_s", "wall_s")},
+                      ("experiment_id", "needles_hit", "PASS", "ttft_s", "wall_s",
+                       "kv_usage_peak", "vram_peak_mib")},
                      ensure_ascii=False))
     return 0 if report["PASS"] else 2
 

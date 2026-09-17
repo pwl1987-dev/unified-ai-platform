@@ -145,12 +145,12 @@ class MetricsSampler(threading.Thread):
         super().__init__(daemon=True)
         self.url, self.interval_ms = metrics_url, interval_ms
         self.samples: list[dict] = []
-        self._stop = threading.Event()
+        self._halt = threading.Event()
         self.exit_code = 0
         self.errors: list[str] = []
 
     def run(self) -> None:
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             t0 = time.monotonic_ns()
             try:
                 with urllib.request.urlopen(self.url, timeout=5) as r:
@@ -162,9 +162,10 @@ class MetricsSampler(threading.Thread):
                         continue
                     raw_kept.append(ln)
                     parts = ln.rsplit(" ", 1)
-                    if len(parts) == 2 and parts[0] in KNOWN_GAUGES:
+                    key = parts[0].split("{")[0] if len(parts) == 2 else None
+                    if key in KNOWN_GAUGES:
                         try:
-                            parsed[KNOWN_GAUGES[parts[0]]] = float(parts[1])
+                            parsed[KNOWN_GAUGES[key]] = float(parts[1])
                         except ValueError:
                             pass
                 self.samples.append({"t_mono_ns": time.monotonic_ns(),
@@ -176,10 +177,10 @@ class MetricsSampler(threading.Thread):
                 if len(self.errors) > 20:
                     break
             wait_s = max(0.0, self.interval_ms / 1000 - (time.monotonic_ns() - t0) / 1e9)
-            self._stop.wait(wait_s)
+            self._halt.wait(wait_s)
 
     def stop(self) -> None:
-        self._stop.set()
+        self._halt.set()
         self.join(timeout=10)
 
     def stats(self) -> dict:
@@ -215,7 +216,7 @@ def canonical_sha(payload_wo_salt: dict) -> str:
 def run_one(api: str, args, prompt: str, idx: int, barrier: threading.Barrier,
             shared: dict) -> None:
     mono, utc = time.monotonic_ns, time.time_ns
-    salt = f"{args.salt_namespace}-{args.experiment_id}-{idx}"
+    salt = f"{args.salt_namespace}-{args.salt_key}-{idx}"
     body: dict = {
         "model": "qwen3.8-27b", "temperature": 0, "seed": args.seed,
         "chat_template_kwargs": {"enable_thinking": False},
@@ -307,13 +308,17 @@ def run_one(api: str, args, prompt: str, idx: int, barrier: threading.Barrier,
                      and output_tokens < args.max_tokens)
         m.update({"ok": True, "output_tokens": output_tokens,
                   "early_stop": early, "stop_reason": finish})
+        # spec decode 下一个 SSE chunk 可含多 token：ntok 是事件数不是 token 数。
+        # 退化性不一致（服务端有 token 客户端零事件，或反之）才计 mismatch。
+        degenerate = bool((server_ct or 0) > 0 and ntok == 0) or bool(
+            server_ct is not None and server_ct == 0 and ntok > 0)
         rec["outcome"] = {
             "ok": True, "http_status": resp.status, "error": None,
-            "client_token_count": ntok,
+            "client_event_count": ntok,
             "server_completion_tokens": server_ct,
             "server_prompt_tokens": (usage or {}).get("prompt_tokens"),
             "stop_reason": finish,
-            "count_mismatch": bool(server_ct is not None and server_ct != ntok),
+            "count_mismatch": degenerate,
             "early_stop": early,
         }
         if usage and usage.get("prompt_tokens") is not None:
@@ -323,11 +328,11 @@ def run_one(api: str, args, prompt: str, idx: int, barrier: threading.Barrier,
                               "client_wall_s": round((t_end - t0m) / 1e9, 4)})
     except urllib.error.HTTPError as e:
         rec["outcome"] = {"ok": False, "http_status": e.code, "error": f"HTTPError:{e.code}",
-                          "client_token_count": ntok, "server_completion_tokens": None,
+                          "client_event_count": ntok, "server_completion_tokens": None,
                           "stop_reason": None, "count_mismatch": False, "early_stop": False}
     except Exception as e:  # noqa: BLE001
         rec["outcome"] = {"ok": False, "http_status": None, "error": str(e)[:200],
-                          "client_token_count": ntok, "server_completion_tokens": None,
+                          "client_event_count": ntok, "server_completion_tokens": None,
                           "stop_reason": None, "count_mismatch": False, "early_stop": False}
         rec["events"].append({"t_mono_ns": mono(), "t_utc_ns": utc(), "kind": "error",
                               "error": str(e)[:200]})
@@ -354,6 +359,10 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=4242)
     ap.add_argument("--timeout-s", type=int, default=900)
     ap.add_argument("--salt-namespace", default="formal", choices=["warmup", "formal"])
+    ap.add_argument("--no-nvml", action="store_true",
+                    help="对照实验：禁用 NVML 采样器，量化 nvidia-smi 轮询开销")
+    ap.add_argument("--salt-key", default=None,
+                    help="稳定 salt 键（暖前缀形态：跨 run 复用以命中 prefix cache；默认=experiment_id 唯一冷形态）")
     ap.add_argument("--out-dir", required=True, help="staging 实验目录")
     # server 身份（manifest 用）
     ap.add_argument("--port", type=int)
@@ -366,6 +375,8 @@ def main() -> int:
     ap.add_argument("--host-snapshot", default=os.path.join(NEXTGEN, "repro", "host-snapshot.json"))
     ap.add_argument("--env-lock", default=os.path.join(NEXTGEN, "repro", "env-lock.json"))
     args = ap.parse_args()
+    if not args.salt_key:
+        args.salt_key = args.experiment_id
 
     if args.fixture.startswith("custom:"):
         target = int(args.fixture.split(":", 1)[1])
@@ -380,8 +391,22 @@ def main() -> int:
     metrics_url = args.api.rsplit("/v1", 1)[0] + "/metrics"
     msamp = MetricsSampler(metrics_url, interval_ms=100)
     uuids = [u for u in (args.gpu_uuids or "").split(",") if u] or None
-    nsamp = nvml_bind.NVMLSampler(interval_ms=500, uuids=uuids)
-    msamp.start(); nsamp.start()
+    if args.no_nvml:
+        nsamp = nvml_bind.NVMLSampler(interval_ms=10**9, uuids=uuids or ["__none__"])
+        nsamp.samples = []
+        class _NS:  # 空采样器（对照实验：量化 nvidia-smi 轮询开销）
+            samples = []
+            def stop(self): pass
+            def stats(self):
+                return {"requested_interval_ms": None, "actual_interval_ms_median": None,
+                        "missing_sample_ratio": None, "max_gap_ms": None,
+                        "sampler_exit_code": 0, "samples_collected": 0,
+                        "note": "disabled by --no-nvml (sampler-tax control run)"}
+        nsamp = _NS()
+    else:
+        nsamp = nvml_bind.NVMLSampler(interval_ms=500, uuids=uuids)
+        nsamp.start()
+    msamp.start()
 
     shared = {"lock": threading.Lock(), "raw": [], "meta": []}
     barrier = threading.Barrier(args.concurrency)
@@ -461,6 +486,14 @@ def main() -> int:
         if os.path.exists(fp):
             harness_files[fn] = sha256_file(fp)
     initial_temps = [c["temp_c"] for c in nsamp.samples[:max(1, args.concurrency)]]
+    # 卡身份全集：logical_index + uuid + pci_bdf（三方齐全才可归档 valid）
+    by_uuid = {c["uuid"]: c for c in nvml_bind.snapshot_gpus()}
+    cards_manifest = [
+        {"logical_index": by_uuid.get(u, {}).get("logical_index"), "uuid": u,
+         "pci_bdf": by_uuid.get(u, {}).get("pci_bdf"),
+         "role": f"tp_rank_{rank}",
+         "power_limit_w": by_uuid.get(u, {}).get("power_limit_w")}
+        for rank, u in enumerate(uuids or [])]
     manifest = {
         "experiment_id": args.experiment_id,
         "status": "VALID_PASS",  # 占位；classify.py 依 Gate 重判
@@ -472,7 +505,7 @@ def main() -> int:
         "host_snapshot_sha256": hs.get("host-snapshot.json"),
         "env_lock_sha256": hs.get("env-lock.json"),
         "gpu": {
-            "cards": [{"uuid": u} for u in (uuids or [])],
+            "cards": cards_manifest,
             "power_limit_w": (nsamp.samples[0]["power_limit_w"] if nsamp.samples else None),
             "initial_temp_c": initial_temps,
         },

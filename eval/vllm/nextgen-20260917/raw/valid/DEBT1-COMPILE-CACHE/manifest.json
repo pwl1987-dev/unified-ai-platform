@@ -1,0 +1,13 @@
+{
+ "experiment_id": "DEBT1-COMPILE-CACHE",
+ "evidence_kind": "debt-aggregate",
+ "verdict": "PASS",
+ "probe_hashes": [
+  "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+  "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+  "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd"
+ ],
+ "status": "VALID_PASS",
+ "evidence_class": "valid",
+ "classification_reason": null
+}
