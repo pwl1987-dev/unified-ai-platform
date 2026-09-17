@@ -1,0 +1,121 @@
+# Phase 00 机器可判定 Gate（v2.1）
+# 所有门槛由 tools/evaluate_gates.py 消费；人类语言描述一律以本文件为准。
+version: 1
+phase: 00
+
+# Phase 00 是复现不是赢家：三档一致性标度
+consistency_scale:
+  highly_consistent_pct: 3.0     # |new - ref| / ref <= 3% => 高度一致
+  drift_allowed_pct: 5.0         # 3%--5% => 记录漂移放行
+  over_drift_action: BLOCK_PHASE_01_ENV_RECONCILIATION   # >5% => 阻断进 Phase 01
+
+slo: SLO_UNDECIDED    # Phase 01/02 输出完整吞吐-延迟曲线，禁止事后择优
+
+# 通用 run 有效性（任一不满足 => run 无效，不得参与锚点中位数）
+run_validity:
+  - check: schema_validation_passed
+  - check: sampler_exit_code
+    equals: 0
+  - check: missing_sample_ratio
+    max: 0.05
+  - check: count_mismatch_samples
+    max: 0        # client 计数与 server usage 不一致的样本数
+  - check: http_errors
+    equals: 0
+  - check: nvml_uuid_bound
+    equals: true
+
+# ---------------------------------------------------------------------------
+anchors:
+  - id: A1-TP1-D565-C1-FIX512
+    experiment_prefix: V28-T1-Q0-KVARN-SD7-MS1-NBT2048-C1-L0565
+    mode: fixed-output            # ignore_eos=true, requested=512
+    reference_mode: establish_baseline    # 新锚点，无历史 reference，不设历史数值 Gate
+    repeats: 3
+    aggregation: median
+    gates:
+      completeness: {requested_tokens: 512, require_all_exact: true}   # requested==completion==512，早停样本单列剔除
+      stability: {metric: client_observed_decode_tok_s, spread_ratio_max: 0.03}
+      quality: {natural_stop_sane: true}    # 同 boot natural-stop 无乱码/复读/空输出
+      pairing: {paired_with: A3-TP2-D565-C1-FIX512, required: true}
+    establishes_reference_for: {phase: 01, metric: client_observed_decode_tok_s}
+
+  - id: A2-TP1-P32K-C4
+    experiment_prefix: V28-T1-Q0-KVARN-SD7-MS4-NBT2048-C4-L032K
+    mode: natural-stop            # 同历史：max_tokens=256, prompt_target=32768
+    reference: {value: 197.5, unit: tok_s, source: dig028/raw/cg8ms4-c4.json, fixture_same: true}
+    tolerance_pct: 5.0
+    repeats: 3
+    aggregation: median
+    metric: aggregate_output_tok_s
+    gates:
+      stability: {metric: aggregate_output_tok_s, spread_ratio_max: 0.05}
+      concurrency_validity: {max_running_equals: 4}   # /metrics 峰值必须==4 才算真实驻留 C4
+      completeness: {requested_tokens: 256, allow_early_stop: true}
+
+  - id: A3-TP2-D565-C1-FIX512
+    experiment_prefix: V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L0565
+    mode: fixed-output
+    reference_mode: establish_baseline
+    repeats: 3
+    aggregation: median
+    gates:
+      completeness: {requested_tokens: 512, require_all_exact: true}
+      stability: {metric: client_observed_decode_tok_s, spread_ratio_max: 0.03}
+      quality: {natural_stop_sane: true}
+      pairing: {paired_with: A1-TP1-D565-C1-FIX512, required: true}
+    establishes_reference_for: {phase: 01, metric: client_observed_decode_tok_s}
+
+  - id: A4-TP2-P220K-C1-TTFT
+    experiment_prefix: V28-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L220K
+    mode: fixed-output            # max_tokens=128（同历史 tp2-220k-c1，completion=128）
+    reference: {value: 96.212, unit: s, source: dig028/raw/tp2-220k-c1.json, fixture_same: true}
+    tolerance_pct: 5.0
+    repeats: 3
+    aggregation: median
+    metric: ttft_s
+    gates:
+      stability: {metric: ttft_s, spread_ratio_max: 0.05}
+      completeness: {requested_tokens: 128, require_all_exact: true}
+      needle: {runs: 1, needles_required: "5/5", at_context: 220000}
+
+# sanity（非 Gate）：D565 natural-stop TP1 ~133.5 / TP2 ~177.26 方向参考，
+# 输出长度不等（193/262 tok），不得计算正式加速比。
+
+# ---------------------------------------------------------------------------
+debts:
+  - id: D1-COMPILE-CACHE
+    groups: 3                     # 3 个相互隔离 cache-group
+    per_group: {build: 1, reuse_restarts: 2}   # 组内共享同一 cache root
+    coldness_proof:
+      enumerate_layers: [torch_compile, triton, vllm_artifacts, flashinfer, home_cache_defaults]
+      pre_build_snapshot_must_be: empty_or_absent
+    gates:
+      token_ids_equal_across_group_boots: true
+      cache_hit_evidence_present: true      # restart 日志含 cache 命中证据
+      perf_drift_note: 比较 build/restart1/restart2 的 client_observed_decode_tok_s 分布
+
+  - id: D2-TP2-238K-DUAL-GATE
+    boots: 3
+    seeds_per_boot: 3
+    correctness_gate:              # 45 case 全部按预定义 needle 规则判定，按 boot 分组报告
+      needle_positions_pct: [10, 30, 50, 70, 90]
+      per_boot_required: "15/15"   # 3 seed x 5 needle
+      rule: exact_match_code_list
+    stability_gate:
+      cross_boot_ttft_median_drift_max: 0.10
+      cross_boot_kv_peak_drift_max: 0.05
+      cross_boot_vram_peak_drift_max: 0.02
+      zero: [oom, crash, preempt, http_error]
+
+# ---------------------------------------------------------------------------
+# 环境 Gate（Preflight）
+preflight_gates:
+  - check: gpu_logical_to_uuid_bdf_matches_manifest
+    on_fail: ENV_DRIFT_BLOCK      # 不自动换卡
+  - check: clock_sync_status
+    require: synchronized_or_steady_offset_recorded
+  - check: cpu_governor
+    require: recorded_and_fixed_for_campaign
+  - check: model_sha256_matches_reference_manifest
+  - check: stale_staging_scanned

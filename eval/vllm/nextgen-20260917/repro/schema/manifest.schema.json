@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "nextgen experiment manifest (manifest.json)",
+  "type": "object",
+  "required": ["experiment_id", "status", "evidence_class", "created_utc",
+               "harness_git_sha", "host_snapshot_sha256", "env_lock_sha256",
+               "gpu", "server", "fixture", "recipe", "timing"],
+  "properties": {
+    "experiment_id": {"type": "string"},
+    "status": {"enum": ["VALID_PASS", "VALID_FAIL", "INVALID", "UNSUPPORTED", "ABORTED", "REJECTED"]},
+    "evidence_class": {"enum": ["staging", "valid", "invalid", "unsupported"]},
+    "classification_reason": {"enum": ["PERF_GATE_FAIL", "OOM", "QUALITY_FAIL", "SERVER_CRASH",
+                                        "HARNESS_ERROR", "ENV_DRIFT", "SCHEMA_FAIL", "INTERRUPTED", null]},
+    "created_utc": {"type": "string"},
+    "harness_git_sha": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+    "harness_files_sha256": {"type": "object"},
+    "host_snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "env_lock_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gpu": {
+      "type": "object",
+      "required": ["cards"],
+      "properties": {
+        "cards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["logical_index", "uuid", "pci_bdf"],
+            "properties": {
+              "logical_index": {"type": "integer"},
+              "uuid": {"type": "string"},
+              "pci_bdf": {"type": "string"},
+              "role": {"type": "string"}
+            }
+          }
+        },
+        "cuda_visible_devices": {"type": "string"},
+        "power_limit_w": {"type": "number"},
+        "initial_temp_c": {"type": "array", "items": {"type": "number"}},
+        "idle_vram_mib_per_card": {"type": "array", "items": {"type": "number"}}
+      }
+    },
+    "server": {
+      "type": "object",
+      "required": ["port", "pid", "pgid", "tp", "max_num_seqs", "launch_cmd_file"],
+      "properties": {
+        "port": {"type": "integer"},
+        "pid": {"type": ["integer", "null"]},
+        "pgid": {"type": ["integer", "null"]},
+        "tp": {"type": "integer"},
+        "max_num_seqs": {"type": "integer"},
+        "launch_cmd_file": {"type": "string"},
+        "server_log_file": {"type": "string"},
+        "cache_root": {"type": "string"},
+        "model_sha256_manifest": {"type": "string"}
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "required": ["name", "sha256"],
+      "properties": {
+        "name": {"type": "string"},
+        "sha256": {"type": "string"},
+        "actual_input_tokens": {"type": ["integer", "null"]},
+        "requested_output_tokens": {"type": ["integer", "null"]}
+      }
+    },
+    "recipe": {
+      "type": "object",
+      "properties": {
+        "runtime": {"type": "string"},
+        "kv_profile": {"type": "string"},
+        "quant": {"type": "string"},
+        "spec": {"type": "string"},
+        "nbt": {"type": "integer"},
+        "cudagraph": {"type": "string"}
+      }
+    },
+    "timing": {
+      "type": "object",
+      "required": ["start_utc", "end_utc"],
+      "properties": {
+        "start_utc": {"type": "string"},
+        "end_utc": {"type": "string"},
+        "duration_s": {"type": "number"}
+      }
+    },
+    "clock_sync": {
+      "type": "object",
+      "properties": {
+        "status": {"type": "string"},
+        "offset_ms": {"type": ["number", "null"]}
+      }
+    },
+    "cpu_governor": {"type": "string"},
+    "files": {"type": "object"}
+  }
+}

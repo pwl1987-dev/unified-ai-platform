@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "nextgen run metrics (metrics.json)",
+  "type": "object",
+  "required": ["experiment_id", "schema_version", "mode", "concurrency", "requests_total",
+               "requests_ok", "http_errors", "count_mismatch_samples",
+               "sampler_stats", "per_request", "aggregate"],
+  "properties": {
+    "experiment_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "mode": {"enum": ["fixed-output", "natural-stop"]},
+    "fixture_name": {"type": "string"},
+    "fixture_sha256": {"type": "string"},
+    "concurrency": {"type": "integer", "minimum": 1},
+    "requests_total": {"type": "integer"},
+    "requests_ok": {"type": "integer"},
+    "http_errors": {"type": "integer"},
+    "count_mismatch_samples": {"type": "integer"},
+    "early_stop_samples": {"type": "integer"},
+    "sampler_stats": {
+      "type": "object",
+      "required": ["metrics_endpoint", "nvml"],
+      "properties": {
+        "metrics_endpoint": {"$ref": "#/definitions/sampler"},
+        "nvml": {"$ref": "#/definitions/sampler"}
+      }
+    },
+    "per_request": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["request_index", "ok", "ttfb_s", "ttft_s", "e2e_latency_s",
+                     "output_tokens", "e2e_output_tok_s"],
+        "properties": {
+          "request_index": {"type": "integer"},
+          "ok": {"type": "boolean"},
+          "ttfb_s": {"type": ["number", "null"]},
+          "ttft_s": {"type": ["number", "null"]},
+          "e2e_latency_s": {"type": ["number", "null"]},
+          "output_tokens": {"type": ["integer", "null"]},
+          "e2e_output_tok_s": {"type": ["number", "null"]},
+          "client_observed_decode_tok_s": {"type": ["number", "null"]},
+          "tpot_s": {"type": ["number", "null"]},
+          "null_reason": {"type": ["string", "null"]},
+          "early_stop": {"type": "boolean"},
+          "stop_reason": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "percentiles": {
+      "type": "object",
+      "description": "仅当样本层样本量>=20时填充，否则为空对象",
+      "properties": {
+        "ttft_p50_s": {"type": "number"},
+        "ttft_p95_s": {"type": "number"},
+        "ttft_p99_s": {"type": "number"},
+        "tpot_p50_s": {"type": "number"},
+        "tpot_p95_s": {"type": "number"},
+        "tpot_p99_s": {"type": "number"}
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "required": ["batch_wall_s", "sum_output_tokens"],
+      "properties": {
+        "batch_wall_s": {"type": "number"},
+        "sum_output_tokens": {"type": "integer"},
+        "aggregate_output_tok_s": {"type": "number"},
+        "max_running_observed": {"type": ["integer", "null"]},
+        "resident_concurrency_valid": {"type": ["boolean", "null"]}
+      }
+    }
+  },
+  "definitions": {
+    "sampler": {
+      "type": "object",
+      "required": ["requested_interval_ms", "actual_interval_ms_median", "missing_sample_ratio",
+                   "max_gap_ms", "sampler_exit_code"],
+      "properties": {
+        "requested_interval_ms": {"type": "number"},
+        "actual_interval_ms_min": {"type": "number"},
+        "actual_interval_ms_median": {"type": "number"},
+        "actual_interval_ms_max": {"type": "number"},
+        "missing_sample_ratio": {"type": "number"},
+        "max_gap_ms": {"type": "number"},
+        "sampler_exit_code": {"type": "integer"},
+        "samples_collected": {"type": "integer"}
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+ "generator": "tools/gen_fixtures.py",
+ "generator_sha256": "c0bb0639d2d569f6b761cced9811344af415a6e9a684a60a3a55e58260dda179",
+ "fixtures": {
+  "d565": {
+   "target_tokens": 512,
+   "prompt_sha256": "131ca085aced4ec859845cda24ff38aa07f7584eaafa90f7397838ade5b5eea7"
+  },
+  "p4k": {
+   "target_tokens": 4096,
+   "prompt_sha256": "ccd29a1a7ae7044f5548e72864091b0a57d4d2e2065f1eb5a339d8db38b5de5c"
+  },
+  "p32k": {
+   "target_tokens": 32768,
+   "prompt_sha256": "b46c61b06d9d8cb07764523c0fef2fcb5c895906ae7bc50e807517df2046cb09"
+  },
+  "p220k": {
+   "target_tokens": 220000,
+   "prompt_sha256": "ef8dcca2a2cafb47a450127e0bfdee7bf5526a14b0d28d2b5dab377cb60df758"
+  },
+  "p238k": {
+   "target_tokens": 238000,
+   "prompt_sha256": "85aa2713e72f589969a259318906cdef1d21c28992701a469989611fae46e6d5"
+  },
+  "needle-p220k-s1": {
+   "target_tokens": 220000,
+   "seed": 1,
+   "prompt_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needles": {
+    "240891": 0.1,
+    "696853": 0.3,
+    "988598": 0.5,
+    "941235": 0.7,
+    "900875": 0.9
+   }
+  },
+  "needle-p220k-s2": {
+   "target_tokens": 220000,
+   "seed": 2,
+   "prompt_sha256": "2a0f16915c471a2d6e533a63da508a015ccf365fa2563b257dd7bc843fe737e9",
+   "needles": {
+    "990298": 0.1,
+    "159298": 0.3,
+    "196033": 0.5,
+    "188994": 0.7,
+    "478596": 0.9
+   }
+  },
+  "needle-p220k-s3": {
+   "target_tokens": 220000,
+   "seed": 3,
+   "prompt_sha256": "02831f54ef6e7c2dbd29c04ed325c289b499aa07feb7c98c83f877659c5da1bf",
+   "needles": {
+    "349523": 0.1,
+    "721429": 0.3,
+    "670665": 0.5,
+    "236758": 0.7,
+    "487926": 0.9
+   }
+  },
+  "needle-p238k-s1": {
+   "target_tokens": 238000,
+   "seed": 1,
+   "prompt_sha256": "42ff4293d420e02c385440d6394533e8c710a9e3ff0d63f9aa36811eec8786b5",
+   "needles": {
+    "240891": 0.1,
+    "696853": 0.3,
+    "988598": 0.5,
+    "941235": 0.7,
+    "900875": 0.9
+   }
+  },
+  "needle-p238k-s2": {
+   "target_tokens": 238000,
+   "seed": 2,
+   "prompt_sha256": "1b19ff200fc14e44ff922c48295caa40fff2216211310d8d666fac1e1a02954a",
+   "needles": {
+    "990298": 0.1,
+    "159298": 0.3,
+    "196033": 0.5,
+    "188994": 0.7,
+    "478596": 0.9
+   }
+  },
+  "needle-p238k-s3": {
+   "target_tokens": 238000,
+   "seed": 3,
+   "prompt_sha256": "0c632951a13630c665bda592af4eeb083d18bc08956b0d7a68d193701c3a7f33",
+   "needles": {
+    "349523": 0.1,
+    "721429": 0.3,
+    "670665": 0.5,
+    "236758": 0.7,
+    "487926": 0.9
+   }
+  }
+ }
+}

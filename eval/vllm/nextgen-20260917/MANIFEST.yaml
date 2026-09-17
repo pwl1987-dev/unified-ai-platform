@@ -1,0 +1,129 @@
+# nextgen-20260917 战役冻结清单（Phase 00 起生效）
+# 本文件是机器可读的战役级事实冻结。修改须走正式修订（MASTER-TEST-PLAN §18）。
+version: 1
+frozen_at_utc: "2026-09-17T00:00:00Z"   # 以 commit #1 实际时间为准，见 git log
+plan: MASTER-TEST-PLAN.md@v1.2
+repo_baseline: f2d1054
+
+# ---------------------------------------------------------------------------
+# 物理卡位 Gate（logical index 不是身份，UUID+PCI BDF 才是）
+# 历史证据卡位：dig028-20260916（TP1 锚点 GPU2 / TP2 锚点 GPU3+4）
+# Preflight 必须验证 logical->UUID/BDF 与下表一致；不一致 => ENV_DRIFT 阻断，
+# 不得自动换卡继续。
+gpu_identity_gate:
+  tp1_card:
+    logical_index: 2
+    uuid: "GPU-41a1986d-e745-9e40-c520-09490081fd44"
+    pci_bdf: "00000000:0E:00.0"
+  tp2_cards:
+    - logical_index: 3
+      uuid: "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae"
+      pci_bdf: "00000000:11:00.0"
+    - logical_index: 4
+      uuid: "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e"
+      pci_bdf: "00000000:16:00.0"
+  forbidden_gpus: [0, 1]        # llama.cpp 生产卡：禁止进程操作/配置修改/重启/停止/kill，仅只读探测
+  untouched_by_cleanup: [5, 6, 7]  # 本 Phase cleanup 不触碰
+
+# ---------------------------------------------------------------------------
+# 功耗墙（冻结，不改）
+# MASTER §6.1 写"历史基准以 450W 为主"，但现场 8 卡（含运行 11 天的生产卡）统一
+# 250W，且历史 raw 证据无任何功耗墙修改记录——历史锚点事实运行于 250W 常态。
+# 按单变量原则本战役冻结 250W 不变；该差异写入 phase-00 报告勘误。
+power_wall:
+  limit_w: 250
+  policy: frozen_no_change
+  discrepancy_note: "MASTER-TEST-PLAN §6.1.5 '450W 为主' 与现场 250W 常态不符；以现场为准，不改硬件设置"
+
+# ---------------------------------------------------------------------------
+# 热窗口（机器定义，每正式 arm 前必须 thermal-ready）
+thermal_protocol:
+  idle_temp_window_c: [25, 40]
+  max_deviation_from_baseline_c: 5
+  ready_requires_consecutive_s: 30
+  max_cooldown_wait_s: 600
+  cooldown_timeout_action: ABORTED
+  re_thermal_after_arms: ["P220K", "P238K"]   # 重负载臂后必须重新进入 thermal-ready
+  warmup_cache_salt_namespace: "warmup"        # warmup 独立 salt 命名空间，防预热正式 prompt
+  formal_cache_salt_namespace: "formal"
+
+# ---------------------------------------------------------------------------
+# 采样冻结（0.28/0.29 不得自行变化）
+sampling_protocol:
+  metrics_endpoint_interval_ms: 100
+  nvml_interval_ms: 500
+  missing_sample_ratio_max: 0.05
+  sampler_exit_code_required: 0
+
+# ---------------------------------------------------------------------------
+# 模型身份（SHA256 对照 usable-concurrency-20260916/repro/manifests/model-sha256.txt）
+models:
+  target_dir: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128
+  drafter_dir: /data/sandbox/vllm-cu130-qual-20260915/draft-recal-readable-20260915
+  reference_sha_manifest: eval/vllm/cuda13/usable-concurrency-20260916/repro/manifests/model-sha256.txt
+
+# ---------------------------------------------------------------------------
+# 0.28 冻结配方（Phase 00 锚点母本；来源 start028-captured.sh + boot028.sh）
+recipe_028:
+  venv: /data/tools/vllm28-env            # 只读，禁止装包
+  overlay_pythonpath: /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn
+  cuda_home: /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13
+  serve_args:
+    served_model_name: qwen3.8-27b
+    max_model_len: 245760
+    gpu_memory_utilization: 0.95
+    max_num_batched_tokens: 2048
+    mamba_ssm_cache_dtype: float16
+    mamba_cache_mode: align
+    prefix_match_unit: 128
+    kv_cache_dtype: kvarn_k4v2_g128
+    block_size: 128
+    kv_cache_memory: 4820000000
+    speculative: {method: dflash, num_speculative_tokens: 7}
+    cudagraph: {max_cudagraph_capture_size: 8, custom_ops: ["+rms_norm", "+silu_and_mul"]}
+  env:
+    PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+    VLLM_USE_FLASHINFER_SAMPLER: "0"
+    VLLM_DFLASH2_TORCH_TOPK: "1"
+    KVARN_POOL_MEM_FRAC: "0.15"
+    VLLM_V2_CUDAGRAPH_MEM_MIB: "1000"
+  cache_root_base: /data/sandbox/nextgen-20260917/cache   # 每实验组独立子目录，必须显式钉死
+
+# ---------------------------------------------------------------------------
+# 端口规划
+ports:
+  tp1: 19701
+  tp2: 19702
+  avoid: [19637, 19649, 8000]
+
+# ---------------------------------------------------------------------------
+# 历史锚点参考（全部为"同夹具"参考；跨夹具数字不得使用，见 MASTER §1.1）
+historical_references:
+  - id: TP1-MS4-P32K-C4-aggregate
+    value: 197.5
+    unit: tok_s
+    source: eval/vllm/cuda13/dig028-20260916/raw/cg8ms4-c4.json   # max_tokens=256 prompt_target=32768 natural-stop
+  - id: TP2-P220K-C1-TTFT
+    value: 96.212
+    unit: s
+    source: eval/vllm/cuda13/dig028-20260916/raw/tp2-220k-c1.json # max_tokens=128
+  - id: TP1-P220K-C1-TTFT-same-fixture
+    value: 147.176
+    unit: s
+    source: eval/vllm/cuda13/dig028-20260916/raw/s-220k-c1.json
+    note: 正式加速基准 1.53x 由此计算；1.93x 为跨夹具，禁用
+  - id: TP1-D565-C1-directional
+    value: 133.46
+    unit: tok_s
+    note: 输出 193 tok 自然停止，仅 sanity 方向参考，非 Gate
+  - id: TP2-D565-C1-directional
+    value: 177.26
+    unit: tok_s
+    note: 输出 262 tok 自然停止，仅 sanity 方向参考，非 Gate
+  - id: TP2-238K-needle
+    value: "5/5"
+    source: eval/vllm/cuda13/dig028-20260916/raw/t-needle238k.json
+
+# ---------------------------------------------------------------------------
+# SLO 状态：未定。Phase 01/02 必须输出完整吞吐-延迟曲线，禁止事后择优阈值。
+slo_status: SLO_UNDECIDED

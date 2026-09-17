@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "nextgen raw client events (raw-events.jsonl, one object per line)",
+  "type": "object",
+  "required": ["experiment_id", "request_index", "request_start_mono_ns", "request_start_utc_ns",
+               "sampling", "canonical_request_sha256", "events", "outcome"],
+  "properties": {
+    "experiment_id": {"type": "string"},
+    "request_index": {"type": "integer", "minimum": 0},
+    "client_version": {"type": "string"},
+    "request_start_mono_ns": {"type": "integer"},
+    "request_start_utc_ns": {"type": "integer"},
+    "sampling": {
+      "type": "object",
+      "required": ["temperature", "seed", "stream", "max_tokens", "mode"],
+      "properties": {
+        "temperature": {"type": "number"},
+        "seed": {"type": "integer"},
+        "stream": {"type": "boolean"},
+        "max_tokens": {"type": "integer"},
+        "mode": {"enum": ["fixed-output", "natural-stop"]},
+        "ignore_eos": {"type": "boolean"},
+        "enable_thinking": {"type": "boolean"}
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "actual_input_tokens": {"type": ["integer", "null"]},
+        "tokenizer_sha256": {"type": ["string", "null"]},
+        "chat_template_sha256": {"type": ["string", "null"]}
+      }
+    },
+    "canonical_request_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "cache_salt": {"type": "string"},
+    "cache_salt_namespace": {"enum": ["warmup", "formal"]},
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["t_mono_ns", "kind"],
+        "properties": {
+          "t_mono_ns": {"type": "integer"},
+          "t_utc_ns": {"type": "integer"},
+          "kind": {"enum": ["request_start", "first_header", "first_byte", "first_token",
+                            "token", "last_token", "usage", "done", "error", "http_status"]}
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": ["ok"],
+      "properties": {
+        "ok": {"type": "boolean"},
+        "http_status": {"type": ["integer", "null"]},
+        "error": {"type": ["string", "null"]},
+        "client_token_count": {"type": ["integer", "null"]},
+        "server_completion_tokens": {"type": ["integer", "null"]},
+        "server_prompt_tokens": {"type": ["integer", "null"]},
+        "stop_reason": {"type": ["string", "null"]},
+        "count_mismatch": {"type": "boolean"},
+        "early_stop": {"type": "boolean"}
+      }
+    }
+  }
+}
