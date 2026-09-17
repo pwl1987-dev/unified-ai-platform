@@ -1,6 +1,6 @@
 # vLLM 生产镜像 · CUDA 12.9 / 驱动 550+ 时代（生产现役）
 
-> [返回项目首页](../../../../README.md) · [返回上级目录说明](../README.md)
+> [返回项目首页](../../../../README.md) · [返回上级目录说明](../../README.md)
 
 生产镜像 `nvidia-4090-llm-inference:0.27.1-cu129` 的配方即本目录上级的 `inference/vllm/docker/`：
 
