@@ -13,6 +13,7 @@
   5. manifest 显式 interrupted        -> ABORTED / INTERRUPTED
   6. run_validity 未过（采样器/计数错）-> INVALID / HARNESS_ERROR
   7. OOM（真实服务端拒绝且测量链完好） -> VALID_FAIL / OOM
+  7b. KV/显存容量不足以承载目标上下文 -> VALID_FAIL / CAPACITY_LIMIT（schema 1.1）
   8. 质量门失败                        -> VALID_FAIL / QUALITY_FAIL
   9. 性能门失败                        -> VALID_FAIL / PERF_GATE_FAIL
   10. 全部通过                         -> VALID_PASS / null
@@ -38,6 +39,7 @@ REASON_TO_STATUS = {
     "PERF_GATE_FAIL": ("VALID_FAIL", "valid"),
     "QUALITY_FAIL": ("VALID_FAIL", "valid"),
     "OOM": ("VALID_FAIL", "valid"),          # 真实 OOM = 有效负结果
+    "CAPACITY_LIMIT": ("VALID_FAIL", "valid"),  # schema 1.1: KV/显存容量不足以承载目标上下文 = 有效容量负结果（模型与测量链完好）
     "SERVER_CRASH": ("INVALID", "invalid"),
     "HARNESS_ERROR": ("INVALID", "invalid"),
     "ENV_DRIFT": ("INVALID", "invalid"),
@@ -172,6 +174,8 @@ def classify(exp_id: str, reason_key: str | None = None,
                 manifest["validity_errors"] = v[:20]
             elif reason_key == "oom" or oom_server_side:
                 status, cls, reason = *REASON_TO_STATUS["OOM"], "OOM"
+            elif reason_key == "capacity_limit":
+                status, cls, reason = *REASON_TO_STATUS["CAPACITY_LIMIT"], "CAPACITY_LIMIT"
             elif reason_key == "quality_fail":
                 status, cls, reason = *REASON_TO_STATUS["QUALITY_FAIL"], "QUALITY_FAIL"
             elif reason_key == "perf_gate_fail":

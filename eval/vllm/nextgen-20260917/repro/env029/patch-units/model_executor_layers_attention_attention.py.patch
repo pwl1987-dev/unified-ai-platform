@@ -1,0 +1,75 @@
+--- /data/tools/vllm28-env/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py	2026-09-06 20:12:51.609095347 +0800
++++ /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm/model_executor/layers/attention/attention.py	2026-09-15 22:39:43.482650643 +0800
+@@ -110,8 +110,33 @@
+ 
+     sizes = attn_backend.get_supported_kernel_block_sizes()
+     candidates = [s for s in sizes if isinstance(s, int)]
++    # port(kvarn-v2): MultipleOf backends (FA2: MultipleOf(16)) support ANY
++    # multiple — scale up to the page budget instead of offering only the base,
++    # or every 16-token SW block burns a whole shared page.
++    mults = [s.base for s in sizes if isinstance(s, MultipleOf)]
++    if mults and page_budget and per_token_bytes > 0:
++        base = min(mults)
++        budget_tokens = page_budget // per_token_bytes
++        scaled = budget_tokens // base * base
++        # port(kvarn-v2): prefer a DIVISOR of ``fallback`` (the primary
++        # block) so the scheduler LCM and the prefix hash work out — otherwise
++        # the SW block breaks block-size uniformity.
++        if fallback and fallback > 0:
++            # KVarN tile compatibility: prefer multiples of 128, then any
++            # divisor of the primary block.
++            for step in (128, base):
++                found = 0
++                for d in range(budget_tokens, step - 1, -1):
++                    if fallback % d == 0 and d % step == 0:
++                        found = d
++                        break
++                if found:
++                    scaled = found
++                    break
++        if scaled >= base:
++            candidates.append(scaled)
+     if not candidates:
+-        candidates = [s.base for s in sizes if isinstance(s, MultipleOf)]
++        candidates = mults
+     if not candidates:
+         return fallback
+     smallest = min(candidates)
+@@ -619,6 +644,9 @@
+             # bytes per block. Otherwise (page_size_padded is None) the smallest
+             # block is fine — ``unify`` scales it up by an integer ratio.
+             shared_page = vllm_config.cache_config.skip_page_size_padded
++            # port(kvarn-0.28): share the resolved Mamba page for DFlash SW layers.
++            if shared_page is None and str(vllm_config.cache_config.cache_dtype).startswith("kvarn"):
++                shared_page = vllm_config.cache_config.mamba_page_size_padded
+             # The backend owns its packing
+             sw_per_token = self.attn_backend.customize_spec(
+                 SlidingWindowSpec(
+@@ -644,6 +672,27 @@
+                 sliding_window=self.sliding_window,
+                 page_size_padded=shared_page,
+             )
++        # port(0.27.1): KVarN branch (mirrors the TQ branch above; passes
++        # kv_quant_mode=quant_mode, which the 0.23 KVarN hunk did not have).
++        elif self.kv_cache_dtype.startswith("kvarn_"):
++            from vllm.model_executor.layers.quantization.kvarn.config import (
++                KVarNConfig,
++            )
++            kvarn_cfg = KVarNConfig.from_cache_dtype(
++                self.kv_cache_dtype, self.head_size
++            )
++            # port(kvarn-0.28): packed K+V bytes per token/head are expressed
++            # by AttentionSpec.state_content_bytes (TQFullAttentionSpec was removed).
++            slot_bytes = kvarn_cfg.tile_bytes_aligned // kvarn_cfg.group
++            return FullAttentionSpec(
++                block_size=block_size,
++                num_kv_heads=self.num_kv_heads,
++                head_size=self.head_size,
++                head_size_v=self.head_size,
++                dtype=self.kv_cache_torch_dtype,
++                kv_quant_mode=quant_mode,
++                state_content_bytes=slot_bytes,
++            )
+         else:
+             return FullAttentionSpec(
+                 block_size=block_size,

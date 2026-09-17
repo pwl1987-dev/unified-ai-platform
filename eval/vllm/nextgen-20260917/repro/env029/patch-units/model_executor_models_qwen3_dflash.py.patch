@@ -1,0 +1,48 @@
+--- /data/tools/vllm28-env/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_dflash.py	2026-09-06 20:12:51.653831647 +0800
++++ /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm/model_executor/models/qwen3_dflash.py	2026-09-15 22:32:57.103472447 +0800
+@@ -244,6 +244,11 @@
+         )
+ 
+         self.sliding_window = sliding_window
++        # port(kvarn-v2): KVarN has no sliding-window path — drafter layers stay bf16.
++        if cache_config is not None and str(getattr(cache_config, "cache_dtype", "auto")).startswith("kvarn"):
++            from copy import copy as _kv_copy
++            cache_config = _kv_copy(cache_config)
++            cache_config.cache_dtype = "auto"
+         self.attn = Attention(
+             self.num_heads,
+             self.head_dim,
+@@ -375,6 +380,24 @@
+         return hidden_states, residual
+ 
+ 
++def _dense_kv_rows(attn: nn.Module) -> torch.Tensor:
++    """Return dense K/V rows from dense or pack-quantized qkv_proj."""
++    qkv = attn.qkv_proj
++    w = getattr(qkv, "weight", None)
++    if w is not None and w.dim() == 2:
++        return w[attn.q_size :]
++    packed, scale = qkv.weight_packed, qkv.weight_scale
++    out_f, in_f = int(packed.shape[0]), int(qkv.input_size)
++    bits = 32 * packed.shape[1] // in_f
++    from compressed_tensors.compressors.pack_quantized.base import unpack_from_int32
++    q = unpack_from_int32(packed.data, bits, torch.Size([out_f, in_f]), packed_dim=1)
++    group = in_f // scale.shape[1]
++    dense = (q.to(torch.float32).reshape(out_f, in_f // group, group)
++             * scale.to(torch.float32)[..., None]).reshape(out_f, in_f)
++    dtype = scale.dtype if scale.dtype.is_floating_point else torch.bfloat16
++    return dense.to(dtype)[attn.q_size :]
++
++
+ @support_torch_compile
+ class DFlashQwen3Model(nn.Module):
+     decoder_layer_cls = DFlashQwen3DecoderLayer
+@@ -487,7 +510,7 @@
+         self._hidden_norm_weight = self.hidden_norm.weight.data
+ 
+         # KV projection weights: [num_layers * 2 * kv_size, hidden_size]
+-        kv_weights = [a.qkv_proj.weight[a.q_size :] for a in layers_attn]
++        kv_weights = [_dense_kv_rows(a) for a in layers_attn]
+         self._fused_kv_weight = torch.cat(kv_weights, dim=0)
+         if has_bias:
+             kv_biases = [a.qkv_proj.bias[a.q_size :] for a in layers_attn]

@@ -1,0 +1,33 @@
+--- /data/tools/vllm28-env/lib/python3.12/site-packages/vllm/v1/kv_cache_interface.py	2026-09-06 20:12:51.866865260 +0800
++++ /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm/v1/kv_cache_interface.py	2026-09-15 22:35:31.764340773 +0800
+@@ -51,6 +51,8 @@
+     TURBOQUANT_4BIT_NC = 7
+     TURBOQUANT_K3V4_NC = 8
+     TURBOQUANT_3BIT_NC = 9
++    # port(kvarn-0.28): distinct KVarN packed-tile quantization mode
++    KVARN = 10
+ 
+     @property
+     def is_per_token_head(self) -> bool:
+@@ -76,6 +78,12 @@
+             KVQuantMode.TURBOQUANT_3BIT_NC,
+         )
+ 
++    # port(0.27.1): KVarN quant mode predicate
++    @property
++    def is_kvarn(self) -> bool:
++        """True for KVarN quantization mode."""
++        return self == KVQuantMode.KVARN
++
+ 
+ def get_kv_quant_mode(kv_cache_dtype: str) -> KVQuantMode:
+     """Map a ``kv_cache_dtype`` string to a :class:`KVQuantMode`."""
+@@ -89,6 +97,8 @@
+         return KVQuantMode.NVFP4
+     if isinstance(kv_cache_dtype, str) and kv_cache_dtype.startswith("turboquant_"):
+         return KVQuantMode[kv_cache_dtype.upper()]
++    if isinstance(kv_cache_dtype, str) and kv_cache_dtype.startswith("kvarn_"):
++        return KVQuantMode.KVARN
+     if isinstance(kv_cache_dtype, str) and kv_cache_dtype.startswith("fp8"):
+         return KVQuantMode.FP8_PER_TENSOR
+     return KVQuantMode.NONE

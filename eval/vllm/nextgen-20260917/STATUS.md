@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 00（预检与 0.28 基线校准）— **完成**
-- **Last Completed**: Phase 00 全量（四锚点重定基线 + D1 compile-cache PASS + D2 238K/220K 召回负结果 + 六态归档 + commit #2）（2026-09-17）
-- **Current Task**: 无（Phase 00 收口）
-- **Next Task**: Phase 01 — uv 建 0.29 环境；携四新基线（D565 F512 TP1=131.581 / TP2=172.832 tok/s；C4-L0565 agg=168.51；P220K TTFT=104.546s）；优先 A/B：bf16-KV vs kvarn 的 220K needle 对照（D2 负结果驱动）
+- **Phase**: 01（KV 因果裁决 + 0.29 资格认证，计划 v1.2）— **执行中**
+- **Last Completed**: Phase 00 全量（2026-09-17，commit #1=80e7d15 / #2=899eb5a）
+- **Current Task**: P0 引导（MANIFEST v2 + schema 1.1 + gates 冻结 + 0.29 环境已建：vllm 0.29.0@g98dff2a81，能力探针完成，CLI 差异=--kv-cache-memory→--kv-cache-memory-bytes + help 分组制）
+- **Next Task**: P1 KV 因果 A/B（0.28 栈 2×2 屏蔽 → 3-boot 矩阵）→ P2/P3 Layer A/B → P4 Layer X/C → P5 Gate A-S/A-X → P6 收口
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 

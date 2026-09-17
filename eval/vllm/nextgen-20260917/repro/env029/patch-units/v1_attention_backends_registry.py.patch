@@ -1,0 +1,11 @@
+--- /data/tools/vllm28-env/lib/python3.12/site-packages/vllm/v1/attention/backends/registry.py	2026-09-06 20:12:51.875625998 +0800
++++ /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm/v1/attention/backends/registry.py	2026-09-15 22:32:57.098458315 +0800
+@@ -124,6 +124,8 @@
+     CPU_ATTN = "vllm.v1.attention.backends.cpu_attn.CPUAttentionBackend"
+     CPU_MLA = "vllm.v1.attention.backends.mla.cpu_mla.CPUMLABackend"
+     TURBOQUANT = "vllm.v1.attention.backends.turboquant_attn.TurboQuantAttentionBackend"
++    # port(0.27.1): KVarN backend
++    KVARN = "vllm.v1.attention.backends.kvarn_attn.KVarNAttentionBackend"
+     # Placeholder for third-party/custom backends - must be registered before use
+     # set to None to avoid alias with other backend, whose value is an empty string
+     CUSTOM = None

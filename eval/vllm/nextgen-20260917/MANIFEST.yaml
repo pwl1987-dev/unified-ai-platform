@@ -1,6 +1,6 @@
 # nextgen-20260917 战役冻结清单（Phase 00 起生效）
 # 本文件是机器可读的战役级事实冻结。修改须走正式修订（MASTER-TEST-PLAN §18）。
-version: 1
+version: 2
 frozen_at_utc: "2026-09-17T00:00:00Z"   # 以 commit #1 实际时间为准，见 git log
 plan: MASTER-TEST-PLAN.md@v1.2
 repo_baseline: f2d1054
@@ -127,3 +127,46 @@ historical_references:
 # ---------------------------------------------------------------------------
 # SLO 状态：未定。Phase 01/02 必须输出完整吞吐-延迟曲线，禁止事后择优阈值。
 slo_status: SLO_UNDECIDED
+
+# ---------------------------------------------------------------------------
+# Phase 01（v1.2 计划）。正式修订：version 1 -> 2（§18 流程）。
+# 接手者读本块即可知 Phase 01 冻结内容；Phase 00 各块继续有效。
+phase01:
+  measurement_contract_sha: 80e7d15c6e18247615f5425d2e5ece9cffdfe3d5   # 指标公式/fixture/schema 语义/pairing 冻结
+  runner_safety_baseline: 899eb5a3ad59b6e548ff7bd507085061f8732089     # stop()/PGID/staging/压缩修复以此为下限继承
+  manifest_schema:
+    version: "1.1"
+    sha256: f81129bb308735caf390336632cf46f145d0ca0f3e13cb0ead4533d9bbe6212c
+    delta: "additive：classification_reason += CAPACITY_LIMIT；新增 candidate_decision 字段（PASS/REJECTED/DEFERRED_TO_PHASE03）"
+  gates_sha256: f407228b47c37905cdeb4a17c8414442cce6e59785b56fa8e54cf1d5306563ef  # repro/gates-phase01.yaml（P0 冻结，禁改）
+  runtime_029:
+    venv: /data/tools/vllm29-env                # uv 建（uv 0.12.10，Python 3.12.3），本 Phase 可写（打补丁留 .orig+hash 台账）
+    vllm_version: 0.29.0
+    vllm_commit_id: g98dff2a81                  # = 官方 release commit 98dff2a81d747d1dba01a47f939f48c3526d4206
+    vllm_tree_sha256: 45c5c91928f602cbde8302812953df8550d643add8f03088cfee703c52940a38  # 4930 files，打补丁前基准
+    torch: 2.13.0+cu130
+    transformers: 5.17.0                        # 0.28 环境为 5.16.1（版本差异源，已记录）
+    flashinfer_python: 0.6.18
+    triton: 3.7.1
+    lock: eval/vllm/nextgen-20260917/repro/env029/lock.txt
+    capability_probe: eval/vllm/nextgen-20260917/repro/capabilities/vllm029-capability-probe.json
+  cli_changes_vs_028_frozen:
+    - "0.28 --kv-cache-memory → 0.29 --kv-cache-memory-bytes（per-GPU；not-None 时忽略 gpu_memory_utilization；'1k/2M' 可读格式）"
+    - "help 改 ConfigGroup 分节制（--help=<Group>/--help=all）"
+    - "kv-cache-dtype 两版本均原生支持显式 bfloat16 与 fp8 家族；kvarn_k4v2_g128 仅 overlay"
+  patch_units:                                  # 拆分台账：repro/env029/patch-units.json（含逐文件 .patch 与 LOC）
+    a_embed_quant_load: {layer: A, status: REQUIRED_029}          # 0.29 qwen3_5.py:245 未传 quant_config，已验证
+    b_dflash_packed_kv_dequant: {layer: B, status: REQUIRED_029}  # 0.29 无 _dense_kv_rows 等价物
+    c_torch_topk_force: {layer: B, status: VERIFY_AT_LAYER_B}    # 0.29 重写 topk+flashinfer 0.6.18，JIT 实证后定
+    d_kvarn_kernels_backend_hooks: {layer: C, status: LAYER_C_PORT}  # 新增 5157 行 + 12 hook 文件 535 行内大头
+    e_env_hooks: {layer: C, status: WITH_C}
+  recipes:
+    layer_a: "0.29 target-only + W4A16 + native KV + 32K + patch(a)；TP1 全套 + TP2 最小资格臂"
+    layer_b: "layer_a + DFlash2 recal k=7 + patch(b,c)；接受率/graph replay/无损门"
+    layer_x_bridge: "P1 胜出质量安全 KV profile 移植 0.29 native 路径；最小 P128K+P220K 五针+TTFT（same-KV reference 配对）"
+    layer_c: "KVarN port 0.29 树；止损红线见 gates-phase01.yaml；晋级 128K→220K→224K→238K→245K"
+  resolved_kv_profile_rules:
+    bf16_arm: "显式 bfloat16（禁 auto）；mamba 维持 float16/align 不变（单变量）；运行时 resolved 三元组落盘"
+    fp8_arm: "fp8 默认 scale=1.0，标签 FP8_DIAGNOSTIC，不进 Gate A-X"
+    derived_parameter: "kv_cache_memory 随 dtype 派生，仅保证相同实际 token capacity（margin ≥1.05）"
+  candidate_decision_ledger: raw/valid/<exp>/manifest.json:candidate_decision   # 与实验六态分落盘

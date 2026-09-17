@@ -1,0 +1,36 @@
+{
+  "probed_utc": "2026-09-17",
+  "env": "/data/tools/vllm29-env",
+  "vllm_version": "0.29.0",
+  "vllm_commit_id": "g98dff2a81",
+  "vllm_release_commit_expected": "98dff2a81d747d1dba01a47f939f48c3526d4206",
+  "vllm_tree_files": 4930,
+  "vllm_tree_sha256": "45c5c91928f602cbde8302812953df8550d643add8f03088cfee703c52940a38",
+  "torch": "2.13.0+cu130",
+  "transformers": "5.17.0",
+  "flashinfer_python": "0.6.18",
+  "triton": "3.7.1",
+  "cli_surface_changes_vs_028": {
+    "help_system": "ConfigGroup 分节制（--help=<Group> / --help=all），不再是单页全量",
+    "kv_cache_memory": "0.28 --kv-cache-memory RENAMED -> 0.29 --kv-cache-memory-bytes（human-readable '1k/2M'；not-None 时忽略 gpu_memory_utilization；语义=per GPU）",
+    "kv_cache_dtype_choices": "auto,bfloat16,float16,fp8,fp8_ds_mla,fp8_e4m3,fp8_e5m2,fp8_inc,fp8_per_token_head,int4_per_token_head,int8_per_token_head,nvfp4,nvfp4_4over6,...（help 截断，全列表见 vllm029-serve-help-all.txt；无 kvarn_* —— overlay 专属，符合预期）"
+  },
+  "frozen_recipe_flag_availability_029": {
+    "kv-cache-dtype": "OK（含显式 bfloat16）",
+    "mamba-ssm-cache-dtype": "OK {auto,bfloat16,float16,float32}",
+    "mamba-cache-mode": "OK {align,all,none}",
+    "prefix-match-unit": "OK",
+    "language-model-only": "OK",
+    "async-scheduling": "OK",
+    "speculative-config": "OK（method 合法性待 boot 实证 dflash）",
+    "block-size": "OK",
+    "kv-cache-memory-bytes": "OK（新名，见上）",
+    "compilation-config": "OK（custom_ops 语法待 boot 实证）"
+  },
+  "env_028_kv_dtype_native_choices": {
+    "source": "vllm28-env config/cache.py CacheDType Literal",
+    "values": ["auto","float16","bfloat16","fp8","fp8_e4m3","fp8_e5m2","fp8_inc","fp8_ds_mla","turboquant_k8v4","turboquant_4bit_nc","turboquant_k3v4_nc","turboquant_3bit_nc","int4_per_token_head","int8_per_token_head","fp8_per_token_head","nvfp4","nvfp4_4over6"],
+    "implication": "P1 BF16 臂在 0.28 可显式 bfloat16（无需 auto）；turboquant_* 为 kvarn 的上游近亲，Layer C 移植时可对照"
+  },
+  "artifacts": ["vllm029-serve-help.txt", "vllm029-serve-help-all.txt"]
+}

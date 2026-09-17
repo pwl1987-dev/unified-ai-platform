@@ -1,0 +1,71 @@
+{
+  "generated_utc": "2026-09-17",
+  "method": "diff -ru vllm28-env site-packages vllm vs overlay-kvarn/vllm（.orig/pyc 剔除）；逐文件 unified diff 存 patch-units/*.patch",
+  "baseline_028_pristine": "/data/tools/vllm28-env/lib/python3.12/site-packages/vllm",
+  "overlay": "/data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm",
+  "totals": {"modified_files": 18, "changed_loc": 535, "new_files_loc": 5157},
+  "units": {
+    "a_embed_quant_load": {
+      "layer": "A",
+      "files": ["model_executor/models/qwen3_5.py (+2)", "model_executor/models/qwen3_5_mtp.py (+2)"],
+      "purpose": "embed_tokens 传 quant_config+prefix，使 INT8-embedding 检查点可加载",
+      "status_029": "REQUIRED — 已验证 0.29 qwen3_5.py:245 VocabParallelEmbedding 仍无 quant_config（上游未修）",
+      "port_difficulty": "trivial（补 2 个 kwargs）",
+      "patch": "patch-units/model_executor_models_qwen3_5.py.patch + _mtp"
+    },
+    "b_dflash_packed_kv_dequant": {
+      "layer": "B",
+      "files": ["model_executor/models/qwen3_dflash.py (+23, _dense_kv_rows + kvarn 窗口守卫)", "model_executor/models/qwen3_dflash2.py (1, 去 @support_torch_compile)"],
+      "purpose": "drafter ctx K/V 预计算需从 W4A16 packed qkv_proj 取 dense 行",
+      "status_029": "REQUIRED — 0.29 无 _dense_kv_rows/pack 等价物（上游未修）；kvarn 窗口守卫部分属 C",
+      "port_difficulty": "medium（需对照 0.29 dflash API 面）",
+      "patch": "patch-units/model_executor_models_qwen3_dflash.py.patch + _dflash2"
+    },
+    "c_torch_topk_force": {
+      "layer": "B",
+      "files": ["model_executor/layers/logits_processor.py (+4, VLLM_DFLASH2_TORCH_TOPK)"],
+      "purpose": "flashinfer.top_k cu130 JIT 失败时强制 torch.topk",
+      "status_029": "VERIFY_AT_LAYER_B — 0.29 重写 topk 路径（has_flashinfer() 检查+import 层 fallback），且 env 配 flashinfer 0.6.18（0.28 为 0.6.16.post3）；调用期 JIT 失败是否被兜住需 Layer B 实证；失败则移植 env-var 补丁",
+      "port_difficulty": "trivial-if-needed",
+      "patch": "patch-units/model_executor_layers_logits_processor.py.patch"
+    },
+    "d_kvarn_core": {
+      "layer": "C",
+      "new_files": {
+        "v1/attention/backends/kvarn_attn.py": 2743,
+        "v1/attention/ops/triton_kvarn_decode.py": 1203,
+        "v1/attention/ops/kvarn_store.py": 285,
+        "v1/attention/ops/triton_kvarn_sinkhorn.py": 205,
+        "v1/attention/ops/kvarn_decode.py": 118,
+        "model_executor/layers/quantization/kvarn/{__init__,config,sinkhorn}.py": 603
+      },
+      "hook_files_loc": {
+        "v1/core/kv_cache_utils.py": 212,
+        "platforms/cuda.py": 122,
+        "model_executor/layers/attention/attention.py": 51,
+        "v1/core/single_type_kv_cache_manager.py": 27,
+        "platforms/interface.py": 24,
+        "v1/worker/gpu/spec_decode/dflash2/speculator.py": 13,
+        "v1/worker/gpu/model_states/mamba_hybrid.py": 12,
+        "v1/kv_cache_interface.py": 9,
+        "v1/core/kv_cache_coordinator.py": 7,
+        "utils/torch_utils.py": 5,
+        "config/cache.py": 5,
+        "v1/attention/backends/registry.py": 2
+      },
+      "notes": "speculator 钩=KVarN 量化噪声 NaN 安全钳位；attention.py 钩=SW 块页预算缩放；platforms/cuda.py 含 KVARN_POOL_MEM_FRAC（与 e 单元同文件）",
+      "status_029": "LAYER_C_PORT — 止损红线按 gates-phase01.yaml（LOC≤3000 改动 / core files≤40 / attempt≤6）；0.29 有 turboquant_* 上游近亲可对照（0.28 CacheDType Literal 同样含 turboquant 族）"
+    },
+    "e_env_hooks": {
+      "layer": "C",
+      "files": ["v1/worker/gpu/model_runner.py (+14, VLLM_V2_CUDAGRAPH_MEM_MIB)", "platforms/cuda.py 内 KVARN_POOL_MEM_FRAC（与 d 同文件）"],
+      "status_029": "随 C 移植；未生效 boot 显式探测告警（boot 脚本实现）"
+    }
+  },
+  "symbol_provenance_rule": "每个 ported symbol：import 模块路径 → inspect.getfile(symbol) → 文件 SHA256 → sys.path 优先级，落 raw/<exp>/provenance.json",
+  "next_actions": [
+    "Layer A：仅移植 unit a（qwen3_5 两处）到 vllm29-env 树内（.orig 备份 + tree-hash 台账更新）",
+    "Layer B：移植 unit b；unit c 先实证 0.6.18 top_k JIT，失败再移植",
+    "Layer C：unit d+e 全量 port，逐文件 dry-run 留档"
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "nextgen experiment manifest (manifest.json)",
+  "manifest_schema_version": "1.1",
   "type": "object",
   "required": ["experiment_id", "status", "evidence_class", "created_utc",
                "harness_git_sha", "host_snapshot_sha256", "env_lock_sha256",
@@ -10,7 +11,9 @@
     "status": {"enum": ["VALID_PASS", "VALID_FAIL", "INVALID", "UNSUPPORTED", "ABORTED", "REJECTED"]},
     "evidence_class": {"enum": ["staging", "valid", "invalid", "unsupported"]},
     "classification_reason": {"enum": ["PERF_GATE_FAIL", "OOM", "QUALITY_FAIL", "SERVER_CRASH",
-                                        "HARNESS_ERROR", "ENV_DRIFT", "SCHEMA_FAIL", "INTERRUPTED", null]},
+                                        "HARNESS_ERROR", "ENV_DRIFT", "SCHEMA_FAIL", "INTERRUPTED",
+                                        "CAPACITY_LIMIT", null]},
+    "candidate_decision": {"enum": ["PASS", "REJECTED", "DEFERRED_TO_PHASE03", null]},
     "created_utc": {"type": "string"},
     "harness_git_sha": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
     "harness_files_sha256": {"type": "object"},

@@ -1,0 +1,10 @@
+--- /data/tools/vllm28-env/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_dflash2.py	2026-09-06 20:12:51.660963498 +0800
++++ /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm/model_executor/models/qwen3_dflash2.py	2026-09-16 06:19:49.710900957 +0800
+@@ -184,7 +184,6 @@
+     )
+ 
+ 
+-@support_torch_compile
+ class CandidateSelector(nn.Module):
+     def __init__(
+         self,

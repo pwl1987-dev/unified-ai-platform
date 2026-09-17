@@ -1,0 +1,109 @@
+# gates-phase01.yaml — Phase 01 全门槛冻结（v1.0，P0 冻结，禁止看结果后修改）
+# 依据：计划 v1.2 + MASTER §2/§7/§17 + Phase 00 证据（DECISIONS #1-7）
+# 判定口径：|new−ref|/ref ≤0.03 高度一致 / 0.03–0.05 记漂移放行 / >0.05 阻断
+version: 1
+frozen_utc: "2026-09-17"
+measurement_contract_sha: 80e7d15          # 指标公式/fixture/pairing 冻结（Phase 00 commit #1）
+runner_safety_baseline: 899eb5a            # stop()/PGID/staging/压缩修复以此为下限继承
+
+qualify_protocol:
+  screen: {boots: 1, reps_per_boot: 3}
+  qualify_perf: {boots: 3, reps_per_boot: 3, rule: "固定同 fixture/seed"}
+  qualify_correctness: {boots: 3, seeds: 3, positions: 5, runs_each: 1,
+                        note: "temp=0 确定性，跨 boot 即复现；不做 135 次冗余"}
+
+status_layering:  # 四层分离，禁止混用
+  experiment_status: [VALID_PASS, VALID_FAIL, INVALID, UNSUPPORTED, ABORTED, REJECTED]
+  classification_reason: [PERF_GATE_FAIL, OOM, QUALITY_FAIL, SERVER_CRASH, HARNESS_ERROR,
+                          ENV_DRIFT, SCHEMA_FAIL, INTERRUPTED, CAPACITY_LIMIT]
+  candidate_decision: [PASS, REJECTED, DEFERRED_TO_PHASE03]
+  gate_verdicts: [A-S, A-X]
+
+# ============================================================ P1 KV 因果 A/B
+p1_kv_causal:
+  known_negative_controls:   # Phase 00 实际矩阵（勘正版）
+    nd220k_seed1: {score: "2/5", note: "三名义 boot 各 1 次，实为同一 b1 server"}
+    nd238k: {S1: "2/5", S2: "5/5", S3: "2/5"}
+  single_variable: "四臂同 overlay/PYTHONPATH/patch/env/cache 规则；仅变 kv_cache_dtype 及 derived kv_cache_memory"
+  derived_parameter_declaration: "kv_cache_memory 为 dtype 派生量，仅保证相同实际 token capacity，不作性能因果变量"
+  capacity_precheck:
+    kv_capacity_margin: 1.05        # 实际 KV token capacity ≥ 1.05 × 目标上下文
+    ladder_tokens: [131072, 163840, 196608, 225280]   # 128→160→192→220K 升序
+    insufficient_outcome: {status: VALID_FAIL, reason: CAPACITY_LIMIT}
+    resolved_dtype_capture: [attention_kv, mamba_conv_state, mamba_ssm_state]  # 运行时实证落盘
+  causal_2x2:                       # Screen 级：1 boot/臂 × 已知失败 seed × 5 needle @220K
+    cells: {A: "target-only KVarN", B: "DFlash2+KVarN(复现)", C: "target-only BF16", D: "DFlash2+BF16"}
+    interpretation:
+      A_fail_C_pass: "KVarN 主效应"
+      A_pass_C_pass_B_fail_D_pass: "KVarN×spec 交互"
+      A_pass_C_pass_B_fail_D_fail: "speculative 主效应"
+      A_fail_C_fail: "不可归因 KVarN，查 fixture/model/runtime"
+  bf16_arm:  {dtype: bfloat16, needle_gate: "每 seed 每 boot 5/5", eligible_for_gate_ax: true}
+  fp8_arm:   {dtype: fp8, scale: "1.0 (default)", label: FP8_DIAGNOSTIC,
+              needle_gate: "每 seed 每 boot 5/5", eligible_for_gate_ax: false,
+              note: "仅证明降精度恢复召回；calibrated scale 归 Phase 03"}
+  kvarn_control_arm:
+    negative_control_gate: "220K seed=1 复现浅层失败（≤3/5 且丢失针位于 0.1/0.3/0.5）"
+    expanded_3seed_rule: "记录完整分布不预判；{2/5,5/5,2/5} 型判 consistent-with-kvarn"
+  ttft_gate:
+    metric: ttft_s
+    stability_spread_max: 0.05      # 每 boot 内 3 reps
+    purpose: "注册为 0.29 Gate A-X same-KV reference（0.29 KVarN↔104.546s；BF16/FP8↔P1 same-fixture）"
+
+# ============================================================ P2 Layer A
+layer_a:
+  perf_regression_max: 0.05         # vs 0.28 同形制配对臂
+  spread_max: 0.03
+  quality: "verbatim 5/5 + 代码 smoke 核心轴与 0.28 同形制臂一致（零容忍）"
+  mrv2_proof: "boot 日志实证；fallback 路径显式记录，混算禁止"
+
+# ============================================================ P3 Layer B
+layer_b:
+  acceptance_gate:
+    denominator: "accepted_tokens / proposed_tokens（spec decode 计数器）"
+    total_gap_max_pp: -5.0          # 0.29 vs 0.28 same-fixture 配对臂，绝对 pp 差下限
+    total_structural_floor: 0.20    # 总接受率 ≥20%（0.28 基线 29–33%；<20% = 结构性崩塌）
+    per_position_gap_max_pp: 8.0    # 每位置接受率 vs 0.28 same-fixture 臂
+  graph_replay:
+    ratio_floor: 0.95               # 正式 bench 中 replayed/eligible decode steps
+    evidence_rule: "server 计数器或 profiled probe trace 中的 cudagraph replay；仅 capture 日志不足为证"
+  output_lossless: "spec vs target-only 冻结探针集逐位一致（gate: 100%）"
+
+# ============================================================ P4 Layer C 止损 + 晋级
+layer_c_stop_loss:
+  patch_changed_loc_max: 3000
+  touched_core_files_max: 40
+  monkeypatch_scheduler_or_kv_core: forbidden
+  invasive_upstream_core_interface_mod: forbidden
+  max_port_attempts: 6
+  escalation_chain: [128K-sanity, 220K-needle, 224K, 238K, 245K-capacity]
+  quality_reject_rule: "220K 浅层失败 → 实验VALID_FAIL/QUALITY_FAIL + 候选REJECTED + A-X FAIL；仅保留兼容/容量诊断"
+  mrv1_fallback_rule: "bounded diagnostic + 独立 runtime 记录 → 判 A-X/MRV2 FAIL，非全停"
+
+# ============================================================ P5 Gate A-S / A-X
+gate_as:                            # 短/交互 32K profile
+  perf_regression_max: 0.05
+  three_boot_reproducible: true
+  quality_required: true
+gate_ax:                            # ≥128K/220K 长上下文
+  eligibility: {bf16_native: eligible, kvarn: eligible_if_quality_pass,
+                fp8_calibrated: eligible_phase03, fp8_scale1_diagnostic: not_eligible}
+  needle: "5/5 每 seed"
+  capacity_margin: 1.05
+  ttft_regression_max_vs_same_kv_reference: 0.05
+  deferred_rule: "仅 FP8_DIAGNOSTIC 可行 → A-X = DEFERRED_TO_PHASE03"
+overall_gate_a: "A-S AND A-X；A-S PASS + A-X FAIL → 0.29 认证为短/交互栈、长上下文 BLOCKED"
+
+# ============================================================ P5 双曲线 + 2h
+open_loop:
+  workload_curves: [D565, P220K]    # 各自独立饱和点，禁止混合
+  closed_loop_concurrencies: [1, 2, 4, 8]
+  saturation_ratios: [0.25, 0.50, 0.75, 0.90, 1.10]
+  per_point_d565:  {warmup_s: 120, measurement_s: 300, min_completed_requests: 60, max_test_duration_s: 900}
+  per_point_p220k: {warmup_s: 60,  measurement_s: 900, min_completed_requests: 20, max_test_duration_s: 3600}
+  insufficient_samples_rule: "completed < min_completed_requests → 该点 P99 = INSUFFICIENT_SAMPLES"
+  outputs: [arrival_rate, achieved_rate, ttft_p50_p95_p99, tpot, queue_depth, error_rate, preemptions, goodput]
+stability_2h:
+  workload: "MASTER 2h 混合流量 generator（D565/P4K/P32K/P128K/P220K + tool/JSON/cancel/retry + 周期 canary/needle）"
+  pass_criteria: {crashes: 0, oom: 0, http_error_rate_max: 0.001, preemption_count_max: 10,
+                  vram_upward_drift_max_pct: 2.0, canary_failures: 0}

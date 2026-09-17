@@ -1,0 +1,20 @@
+--- /data/tools/vllm28-env/lib/python3.12/site-packages/vllm/model_executor/layers/logits_processor.py	2026-09-06 20:12:51.607295723 +0800
++++ /data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn/vllm/model_executor/layers/logits_processor.py	2026-09-15 21:00:02.847085247 +0800
+@@ -4,6 +4,7 @@
+ 
+ from collections.abc import Callable
+ from functools import cache
++import os
+ 
+ import torch
+ import torch.nn.functional as F
+@@ -32,6 +33,9 @@
+     The top-k spans the vocabulary, where the radix kernel is about twice
+     torch.topk.
+     """
++    if os.environ.get("VLLM_DFLASH2_TORCH_TOPK", "0") == "1":
++        logger.info_once("VLLM_DFLASH2_TORCH_TOPK=1; vocab top-k uses torch.topk")
++        return None
+     if not current_platform.is_cuda():
+         return None
+     if not has_flashinfer():
