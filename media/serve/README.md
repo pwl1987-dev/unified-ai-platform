@@ -1,5 +1,7 @@
 # serve/ — vLLM 服务启停脚本（媒资线小模型池）
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 8 个模型的 vLLM serve 启停（配 `env.sh` 公共环境 + `stop.sh` 统一停）。
 运行底座 = `/data/tools/vllm28-env`（vLLM 0.28 + cu13，**五坑配方**见
 `inference/vllm/build/cu130-driver580/README.md`：CUDA_HOME=venv 内 cu13 / PATH+ninja /

@@ -1,5 +1,7 @@
 # services/ — 检索/视觉周边池
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 `start-services.sh`：三容器可复现启动（复现自 docker inspect）——GPU5=embed(:19623)+
 rerank(:19624)、GPU7=Qwen3-VL-8B(:19625)，复用 vLLM 栈镜像，宿主网络。
 reranker 三坑（P54）已写进脚本注释：--runner pooling / qwen3_reranker.jinja /

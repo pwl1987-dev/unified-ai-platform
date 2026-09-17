@@ -1,5 +1,7 @@
 # drafter/——自蒸馏数据、校准 int4 重量化、MTP 微调与 DFlash2 重量化
 
+> [返回项目首页](../../../README.md) · [返回上级目录说明](../README.md)
+
 本目录包含构建模型单用户 fast variant 的工具：`models/Qwen3.8-27B-W4A16-AutoRound-fast`，Hub 预构建名称为 `syvai/qwen3.8-27b-3090-fast-variant`，由 `prepare/fetch_fast_variant.py` 组装。目录还包含完整的 MTP head 微调流程；微调没有带来实际收益，但负结果有信息价值，而且同一批数据还服务于有效线路。
 
 所有操作都在 serving venv 的 3090 上执行，端到端约需 6 小时 GPU 时间。

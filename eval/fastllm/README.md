@@ -1,5 +1,7 @@
 # FastLLM 替代资格评估——2026-09-15
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 范围：在 llama.cpp 生产线保持冻结的前提下，判断 FastLLM 是否能够替代 vLLM 高速通道。
 
 ## 稳定 Wheel 兼容性结果

@@ -1,5 +1,7 @@
 # ComfyUI + MiniMax-H3 视频生成服务（GPU2/3 双 4090，按需启停）
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 2026-09-05 部署，`docker start comfyui` 即恢复（当前停机状态是常态——GPU2/3 白天另作他用）。
 入口 http://<内网IP>:8188（ufw 已放行），已接入 mon :9000 探活。
 

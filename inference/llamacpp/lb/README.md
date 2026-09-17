@@ -1,5 +1,7 @@
 # lb/ — OpenResty 动态负载均衡（本仓库核心贡献之一）
 
+> [返回项目首页](../../../README.md) · [返回上级目录说明](../README.md)
+
 多副本 llama-server 的生产级路由方案：`qwen27b.conf`（入口 :8000 + /_lbstats + 监控路由）
 + `route.lua`（核心逻辑）。
 

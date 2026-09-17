@@ -1,5 +1,7 @@
 # eval/vllm — vLLM 线评测
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 - `p0/`：差距归因工具箱（bench_step 隔离步速+按位置接受剖面 / multi_residue 12 残差前缀
   正确性门 / prefix_hit 冒烟 / run.sh 单变量试验机 / compose.p0 沙箱 / arms 配置模板 / results.tsv）
 - `b0/`：**B 线复刻地基（2026-09-08 过门）**——bf16 双侧纯 torch 数值复刻：ask 级引擎插桩

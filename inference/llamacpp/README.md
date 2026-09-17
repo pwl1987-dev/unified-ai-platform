@@ -1,5 +1,7 @@
 # llama.cpp 生产线（生产主力）
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 4×llama-server（b10715, cu12.4 构建）+ OpenResty LB，GPU0-3，唯一入口 :8000。
 
 ## 部署

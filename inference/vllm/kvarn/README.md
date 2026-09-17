@@ -1,5 +1,7 @@
 # KVarN KV cache：移植到 vLLM 0.27.1
 
+> [返回项目首页](../../../README.md) · [返回上级目录说明](../README.md)
+
 [KVarN](https://github.com/huawei-csl/KVarN)（华为 CSL，Apache-2.0）是一种 KV cache 压缩方案：使用 Hadamard 旋转、迭代方差归一化，并以每 128-token tile 的 4-bit key／2-bit value 进行压缩。它原本作为 vLLM 0.23.0 分支中的原生 attention backend 提供。本目录将该 backend 移植到本仓库使用的 vLLM 0.27.1，仅支持 dense（非 MLA）路径。移植最初来自单卡 RTX 3090 上游栈，已在 RTX 4090 上完成资格评估；保留测量见根目录 README。
 
 ## 目录内容

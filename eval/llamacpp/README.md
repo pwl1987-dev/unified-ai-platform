@@ -1,5 +1,7 @@
 # eval/llamacpp — llama.cpp 线门禁
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 - `gate.sh`：GPU5 控制实例（纯底座）+ GPU4 热挂实例（--lora-scaled :5.657）→ 全轴 → 判定表
 - `compare_gate.py`：判定规则（任一轴 >2pp 回退 FAIL；humaneval/xfc 必须严格提升；tps 2%）
 - `run_baseline.py`：评测执行器（humaneval/xfc/gsm8k/ifeval/needle/longgen/tps）

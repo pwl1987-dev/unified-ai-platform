@@ -1,5 +1,7 @@
 # vllm/ — coding-v1.1 单卡 240K 投机解码生产线（DFlash2 + KVarN）
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 基于 [syv-ai/qwen38-27b-rtx3090](https://github.com/syv-ai/qwen38-27b-rtx3090)（Apache-2.0，见本目录 LICENSE，
 上游原版说明保留在 `README.upstream.md`）的 vLLM 0.27.1 单用户栈改造：28 补丁 + KVarN 4/2-bit KV +
 DFlash2 块式投机解码 + V2 runner。在本仓的定位：**生产 llama.cpp 双副本（90 tok/s）之外的单卡高速通道**——

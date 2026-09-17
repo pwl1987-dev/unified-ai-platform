@@ -1,7 +1,21 @@
-# ops/ — 机器级运维（引擎无关）
+# ops/ · 机器级运维与监控
 
-- `mon/`：监控 v3 —— collect.py/index.html（:9000，2s 粒度 GPU+副本 slot+vLLM 主力，24h 历史）+
-  collect.sh + soak.sh（*/5 cron：LB 健康 + 8081/8082 spec 计数器 + VRAM 旁路留痕）
-- `scripts/`：gpu-power.sh v2（逐卡 day/quiet/night 功耗墙 + gpu-power.conf + holidays/workdays
-  日历，root cron 08:00/18:00；250W 对 decode 仅 -1.5%）+ noise-mode.sh（白天软摘除 r2/r3）+
-  bootcheck.sh（@reboot 自检：驱动/容器/LB/comfyui 探活 → 日志）
+> [返回项目首页](../README.md)
+
+本目录提供与具体推理引擎无关的 GPU 监控、功耗控制、噪声模式和启动自检。
+
+## 模块导航
+
+| 模块 | 入口 | 说明 |
+|---|---|---|
+| 监控 | [`mon/`](mon/) | 2 秒粒度 GPU、slot、vLLM 和 24h 历史 |
+| 功耗 | [`scripts/gpu-power.sh`](scripts/gpu-power.sh) | day／quiet／night 三档功耗墙 |
+| 噪声模式 | [`scripts/noise-mode.sh`](scripts/noise-mode.sh) | 白天软摘除副本，晚间恢复 |
+| 启动自检 | [`scripts/bootcheck.sh`](scripts/bootcheck.sh) | 驱动、容器、LB 和 ComfyUI 探活 |
+
+## 运维规则
+
+- 生产 GPU 和端口默认不可动；实验先做 GPU、进程、端口和显存预检。
+- 功耗墙、GPU UUID、模型和服务状态都要写入实验证据。
+- `pkill -f` 必须避免自匹配；杀服务前先确认 PID。
+- 长稳实验结束后清理实验进程，并确认生产健康检查返回 200。

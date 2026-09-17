@@ -1,8 +1,33 @@
-# eval/ — 门禁评测（按引擎分线）
+# eval/ · 评测与质量门禁
 
-**"比现在好"的可证伪定义**：全轴 ≥ 基线、核心轴（代码/工具）严格 >，任一轴回退 >2pp 即 FAIL。
-- `llamacpp/`：gate.sh 一键 A/B 门禁 + rulers 冻结基线（humaneval 84.76 / xfc 63.5 / gsm8k 93 /
-  ifeval 56 / needle / longgen）+ RFT 沙箱 + spec 四配置矩阵 + gate-verdict 判决存档
-- `vllm/`：p0 差距归因工具箱（步速分解 / **12 残差前缀正确性门** / A-B 试验机）+
-  spec_bench 接受率差分 + quality_ab 双引擎 10 任务质量 A/B + int4 头判决书 + `cuda13/` 0.28/cu130 资格测试
-- `fastllm/`：FastLLM 替代资格测试；stable `ftllm==0.1.8.2` 已证无法直接加载现役 compressed-tensors W4A16，pinned current-source 路线继续验证
+> [返回项目首页](../README.md)
+
+评测目录按推理引擎分线，所有结论都必须能回溯到固定模型、fixture、环境、补丁、原始数据和重复规则。
+
+## 评测导航
+
+| 线路 | 状态 | 入口 | 重点 |
+|---|---|---|---|
+| llama.cpp | ✅ 已认证基线 | [`llamacpp/`](llamacpp/) | A/B 门禁、语义 Gate、RFT、rulers |
+| vLLM | 🧪 当前主线 | [`vllm/`](vllm/) | P0、drafter、质量 A/B、长上下文、CUDA 13 |
+| FastLLM | ⛔ 已归档 | [`fastllm/`](fastllm/) | 替代性资格、兼容性和负结果 |
+
+## 统一判定原则
+
+**“比现在好”必须可证伪**：全轴不低于基线，代码／工具核心轴严格提升；任一轴回退超过 2pp 即 FAIL。性能差异小于 3% 默认视为噪声，但质量、安全、OOM 和崩溃直接判定。
+
+## 证据层级
+
+- `raw/`：原始 JSON、JSONL、stdout、环境和探针结果，具有最高证据权重。
+- `REPORT.md`：对实验形制、数据和结论的解释，不替代原始证据。
+- `INVALID`、`UNSUPPORTED`、`REJECTED`：必须保留，不能只提交成功结果。
+- 不同夹具、不同输出长度和不同拓扑不得直接计算加速比。
+
+## 当前下一代评测
+
+vLLM 0.29 + TP2 的执行入口为 [`vllm/nextgen-20260917/MASTER-TEST-PLAN.md`](vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。顺序为：夹具修正 → 0.28 锚点 → 0.29 target-only → DFlash2 → KVarN → TP2／量化／拓扑 → 真实 Agent → 长稳 → 跨设备复现。
+
+## 返回
+
+- [推理运行时总览](../inference/README.md)
+- [深度分析与优化文档](../docs/README.md)

@@ -1,5 +1,7 @@
 # NVIDIA RTX 4090 本地推理
 
+> [返回项目首页](../../README.md) · [返回上级目录说明](../README.md)
+
 本目录记录 Qwen3.8-27B 在单张 24 GiB RTX 4090 上经过质量门控的优化结果。选定的完整窗口服务在启用视觉、自动前缀缓存和完整 262,144-token 模型上下文时可维持 **136.47 tok/s**。匹配的 BF16 基准形制 decode 为 **178.72 tok/s**，32,817-token 冷 prefill 为 **2,299 tok/s**；此前 llama.cpp 形制为 62.61 tok/s。
 
 选定目标是 Huihui 的 abliterated 模型，量化版本为 `ababaka/Huihui-Qwen3.8-27B-Abliterated-W4A16-AutoRound`，revision 为 `c20530baefe3e77ccfc6891c2b50cce7ea28bf1e`。本地 fast variant 使用已完成资格认证的 int4-GPTQ head／MTP 资产，revision 为 `124c14e7e8c7d2f5402933b9af368e772a9fcf0c`；两者源张量逐字节一致。DFlash2 W4A16 revision 为 `4d30ec736ffc6b8688dc2ae2b502d9b48bdec279`。stock target 仅作为回滚和历史基准保留。

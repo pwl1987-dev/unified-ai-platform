@@ -1,5 +1,7 @@
 # patches/ — vLLM 0.27.1 的 27 个栈补丁
 
+> [返回项目首页](../../../README.md) · [返回上级目录说明](../README.md)
+
 构建时逐个 `patch -p1` 应用（Dockerfile.cu129 内置），`_check_applied.py` 做内容级校验。
 补丁头注明 "Written against vLLM 0.27.1. Reapply after upgrades"——0.28 迁移时逐个重验
 （ROADMAP 方向 C）。按功能分组：

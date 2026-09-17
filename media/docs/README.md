@@ -1,10 +1,13 @@
-# media/docs/ — 媒资线实测与决策文档
+# media/docs/ · 媒体线文档地图
+
+> [返回项目首页](../../README.md) · [返回媒体生产线](../README.md)
 
 | 文档 | 内容 |
 |---|---|
-| `RESULTS.md` | 滚动实测记录（209 行）：新闻结构化全流程落地（批次 A 视频横评终榜 / B WeMM 检索 POC / C 镜头分割 / D 人脸终局 / E 治理 / F 端到端 / G 条目拆分 / I 帧域确定性闭环）、推理栈现代化 v2（vllm28-env 新底座要点 + 两新坑、M1 方言 ASR 决赛表、OCR 换代） |
-| `MODEL-PICKS-2026-09.md` | 五域换代定案：视频三档 + 轻量王 / 端到端验证 / 人脸终局 / M3 / M1 / VL / 声纹 + 部署速查 |
-| `PERCEPTION-MATRIX-2026-09.md` | 四层级联架构与能力清单→模型映射（视频结构/语义/文字/人物/音频/QC/审校）+ 镜头语言量化 |
-| `MEDIA-TEST-MANIFEST.md` | 测试素材就位状态与实验→素材映射（真实新闻素材 2 期 + B 站对照 4 期 + KeSpeech 8 方言 + GigaSpeechBench + M7 拆条黄金集） |
-| `datasets-README.md` | 训练语料包编排说明（原件名 README.md，避免与本文件冲突改名） |
-| `chayu-prelabel-REVIEW.md` | 茶余饭后话临沂金标预标人工校对清单（双模型预标对照：小分歧 3 / 大分歧 16 / 音乐 1；**人名已遮蔽**） |
+| [`RESULTS.md`](RESULTS.md) | 滚动实测：新闻结构化、镜头分割、人脸、ASR、OCR、端到端和推理栈 |
+| [`MODEL-PICKS-2026-09.md`](MODEL-PICKS-2026-09.md) | 视频、ASR、VL、人脸、声纹和部署选型 |
+| [`PERCEPTION-MATRIX-2026-09.md`](PERCEPTION-MATRIX-2026-09.md) | 视频结构、语义、文字、人物、音频和 QC 能力矩阵 |
+| [`MEDIA-TEST-MANIFEST.md`](MEDIA-TEST-MANIFEST.md) | 测试素材状态以及实验与素材映射 |
+| [`chayu-prelabel-REVIEW.md`](chayu-prelabel-REVIEW.md) | 茶余饭后金标预标人工校对清单 |
+
+阅读原则：`RESULTS.md` 是过程记录，`MODEL-PICKS-2026-09.md` 是当前选型结论；涉及模型能力的结论必须回看对应素材和原始测量。
