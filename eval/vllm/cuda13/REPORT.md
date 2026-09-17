@@ -1,87 +1,77 @@
-# vLLM 0.28 + CUDA 13 qualification — 2026-09-15
+# vLLM 0.28 + CUDA 13 资格评估——2026-09-15
 
-Scope: qualify the CUDA 13 / vLLM 0.28 lane against the current vLLM 0.27.1/cu129 production baseline before using it as the baseline for FastLLM replacement decisions. llama.cpp production is out of scope and remains frozen.
+范围：将 CUDA 13／vLLM 0.28 线路与当前 vLLM 0.27.1/cu129 生产基线进行资格比较，再以最强可部署结果作为 FastLLM 替代门槛。llama.cpp 生产线不在本报告范围内，保持冻结。
 
-## Frozen environment
+## 冻结环境
+- GPU：RTX 4090 24 GB；驱动 580.173.02；板卡功耗上限 450 W。
+- 候选运行时：`/data/tools/vllm28-env`，vLLM 0.28.0，PyTorch 2.13.0+cu130，`torch.version.cuda=13.0`。
+- 目标：当前生产 `Qwen3.8-27B-coding-v1.1-W4A16` AutoRound/compressed-tensors 检查点，包含 INT8 embed/lm_head。
+- 测试卡：仅 GPU2。生产 llama.cpp/vLLM 卡未重启、未修改。
 
-- GPU: RTX 4090 24 GB; driver 580.173.02; board power limit 450 W.
-- Candidate runtime: `/data/tools/vllm28-env`, vLLM 0.28.0, PyTorch 2.13.0+cu130, `torch.version.cuda=13.0`.
-- Target: current production `Qwen3.8-27B-coding-v1.1-W4A16` AutoRound/compressed-tensors checkpoint, including INT8 embed/lm_head.
-- Test card: GPU2 only. Production llama.cpp/vLLM cards were not restarted or modified.
+## 兼容性结果
+原生 vLLM 0.28.0 加载生产检查点失败，原因是打包的 INT8 embedding 没有按量化配置构造（`embed_tokens.weight_packed` 没有目标参数）。
 
-## Compatibility result
+在沙箱 overlay 中，将现有 `inference/vllm/patches/qwen3_5-embed-quant.patch` 逻辑应用到 Qwen3.5 `VocabParallelEmbedding` 后，目标模型可以加载。补丁 SHA256：`0a1b9ca06798c1aef582995de5a0beb3ad9a22a54cdbd2361986563a9c7a980e`。
 
-Stock vLLM 0.28.0 fails while loading the production checkpoint because the packed INT8 embedding is not constructed with the quantization config (`embed_tokens.weight_packed` has no target parameter).
+结果：**仅目标加载兼容性 PASS**。模型成功加载 7/7 个权重分片，并通过优化编译／CUDA Graph 路径达到 API Ready。
 
-A sandbox overlay applying the existing `inference/vllm/patches/qwen3_5-embed-quant.patch` logic to Qwen3.5 `VocabParallelEmbedding` fixes the target-model load. Patch SHA256: `0a1b9ca06798c1aef582995de5a0beb3ad9a22a54cdbd2361986563a9c7a980e`.
+## 首轮可比的仅目标测量
+测试工具：现有 `inference/vllm/bench/ulmus_validate.py`，p565/g512 流式 decode 夹具，temperature 0、seed 4242，测量三次；未启用投机解码。
 
-Result: **target-only compatibility PASS**. The model loads 7/7 weight shards and reaches API ready with the optimized compile/CUDA-graph path.
+- decode：57.5033／57.9550／57.9536 tok/s
+- decode 中位数：**57.9536 tok/s**
+- 4K prefill：实际 prompt 4,129 token，**2887.23 tok/s**
+- 观测到的近似编译时间：39.5 s；完整引擎初始化约 114 s
 
-## First comparable target-only measurement
+测试辅助程序的板卡功耗采样器读取第一张可见 GPU，而不是 GPU2，因此本轮功耗字段无效，已从资格结论中排除。
 
-Harness: existing `inference/vllm/bench/ulmus_validate.py`, p565/g512 streaming decode fixture, temperature 0, seed 4242, three measured requests; no speculative decoder.
+## 同卡 vLLM 0.27.1/cu129 仅目标基线
+随后在 GPU2 上使用当前 0.27.1/cu129 镜像运行完全相同的目标、32K 最大上下文、max-seqs=1、前缀缓存设置和 p565/g512 夹具，同样未启用投机解码。
 
-- decode runs: 57.5033 / 57.9550 / 57.9536 tok/s
-- decode median: **57.9536 tok/s**
-- 4K prefill fixture: 4,129 actual prompt tokens, **2887.23 tok/s**
-- approximate compile time observed: 39.5 s; full engine initialization: ~114 s
+- decode：57.6851／57.6894／57.6843 tok/s
+- decode 中位数：**57.6851 tok/s**
+- 4K prefill：实际 prompt 4,129 token，**2887.34 tok/s**
+- 引擎初始化：总计约 163 s；torch.compile 约 86.9 s
 
-The benchmark helper's board-power sampler queries the first visible GPU rather than GPU2, so its reported power fields are invalid for this run and are deliberately excluded from the qualification result.
+相对于 0.28/cu130，0.27.1/cu129 的 decode 从 57.6851 变为 57.9536 tok/s，变化为 **+0.47%**；prefill 基本相同。实质改善是启动／编译时间：约 163 s 降至约 114 s。
 
-## Same-card vLLM 0.27.1/cu129 target-only baseline
+## 原生 DFlash2／cu130——第 1 次启动资格结果
+vLLM 0.28 已原生包含 `DFlash2DraftModel` 和 V2 DFlash2 speculator，因此没有整体迁移 0.27.1 的 DFlash2 backport。生产重校准 W4A16 drafter 在 0.28/cu130 沙箱中暴露出两个已证明的兼容性缺口：
 
-The exact same target, GPU2, 32K max context, max-seqs=1, prefix-cache setting and p565/g512 harness were then run on the current 0.27.1/cu129 image without speculative decoding.
+1. compressed-tensors W4A16 的 `qkv_proj` 没有 dense `.weight`；DFlash 上下文 K/V 预计算需要沿用现有的打包量化 K/V 行反量化逻辑。
+2. DFlash2 candidate selector 的 `flashinfer.top_k` JIT 在 cu130 环境因 CCCL／工具包头文件不匹配失败，因此本线路强制使用 `torch.topk`。
 
-- decode runs: 57.6851 / 57.6894 / 57.6843 tok/s
-- decode median: **57.6851 tok/s**
-- 4K prefill fixture: 4,129 actual prompt tokens, **2887.34 tok/s**
-- engine init: ~163 s total; torch.compile ~86.9 s
+加上这两个最小兼容性改动和现有 Qwen3.5 量化 embedding 修复后，0.28/cu130 成功加载目标 7/7 分片及 recal drafter 1/1 分片，捕获目标和 DFlash2 CUDA Graph，并达到 API Ready。
 
-Against 0.28/cu130, target-only decode changes from 57.6851 to 57.9536 tok/s (**+0.47%**); prefill is effectively identical. The material observed improvement is startup/compile time: ~163 s -> ~114 s.
+32K 纯文本、第 1 次启动、p565/g512 资格结果：decode 中位数 **141.6137 tok/s**（141.7234／141.6137／141.5426），4K prefill **2883.92 tok/s**。benchmark 增量记录 236 个 draft step、1652 个 draft token 和 530 个接受 token（**32.08% draft-token acceptance**），接受位置为 175／116／89／58／35／30／27。原始数据：`dflash2-cu130-boot1.json`。
 
-## Native DFlash2 / cu130 — boot 1 qualification
+这只是资格数据，还不是生产结论：当前形制是 32K 纯文本，必须通过独立新启动后，才能在生产 245760 上下文／视觉形制比较。辅助程序的功耗字段仍无效，因为采样的是 GPU0；板卡功耗另行处理。
 
-vLLM 0.28 already contains native `DFlash2DraftModel` and the V2 DFlash2 speculator, so the 0.27.1 DFlash2 backport was **not** migrated wholesale. The production recalibrated W4A16 drafter exposed only two demonstrated gaps in the 0.28/cu130 sandbox:
+## 新启动可重复性门
+同一 32K 纯文本 DFlash2 形制在 GPU2 上独立启动三次，decode 中位数为 **141.6137／141.6538／141.6070 tok/s**。均值 **141.6248 tok/s**，样本标准差 **0.0253 tok/s**；总范围 **0.0468 tok/s，即均值的 0.033%**。三次确定性夹具的 draft-token acceptance 均为 **32.082%**。
 
-1. compressed-tensors W4A16 `qkv_proj` has no dense `.weight`; DFlash context-K/V precompute therefore needs the existing pack-quantized K/V-row dequantization logic;
-2. DFlash2 candidate-selector `flashinfer.top_k` JIT fails under this cu130 environment with a CCCL/toolkit-header mismatch, so this arm forces the selector to `torch.topk`.
+结论：**PASS——本次 3 次启动窗口未观察到启动级双峰。** 这关闭了当前 32K 形制的 0.27 时代启动模式疑虑，但不能证明 245760 生产形制。原始文件：`dflash2-cu130-boot{1,2,3}.json`；汇总：`dflash2-cu130-fresh-boots-summary.json`。
 
-With those two minimal compatibility changes plus the existing Qwen3.5 quantized-embedding fix, 0.28/cu130 loads target 7/7 shards + recal drafter 1/1 shard, captures target and DFlash2 CUDA graphs, and reaches API Ready.
+## 原生长上下文容量门
+同一 0.28/cu130 原生 DFlash2 线路以精确生产目标 `max_model_len=245760` 启动，仍为纯文本且未启用 KVarN。引擎在 KV-cache sizing 阶段失败：需要 **20.36 GiB** KV cache，但只有 **4.91 GiB** 可用。vLLM 估计最大模型长度为 **43,264 token**。
 
-32K text-only boot-1 p565/g512 qualification: **141.6137 tok/s median** (141.7234 / 141.6137 / 141.5426); 4K prefill **2883.92 tok/s**. The benchmark delta recorded 236 draft steps, 1652 draft tokens and 530 accepted draft tokens (**32.08% draft-token acceptance**), with accepted positions 175/116/89/58/35/30/27. Raw data: `dflash2-cu130-boot1.json`.
+随后直接测试该估计值。`max_model_len=43264` 达到 API Ready；vLLM 分配 **43,545 个 KV-cache token**，对 43,264-token 请求报告最大并发 **1.01x**。因此 **43,264 是已观察到的原生 KV 启动上限**，不只是估计值。由于配置上限以上只剩 281 个 KV token，不建议把它作为生产日常设置。
 
-This is a qualification datum, not yet the production verdict: it is 32K + text-only and must survive independent fresh boots before comparison at the 245760 production context/vision shape. Harness power fields remain invalid because the helper samples GPU0; board power is handled separately.
+结论：模型本身没有失去上下文能力；缺少的是 0.27 生产栈的 KVarN／混合 KV 内存路径。没有迁移该能力，原生 0.28/cu130 无法在单张 24 GB 4090 上接近 245760。原始汇总：`native-long-context-capacity.json`。
 
-## Fresh-boot repeatability gate
+## 解释
+57.95 tok/s 是**仅目标的引擎／运行时数据**，不能直接与当前约 130 tok/s 的生产数字比较，因为生产数字启用了 DFlash2 k=7。同卡 A/B 表明，单独升级 CUDA13／vLLM 0.28 并不能相对于 0.27.1/cu129 带来实质单流 decode 增益；下一项决定性测试是 0.28/cu130 原生 DFlash2。
 
-Three independent GPU2 process boots of the same 32K text-only DFlash2 arm produced decode medians **141.6137 / 141.6538 / 141.6070 tok/s**. Mean **141.6248 tok/s**, sample stdev **0.0253 tok/s**; total range **0.0468 tok/s = 0.033% of mean**. Draft-token acceptance was exactly **32.082%** on all three deterministic fixture runs.
+替代基线分为两层：
+1. vLLM 0.27.1/cu129，同一目标，仅目标，同一夹具。
+2. vLLM 0.28/cu130，完成所需补丁迁移后的生产形 DFlash2 配置。
 
-Verdict: **PASS — no boot-level bimodality observed in this 3-boot qualification window.** This closes the specific 0.27-era boot-mode concern for the current 32K arm, but does not yet prove the 245760 production shape. Raw files: `dflash2-cu130-boot{1,2,3}.json`; aggregate: `dflash2-cu130-fresh-boots-summary.json`.
+FastLLM 必须击败最强可部署的 vLLM 结果，不能只击败旧的 0.27.1/cu129 线路。
 
-## Native long-context capacity gate
-
-The same 0.28/cu130 native-DFlash2 arm was started at the exact production target `max_model_len=245760`, still text-only and without KVarN. Engine initialization failed at KV-cache sizing: **20.36 GiB KV cache required vs 4.91 GiB available**. vLLM estimated the maximum model length at **43,264 tokens**.
-
-That estimate was then tested directly. `max_model_len=43264` reaches API Ready; vLLM allocates **43,545 KV-cache tokens** and reports **1.01x** maximum concurrency for a 43,264-token request. Therefore **43,264 is an observed native-KV startup ceiling**, not merely an estimate. It is not a recommended production setting because only 281 KV tokens remain above the configured maximum.
-
-Conclusion: the model itself has not lost context capability; the missing layer is the 0.27 production stack's KVarN/hybrid-KV memory path. Native 0.28/cu130 cannot approach 245760 on one 24-GB 4090 without migrating that capability. Raw summary: `native-long-context-capacity.json`.
-
-## Interpretation
-
-57.95 tok/s is a **target-only engine/runtime datum**. It must not be compared directly with the current ~130 tok/s production figure because that figure uses DFlash2 k=7. The same-card A/B shows that CUDA13/vLLM 0.28 alone does **not** provide a material single-stream decode gain over 0.27.1/cu129; the next decisive test is native DFlash2 on 0.28/cu130.
-
-The replacement baseline is therefore two-tiered:
-
-1. vLLM 0.27.1/cu129, same target, target-only, same fixture.
-2. vLLM 0.28/cu130, production-shaped DFlash2 configuration after required patch migration.
-
-FastLLM must beat the strongest deployable vLLM result, not merely the legacy 0.27.1/cu129 stack.
-
-## Current task / next task
-
-- Completed: vLLM 0.27.1/cu129 same-card target-only baseline; decode is effectively tied with 0.28/cu130 (+0.47% for 0.28), while 0.28 starts/compiles materially faster.
-- Completed: native DFlash2 + recal W4A16 compatibility and 3-fresh-boot repeatability gate; 32K decode mean 141.625 tok/s with only 0.033% total boot range, no bimodality observed.
-- Completed: native long-context capacity gate. 245760 needs 20.36 GiB KV but only 4.91 GiB is available; 43,264 is the validated native-KV API-ready ceiling (43,545 KV tokens, 1.01x concurrency).
-- Current: port the minimum 0.27 KVarN/hybrid-KV capability into an isolated 0.28/cu130 overlay; first gates are import/config/KV-init, not performance.
-- Next: restore 245760 capacity, then qualify prefix-cache/quality/stability and use the strongest deployable vLLM result as the FastLLM replacement threshold.
-- No production configuration change is authorized by this report.
+## 当前任务／下一任务
+- 已完成：vLLM 0.27.1/cu129 同卡仅目标基线；decode 与 0.28/cu130 基本持平（0.28 为 +0.47%），而 0.28 启动／编译明显更快。
+- 已完成：原生 DFlash2 + recal W4A16 兼容性及 3 次新启动可重复性门；32K decode 均值 141.625 tok/s，总启动范围仅 0.033%，未观察到双峰。
+- 已完成：原生长上下文容量门。245760 需要 20.36 GiB KV、可用 4.91 GiB；43,264 是经过验证的原生 KV API-ready 上限（43,545 KV token，1.01x 并发）。
+- 当前：将最小 0.27 KVarN／混合 KV 能力移植到隔离的 0.28/cu130 overlay；第一批门是 import／配置／KV-init，不是性能。
+- 下一步：恢复 245760 容量，再认证前缀缓存、质量和稳定性，并以最强可部署 vLLM 结果作为 FastLLM 替代阈值。
+- 本报告未授权任何生产配置变更。

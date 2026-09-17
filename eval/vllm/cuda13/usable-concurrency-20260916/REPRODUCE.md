@@ -1,31 +1,31 @@
-# Reproduce the vLLM 0.27 / 0.28 qualification
+# 复现 vLLM 0.27／0.28 资格评估
 
-This bundle is intended to reproduce the RTX 4090 comparison without relying on the original sandbox.
+本套文件用于在不依赖原始沙箱的情况下复现 RTX 4090 对比。
 
-## Preconditions
+## 前置条件
+- NVIDIA RTX 4090 24GB；0.28 线路使用的驱动必须兼容 CUDA 13.0。
+- 目标模型和 DFlash2 检查点必须与 `repro/manifests/model-sha256.txt` 匹配。
+- 0.28 使用 Python 3.12、`venv` 和 `patch`；0.27 使用 Docker 和已归档的 0.27 镜像。
+- 不同并发形制之间不得复用编译缓存。
 
-- NVIDIA RTX 4090 24GB, driver compatible with CUDA 13.0 for the 0.28 arm.
-- Exact target and DFlash2 checkpoints matching `repro/manifests/model-sha256.txt`.
-- Python 3.12 + `venv` + `patch` for 0.28; Docker + the archived 0.27 image for 0.27.
-- Do not reuse compile caches across different concurrency shapes.
+## 验证模型身份
 
-## Verify model identity
+运行任何基准前，先将检查点文件与 `repro/manifests/model-sha256.txt` 比较。`model-paths-reference.txt` 只记录原始路径作为参考，其他主机可以使用不同路径。
 
-Compare the checkpoint files against `repro/manifests/model-sha256.txt` before running any benchmark. `model-paths-reference.txt` records the original paths only as a reference; paths may differ on another host.
+## 构建 0.28/cu130 环境
 
-## Build the 0.28/cu130 environment
-
-From the repository root:
+在仓库根目录执行：
 
 ```bash
 VENV=/opt/qwen-vllm028 \
   eval/vllm/cuda13/usable-concurrency-20260916/repro/setup_vllm028.sh
 ```
 
-The setup script installs the locked packages, performs `patch --dry-run`, applies `inference/vllm/build/cu130-driver580/vllm028-kvarn-dflash2-w4a16.patch`, and imports the KVarN + DFlash2 patched code.
-## Start either arm
+setup 脚本会安装锁定的软件包，执行 `patch --dry-run`，应用 `inference/vllm/build/cu130-driver580/vllm028-kvarn-dflash2-w4a16.patch`，并导入 KVarN + DFlash2 补丁代码。
 
-Set the exact checkpoint directories, then launch only the arm being tested:
+## 启动任一测试线路
+
+设置精确的检查点目录，然后只启动当前要测试的线路：
 
 ```bash
 export TARGET_DIR=/path/to/exact/target
@@ -34,16 +34,16 @@ GPU=2 PORT=19637 MAX_SEQS=1 VENV=/opt/qwen-vllm028 \
   eval/vllm/cuda13/usable-concurrency-20260916/repro/start_vllm028.sh
 ```
 
-For 0.27, use `start_vllm027.sh` and set `IMAGE` if the archived image has another local tag. Both launchers freeze `max_model_len=245760`, KVarN k4v2_g128, KV=4.82GB, DFlash2 k=7, CG=8, prefix cache, mamba align, and 2048 batched tokens.
+0.27 使用 `start_vllm027.sh`；如果归档镜像使用其他本地标签，设置 `IMAGE`。两个启动器都固定 `max_model_len=245760`、KVarN k4v2_g128、KV=4.82GB、DFlash2 k=7、CG=8、前缀缓存、mamba 对齐和 2048 个 batched token。
 
-## Run the evidence probes
+## 运行证据探针
 
-Use `long_concurrency_probe_v4.py` for capacity/admission tests and `captured/long_multineedle_probe_v2.py` for long-context accuracy. Use a unique cache salt per request and keep the exact prompt/token targets in the raw evidence.
+容量／接入测试使用 `long_concurrency_probe_v4.py`；长上下文准确性使用 `captured/long_multineedle_probe_v2.py`。每个请求使用唯一 cache salt，并在原始证据中保留精确的 prompt／token 目标。
 
-Primary decision points are C1 224K/240K, C2 128K, and random five-needle accuracy near 127K/223K/239K. The ~4K C4/C6/C8 data is retained only to establish the physical resident ceiling.
+主要决策点是 C1 224K／240K、C2 128K，以及约 127K／223K／239K 的随机五针准确性。约 4K 的 C4／C6／C8 数据只用于确定物理常驻上限。
 
-## Evidence policy
+## 证据规则
 
-`raw/valid/` is authoritative. `raw/invalid/accuracy-v1/` is intentionally preserved but must not be used for conclusions. `raw/historical/` records earlier experiments/failures. `SUMMARY.json` is machine-readable and `REPORT.md` is the current interpretation.
+`raw/valid/` 为权威证据。`raw/invalid/accuracy-v1/` 有意保留，但不得用于结论。`raw/historical/` 记录早期实验／失败。`SUMMARY.json` 是机器可读汇总，`REPORT.md` 是当前解释。
 
-FastLLM must use these same context, accuracy, TTFT, and stability gates before it can be considered a replacement.
+FastLLM 必须使用相同的上下文、准确性、TTFT 和稳定性门，之后才可以被视为替代方案。

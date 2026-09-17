@@ -17,8 +17,8 @@
 - [运维（ops/）](#运维ops)
 - [后续优化路线图](#后续优化路线图)
 - [模型权重来源（不入库）](#模型权重来源不入库)
-- [English TL;DR](#english-tldr)
-- [License](#license)
+- [中文摘要](#中文摘要)
+- [许可证](#许可证)
 
 ---
 
@@ -227,17 +227,17 @@ C) vLLM 0.28 + cu13 栈迁移（28 补丁重验）；D) 262K 恢复（依附 A/C
 - 自后训：`Qwen3.8-27B-coding-v1.1`（QLoRA 产物，见 training/；vLLM 线用其 W4A16+int8 头量化版）
 - 草稿模型参考：`Qwen3.8-27B-DFlash2`（侧车 drafter，1.92B）
 
-## English TL;DR
+## 中文摘要
 
-Single-machine **8×RTX 4090** full stack for **qwen3.8-27b** (27.3B, hybrid linear-attention / GDN):
+这是面向单机 **8×RTX 4090** 的 **qwen3.8-27b** 全栈工程（27.3B 参数，混合线性注意力／GDN）：
 
-- **Inference, two engines**: (1) 4× llama.cpp (b10715) replicas, 256K ctx each at 97% VRAM, MTP speculation (~47% acceptance, 72 tok/s single-stream, ~420 tok/s aggregated), fronted by an **OpenResty + Lua dynamic load balancer** (session-sticky prefix-cache routing, saturation drift, large/small session pools); (2) a single-card **vLLM fast lane** (adapted 0.27.1 stack: KVarN 4/2-bit KV + DFlash2 block speculation) running the post-trained model at **130 tok/s decode @240K** — 1.45× a production replica on one card, with a GPTQ-recalibrated drafter (+6.9%), a 20-arm gap-attribution campaign (step-time parity proven; the remaining headroom lives in a lookup/adaptive lane that is output-corrupting under prefix-cache hits and therefore vetoed), and a 12-residue prefix-cache correctness gate.
-- **Build recipes for both CUDA eras**: cu12.4/550 (llama.cpp) and cu12.9/550+ (vLLM image) alongside a cu13/580 native vLLM 0.28 environment with its five documented pitfalls.
-- **Post-training** (`training/`): 4-GPU QLoRA (NF4 + ZeRO-3, rsLoRA r=32) with full VRAM accounting and six documented pitfalls; llama.cpp patches converting GDN LoRA adapters to GGUF (out_proj column-permute dead-end), rsLoRA √r scale compensation, no-restart hot-swapping.
-- **Release gating** (`eval/`, split per engine): falsifiable A/B gates against frozen rulers; sandboxed RFT execution; step-time/acceptance decomposition and correctness gates for the speculative-decoding lane.
-- **Roadmap** (`docs/ROADMAP.md`): fix the adaptive×prefix-cache corruption to unlock a measured +32% config; distillation-retrain the DFlash2 drafter; migrate to vLLM 0.28/cu13; restore 262K.
+- **双推理引擎**：4 个 llama.cpp（b10715）副本，每副本 256K 上下文、显存约 97%，启用 MTP 投机解码，单流约 72 tok/s、聚合约 420 tok/s；前置 OpenResty + Lua 动态负载均衡，支持会话粘滞前缀缓存、满载漂移以及大小会话池。另有单卡 vLLM 高速通道，基于 0.27.1、KVarN 4/2-bit KV 和 DFlash2 块式投机解码，在 240K 上下文下约 130 tok/s。
+- **两代 CUDA 构建配方**：cu12.4/550 的 llama.cpp、cu12.9/550+ 的 vLLM 镜像，以及 cu13/580 原生 vLLM 0.28 环境和对应的五项已记录陷阱。
+- **后训练**：`training/` 提供 4 卡 QLoRA（NF4 + ZeRO-3，rsLoRA r=32）、完整显存账和六项陷阱记录；同时包含将 GDN LoRA 适配器转换为 GGUF 的 llama.cpp 补丁、rsLoRA √r 缩放补偿和免重启热挂。
+- **发布门禁**：`eval/` 按引擎拆分 A/B 门禁，以冻结 rulers 为基线执行可证伪比较，包含隔离的 RFT 执行、步速／接受率分解和投机解码正确性门。
+- **路线图**：`docs/ROADMAP.md` 计划修复 adaptive×前缀缓存损坏以解禁实测 +32% 配置，重训 DFlash2 drafter，迁移 vLLM 0.28/cu13，并恢复 262K。
 
-## License
+## 许可证
 
 MIT — see [LICENSE](LICENSE). 模型权重版权归原作者所有，本仓库仅含工程代码、配置与评测数据。
 `inference/vllm/` 目录包含来自 [syv-ai/qwen38-27b-rtx3090](https://github.com/syv-ai/qwen38-27b-rtx3090) 的 Apache-2.0 代码（附原许可证），其余为本仓库原创。

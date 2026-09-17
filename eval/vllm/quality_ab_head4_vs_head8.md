@@ -1,3 +1,7 @@
+## 文档语言说明
+
+本文档中的英文代码、模型原始回答和评测输出属于质量 A/B 的原始证据，为保证可追溯性按原样保留；面向读者的说明文字已统一使用中文。
+
 # 质量 A/B 对照：int4 头（A_int4head）vs int8 头（B_int8head）
 
 > temperature=0、enable_thinking=False、max_tokens=8192 ｜ 自动检查仅供参考，最终以人工评分为准

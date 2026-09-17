@@ -1,26 +1,26 @@
-# FastLLM replacement qualification — 2026-09-15
+# FastLLM 替代资格评估——2026-09-15
 
-Scope: determine whether FastLLM can replace the vLLM high-speed lane while llama.cpp production remains frozen.
+范围：在 llama.cpp 生产线保持冻结的前提下，判断 FastLLM 是否能够替代 vLLM 高速通道。
 
-## Stable wheel compatibility result
+## 稳定 Wheel 兼容性结果
 
-Isolated environment: `/data/sandbox/fastllm-qual-20260915/venv`, package `ftllm==0.1.8.2`.
+隔离环境：`/data/sandbox/fastllm-qual-20260915/venv`，软件包 `ftllm==0.1.8.2`。
 
-Target: the same production `Qwen3.8-27B-coding-v1.1-W4A16` AutoRound/compressed-tensors checkpoint used by vLLM.
+目标：与 vLLM 使用的生产目标相同，即 `Qwen3.8-27B-coding-v1.1-W4A16` AutoRound/compressed-tensors 检查点。
 
-GPU4 target-only smoke failed during model loading with repeated:
+仅加载目标模型的 GPU4 冒烟测试在加载阶段失败，重复出现：
 
 `FastLLM Error: SafeTensorItem.CreateBuffer: unsupport src dtype I32`
 
-Verdict: **stable `ftllm 0.1.8.2` cannot directly load the current production W4A16 checkpoint**. This is a checkpoint compatibility failure, not a performance or quality verdict. GPU4 returned to idle after termination; production services were untouched.
+结论：**稳定版 `ftllm 0.1.8.2` 不能直接加载当前生产 W4A16 检查点**。这是检查点兼容性失败，不是性能或质量结论。终止测试后 GPU4 已恢复空闲，生产服务未被触碰。
 
-## Current-source lane
+## 当前源码线路
 
-A pinned upstream FastLLM source snapshot is staged at `/data/sandbox/fastllm-qual-20260915/src`.
+固定版本的上游 FastLLM 源码快照位于 `/data/sandbox/fastllm-qual-20260915/src`。
 
-- FastLLM commit: `74d36383312421e8316501aa46f7c002c8e490d9`
-- pybind11 submodule commit: `0e2c3e5db41b6b2af4038734c84ab855ccaaa5f0`
-- build target: `fastllm_tools`, CUDA 12.9 build container, RTX 4090 SM89 only
-- first build reached CUDA compilation and failed only because the runtime image lacked `cublas_v2.h`; an isolated resume build adds `cuda-libraries-dev-12-9`.
+- FastLLM 提交：`74d36383312421e8316501aa46f7c002c8e490d9`
+- pybind11 子模块提交：`0e2c3e5db41b6b2af4038734c84ab855ccaaa5f0`
+- 构建目标：`fastllm_tools`，CUDA 12.9 构建容器，仅针对 RTX 4090 SM89
+- 首次构建已进入 CUDA 编译阶段，唯一失败原因是运行时镜像缺少 `cublas_v2.h`；隔离恢复构建会补充 `cuda-libraries-dev-12-9`。
 
-Current-source compatibility is **pending** until the pinned build completes and the same W4A16 target-only smoke is rerun.
+源码线路的兼容性仍为**待定**：必须先完成固定版本构建，再对同一个 W4A16 目标重新执行仅加载冒烟测试。

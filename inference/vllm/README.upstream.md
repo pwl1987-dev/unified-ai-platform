@@ -1,79 +1,38 @@
-# NVIDIA RTX 4090 local inference
+# NVIDIA RTX 4090 本地推理
 
-This repository records the quality-gated optimization of Qwen3.8-27B for one
-24 GiB RTX 4090. The selected full-window service sustains **136.47 tok/s** with
-vision, automatic prefix caching and the complete 262,144-token model context.
-A matched BF16 benchmark profile reaches **178.72 tok/s** decode and **2,299
-tok/s** on a 32,817-token cold prefill, versus 62.61 tok/s on the previous
-llama.cpp setup.
+本目录记录 Qwen3.8-27B 在单张 24 GiB RTX 4090 上经过质量门控的优化结果。选定的完整窗口服务在启用视觉、自动前缀缓存和完整 262,144-token 模型上下文时可维持 **136.47 tok/s**。匹配的 BF16 基准形制 decode 为 **178.72 tok/s**，32,817-token 冷 prefill 为 **2,299 tok/s**；此前 llama.cpp 形制为 62.61 tok/s。
 
-The selected target is Huihui's abliterated model, quantized as
-`ababaka/Huihui-Qwen3.8-27B-Abliterated-W4A16-AutoRound` at revision
-`c20530baefe3e77ccfc6891c2b50cce7ea28bf1e`.  The local fast variant uses the
-already-qualified int4-GPTQ head/MTP assets at revision
-`124c14e7e8c7d2f5402933b9af368e772a9fcf0c`; their source tensors are byte-for-byte
-identical between the Huihui and stock checkpoints.  The DFlash2 W4A16 revision is
-`4d30ec736ffc6b8688dc2ae2b502d9b48bdec279`.  The stock target is retained only as
-a rollback and historical benchmark baseline.
+选定目标是 Huihui 的 abliterated 模型，量化版本为 `ababaka/Huihui-Qwen3.8-27B-Abliterated-W4A16-AutoRound`，revision 为 `c20530baefe3e77ccfc6891c2b50cce7ea28bf1e`。本地 fast variant 使用已完成资格认证的 int4-GPTQ head／MTP 资产，revision 为 `124c14e7e8c7d2f5402933b9af368e772a9fcf0c`；两者源张量逐字节一致。DFlash2 W4A16 revision 为 `4d30ec736ffc6b8688dc2ae2b502d9b48bdec279`。stock target 仅作为回滚和历史基准保留。
 
-The implementation is based on commit
-`dfee877366ff0db341d5d685784154f17b3a2f64` of
-[`syv-ai/qwen38-27b-rtx3090`](https://github.com/syv-ai/qwen38-27b-rtx3090),
-with a reproducible CUDA 12.9 image and an RTX 4090-specific qualified profile.
+实现基于 `syv-ai/qwen38-27b-rtx3090` 的提交 `dfee877366ff0db341d5d685784154f17b3a2f64`，配套可复现的 CUDA 12.9 镜像和 RTX 4090 专用资格配置。
 
-## Result
+## 结果
+服务在未启用认证的 `0.0.0.0:19622` 上提供 `qwen3.8-27b`。只能在可信网络中使用。
 
-The service exposes `qwen3.8-27b` on unauthenticated `0.0.0.0:19622`. Keep it
-on a trusted network.
-
-| Selected setting | Value |
+| 选定设置 | 值 |
 |---|---|
-| GPU | One RTX 4090, 24 GiB, 280 W limit |
-| Target | Huihui Qwen3.8-27B Abliterated W4A16 |
-| Speculator | DFlash2 W4A16, k=7 |
-| Context | 262,144 server; 245,760 input + 8,192 output for OpenCode |
-| KV cache | KVarN K4V2, 272,781 reported tokens |
-| Required features | Vision and automatic prefix caching |
-| API | OpenAI compatible, port 19622, no key |
+| GPU | 单张 RTX 4090，24 GiB，功耗上限 280 W |
+| 目标 | Huihui Qwen3.8-27B Abliterated W4A16 |
+| Speculator | DFlash2 W4A16，k=7 |
+| 上下文 | 服务端 262,144；OpenCode 为 245,760 输入 + 8,192 输出 |
+| KV cache | KVarN K4V2，报告 272,781 token |
+| 必需特性 | 视觉和自动前缀缓存 |
+| API | OpenAI 兼容，端口 19622，无 key |
 
-## Boundaries
-
-- Do not use the upstream CUDA 13 prebuilt image while Ulmus runs driver
-  `550.163.01`.  `docker/Dockerfile.cu129` pins the official vLLM 0.27.1
-  CUDA 12.9 wheel instead.  It also gives the host R550 library precedence
-  over CUDA's datacenter-only forward-compatibility shim; otherwise GeForce
-  initialization fails with CUDA error 804.
-- Do not change Ulmus's 280 W GPU limit for this campaign.
-- Vision and automatic prefix caching are mandatory.  Every profile sets
-  `VISION=1`, `VISION_OFFLOAD=1`, and `PREFIX_CACHE=1`.
-  An Ulmus A/B with uncached 2,097,152-pixel images measured 1.033 s with the
-  0.85 GiB tower offloaded and 0.984 s with it resident.  Keeping it resident
-  left only 235 MiB free, reduced the retained decode fixture from 175.3 to
-  169.3 tok/s, and the engine failed after the combined 32K/cache workload.
-  The roughly 49 ms image penalty is therefore the stable overall trade.
-  The Huihui and stock checkpoints' 333 vision tensors were compared directly
-  and are byte-identical, so that A/B remains applicable after the target switch.
-- The endpoint is deliberately published without an API key on all Ulmus
-  interfaces (`0.0.0.0:19622`) for trusted-LAN use.  Do not forward this port
-  through the Internet edge.
-- `models/`, `cache/`, profiles, source, and results remain under this folder.
+## 边界与约束
+- Ulmus 使用驱动 `550.163.01` 时，不得使用上游 CUDA 13 预构建镜像；`docker/Dockerfile.cu129` 固定官方 vLLM 0.27.1 CUDA 12.9 wheel。
+- 不得改变本轮测试的 280 W GPU 功耗上限。
+- 视觉和自动前缀缓存是必需特性。所有 profile 设置 `VISION=1`、`VISION_OFFLOAD=1` 和 `PREFIX_CACHE=1`。视觉塔常驻会减少显存余量并导致组合 32K／cache 工作负载失败，因此稳定整体折中是 offload。
+- Huihui 与 stock 检查点的 333 个视觉张量已直接比较且逐字节相同，目标切换后 A/B 结论仍可用。
+- endpoint 有意在所有 Ulmus 接口以无 API key 方式发布，仅适用于可信局域网；不得将此端口转发到互联网边缘。
+- `models/`、`cache/`、profiles、源码和结果均保留在本目录下。
 
 ## Profiles
+`compose.yaml` 默认将 `MODEL` 设置为 `/app/models/Huihui-Qwen3.8-27B-Abliterated-W4A16-AutoRound-fast`；显式覆盖 `MODEL` 只用于受控 A/B。
 
-`compose.yaml` defaults `MODEL` to
-`/app/models/Huihui-Qwen3.8-27B-Abliterated-W4A16-AutoRound-fast`; an explicit
-`MODEL` override is reserved for controlled A/B runs.
+`max` 是已部署 profile：DFlash2 k=7、KVarN K4V2 KV、单请求 slot 和完整 262,144-token 服务端上下文。`fast` 是匹配的性能基准，使用 BF16 KV 和 65,536-token 上下文。`long` 牺牲冷 prefill 速度，使用 131,072-token INT8 KV 上下文。`mtp-long` 是 150,000-token FP8-KV 原生 MTP 控制形制。`huge` 是早期 245,760-token KVarN 形制。两个 KVarN profile 都是有损 cache；`max` 接受该测量折中，以保留完整原生窗口。
 
-`max` is the deployed profile: DFlash2 k=7, KVarN K4V2 KV, one request slot,
-and the full 262,144-token server context.  `fast` is the matched performance
-benchmark with BF16 KV and a 65,536-token context.  `long` trades cold-prefill speed for a
-131,072-token INT8 KV context.  `mtp-long` is the 150,000-token FP8-KV native
-MTP control.  `huge` is the earlier 245,760-token KVarN profile.  Both KVarN
-profiles use a lossy cache; `max` accepts that measured trade to keep the
-model's complete native window available.
-
-Select a profile and start the server:
-
+启动方式：
 ```bash
 git clone https://github.com/AnnoyingTechnology/nvidia-4090-llm-inference
 cd nvidia-4090-llm-inference
@@ -83,63 +42,19 @@ sudo docker compose up -d
 sudo docker compose logs -f qwen
 ```
 
-The first start downloads the pinned Huihui target, assembles its local fast
-variant, fetches the DFlash2 sidecar, then compiles CUDA/Triton kernels.  The
-build, models and compiled cache are persistent inside this folder.  The model
-repository and immutable revision are declared in `compose.yaml`, so a fresh
-models volume cannot silently fall back to the stock target.
+首次启动会下载固定版本的 Huihui 目标、组装本地 fast variant、获取 DFlash2 sidecar，并编译 CUDA／Triton kernel。构建、模型和编译缓存会持久化在本目录。`compose.yaml` 声明模型仓库和不可变 revision，新的 models volume 不会静默回退到 stock target。
 
-Validate the non-negotiable features and collect the comparison cell from the
-host after `/health` becomes ready:
-
+验证不可妥协的特性，并在 `/health` 就绪后从主机采集比较单元：
 ```bash
 python3 bench/ulmus_validate.py --benchmark --profile max --prefill-target 32768
 ```
 
-The `fast` performance benchmark uses the same approximate p512/g512 text fixture as
-the dual-3090 campaign (565 prompt tokens after Qwen's chat template), plus its
-p8,221 cold-prefill fixture, so the resulting cells are directly comparable.
-
-Run the test once to warm the stack, then keep the second run.  Stop before
-changing profiles:
-
-```bash
-sudo docker compose down
-cp profiles/fast.env .env
-sudo docker compose up -d
-```
-
-`docker compose down` removes the container and private bridge only.  It does
-not delete `models/`, `cache/`, the built image, or benchmark results.
-
-## Qualified results (2026-09-03)
-
-The selected Huihui target was measured after warmup on Ulmus's RTX 4090 at its
-unchanged 280 W power limit.  The retained cells use a cold cache namespace for
-each performance request.  The stock results remain in their original result files
-for provenance; do not relabel them as Huihui measurements.
-
-| Profile | KV / context | p565/g512 decode | Cold prefill | Vision | Prefix cache |
+## 已认证结果（2026-09-03）
+| Profile | KV／上下文 | p565/g512 decode | 冷 prefill | 视觉 | 前缀缓存 |
 |---|---|---:|---:|---|---|
-| `max` (active) | KVarN K4V2 / 262,144 | 136.47 tok/s | 2,230 tok/s at p32,817 | PASS | PASS, 32,640 tokens reused |
-| `fast` (article benchmark) | BF16 / 65,536 | 178.72 tok/s | 2,299 tok/s at p32,817 | PASS | PASS, 33,600/34,231 tokens reused |
+| `max`（当前） | KVarN K4V2／262,144 | 136.47 tok/s | p32,817 时 2,230 tok/s | PASS | PASS，复用 32,640 token |
+| `fast`（文章基准） | BF16／65,536 | 178.72 tok/s | p32,817 时 2,299 tok/s | PASS | PASS，复用 33,600／34,231 token |
 
-Median decode board power was 278.3 W in `max` and 278.8 W in the retained
-`fast` article run.  The active `max` profile passed all 12 request-level checks
-in `bench/api_smoke.py`.  DFlash2 k=5 was slower at 129.02 tok/s.  k=3 was slower
-again at 124.03 tok/s and failed the prefix-cache canary, so k=7 remains selected.
+`max` 的 decode 中位板卡功耗为 278.3 W，保留的 `fast` 文章运行记录为 278.8 W。当前 `max` profile 通过 `bench/api_smoke.py` 的全部 12 项请求级检查。DFlash2 k=5 较慢，为 129.02 tok/s；k=3 更慢，为 124.03 tok/s，且失败于前缀缓存 canary，因此继续选择 k=7。
 
-For the article's comparable ~32K cell, `fast` processed a 32,817-token cold
-prompt at 2,298.5 tok/s and 278.0 W.  The deployed `max` profile allocates a
-272,781-token GPU KV pool and completed exactly 262,136 prompt tokens plus eight
-forced output tokens—262,144 total—in 210.8 seconds.  The GPU held about
-23,698 MiB during that request with roughly 513 MiB free, which is the intended
-transient margin rather than unused capacity.  KVarN's 4/2-bit cache is lossy and
-its deep-context decode is slower than BF16, but the earlier stock INT4 control
-took 608.3 seconds at the same boundary.
-
-Current machine-readable results are in
-`results/huihui-fast-32k-qualified.json`, `results/huihui-max-32k-qualified.json`,
-`results/huihui-max-exact-boundary.json`, and `results/huihui-max-api-smoke.txt`.
-The k=3 and k=5 rejection evidence is retained alongside them.  The reusable
-vision residency A/B remains `results/vision-offload-ab.json`.
+当前机器可读结果位于 `results/huihui-fast-32k-qualified.json`、`results/huihui-max-32k-qualified.json`、`results/huihui-max-exact-boundary.json` 和 `results/huihui-max-api-smoke.txt`。k=3、k=5 的否决证据也与其并列保留；视觉 residency A/B 为 `results/vision-offload-ab.json`。

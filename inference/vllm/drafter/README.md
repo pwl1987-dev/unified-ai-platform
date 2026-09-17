@@ -1,124 +1,50 @@
-# drafter/ — self-distillation data, calibrated int4 requant, MTP fine-tuning, DFlash2 requant
+# drafter/——自蒸馏数据、校准 int4 重量化、MTP 微调与 DFlash2 重量化
 
-Tooling used to build the single-user "fast" variant of the model
-(`models/Qwen3.8-27B-W4A16-AutoRound-fast`, prebuilt on the Hub as
-`syvai/qwen3.8-27b-3090-fast-variant`; `prepare/fetch_fast_variant.py` assembles it). It also
-contains a complete MTP-head fine-tuning pipeline that, honestly, did **not** move the
-needle — kept because the negative result is informative and the same data feeds the
-things that did work.
+本目录包含构建模型单用户 fast variant 的工具：`models/Qwen3.8-27B-W4A16-AutoRound-fast`，Hub 预构建名称为 `syvai/qwen3.8-27b-3090-fast-variant`，由 `prepare/fetch_fast_variant.py` 组装。目录还包含完整的 MTP head 微调流程；微调没有带来实际收益，但负结果有信息价值，而且同一批数据还服务于有效线路。
 
-Everything here runs on the 3090 in the serving venv; ~6 h of GPU time end to end.
+所有操作都在 serving venv 的 3090 上执行，端到端约需 6 小时 GPU 时间。
 
-## What actually mattered (in order)
-
-1. **The draft-head vocabulary.** The MTP drafter scores a 40,960-row slice of `lm_head`
-   (`prepare/build_draft_vocab.py`); a token outside that slice can never be drafted, so every
-   such token is a guaranteed rejection *and* truncates the chain. The originally shipped id
-   list (counted over Danish web text, Wikipedia, Python, and 8.8M tokens of older outputs)
-   covered 92.1% of what the model actually generates — 83% on code. A list counted over
-   5.4M tokens of the model's own outputs (this pipeline, `gen_data.py`) covers 97.5%
-   (96% on code). Nothing else changed: 98.0 → 108.6 tok/s greedy, 90.0 → 107.4 at
-   default sampling. Coverage barely improves past 40k rows (49k: 98.2%; the model only
-   ever emits ~54k distinct tokens), and 49k measured no faster.
-2. **GPTQ-calibrated int4 for lm_head and the MTP module.** Round-to-nearest int4 costs
-   +1.5% perplexity on lm_head (KL to the bf16 head 0.0068) and ~2% acceptance on the
-   MTP module. GPTQ with a Hessian from 300k captured hidden states (`gptq_lm_head.py`)
-   halves the lm_head KL (0.0029, +0.6% PPL, GSM8K 96.5% unchanged) and the MTP
-   Hessians from `train_mtp.py --dump-hessians` keep acceptance intact
-   (`requant_mtp_gptq.py`). Together: −1.8 ms per decode step (108.6 → 118.8 greedy).
-3. **Fine-tuning the MTP head: no.** Distilling the target's own distribution into the
-   drafter (KL over the draft vocab, unrolled depth-2 chains, 7M tokens, one epoch)
-   halves the KL and looks great on the naive metric — until you score only response
-   tokens against the *actual* next token, where top-1 agreement is unchanged
-   (0.685 → 0.685) and vLLM's acceptance moves within noise. Qwen's head is already at the
-   ceiling of a single-layer chain drafter for greedy top-1 on this data; the KL gains
-   were on prompt tokens and on positions whose true token is outside the draft vocab.
-   `train_mtp.py --eval-only` with `--depths 4` prints the greedy chain simulation that
-   matches vLLM (2.5 vs 2.6 tok/step for the original head).
+## 真正重要的因素（按优先级）
+1. **draft-head 词表。** MTP drafter 对 `lm_head` 的 40,960 行切片打分（`prepare/build_draft_vocab.py`）。切片之外的 token 永远无法被 draft，因此必然拒绝并截断链。原始 id 列表覆盖模型实际生成内容的 92.1%，代码覆盖率为 83%；使用模型自身 5.4M token 输出统计的列表覆盖率为 97.5%，代码为 96%。其他条件不变时，greedy 从 98.0 提升到 108.6 tok/s，默认采样从 90.0 提升到 107.4 tok/s。超过 40K 行收益很小，49K 为 98.2%，且实测更慢。
+2. **lm_head 和 MTP 模块的 GPTQ 校准 int4。** 最近邻 int4 使 lm_head 困惑度增加 1.5%，KL 为 0.0068，并使 MTP acceptance 下降约 2%。使用 300K 个 hidden state 的 Hessian（`gptq_lm_head.py`）后，lm_head KL 降到 0.0029，PPL 增加 0.6%，GSM8K 仍为 96.5%；`train_mtp.py --dump-hessians` 得到的 MTP Hessian 可保持 acceptance。组合后每个 decode step 减少约 1.8 ms，greedy 从 108.6 提升到 118.8 tok/s。
+3. **MTP head 微调：不值得。** 将目标模型自身分布蒸馏给 drafter，在 draft vocab 上计算 KL，展开 depth-2 链，使用 7M token、1 个 epoch；朴素指标看似变好，但只在 response token 上与真实 next token 比较时，top-1 agreement 不变（0.685→0.685），vLLM acceptance 仍在噪声范围内。KL 收益主要来自 prompt token 以及真实 token 不在 draft vocab 的位置。`train_mtp.py --eval-only` 配合 `--depths 4` 可打印与 vLLM 一致的 greedy 链模拟，原始 head 为 2.5 对 2.6 tok/step。
 
 ## Pipeline
-
 ```bash
 V=venv/bin/python
-$V drafter/collect_prompts.py                 # 6.8k prompts: UltraChat, Magicoder, syvai/da-instruction,
-                                              #   syvai/reasoning-v1, skolegpt-instruct, GSM8K; 45% thinking on
-VLLM_MARLIN_INPUT_DTYPE=int8 VLLM_MARLIN_INT8_INCLUDE_RE=mlp $V drafter/gen_data.py   # 2.2 h, 5.4M output tokens
-$V drafter/capture.py                         # 1.7 h: hidden states of every token (74 GB memmap), in-process
-                                              #   vLLM hook on GPUModelRunner._model_forward
-# draft vocab from the model's own outputs -> prepare/draft_vocab_ids.json (the shipped list)
+$V drafter/collect_prompts.py                 # 6.8k prompts，多个公开数据集
+VLLM_MARLIN_INPUT_DTYPE=int8 VLLM_MARLIN_INT8_INCLUDE_RE=mlp $V drafter/gen_data.py   # 2.2 h，5.4M 输出 token
+$V drafter/capture.py                         # 1.7 h，保存每个 token 的 hidden state
 $V drafter/train_mtp.py --out drafter/runs/e --eval-only 1 --draft-ids prepare/draft_vocab_ids.json \
      --max-seqs 400 --val-frac 0.4 --depths 2 --dump-hessians drafter/runs/e/mtp_hessians.pt
 $V drafter/gptq_lm_head.py models/Qwen3.8-27B-W4A16-AutoRound models/tmp-lm4 --bits 4 --calib-rows 300000
-$V prepare/build_draft_vocab.py models/tmp-lm4 --ids prepare/draft_vocab_ids.json   # int4 draft head from the int4 lm_head
+$V prepare/build_draft_vocab.py models/tmp-lm4 --ids prepare/draft_vocab_ids.json
 $V drafter/requant_mtp_gptq.py models/tmp-lm4 models/Qwen3.8-27B-W4A16-AutoRound-fast drafter/runs/e/mtp_hessians.pt --bits 4
 ```
 
-Optional fine-tune (for the record): `train_mtp.py --out runs/r --depths 2 --depth-weights 1,0.5
---epochs 1 --lr 3e-5 --micro-tokens 4096` (~30 min/epoch at 4k tok/s), then `export_mtp.py`.
-The trainer reproduces vLLM's drafter to 1% (checked by replaying captured drafter calls
-with their KV history) so its numbers are trustworthy; use `--eval-only` first, response
-tokens only, true-token criterion.
+可选微调仅作记录：`train_mtp.py --out runs/r --depths 2 --depth-weights 1,0.5 --epochs 1 --lr 3e-5 --micro-tokens 4096`，然后执行 `export_mtp.py`。训练器通过重放带 KV history 的 drafter 调用，将自身结果复现到 vLLM 的 1% 以内；应先使用 `--eval-only`，只统计 response token 和真实 token criterion。
 
-## DFlash2 drafter: W4A16 requantization
+## DFlash2 drafter：W4A16 重量化
+`SPEC=dflash2` 单用户模式使用 [incoai/Qwen3.8-27B-DFlash2](https://huggingface.co/incoai/Qwen3.8-27B-DFlash2)，包含 5 个 Qwen3 风格层、hidden 5120、8 个 KV head×128、MLP 17408、将目标第 5／19／33／47／61 层 hidden state 投影到 drafter 的 `fc`、动态卷积和 candidate selector；1.92B 参数，bf16 为 3.85 GB。每个 decode step 读取一次，3090 上约 5 ms，21K-token KV pool；因此使用 compressed-tensors W4A16（Marlin）重写为 1.19 GB：`syvai/Qwen3.8-27B-DFlash2-W4A16`。
 
-`SPEC=dflash2` single-user mode uses [incoai/Qwen3.8-27B-DFlash2](https://huggingface.co/incoai/Qwen3.8-27B-DFlash2)
-(5 Qwen3-style layers, hidden 5120, 8 KV heads × 128, MLP 17408, an `fc` that projects the
-target's layer 5/19/33/47/61 hidden states, dynamic convs, a candidate selector; 1.92B
-params, 3.85 GB bf16). Read once per decode step that is ~5 ms on a 3090 and a 21k-token
-KV pool, so it ships requantized to W4A16 compressed-tensors (Marlin), 1.19 GB:
-[syvai/Qwen3.8-27B-DFlash2-W4A16](https://huggingface.co/syvai/Qwen3.8-27B-DFlash2-W4A16)
-(`prepare/fetch_dflash2.py`). To rebuild it:
-
+重建命令：
 ```bash
 V=venv/bin/python
-$V prepare/fetch_dflash2.py --bf16                               # models/Qwen3.8-27B-DFlash2 (3.85 GB)
-# 1. Hessians from the drafter's OWN inputs: vLLM in-process, eager (hooks), the bf16 drafter
-#    speculating on 400 prompts of data/gen.jsonl at model-default sampling, ~20 min;
-#    hooks on qkv_proj / o_proj / gate_up_proj (GPU fp32 Hessians), down_proj / fc (rows
-#    dumped to memmaps, reduced on the GPU in a re-exec'd process), plus the input of the
-#    fused context-KV precompute (the k/v rows are applied to those too). ~56 GB of scratch.
+$V prepare/fetch_dflash2.py --bf16
 DRAFT=models/Qwen3.8-27B-DFlash2 $V drafter/capture_dflash2.py --prompts 400 --max-tokens 384
-# 2. GPTQ int4 g128 for the 35 layer matrices + fc (k/v blend the context Hessian in),
-#    compressed-tensors export with the vLLM-prefix ignore list (~40 s, GPU must be free:
-#    the fc Hessian is 25600^2)
 $V drafter/quant_dflash2.py models/Qwen3.8-27B-DFlash2 models/Qwen3.8-27B-DFlash2-W4A16 drafter/runs/dflash2/hessians.pt
 ```
 
-What the measurements said (8 realistic prompts × 1,024 tokens, fast-variant target):
+## 测量结论
+- int4 GPTQ 保持 greedy acceptance（3.34–3.65，对比 bf16 的 3.54 tokens/step），默认采样损失约 5%（3.2 对 3.4）。int4 噪声影响 acceptance probability，不影响 argmax；每 step 少读 2.7 GB，配合 fast variant 后将 DFlash2 从无收益变为有收益。
+- `fc` 保持 bf16 而不是 int4（增加 0.26 GB）没有 acceptance 差异：3.17 对 3.17。
+- 将 context-KV 输入分布混入 k/v Hessian 会使 greedy acceptance 下降 7%，3.34→3.12 tokens/step，126→118 tok/s；因此发布的 drafter 不使用该校准。
+- 对 selector walk 的 16-candidate proposal 应用请求的 top-k/top-p，缓存截断但 verify 仍无损，收益约 2%，在噪声范围内，默认关闭（`VLLM_DFLASH2_DRAFT_TOPK_TOPP=0`）。
+- int4 矩阵相对权重误差均值为 0.147（Frobenius），与 MTP 模块相近。
 
-- int4 GPTQ keeps greedy acceptance (3.34-3.65 vs 3.54 tokens per step for bf16) and loses
-  ~5% at the model's default sampling (3.2 vs 3.4): noise in q hurts the acceptance
-  *probability*, not the argmax. Per step it reads 2.7 GB less (31.4 → 28 ms with the base
-  target, 26.5 ms with the fast variant), which is what turns DFlash2 from a wash into a
-  win on this card.
-- `fc` in bf16 instead of int4 (+0.26 GB): no acceptance difference (3.17 vs 3.17).
-- Blending the context-KV input distribution into the k/v Hessians (the k/v rows are also
-  applied to the context rows by the fused precompute, so on paper this is the right
-  calibration): **7% worse** greedy acceptance, 3.34 → 3.12 tokens per step, 126 → 118 tok/s.
-  It looked equal on a single default-sampling run, which is how it nearly shipped; greedy is
-  the reproducible signal here (four repeats land within 1.5 tok/s, step counts identical).
-  `quant_dflash2.py` still supports it — pass a Hessian file containing `ctx_kv` — but the
-  shipped drafter does not use it.
-- Applying the request's top-k/top-p to the selector walk's 16-candidate proposal (cached
-  truncated, so the verify stays lossless — the DFlash2 analogue of the MTP draft
-  truncation): +2%, inside the noise; on by default (`VLLM_DFLASH2_DRAFT_TOPK_TOPP=0` off).
-- Relative weight error of the int4 matrices: 0.147 mean (Frobenius), like the MTP module.
-
-## Notes that cost time
-
-- `capture.py` aligns hidden states by vLLM's request ids, which are `"<counter>-<uuid>"`
-  in 0.27, and by `input_batch.req_ids` order within a step.
-- Decode-time hidden states differ from prefill ones by ~0.9% (fp16 recurrent state);
-  training on either gives the same drafter.
-- Positions right after a rejection are systematically harder: vLLM's per-position
-  acceptance is measured there, so it sits ~5 points below a whole-sequence top-1 rate.
-  The chain simulation in `train_mtp.py --eval-only` accounts for that.
-- Greedy decoding with speculation is not bit-deterministic across drafter configs
-  (verify batches of 5 vs 1 token round differently), so 8 prompts × 1k tokens has a
-  ±3% spread on tokens/step. Repeat before believing a 2% difference. With DFlash2 the
-  greedy spread is wider (3.1-3.6 tokens per step across launch configs), default sampling
-  ±5% per run.
-- `capture_dflash2.py`: an in-process vLLM engine does not give its GPU memory back on
-  `del llm`; the Hessian reduction re-execs the process. The fused `qkv_proj.weight_shape`
-  parameter only holds the last-loaded shard's shape — derive the dense shape from
-  `weight_packed`/`input_size` (the backport's `_dense_kv_rows` does).
+## 费时事项
+- `capture.py` 按 vLLM request id 对齐 hidden state；0.27 中 request id 形如 `counter-uuid`，并按单步内 `input_batch.req_ids` 顺序处理。
+- decode 阶段 hidden state 与 prefill 阶段相差约 0.9%；在任一阶段训练都会得到相同 drafter。
+- rejection 后紧邻的位置系统性更难；其逐位置 acceptance 比整段 top-1 率低约 5 个百分点，`train_mtp.py --eval-only` 的链模拟会处理这一点。
+- 带 speculation 的 greedy decode 在不同 drafter 配置间不是 bit-deterministic；8 个 prompt×1K token 的 tokens/step 可有 ±3% 波动，DFlash2 的启动形制间范围更宽，因此 2% 差异必须重复验证。
+- `capture_dflash2.py` 中，进程内 vLLM 引擎在 `del llm` 后不会归还 GPU 内存，Hessian reduction 需要重新执行进程；融合 `qkv_proj.weight_shape` 只保存最后分片形状，应从 `weight_packed`／`input_size` 推导 dense shape。
