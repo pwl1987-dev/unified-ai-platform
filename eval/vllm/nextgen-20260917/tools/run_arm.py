@@ -153,6 +153,8 @@ def main() -> int:
     ap.add_argument("--skip-thermal", action="store_true")
     ap.add_argument("--warm-prefix", action="store_true",
                     help="正式 runs 用稳定 salt（暖前缀形态，对齐历史 warm 参考值）")
+    ap.add_argument("--boot-tag", default="B01",
+                    help="exp_id 的 boot 号（Qualify 3-boot 传 B02/B03；默认 B01 兼容既有证据）")
     args = ap.parse_args()
     uuids = args.gpu_uuids.split(",")
 
@@ -192,7 +194,7 @@ def main() -> int:
             else:
                 print("[thermal] skipped (--skip-thermal): immediate back-to-back warm replay", flush=True)
         for i in range(1, n + 1):
-            exp_id = f"{args.exp_prefix}-{key.upper()}-B01-R{i:02d}"
+            exp_id = f"{args.exp_prefix}-{key.upper()}-{args.boot_tag}-R{i:02d}"
             out_dir = os.path.join(NEXTGEN, "raw", "staging", exp_id)
             os.makedirs(out_dir, exist_ok=True)
             print(f"[run] {exp_id} mode={mode}", flush=True)

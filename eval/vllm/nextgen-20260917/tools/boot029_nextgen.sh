@@ -95,6 +95,9 @@ CMD=("$VENV/bin/python" -m vllm.entrypoints.cli.main serve "$TARGET"
   --block-size 128
   --compilation-config '{"max_cudagraph_capture_size":8,"custom_ops":["+rms_norm","+silu_and_mul"]}')
 [[ -n "$KV_MEM" ]] && CMD+=(--kv-cache-memory-bytes "$KV_MEM")
+# EXTRA_SERVE_ARGS: 附加 serve 参数（如 Layer B 观测开关），空格分隔
+read -ra _EXTRA <<< "${EXTRA_SERVE_ARGS:-}"
+CMD+=("${_EXTRA[@]}")
 if [[ $SPEC == 1 ]]; then
   CMD+=(--speculative-config "{\"method\":\"dflash\",\"model\":\"$DRAFT\",\"num_speculative_tokens\":7}")
 fi

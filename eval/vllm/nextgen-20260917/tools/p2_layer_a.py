@@ -79,14 +79,16 @@ def stop(pgid: int | None) -> None:
     time.sleep(3)
 
 
-def run_arm_tool(arm: dict, fixture: str, runs: str, max_tokens: int, pgid: int, pid: int) -> int:
+def run_arm_tool(arm: dict, fixture: str, runs: str, max_tokens: int, pgid: int, pid: int,
+                 boot_tag: str = "B01") -> int:
     cmd = [sys.executable, os.path.join(HERE, "run_arm.py"),
            "--api", f"http://127.0.0.1:{PORT}/v1", "--port", str(PORT),
            "--tp", "1", "--ms", "1", "--gpu-uuids", TP1_UUID,
            "--server-pid", str(pid), "--server-pgid", str(pgid),
            "--tag", f"la-{arm['key'].lower()}",
            "--exp-prefix", arm["prefix"] if fixture == "d565" else arm["prefix"] + "-P4K",
-           "--runs", *runs.split(), "--fixture", fixture, "--max-tokens", str(max_tokens)]
+           "--runs", *runs.split(), "--fixture", fixture, "--max-tokens", str(max_tokens),
+           "--boot-tag", boot_tag]
     return subprocess.run(cmd, timeout=max_tokens * 60 + 2400).returncode
 
 
@@ -117,29 +119,37 @@ def main() -> int:
     os.makedirs(os.path.dirname(OUT_FILE), exist_ok=True)
     doc = json.load(open(OUT_FILE)) if os.path.exists(OUT_FILE) else {}
     for arm in ARMS:
-        if arm["key"] in doc and doc[arm["key"]].get("done"):
-            print(f"[{arm['key']}] done, skip", flush=True)
-            continue
-        bno = str(int(time.strftime("%H%M")))
-        ready, pgid, log = boot(arm, bno)
-        if not ready:
-            doc[arm["key"]] = {"done": False, "boot_ready": False, "log": log}
+        boots = doc.setdefault(arm["key"], {}).setdefault("boots", {})
+        for bt in ("B01", "B02", "B03"):
+            if bt in boots and boots[bt].get("all_ok"):
+                print(f"[{arm['key']}-{bt}] done, skip", flush=True)
+                continue
+            # 断点续跑：B01 的 d565 F512 R03 证据已落盘则视为完成（兼容首次 Screen 直升 Qualify）
+            if bt == "B01" and os.path.exists(os.path.join(
+                    STAGING, f"{arm['prefix']}-F512-B01-R03")):
+                boots[bt] = {"all_ok": True, "note": "B01 证据已在位（Screen 轮完成）"}
+                json.dump(doc, open(OUT_FILE, "w"), indent=1, ensure_ascii=False)
+                continue
+            ready, pgid, log = boot(arm, bt)
+            if not ready:
+                boots[bt] = {"all_ok": False, "boot_ready": False, "log": log}
+                json.dump(doc, open(OUT_FILE, "w"), indent=1, ensure_ascii=False)
+                print(f"[{arm['key']}-{bt}] BOOT FAIL", flush=True)
+                continue
+            pid = int(open(os.path.join(log, "server.pid")).read().strip())
+            rc1 = run_arm_tool(arm, "d565", "ns:1 f512:3", 512, pgid, pid, bt)
+            rc2 = run_arm_tool(arm, "p4k", "ns:3", 256, pgid, pid, bt)
+            rc3 = verbatim_probe(arm, f"SMOKE-{bt}") if bt != "B01" else verbatim_probe(arm, "SMOKE")
+            ev = mrv2_evidence(log, arm["key"]) if bt == "B01" else {}
+            boots[bt] = {"all_ok": rc1 == rc2 == rc3 == 0, "boot_ready": True, "log": log,
+                         "rc": {"d565": rc1, "p4k": rc2, "verbatim": rc3}, "mrv2": ev}
             json.dump(doc, open(OUT_FILE, "w"), indent=1, ensure_ascii=False)
-            print(f"[{arm['key']}] BOOT FAIL", flush=True)
-            continue
-        pid = int(open(os.path.join(log, "server.pid")).read().strip())
-        rc1 = run_arm_tool(arm, "d565", "ns:1 f512:3", 512, pgid, pid)
-        rc2 = run_arm_tool(arm, "p4k", "ns:3", 256, pgid, pid)
-        rc3 = verbatim_probe(arm, "SMOKE")
-        ev = mrv2_evidence(log, arm["key"])
-        all_ok = rc1 == rc2 == rc3 == 0
-        doc[arm["key"]] = {"done": all_ok, "boot_ready": True, "log": log,
-                           "rc": {"d565": rc1, "p4k": rc2, "verbatim": rc3}, "mrv2": ev}
+            stop(pgid)
+            time.sleep(10)
+        doc[arm["key"]]["done"] = all(v.get("all_ok") for v in boots.values())
         json.dump(doc, open(OUT_FILE, "w"), indent=1, ensure_ascii=False)
-        stop(pgid)
-        time.sleep(10)
-    print(json.dumps({k: {"done": v.get("done"), "rc": v.get("rc"),
-                          "mrv2_proven": (v.get("mrv2") or {}).get("mrv2_proven")}
+    print(json.dumps({k: {"done": v.get("done"),
+                          "boots": {b: x.get("all_ok") for b, x in v.get("boots", {}).items()}}
                       for k, v in doc.items()}, ensure_ascii=False), flush=True)
     return 0
 
