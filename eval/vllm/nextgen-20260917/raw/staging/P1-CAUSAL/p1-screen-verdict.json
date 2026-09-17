@@ -1,0 +1,301 @@
+{
+ "capacity": {
+  "bf16_ladder": [
+   {
+    "prompt_tokens": 220000,
+    "model_len": 225280,
+    "ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p1cap-b16-B01",
+    "evidence": [
+     "(APIServer pid=2120677) INFO 09-17 23:09:16 [api_utils.py:272] non-default args: {'model_tag': '/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128', 'host': '127.0.0.1', 'port': 19702, 'model': '/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128', 'max_model_len': 225280, 'served_model_name': ['qwen3.8-27b'], 'generation_config': 'vllm', 'tensor_parallel_size': 2, 'block_size': 128, 'gpu_memory_utilization': 0.95, 'kv_cache_dtype': 'bfloat16', 'enable_prefix_caching': True, 'mamba_ssm_cache_dtype': 'float16', 'prefix_match_unit': 128, 'mamba_cache_mode': 'align', 'language_model_only': True, 'max_num_batched_tokens': 2048, 'max_num_seqs': 1, 'async_scheduling': True, 'compilation_config': {'mode': None, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+rms_norm', '+silu_and_mul'], 'ir_enable_torch_wrap': None, 'splitting_ops': None, 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': None, 'compile_ranges_endpoints': None, 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': None, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': None, 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': None, 'pass_config': {}, 'max_cudagraph_capture_size': 8, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': None, 'static_all_moe_layers': []}}",
+     "(EngineCore pid=2121145) INFO 09-17 23:09:30 [core.py:122] Initializing a V1 LLM engine (v0.28.0) with config: model='/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128', speculative_config=None, tokenizer='/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=225280, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=compressed-tensors, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=bfloat16, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=qwen3.8-27b, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+rms_norm', '+silu_and_mul', 'none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 8, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=True, enable_cutedsl_warmup=True, enable_jit_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='auto', linear_backend='auto')",
+     "(Worker_TP1 pid=2121511) INFO 09-17 23:11:57 [gpu_worker.py:593] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9500 is equivalent to --gpu-memory-utilization=0.9431 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9569. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.",
+     "(Worker_TP0 pid=2121510) INFO 09-17 23:11:57 [gpu_worker.py:578] Available KV cache memory: 14.13 GiB",
+     "(Worker_TP0 pid=2121510) INFO 09-17 23:11:57 [gpu_worker.py:593] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9500 is equivalent to --gpu-memory-utilization=0.9431 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9569. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.",
+     "(EngineCore pid=2121145) INFO 09-17 23:11:57 [kv_cache_utils.py:2084] GPU KV cache size: 456,621 tokens, Maximum concurrency for 225,280 tokens per request: 2.03x"
+    ]
+   }
+  ],
+  "fp8": {
+   "prompt_tokens": 220000,
+   "model_len": 225280,
+   "ready": false,
+   "log": "/data/sandbox/nextgen-20260917/log-p1cap-fp8-B02",
+   "evidence": [
+    "(EngineCore pid=2124665) [8/11]  /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc --generate-dependencies-with-compile -MF /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_3.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/cub -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/thrust -isystem /usr/include/python3.12 -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/csrc -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -Xfatbin=-compress-all -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_paged_kernel_mask_3.cu -o /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_3.cuda.o",
+    "(EngineCore pid=2124665) FAILED: [code=1] /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_3.cuda.o",
+    "(EngineCore pid=2124665)  /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc --generate-dependencies-with-compile -MF /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_3.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/cub -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/thrust -isystem /usr/include/python3.12 -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/csrc -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -Xfatbin=-compress-all -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_paged_kernel_mask_3.cu -o /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_3.cuda.o",
+    "(EngineCore pid=2124665)                  from /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_paged_kernel_mask_3.cu:1:",
+    "(EngineCore pid=2124665) [9/11]  /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc --generate-dependencies-with-compile -MF /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_ragged_kernel_mask_3.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/cub -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/thrust -isystem /usr/include/python3.12 -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/csrc -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -Xfatbin=-compress-all -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_ragged_kernel_mask_3.cu -o /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_ragged_kernel_mask_3.cuda.o",
+    "(EngineCore pid=2124665) FAILED: [code=1] /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_ragged_kernel_mask_3.cuda.o",
+    "(EngineCore pid=2124665)  /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc --generate-dependencies-with-compile -MF /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_ragged_kernel_mask_3.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/cub -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/thrust -isystem /usr/include/python3.12 -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/csrc -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -Xfatbin=-compress-all -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_ragged_kernel_mask_3.cu -o /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_ragged_kernel_mask_3.cuda.o",
+    "(EngineCore pid=2124665)                  from /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_ragged_kernel_mask_3.cu:1:",
+    "(EngineCore pid=2124665) [10/11]  /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc --generate-dependencies-with-compile -MF /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_1.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/cub -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/thrust -isystem /usr/include/python3.12 -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/csrc -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -Xfatbin=-compress-all -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_paged_kernel_mask_1.cu -o /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_1.cuda.o",
+    "(EngineCore pid=2124665) FAILED: [code=1] /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_1.cuda.o",
+    "(EngineCore pid=2124665)  /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc --generate-dependencies-with-compile -MF /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_1.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/cub -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include -I/data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cccl/thrust -isystem /usr/include/python3.12 -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/nvidia/cu13/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/tvm_ffi/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/csrc -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /data/tools/vllm28-env/lib/python3.12/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -Xfatbin=-compress-all -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_paged_kernel_mask_1.cu -o /home/lytv/.cache/flashinfer/0.6.16.post3/89/cached_ops/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_batch_prefill_paged_kernel_mask_1.cuda.o",
+    "(EngineCore pid=2124665)                  from /home/lytv/.cache/flashinfer/0.6.16.post3/89/generated/batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_256_head_dim_vo_256_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False/batch_prefill_paged_kernel_mask_1.cu:1:"
+   ],
+   "retry_fa2_forced": {
+    "ready": false,
+    "log": "/data/sandbox/nextgen-20260917/log-p1cap-fp8fa-B04",
+    "boot_attempts": 2,
+    "root_cause": "flashinfer 0.6.16.post3 自带 CCCL 头与 cu13 nvcc 不兼容（cuda_toolkit.h:41 'CUDA compiler and CUDA toolkit headers are incompatible'）；fp8 KV prefill 路径必须 JIT flashinfer 核（默认与强制 FLASH_ATTN 后端均然）——补丁 c 同根因家族",
+    "classification": "UNSUPPORTED on 0.28 栈（环境限制）；FP8_DIAGNOSTIC 顺延 0.29 Layer X（flashinfer 0.6.18 新 CCCL 待验证）"
+   }
+  },
+  "L_bf16": {
+   "prompt_tokens": 220000,
+   "model_len": 225280
+  }
+ },
+ "screen": {
+  "A": {
+   "experiment_id": "V28-T2-Q0-KVARN-SD0-MS1-NBT2048-C1-L220K-P1SCN-A-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 93.213,
+   "wall_s": 93.473,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVARN-SD0-MS1-NBT2048-C1-L220K-P1SCN-A-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 14486,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 33.4,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 148.6,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 148.6,
+     "sampler_exit_code": 0,
+     "samples_collected": 935,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 518.3,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 518.3,
+     "sampler_exit_code": 0,
+     "samples_collected": 374,
+     "errors": []
+    }
+   }
+  },
+  "B": {
+   "experiment_id": "V28-T2-Q0-KVARN-SD1-MS1-NBT2048-C1-L220K-P1SCN-B-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 96.602,
+   "wall_s": 97.502,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVARN-SD1-MS1-NBT2048-C1-L220K-P1SCN-B-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 15620,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 40.4,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 138.5,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 138.5,
+     "sampler_exit_code": 0,
+     "samples_collected": 975,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 507.6,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 507.6,
+     "sampler_exit_code": 0,
+     "samples_collected": 390,
+     "errors": []
+    }
+   }
+  },
+  "C": {
+   "experiment_id": "V28-T2-Q0-KVB16-SD0-MS1-NBT2048-C1-L220K-P1SCN-C-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 91.775,
+   "wall_s": 92.048,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVB16-SD0-MS1-NBT2048-C1-L220K-P1SCN-C-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 23538,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 32.6,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 126.7,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 126.7,
+     "sampler_exit_code": 0,
+     "samples_collected": 920,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 510.7,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 510.7,
+     "sampler_exit_code": 0,
+     "samples_collected": 370,
+     "errors": []
+    }
+   }
+  },
+  "D": {
+   "experiment_id": "V28-T2-Q0-KVB16-SD1-MS1-NBT2048-C1-L220K-P1SCN-D-S1",
+   "prompt_tokens_target": 220000,
+   "actual_prompt_tokens": 220145,
+   "seed": 1,
+   "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+   "needle_position_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ],
+   "ttft_s": 104.041,
+   "wall_s": 105.394,
+   "completion_tokens": 18,
+   "needles_hit": "2/5",
+   "per_needle": {
+    "240891": false,
+    "696853": false,
+    "988598": false,
+    "941235": true,
+    "900875": true
+   },
+   "PASS": false,
+   "answer": "```\n941235,900875\n```",
+   "cache_salt": "formal-needle-V28-T2-Q0-KVB16-SD1-MS1-NBT2048-C1-L220K-P1SCN-D-S1",
+   "kv_usage_peak": null,
+   "vram_peak_mib": 22190,
+   "preempt_observed": false,
+   "sampler_stats": {
+    "metrics_endpoint": {
+     "requested_interval_ms": 100,
+     "actual_interval_ms_min": 40.3,
+     "actual_interval_ms_median": 100.1,
+     "actual_interval_ms_max": 124.2,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 124.2,
+     "sampler_exit_code": 0,
+     "samples_collected": 1054,
+     "errors": []
+    },
+    "nvml": {
+     "requested_interval_ms": 500,
+     "actual_interval_ms_min": 0.0,
+     "actual_interval_ms_median": 0.0,
+     "actual_interval_ms_max": 511.6,
+     "missing_sample_ratio": 0.0,
+     "max_gap_ms": 511.6,
+     "sampler_exit_code": 0,
+     "samples_collected": 422,
+     "errors": []
+    }
+   }
+  }
+ },
+ "verdict": {
+  "cells": {
+   "A": {
+    "PASS": false,
+    "hits": "2/5"
+   },
+   "B": {
+    "PASS": false,
+    "hits": "2/5"
+   },
+   "C": {
+    "PASS": false,
+    "hits": "2/5"
+   },
+   "D": {
+    "PASS": false,
+    "hits": "2/5"
+   }
+  },
+  "L_bf16": {
+   "prompt_tokens": 220000,
+   "model_len": 225280
+  },
+  "fp8_220k_ready": false,
+  "fp8_arm_PASS": null,
+  "interpretation": "NOT_ATTRIBUTABLE_TO_KVARN",
+  "rule": "A=fail,C=pass→主效应；A,C=pass,B=fail,D=pass→交互；A,C=pass,B,D=fail→spec 主效应；A,C=fail→不可归因"
+ }
+}

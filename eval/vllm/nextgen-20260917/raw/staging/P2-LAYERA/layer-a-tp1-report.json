@@ -1,0 +1,120 @@
+{
+ "LA28REF": {
+  "done": true,
+  "boot_ready": true,
+  "log": "/data/sandbox/nextgen-20260917/log-la-la28ref-9",
+  "rc": {
+   "d565": 0,
+   "p4k": 0,
+   "verbatim": 0
+  },
+  "mrv2": {
+   "mrv2_proven": null,
+   "note": "0.28 无 V2 Model Runner 概念；GDN Triton 路径同 0.29"
+  },
+  "boots": {
+   "B01": {
+    "all_ok": true,
+    "note": "B01 证据已在位（Screen 轮完成）"
+   },
+   "B02": {
+    "all_ok": true,
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-la-la28ref-B02",
+    "rc": {
+     "d565": 0,
+     "p4k": 0,
+     "verbatim": 0
+    },
+    "mrv2": {}
+   },
+   "B03": {
+    "all_ok": true,
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-la-la28ref-B03",
+    "rc": {
+     "d565": 0,
+     "p4k": 0,
+     "verbatim": 0
+    },
+    "mrv2": {}
+   }
+  }
+ },
+ "LA29A": {
+  "done": true,
+  "boot_ready": true,
+  "log": "/data/sandbox/nextgen-20260917/log-la-la29a-14",
+  "rc": {
+   "d565": 0,
+   "p4k": 0,
+   "verbatim": 0
+  },
+  "mrv2": {
+   "mrv2_proven": true,
+   "proof_line": "gpu_worker.py:429 'Using V2 Model Runner'（0.29 措辞；正则勘误：非 'mrv2' 字面）",
+   "async_scheduling": true,
+   "fallbacks_recorded": [
+    {
+     "what": "GDN 融合核→Triton decode 路径",
+     "why": "frozen 配方 mamba-ssm-cache-dtype=float16 触发（融合核要求 BF16 conv cache）",
+     "parity": "0.28 参照臂同样走 Triton GDN（qwen_gdn_linear_attn.py:500/505）——内核路径对齐，无版本混淆",
+     "mrv1_fallback": false
+    }
+   ]
+  },
+  "boots": {
+   "B01": {
+    "all_ok": true,
+    "note": "B01 证据已在位（Screen 轮完成）"
+   },
+   "B02": {
+    "all_ok": true,
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-la-la29a-B02",
+    "rc": {
+     "d565": 0,
+     "p4k": 0,
+     "verbatim": 0
+    },
+    "mrv2": {}
+   },
+   "B03": {
+    "all_ok": true,
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-la-la29a-B03",
+    "rc": {
+     "d565": 0,
+     "p4k": 0,
+     "verbatim": 0
+    },
+    "mrv2": {}
+   }
+  }
+ },
+ "comparison": {
+  "qualify_3boot": {
+   "V28_boot_medians": [
+    57.838,
+    57.847,
+    57.838
+   ],
+   "V28_overall": 57.838,
+   "V28_cross_boot_spread_pct": 0.016,
+   "V29_boot_medians": [
+    57.857,
+    57.863,
+    57.863
+   ],
+   "V29_overall": 57.863,
+   "V29_cross_boot_spread_pct": 0.01,
+   "delta_pct": 0.043
+  },
+  "verbatim": {
+   "V28": "100/100 ×3 boots",
+   "V29": "100/100 ×3 boots"
+  },
+  "gate_layer_a_tp1": "PASS（Qualify 3 boot × 3 reps；性能 +0.043% << 5%；spread << 3%；质量全同；MRV2 实证）",
+  "tier": "≤3% 高度一致"
+ }
+}

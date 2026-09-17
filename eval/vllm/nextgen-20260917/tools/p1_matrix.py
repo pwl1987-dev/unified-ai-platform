@@ -143,8 +143,13 @@ def evaluate(doc: dict) -> dict:
     k = verdict.get("KVARN")
     if k:
         s1 = [d for key, d in k["seed_detail"].items() if key.endswith("-S1")]
+        def _hits_int(h):
+            try:
+                return int(str(h).split("/")[0])
+            except Exception:
+                return 0
         k["negative_control reproduced"] = any(
-            d["PASS"] is False and (d.get("hits") or 0) <= 3 for d in s1)
+            d["PASS"] is False and _hits_int(d.get("hits")) <= 3 for d in s1)
         k["negative_control_rule"] = "220K S1 ≤3/5 且丢针位于浅层（0.1/0.3/0.5）"
     return verdict
 

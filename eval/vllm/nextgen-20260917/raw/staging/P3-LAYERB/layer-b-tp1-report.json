@@ -1,0 +1,166 @@
+{
+ "LB28REF": {
+  "hash_tonly": {
+   "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+   "completion_tokens": 14,
+   "head": "NEXTGEN-CCDET-CHECK-7f3a。",
+   "spec_metrics": null
+  },
+  "log_tonly": "/data/sandbox/nextgen-20260917/log-lb-lb28ref-t",
+  "hash_spec": {
+   "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+   "completion_tokens": 14,
+   "head": "NEXTGEN-CCDET-CHECK-7f3a。",
+   "spec_metrics": null
+  },
+  "spec_done": true,
+  "log_spec": "/data/sandbox/nextgen-20260917/log-lb-lb28ref-s",
+  "gauges_pre_bench": {
+   "gauges": {
+    "vllm:spec_decode_num_drafts_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+    "vllm:spec_decode_num_drafts_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664147.0000374,
+    "vllm:spec_decode_num_draft_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+    "vllm:spec_decode_num_draft_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664147.000069,
+    "vllm:spec_decode_num_accepted_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664147.0000873,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"0\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"1\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"2\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"3\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"4\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"5\"}": 0.0
+   },
+   "accepted": 0.0,
+   "proposed": 0.0
+  },
+  "gauges_post_bench": {
+   "gauges": {
+    "vllm:spec_decode_num_drafts_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 488.0,
+    "vllm:spec_decode_num_drafts_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664147.0000374,
+    "vllm:spec_decode_num_draft_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 3416.0,
+    "vllm:spec_decode_num_draft_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664147.000069,
+    "vllm:spec_decode_num_accepted_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1131.0,
+    "vllm:spec_decode_num_accepted_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664147.0000873,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"0\"}": 338.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"1\"}": 240.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"2\"}": 178.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"3\"}": 134.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"4\"}": 94.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"5\"}": 85.0
+   },
+   "accepted": 1131.0,
+   "proposed": 488.0,
+   "acceptance_ratio": 2.317622950819672
+  },
+  "cudagraph_gauges_post": {},
+  "lossless_bitwise": true
+ },
+ "LB29B": {
+  "spec_done": true,
+  "boot_fail_log": "/data/sandbox/nextgen-20260917/log-lb-lb29b-s",
+  "hash_tonly": {
+   "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+   "completion_tokens": 14,
+   "head": "NEXTGEN-CCDET-CHECK-7f3a。",
+   "spec_metrics": null
+  },
+  "log_tonly": "/data/sandbox/nextgen-20260917/log-lb-lb29b-t",
+  "hash_spec": {
+   "text_sha256": "0bd1ecd60a79a499abf81d34e9b2c1fe32f484d1e04988fdb7f1418d36abf2dd",
+   "completion_tokens": 14,
+   "head": "NEXTGEN-CCDET-CHECK-7f3a。",
+   "spec_metrics": {
+    "mean_acceptance_length": 4.666666666666666,
+    "draft_acceptance_rate": 0.5238095238095238,
+    "acceptance_histogram": [
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0
+    ],
+    "num_spec_steps": 3,
+    "num_accepted_draft_tokens": 11,
+    "num_draft_tokens": 21,
+    "num_spec_tokens": 7,
+    "per_step_accepted": [
+     4,
+     6,
+     1
+    ],
+    "per_step_drafted": [
+     7,
+     7,
+     7
+    ]
+   }
+  },
+  "log_spec": "/data/sandbox/nextgen-20260917/log-lb-lb29b-s",
+  "gauges_pre_bench": {
+   "gauges": {
+    "vllm:spec_decode_num_drafts_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+    "vllm:spec_decode_num_drafts_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664724.4351175,
+    "vllm:spec_decode_num_draft_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+    "vllm:spec_decode_num_draft_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664724.4351485,
+    "vllm:spec_decode_num_accepted_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664724.4351695,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"0\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"1\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"2\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"3\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"4\"}": 0.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"5\"}": 0.0
+   },
+   "accepted": 0.0,
+   "proposed": 0.0
+  },
+  "gauges_post_bench": {
+   "gauges": {
+    "vllm:spec_decode_num_drafts_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 482.0,
+    "vllm:spec_decode_num_drafts_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664724.4351175,
+    "vllm:spec_decode_num_draft_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 3374.0,
+    "vllm:spec_decode_num_draft_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664724.4351485,
+    "vllm:spec_decode_num_accepted_tokens_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1128.0,
+    "vllm:spec_decode_num_accepted_tokens_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 1789664724.4351695,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"0\"}": 335.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"1\"}": 249.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"2\"}": 193.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"3\"}": 125.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"4\"}": 82.0,
+    "vllm:spec_decode_num_accepted_tokens_per_pos_total{engine=\"0\",model_name=\"qwen3.8-27b\",position=\"5\"}": 76.0
+   },
+   "accepted": 1128.0,
+   "proposed": 482.0,
+   "acceptance_ratio": 2.340248962655602
+  },
+  "cudagraph_gauges_post": {},
+  "lossless_bitwise": true
+ },
+ "verdict": {
+  "d565_f512_median": {
+   "V28": 144.962,
+   "V29": 146.014,
+   "delta_pct": 0.73,
+   "spec_speedup_vs_tonly": {
+    "V28": "144.962/57.838=2.506x",
+    "V29": "146.014/57.863=2.524x"
+   }
+  },
+  "lossless": "四通路同 hash 0bd1ecd6…（0.28/0.29 × target-only/spec）——跨版本逐位无损，与 Phase 00 D1 探针 hash 一致",
+  "acceptance_per_draft_token": {
+   "V28": 2.3176,
+   "V29": 2.3402,
+   "as_ratio_of_k7": {
+    "V28": 0.3311,
+    "V29": 0.3343
+   },
+   "gate": "结构性地板 20% PASS；版本 gap +0.33pp << 5pp"
+  },
+  "unit_c": "REQUIRED 并已移植（LB29B 首次 boot 死于 flashinfer 0.6.18 topk JIT CCCL 不兼容；env 开关移植后恢复）",
+  "cudagraph_gauges": "两臂 gauge 均空（过滤词未命中）——graph replay 证据改由 Layer B Qualify boot 宽采样重取",
+  "gate_layer_b_screen": "PASS（无损 100% + 接受率过 + 性能 +0.73%）；Qualify 3-boot 待补"
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "kvb16": [
+  {
+   "seed": 99,
+   "prompt_tokens": 220000,
+   "PASS": true,
+   "hits": "5/5",
+   "answer": null,
+   "codes": {
+    "523601": 0.1,
+    "499248": 0.3,
+    "309794": 0.5,
+    "728557": 0.7,
+    "287487": 0.9
+   }
+  },
+  {
+   "seed": 2,
+   "prompt_tokens": 220000,
+   "PASS": true,
+   "hits": "5/5",
+   "answer": null,
+   "codes": {
+    "990298": 0.1,
+    "159298": 0.3,
+    "196033": 0.5,
+    "188994": 0.7,
+    "478596": 0.9
+   }
+  },
+  {
+   "seed": 1,
+   "prompt_tokens": 128000,
+   "PASS": false,
+   "hits": "2/5",
+   "answer": null,
+   "codes": {
+    "240891": 0.1,
+    "696853": 0.3,
+    "988598": 0.5,
+    "941235": 0.7,
+    "900875": 0.9
+   }
+  }
+ ],
+ "kvarn": [
+  {
+   "seed": 99,
+   "prompt_tokens": 220000,
+   "PASS": true,
+   "hits": "5/5",
+   "answer": null,
+   "codes": {
+    "523601": 0.1,
+    "499248": 0.3,
+    "309794": 0.5,
+    "728557": 0.7,
+    "287487": 0.9
+   }
+  }
+ ],
+ "verdict": {
+  "seed99_recallable_both_dtypes": true,
+  "seed2_220k_recallable": true,
+  "seed1_128k": false,
+  "conclusion_rule": {
+   "seed99_pass+seed1_128k_pass": "码集依赖 + 长度涌现（128→220K 间召回塌陷）",
+   "seed99_pass+seed1_128k_fail": "码集依赖（seed1 码集本身不可召回=夹具问题）",
+   "seed99_fail": "220K 全面召回退化（与码集无关）——升级为模型长上下文质量问题"
+  }
+ }
+}

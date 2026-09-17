@@ -1,0 +1,55 @@
+{
+ "experiment_id": "V28-T2-Q0-KVB16-SD1-MS1-NBT2048-C1-L220K-P1M-B02-S1R3",
+ "prompt_tokens_target": 220000,
+ "actual_prompt_tokens": 220145,
+ "seed": 1,
+ "fixture_sha256": "57161e8db28cb3a1554895b2e8f849d199be03d81abc3868e174eddc0a060d37",
+ "needle_position_fractions": [
+  0.1,
+  0.3,
+  0.5,
+  0.7,
+  0.9
+ ],
+ "ttft_s": 104.349,
+ "wall_s": 105.17,
+ "completion_tokens": 18,
+ "needles_hit": "2/5",
+ "per_needle": {
+  "240891": false,
+  "696853": false,
+  "988598": false,
+  "941235": true,
+  "900875": true
+ },
+ "PASS": false,
+ "answer": "```\n941235,900875\n```",
+ "cache_salt": "formal-needle-V28-T2-Q0-KVB16-SD1-MS1-NBT2048-C1-L220K-P1M-B02-S1R3",
+ "kv_usage_peak": null,
+ "vram_peak_mib": 22668,
+ "preempt_observed": false,
+ "sampler_stats": {
+  "metrics_endpoint": {
+   "requested_interval_ms": 100,
+   "actual_interval_ms_min": 37.1,
+   "actual_interval_ms_median": 100.1,
+   "actual_interval_ms_max": 163.2,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 163.2,
+   "sampler_exit_code": 0,
+   "samples_collected": 1051,
+   "errors": []
+  },
+  "nvml": {
+   "requested_interval_ms": 500,
+   "actual_interval_ms_min": 0.0,
+   "actual_interval_ms_median": 0.0,
+   "actual_interval_ms_max": 570.8,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 570.8,
+   "sampler_exit_code": 0,
+   "samples_collected": 422,
+   "errors": []
+  }
+ }
+}
