@@ -36,5 +36,10 @@
     "integration_decode_uplift_percent": 16.75,
     "autonomy_decode_uplift_percent": 15.78
   },
-  "decision": "Q3_K_M is a fast/low-VRAM tier candidate, not the default quality tier until current step-863 passes autonomy and patch gates."
+  "decision": "Historical step-863 Q3 demonstrates a useful fast/low-VRAM tier, but current step-576 has no published Q3. Rebuild paired Q3/Q4 controls from the published current BF16 companion before making a current deployment decision.",
+  "lineage_corrected": "2026-09-19",
+  "lineage": "historical step-863 paired quantization evidence; not current main",
+  "current_main_revision": "ba6d29fb2505241d7dae88df4fda9038999c3ca9",
+  "current_main_checkpoint": "V3 step-576 strength 0.7",
+  "current_main_publishes_q3": false
 }
