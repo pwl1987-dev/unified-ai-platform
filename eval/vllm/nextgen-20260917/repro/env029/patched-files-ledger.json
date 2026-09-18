@@ -31,10 +31,17 @@
    "applied_utc": "2026-09-18",
    "layer": "B",
    "file": "model_executor/layers/logits_processor.py",
-   "sha256_after": "89dad76031eeac8d0f0aa1e4d1c1e6f8bd21d1f9a21e78b60f83a1c9f1f42a6b0-truncated",
+   "sha256_after": "89dad76031eeac8d1e910bafeace91c48fc134e2174f4d07afbebfde795a3d0f",
    "hunk": "_flashinfer_topk() 增 env 开关（4 行+注释；.orig 备份）",
    "trigger": "LB29B spec boot 实证：flashinfer 0.6.18 topk JIT 于 EngineCore init 死（CCCL 头不兼容同 0.28）",
-   "activation": "VLLM_DFLASH2_TORCH_TOPK=1"
+   "activation": "VLLM_DFLASH2_TORCH_TOPK=1",
+   "sha256_after_erratum": {
+    "bad_record": "89dad76031eeac8d0f0aa1e4d1c1e6f8bd21d1f9a21e78b60f83a1c9f1f42a6b0-truncated",
+    "cause": "Phase 01 手工记录截断（-truncated 后缀），非文件漂移",
+    "correct_sha256": "89dad76031eeac8d1e910bafeace91c48fc134e2174f4d07afbebfde795a3d0f",
+    "verified_by": ".orig 差分恰为 unit-c hunk + 双文件 mtime 2026-09-18 01:04:20（补丁落盘时刻）未再变更",
+    "fixed_utc": "2026-09-18"
+   }
   },
   {
    "unit": "d_kvarn_core + e_env_hooks",

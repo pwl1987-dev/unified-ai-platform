@@ -1,6 +1,6 @@
 # nextgen-20260917 战役冻结清单（Phase 00 起生效）
 # 本文件是机器可读的战役级事实冻结。修改须走正式修订（MASTER-TEST-PLAN §18）。
-version: 2
+version: 3
 frozen_at_utc: "2026-09-17T00:00:00Z"   # 以 commit #1 实际时间为准，见 git log
 plan: MASTER-TEST-PLAN.md@v1.2
 repo_baseline: f2d1054
@@ -170,3 +170,38 @@ phase01:
     fp8_arm: "fp8 默认 scale=1.0，标签 FP8_DIAGNOSTIC，不进 Gate A-X"
     derived_parameter: "kv_cache_memory 随 dtype 派生，仅保证相同实际 token capacity（margin ≥1.05）"
   candidate_decision_ledger: raw/valid/<exp>/manifest.json:candidate_decision   # 与实验六态分落盘
+
+# ---------------------------------------------------------------------------
+# Phase 02（v1.2 计划，机器契约修正版）。正式修订：version 2 -> 3（§18 流程）。
+# 接手者读本块即可知 Phase 02 冻结内容；Phase 00/01 各块继续有效。
+phase02:
+  plan_version: v1.2                          # 两轮评审收敛（9 项结构修正 + 8 项机器契约修正）
+  measurement_contract_sha: 80e7d15c6e18247615f5425d2e5ece9cffdfe3d5   # 继承 Phase 00 commit #1
+  runner_safety_baseline: 899eb5a3ad59b6e548ff7bd507085061f8732089     # 继承下限
+  manifest_schema:
+    version: "1.2"
+    sha256: 32266c04c5fe01c93b36a49db7a472606dd03fbd31836c3b82f6ddb896ed4851
+    delta: "additive：classification_reason += NOT_RUN_UPSTREAM_CAPACITY；新增 screen_decision(IN/OUT/UNSUPPORTED)、evidence_quality(COMPLETE/PARTIAL/MEASUREMENT_NOT_AVAILABLE)、observation_class(CEILING_OBSERVATION)；candidate_decision 语义不变"
+  gates_sha256: a94770296afde7a6c37351c8b34696fa04b7a3c3419ab45ba9528f27b3b2b15e  # repro/gates-phase02.yaml（P0A 冻结，禁改）
+  runtime029_phase02_baseline:                # Phase 01 期间环境变过（补丁落树+pandas/pyarrow 补装），此为打补丁后终态
+    file: eval/vllm/nextgen-20260917/repro/env029/runtime029-phase02-baseline.json
+    freeze_tool: tools/p0a_runtime_freeze.py
+    vllm_tree_sha256_post_patch: 4632d624c2bd2373a746a978a1022a12633abf4036f956fc3fb82e3d047a75c8   # 2537 files（区别于 phase01 的打补丁前基准 45c5c919…）
+    pip_freeze: repro/env029/freeze-phase02-baseline.txt
+    key_versions: {python: 3.12.3, vllm: 0.29.0, torch: 2.13.0+cu130, cuda: "13.0",
+                   transformers: 5.17.0, flashinfer: 0.6.18, triton: 3.7.1,
+                   pandas: 3.0.6, pyarrow: 25.0.1}   # pandas/pyarrow = Phase 01 full-quality 补装
+    integrity: CLEAN                          # 台账 unit-c sha256_after 截断记录已勘误（.orig 差分+mtime 双证）
+    readonly_rule: "Phase 02 全程只读；任何变更 = 新实验 ID + ENV_DRIFT"
+  baselines:                                  # 三形制对照 + TP1 分母（详 gates-phase02.yaml:baselines）
+    b0_l32:  {shape: "TP2 32K spec bf16 native，MS=4",  level: qualify}
+    b0_x128: {shape: "TP2 128K spec bf16 native，MS=2", level: screen_reference}
+    b0_x220: {shape: "TP2 220K spec bf16 native，MS=1", level: screen_reference}
+    tp1_control: {shape: "TP1 32K spec bf16 native",    level: qualify}
+  pairing_scan:                               # P0B；授权卡 GPU2/3/4 内双对，CPU/NUMA 冻结
+    alternate_pair_registration: "对照对臂单独注册 UUID+时窗；历史锚点仍绑定 3+4"
+    escalate_rule: "对照对 busbw 与 D565/P32K 双赢且 ≥5% → 用户拍板（换对=历史 TP2 作废）"
+  screen_matrix: "9 向分类型（scalar/policy 两类 Gate）+ dynamic-k；判定全数值化见 gates-phase02.yaml"
+  combination: "forward-addition 双 lineage（composite_L2 / portable_winners→composite_X2）"
+  ceiling_chain: "P220K PASS → 245K(seed99) → 262K(seed99)；只标 CEILING_OBSERVATION；238K+ 正式认证归 Phase 03"
+  gate_b: "B-L2 ∧ B-X2 → Overall PASS；单边 = L2_ONLY / X2_ONLY（详 gates-phase02.yaml:gate_b）"

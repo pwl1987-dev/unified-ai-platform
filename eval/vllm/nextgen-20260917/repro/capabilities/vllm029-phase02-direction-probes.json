@@ -1,0 +1,91 @@
+{
+  "probed_utc": "2026-09-18",
+  "purpose": "Phase 02 九向实验矩阵旗标/参数实名与约束探针（P0A.4，gates-phase02.yaml 冻结的实名依据）",
+  "env": "/data/tools/vllm29-env（runtime029_phase02_baseline：tree 4632d624… post-patch）",
+  "cli_surface_reconfirm": {
+    "method": "重 dump --help=all 与 Phase 01 版 diff",
+    "result": "唯一差异 = --kv-cache-dtype 枚举新增 kvarn_k4v2_g128/g64、kvarn_k4v4_g128/g64（Layer C unit-d 注入，INERT 状态，仅 kvarn_* dtype 激活）",
+    "artifacts": ["vllm029-serve-help-all-p02.txt", "vllm029-serve-help-p02.err"]
+  },
+  "directions": {
+    "draft_tp": {
+      "real_name": "speculative-config JSON 字段 draft_tensor_parallel_size（speculative.py:394，无顶层旗标）",
+      "usage": "--speculative-config '{\"method\":\"dflash\",\"num_speculative_tokens\":7,\"draft_tensor_parallel_size\":2}'",
+      "constraint": "ge=1；与 target TP 解耦（1477-1494 有对 target_parallel_config 的适配逻辑）"
+    },
+    "batch_sharded_sampling": {
+      "real_name": "--enable-batch-sharded-sampling（config/parallel.py:167）",
+      "validator": "config/vllm.py:2676 _validate_batch_sharded_sampling",
+      "blockers": ["tensor_parallel_size<=1", "max_num_seqs<tp", "max_logprobs==-1", "adaptive_verification 开启（仅 DSpark 用，本栈不涉）"],
+      "model_runner_compat": {
+        "v1": "UNSUPPORTED（_get_v1_model_runner_unsupported_features 2614-2645 明列 batch-sharded sampling）",
+        "v2": "不在 _get_v2_model_runner_unsupported_features（2539-2613）列表；本栈 MRv2（Phase 01 实证）→ 配置级可行，boot 级实证留 P1",
+        "local_logits": "validator 无显式检查；qwen3.5 hybrid V2 local logits 需 boot 实证（MASTER 前提③）"
+      },
+      "verdict": "配置级 GO（TP2/MS≥2）；boot 拒绝则按 gates unsupported_rule 归 UNSUPPORTED"
+    },
+    "max_num_seqs": {
+      "real_name": "--max-num-seqs（既有）",
+      "legal_triangle_note": "MS≥C 合法域；与 bss 联动时须 MS≥TP"
+    },
+    "nbt": {
+      "real_name": "--max-num-batched-tokens（help L1536）",
+      "values_frozen": [1024, 2048, 3072, 4096],
+      "note": "spec decode 时 verify batch 计入（help L1591-1594：通常等于 max_num_batched_tokens）"
+    },
+    "cuda_graph": {
+      "real_name": "--compilation-config JSON：cudagraph_mode / max_cudagraph_capture_size / cudagraph_capture_sizes / cudagraph_num_of_warmups",
+      "mode_enum": ["NONE", "PIECEWISE", "FULL", "FULL_DECODE_ONLY", "FULL_AND_PIECEWISE"],
+      "source": "config/compilation.py:53 CUDAGraphMode；help L1664-1672 compilation-config 块",
+      "stage_mapping": {
+        "auto-cap8": "默认 mode（现行配方 max_cudagraph_capture_size=8）",
+        "FULL-cap8": "--compilation-config '{\"cudagraph_mode\":\"FULL\",\"max_cudagraph_capture_size\":8}'",
+        "FULL-cap16": "同上 capture=16"
+      },
+      "metrics_flag": "--cudagraph-metrics（L1437：'runtime cudagraph dispatch modes' 计数）——Phase 01 曾见无 Prometheus 出口；本轮 profiler 路径为主、此旗标重试为辅",
+      "spec_compat": "FULL+spec 的 verify batch 覆盖 = k8 复核同一关注点；boot 拒绝 → 该 stage UNSUPPORTED"
+    },
+    "all_reduce": {
+      "states": {
+        "default": "custom allreduce kernel（现行）",
+        "flashinfer": "env VLLM_ALLREDUCE_USE_FLASHINFER=1（device_communicators/flashinfer_all_reduce.py:191；cuda_communicator.py:63 要求非 VLLM_BATCH_INVARIANT）",
+        "nccl_fallback": "--disable-custom-all-reduce（help L764）"
+      },
+      "note": "MASTER 措辞 'FlashInfer opt-out' 在 0.29 实为 opt-in env；三态实名如上"
+    },
+    "prefix_retention": {
+      "real_name": "--prefix-cache-retention-interval（help L1032）",
+      "semantics": {
+        "0": "仅语义检查点（最新 replay 边界 + 共享前缀交点）",
+        "positive": "附加周期检查点；必须是调度器 block size 的倍数",
+        "null_dense": "None = 密集保留检查点"
+      },
+      "applies_to": "sliding-window 与 Mamba cache groups（本栈 hybrid mamba 相关）",
+      "default": "UNSET"
+    },
+    "prefix_match_unit": {
+      "real_name": "--prefix-match-unit（help L1064）",
+      "constraint": "每个 KV cache group 的 block_size 必须能被其整除（可细于物理块，如 32 vs 1024-token hybrid 块）",
+      "block_size_128_legal_values": [32, 64, 128],
+      "candidate_values_frozen": ["default", 32, 64, 128]
+    },
+    "admission_control": {
+      "real_names": {
+        "max_num_queued_reqs": "--max-num-queued-reqs（help L1548；waiting+running 总数上限，超限 HTTP 503 可重试；粗粒度容量阀）",
+        "max_num_queued_tokens": "--max-num-queued-tokens（help L1556；prefill 在途 prompt token 总量上限，超限 503；官方语义=TTFT QoS：target_TTFT × prefill_throughput）"
+      },
+      "semantics_note": "tokens 计数保守（部分 prefill 请求全量计入；prefix 命中数不上报 API 层）——建模预期时计入"
+    }
+  },
+  "dynamic_k": {
+    "verdict": "NOT_SUPPORTED_FOR_DFLASH",
+    "evidence": "config/speculative.py:1520 的动态 num_speculative_tokens 语义仅属 suffix_decoding（另一方法）；dflash/dflash2 无动态 k 旗标/字段",
+    "implication": "P2.4 记录源码级不支持（fixed k 阶梯照跑；k8 复核照跑）",
+    "adaptive_verification_note": "enable_adaptive_verification 仅 DSpark 可用（speculative.py:1508 ValueError），与本栈无关"
+  },
+  "misc_relevant": {
+    "kv_cache_dtype_now": "枚举含 kvarn_*（Layer C 注入）——Phase 02 全程 native bf16，kvarn_* 不激活",
+    "mamba_cache_mode": "{align,all,none}；align=prefix caching 开启时默认（本栈沿用 align）",
+    "mamba_block_size": "--mamba-block-size（prefix caching 须开；8 的倍数）"
+  }
+}

@@ -1,0 +1,267 @@
+# gates-phase02.yaml — Phase 02 全门槛冻结（v1.0，P0A 冻结，禁止看结果后修改）
+# 依据：计划 v1.2（机器契约修正版）+ MASTER §8/§17 Gate B + Phase 01 交接（报告 §7）
+# 判定口径：绝对提升 ≥3% 才 IN（scalar 类）；<3% = 噪声 → OUT 留证
+# 参数实名纪律：本文件冻结语义/数值/判定；CLI 旗标实名以 repro/capabilities/ P0A.4 探针为准，不猜
+version: 1
+frozen_utc: "2026-09-18"
+measurement_contract_sha: 80e7d15          # Phase 00 commit #1（指标公式/fixture/pairing）继承
+runner_safety_baseline: 899eb5a            # stop()/PGID/staging/压缩修复下限继承
+manifest_schema:
+  version: "1.2"
+  sha256: 32266c04c5fe01c93b36a49db7a472606dd03fbd31836c3b82f6ddb896ed4851
+runtime_baseline:
+  file: repro/env029/runtime029-phase02-baseline.json
+  vllm_tree_sha256_post_patch: 4632d624c2bd2373a746a978a1022a12633abf4036f956fc3fb82e3d047a75c8
+  rule: "Phase 02 全程只读该环境；任何包/文件变更 = 新实验 ID + ENV_DRIFT"
+
+qualify_protocol:
+  screen: {boots: 1, reps_per_boot: 3}
+  qualify: {boots: 3, reps_per_boot: 3, spread_max: 0.03,
+            rule: "VLLM_CACHE_ROOT 钉死 + 暖机 + 固定同 fixture/seed（认证形制）"}
+
+status_layering:  # 五层分离，禁止混用、禁止发明非法状态
+  experiment_status: [VALID_PASS, VALID_FAIL, INVALID, UNSUPPORTED, ABORTED, REJECTED]
+  classification_reason: [PERF_GATE_FAIL, OOM, QUALITY_FAIL, SERVER_CRASH, HARNESS_ERROR,
+                          ENV_DRIFT, SCHEMA_FAIL, INTERRUPTED, CAPACITY_LIMIT, NOT_RUN_UPSTREAM_CAPACITY]
+  screen_decision: [IN, OUT, UNSUPPORTED]            # Phase 02 增补（schema 1.2）
+  evidence_quality: [COMPLETE, PARTIAL, MEASUREMENT_NOT_AVAILABLE]  # 与六态正交；观测缺失≠失败
+  observation_class: [CEILING_OBSERVATION]           # 245K/262K ceiling 档强制
+  candidate_decision: [PASS, REJECTED, DEFERRED_TO_PHASE03]  # P5 Profile 级决策沿用
+  gate_verdicts: [B-L2, B-X2, Overall-B(L2_ONLY/X2_ONLY)]
+
+# ============================================================ 两类 Gate + sign-aware
+metric_sign:            # 改善率公式：lower=(ref−cand)/ref；higher=(cand−ref)/ref；正=变好
+  ttft_p50: lower       # 指标名 = p02_evaluate.py 提取器实名（每 run 内分布→跨 run 中位）
+  ttft_p95: lower
+  ttft_p99: lower
+  tpot_p50: lower
+  e2e_p50: lower
+  goodput_rps: higher   # requests_ok / batch_wall_s（排除失败/取消）
+  aggregate_tok_s: higher
+  http_error_rate: lower
+  accept_rate: higher
+
+scalar_optimization_gate:        # 适用方向见 directions.*.gate
+  improvement_min: 0.03          # 绝对值；<3% = 噪声 → OUT
+  other_axis_regression_max: 0.05
+  quality: quality_two_tier
+
+policy_envelope_gate:            # 容量/策略/Pareto 类，不按速度单值判（逐向约束见 directions）
+  principle: "按预冻结约束裁决；为压 P95 主动让 aggregate 不构成 OUT"
+
+quality_two_tier:
+  tier_a_exact:                                  # 硬线，100% 逐位
+    ccdet_canary_hash: "与对照 boot 同 hash（期望 0bd1ecd6… 家族）"
+    token_replay: "temp=0+固定 seed 冻结探针集，与对照逐位一致 100%"
+    verbatim: "100/100"
+  tier_b_smoke:                                  # MASTER exact/benign/failure
+    framework: [exact, benign, failure]
+    failure_rule: "failure = 否决（不能用速度抵消）"
+    benign_rule: "放行并记录（含已知 temp=0 boot 间边缘翻转，Phase 01 §6.1 先例）"
+    note: "禁止把 Tier-B 边缘翻转当 Tier-A 违反误判 OUT"
+
+# ============================================================ P0B 拓扑双对扫描
+pairing_scan:
+  authorized_cards: [2, 3, 4]            # 只在授权测试卡内选对；GPU5-7 不碰
+  pairs: {frozen: [3, 4], alternate: "2+3 或 2+4，按 nvidia-smi topo -m 取对比度更好者"}
+  cpu_numa_frozen:                       # 两对完全一致，排除 CPU 侧差异
+    cpu_affinity: "同 taskset cpuset（server+client+tokenizer），cpuset 落盘"
+    numa_policy: "同 numactl 策略，numactl -h 落盘"
+    client_placement: "同节点同核段"
+    nccl_env: "同 NCCL_* 环境"
+  measurements:
+    nccl_tests: "all_reduce busbw（标准尺寸扫描，报告 256MiB 档）"
+    bench: "D565-F512 C1 ×3 reps + P32K C1 ×3 reps（每对 1 boot）"
+  registration: "对照对臂在 MANIFEST 单独注册 UUID+时窗；历史锚点仍绑定 3+4"
+  verdict_rule: {default: "维持 3+4（历史可比性优先）",
+                 escalate_to_user_if: "对照对 busbw 与 D565/P32K 双赢且均 ≥5%",
+                 consequence: "换对 = 历史 TP2 数字作废重测"}
+
+# ============================================================ P1 基线
+baselines:
+  b0_l32:                        # 一切 32K 形制方向的对照零点（Qualify 级）
+    recipe: "0.29 + W4A16 + DFlash2 k7 + TP2 + draft TP1 + 32K(32768) + native KV(bf16 显式) + patch(a,b,c)"
+    max_num_seqs: 4              # 显式声明（MS≥C 合法域内工作点）
+    level: qualify               # 3 boot × 3 reps
+    fixtures: [D565-F512, C4-L0565(真形制), P4K-warm/cold(C1/C4 分轨)]
+    extras: [verbatim, acceptance_ledger, capacity_snapshot]
+  b0_x128:                       # NBT@128K 与 X2 的 same-shape 分母（Screen reference 级）
+    recipe: "同 b0_l32，max_model_len=131072，max_num_seqs=2"
+    level: screen_reference      # 1 boot × 3 reps；进 X2 最终配置时升 3×3
+    fixtures: [P128K-C1, P128K-C2(容量允许时), needle-多seed+seed99]
+    extras: [capacity_snapshot, max_resident_concurrency_calc]
+  b0_x220:                       # admission@220K 与 X2-220K 的分母（Screen reference 级）
+    recipe: "同 b0_l32，max_model_len=225280，max_num_seqs=1"
+    level: screen_reference
+    fixtures: [P220K-C1(在途=1), needle-多seed+seed99]
+    extras: [capacity_snapshot, max_resident_concurrency_calc]
+  tp1_control:                   # B-L2 的 TP1 侧分母（Qualify 级）
+    recipe: "0.29 + W4A16 + DFlash2 k7 + TP1 + 32K + native KV(bf16) + patch(a,b,c)"
+    level: qualify
+    fixtures: [P32K-C1, P32K-C2, D565-C1, D565-C2]
+    reference_reuse: "D565-F512-C1 引用 Layer B Qualify 145.012 tok/s（同栈同形制）"
+
+# ============================================================ P1 9 向矩阵（分类型）
+directions:
+  max_num_seqs:                  # policy 类
+    gate: policy_envelope_gate
+    paired_axis: max_num_seqs    # workload concurrency 每 comparison 冻结
+    legal_triangle: {C1: [1, 2, 4, 8], C2: [2, 4, 8], C4: [4, 8], C8: [8]}   # MS ≥ C
+    boot_sharing: "同 MS 值不同 C 共享 boot"
+    fixtures: {D565: 全三角, P32K: [C1, C2, C4]}
+    judgement:
+      per_c_regression_max: 0.05       # 同 C 下 MS 步进不得拖累该 C 主轴
+      deliverable: "交互档/吞吐档 Pareto envelope（不强求单一值）"
+      in_rule: "任一 C 档主轴 sign-aware 改善 ≥3% 或解锁更高 C 可行档 → 该档位记 IN"
+  nbt:                           # scalar 类
+    gate: scalar_optimization_gate
+    values: [1024, 2048, 3072, 4096]
+    fixtures: {P4K: vs b0_l32, P32K: vs b0_l32, P128K: vs b0_x128}
+    kv_boundary_rule: "KV token capacity 变化 ≤0.5%；挤压即 OUT"
+    oom_rule: "FLA workspace OOM → VALID_FAIL/OOM（降档续跑并记录）"
+    primary_axes: [ttft_p50, ttft_p95, aggregate_tok_s]
+  cuda_graph:                    # scalar 类，两步单变量
+    gate: scalar_optimization_gate
+    stages:
+      - {from: auto-cap8, to: FULL-padded-cap8, promote_only_if: stage1_IN}
+      - {from: FULL-cap8, to: FULL-cap16}
+    primary_axes: [tpot_p95, aggregate_tok_s]
+    fixtures: {D565: [C1, C4, C8]}
+    evidence:                    # 同步清偿 graph-replay Debt（Phase 01 §6.4）
+      required: [capture_coverage, replay_eager_ratio, graph_miss]
+      per_dispatch_metering: "profiler 路径；不可得 → evidence_quality=PARTIAL（非 FAIL）"
+  all_reduce:                    # scalar 类
+    gate: scalar_optimization_gate
+    values: [default, flashinfer_optout, custom_ar_disabled]   # 实名以探针为准
+    fixtures: {D565: [C1, C4], P32K: [C1]}
+    trace: "NCCL/AR trace 留档；只保留真实使用路径"
+    stable_winner_rule: "胜者须跨 rep 方向一致（3/3）"
+  draft_tp:                      # scalar 类
+    gate: scalar_optimization_gate
+    values: [1, 2]               # 分母 = draft TP1（b0 系列）
+    fixtures: {D565: [C1, C2, C4]}
+    primary_axes: [tpot(C1), goodput(C2)]
+    ledger: [draft_vram_mib, accept_rate, nccl_time_share]
+  batch_sharded_sampling:        # scalar 类（预期可能 UNSUPPORTED）
+    gate: scalar_optimization_gate
+    values: [off, on]
+    preconditions: [tp_gt_1, max_num_seqs_ge_tp, model_local_logits]
+    unsupported_rule: "配置拒绝 ≠ bug；能力探针留证 → UNSUPPORTED 归档"
+    fixtures: {D565: [C2, C4, C8], P32K: [C2]}
+    primary_axes: [aggregate_tok_s, goodput]
+  admission_control:             # policy 类
+    gate: policy_envelope_gate
+    levels: "多档（实名以探针为准；queued reqs/tokens 族）"
+    open_loop_fixtures: [P4K, P32K]
+    overload_points: [0.90, 1.10]     # 饱和估计的百分比点
+    judgement:
+      overload_p95_protection: "≥90% 点：served ttft_p95(admission) ≤ served ttft_p95(no-admission)"
+      rejection_predictability: {only_503: true, retry_safe: true, monotonic_in_arrival: true}
+      served_goodput_regression_max_non_overload: 0.05
+      x220_inflight1: {preemptions: 0, oom: 0, http_error_rate_max: 0.001}   # vs b0_x220
+  prefix_retention:              # policy 类
+    gate: policy_envelope_gate
+    values: [off, periodic, dense_if_available]   # 实名/可用性以探针为准
+    fixtures: "真实多轮 + partial-tail；warm C1/C4 分轨"
+    judgement:
+      warm_ttft_improvement_min: 0.03      # C1 轨
+      partial_ttft_improvement_min: 0.03   # C4 partial-tail 轨
+      cold_ttft_regression_max: 0.01
+      vram_overhead_max_mib: 512
+  prefix_match_unit:             # policy 类
+    gate: policy_envelope_gate
+    values: [default, 32, 64, 128]         # 须满足 block 约束（探针先证）
+    tail_rewrite_tokens: [1, 8, 32, 128]
+    judgement:
+      finer_hits_rule: "至少一档尾部改写类 warm/partial TTFT sign-aware 改善 ≥3%（净值，扣除 metadata 开销）"
+      error_rate_max: 0
+      metadata_cost_net: "改善必须为 net（含每请求开销）"
+
+# ============================================================ P2 dynamic k / 投机细化
+dynamic_k:
+  target_only_reference: "TP2 tonly 镜像（b0_l32 配方去 spec），Screen 级 + token diff 基线"
+  ladder: [5, 6, 7]              # k=7 = b0 已有
+  k8_capability_check:           # 一次性复核，不进阶梯
+    cg_covers_verify_batch: true
+    position8_nonzero_accept: true
+    else_rule: "任一不满足 → k8 关闭（留证，不进阶梯）"
+  acceptance_gate:               # 复用 Phase 01 layer_b 地板
+    total_structural_floor: 0.20
+    per_position_gap_max_pp: 8.0
+    denominator: "accepted_tokens / proposed_tokens"
+  bucket_floor:                  # 分桶：单桶崩塌不得被总体均值掩盖
+    buckets: [zh, en, code, tool_json, verbatim, short_prompt, long_prompt, multi_turn]
+    per_bucket_floor: 0.15
+    per_bucket_vs_overall_max_gap_pp: 5.0
+  quality: "temp=0+seed token diff vs target-only（quality_two_tier；破坏即否决）"
+  net_benefit_ledger: [drafter_ms_per_step, verify_ms_per_step, sched_bubble_ms_per_step,
+                       extra_vram_mib, tokens_per_step, accepted_per_step]
+
+# ============================================================ P3 组合（双 lineage）
+combination:
+  forward_addition:
+    order: "按 Screen margin 降序"
+    step_pairing: "每步与上一 composite 同形制严格配对（认证形制）"
+    interaction_rule: "单独 ≥3% 但叠加后增益 <1% → 记 interaction（不判可加）"
+  lineages:
+    composite_L2: "forward-addition 于 L32 形制（b0_l32 起点）"
+    composite_X2: "portable_winners 于 b0_x128/b0_x220 重新 forward-addition"
+  portable_winner_rule:          # 防交互档优化吃掉长上下文容量
+    x128_recheck: {capacity_delta_max: 0.005, ttft_regression_max: 0.01}
+    x220_recheck: "composite_X2 终验（容量/TTFT 不被牺牲）"
+
+# ============================================================ P4 Profile + SLO 双曲线
+profiles:
+  L2:
+    shape: "composite_L2 + 32K + spec"
+    quality: quality_two_tier
+    boots: 3
+    curves: {primary: P32K, micro: D565}
+  X2:
+    shape: "composite_X2 + bf16 native（128K/220K）"
+    quality: "needle 多 seed + seed99（修正协议）+ quality_two_tier"
+    boots: 3                        # 最终配置升 3×3
+    curves: {primary: P128K}
+    x220: {inflight: 1, ttft_gate_max_vs_layerx_ref: 0.05, layerx_ref_ttft_s: 104.125}
+    max_resident_concurrency_rule: "每请求 footprint = prompt + output + 协议/chat 开销；数学不足档直接 VALID_FAIL/CAPACITY_LIMIT 不撞墙"
+
+slo_curves:                          # SLO_UNDECIDED 义务；arrival 列为准
+  closed_loop_concurrencies: [1, 2, 4, 8]
+  infeasible_endpoint: CAPACITY_LIMIT   # 容量不可行档作为曲线端点记录
+  saturation_ratios: [0.25, 0.50, 0.75, 0.90, 1.10]
+  insufficient_samples_rule: "completed < min_completed → 该点 P99 = INSUFFICIENT_SAMPLES"
+  outputs: [arrival_rate, achieved_rate, ttft_p50_p95_p99, tpot, queue_depth, error_rate, preemptions, goodput]
+  per_fixture_params:               # 各自独立冻结，不沿用 Phase 01 D565/P220K 参数
+    D565:  {warmup_s: 120, measurement_s: 300, min_completed_requests: 60,  max_test_duration_s: 900}
+    P32K:  {warmup_s: 120, measurement_s: 420, min_completed_requests: 40,  max_test_duration_s: 1500}
+    P128K: {warmup_s: 240, measurement_s: 900, min_completed_requests: 12,  max_test_duration_s: 3600}
+
+# ============================================================ ceiling 晋级链（245K/262K）
+ceiling_chain:
+  seeds: [99]                       # 只用阳性码集；seed1/seed3（已知负码集）禁用
+  hard_budget: "actual_input_tokens + requested_output_tokens + chat/protocol overhead ≤ max_model_len（overhead 实测入档）"
+  stages:
+    - {fixture: P220K, precondition: "X2-220K 门全过（本链入口）"}
+    - {fixture: P245K, label: CEILING_OBSERVATION,
+       promote_next_only_if: "boot 成功 + 容量足 + needle 5/5 + TTFT 有效证据 全部成立"}
+    - {fixture: P262K, label: CEILING_OBSERVATION}
+  upstream_fail_rule: "245K CAPACITY_LIMIT/OOM/length-limit → 262K = NOT_RUN_UPSTREAM_CAPACITY（不撞第二面墙）"
+  representation_rule: "两档永远只标 CEILING_OBSERVATION，禁止表述为'已认证'；正式 3 boot × 3 seed 资格归 Phase 03"
+
+# ============================================================ Gate B（§17）
+gate_b:
+  b_l2:
+    form: P32K                      # 主判形制
+    primary_axes: [tpot(C1, lower), ttft_p50(C1, lower), goodput(C2, higher)]
+    denominators: {tp2: composite_L2/L2 定稿, tp1: tp1_control(Qualify)}
+    pass_rule: "TP2 ≥1 主轴 sign-aware 改善 ≥3% ∧ 其他关键轴退步 ≤5% ∧ quality_two_tier 过"
+    other_key_axes: [ttft_p95(C1), aggregate_tok_s(C4)]
+  b_x2:
+    needle: "128K/220K 多 seed + seed99 全过（修正协议）"
+    capacity: "max_resident_concurrency 与容量余量成档记录（margin ≥1.05 于申报工作点）"
+    ttft: "220K-C1 ≤ +5% vs Layer X 参照 104.125s"
+    designation: "TP2 designated X2 domain（无 TP1 128K 对照臂时不称 exclusive）"
+  overall:
+    both_pass: PASS
+    single_side: {b_l2_only: L2_ONLY, b_x2_only: X2_ONLY}   # 局部 verdict 可用于路由
+    question: "TP2 是否适合成为交互/长上下文主基线（聚合吞吐 TP1 对照保留，不强行合并配置）"

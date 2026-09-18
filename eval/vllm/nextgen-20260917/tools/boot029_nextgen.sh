@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# nextgen 0.29 参数化启动器（Phase 01，计划 v1.2）
+# nextgen 0.29 参数化启动器（Phase 01 计划 v1.2 建立；Phase 02 v1.2 增量扩参）
 # 母本: tools/boot028_nextgen.sh；差异：
 #   1. venv=/data/tools/vllm29-env（本战役可写，补丁 in-tree + .orig 备份 + tree-hash 台账）
 #   2. --kv-cache-memory → --kv-cache-memory-bytes（0.29 CLI 改名；per-GPU；not-None 时忽略 gpu_memory_utilization）
 #   3. 无 PYTHONPATH overlay（补丁直接进 0.29 树）；overlay 专属环境变量在补丁单元缺失时显式告警
 #   4. 补丁级验证（--patch a|b|c）：所需符号缺失 => 启动前 FAIL，不打哑谜
 #   5. boot 后抓 resolved KV dtype 三元组（attention/Mamba conv/Mamba SSM）落盘
+# Phase 02 扩参（实名依据 repro/capabilities/vllm029-phase02-direction-probes.json）：
+#   --nbt N / --cg-mode M --cg-cap N / --draft-tp N / --k N / --bss 1
+#   --queued-reqs N / --queued-tokens N / --retention 0|N|none / --match-unit N
+#   --pair-uuids U1,U2（仅限授权卡 GPU2/3/4 组合；P0B 配对扫描专用，落 pairing-scan 标记）
 # 防自杀：runner 须以 `setsid bash boot029_nextgen.sh ...` 调用；本脚本 nohup server 并登记 PID/PGID。
 #
 # 用法: boot029_nextgen.sh <tag> <port> <tp> <ms> [选项]
@@ -20,6 +24,8 @@
 set -euo pipefail
 TAG=${1:?tag}; PORT=${2:?port}; TP=${3:?tp}; MS=${4:?ms}; shift 4
 KV_DTYPE=auto MODEL_LEN=32768 KV_MEM="" SPEC=0 PATCH=a COLD=0
+NBT=2048 CG_MODE="" CG_CAP=8 DRAFT_TP=0 SPEC_K=7 BSS=0
+QUEUED_REQS="" QUEUED_TOKENS="" RETENTION="" MATCH_UNIT=128 PAIR_UUIDS=""
 while [[ $# -gt 0 ]]; do case "$1" in
   --kv-dtype) KV_DTYPE=$2; shift 2;;
   --model-len) MODEL_LEN=$2; shift 2;;
@@ -27,6 +33,17 @@ while [[ $# -gt 0 ]]; do case "$1" in
   --spec) SPEC=$2; shift 2;;
   --patch) PATCH=$2; shift 2;;
   --cold) COLD=1; shift;;
+  --nbt) NBT=$2; shift 2;;
+  --cg-mode) CG_MODE=$2; shift 2;;
+  --cg-cap) CG_CAP=$2; shift 2;;
+  --draft-tp) DRAFT_TP=$2; shift 2;;
+  --k) SPEC_K=$2; shift 2;;
+  --bss) BSS=$2; shift 2;;
+  --queued-reqs) QUEUED_REQS=$2; shift 2;;
+  --queued-tokens) QUEUED_TOKENS=$2; shift 2;;
+  --retention) RETENTION=$2; shift 2;;
+  --match-unit) MATCH_UNIT=$2; shift 2;;
+  --pair-uuids) PAIR_UUIDS=$2; shift 2;;
   *) echo "unknown arg $1"; exit 2;;
 esac; done
 
@@ -42,7 +59,19 @@ DRAFT=/data/sandbox/vllm-cu130-qual-20260915/draft-recal-readable-20260915
 # ---- 物理卡位 Gate（与 MANIFEST gpu_identity_gate 一致）----
 declare -A ROLE_UUIDS=( [1]="GPU-41a1986d-e745-9e40-c520-09490081fd44"
                         [2]="GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e" )
-WANT=${ROLE_UUIDS[$TP]:?unknown tp}
+# 授权卡集（P0B 配对扫描越权防护）：--pair-uuids 只允许从 GPU2/3/4 组合
+AUTHORIZED_UUIDS="GPU-41a1986d-e745-9e40-c520-09490081fd44 GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e"
+if [[ -n "$PAIR_UUIDS" ]]; then
+  IFS=',' read -ra _PU <<< "$PAIR_UUIDS"
+  [[ ${#_PU[@]} -eq $TP ]] || { echo "--pair-uuids 数量须等于 tp=$TP"; exit 9; }
+  for u in "${_PU[@]}"; do
+    [[ " $AUTHORIZED_UUIDS " == *" $u "* ]] || { echo "[pair-guard] $u 不在授权卡集（GPU2/3/4）— 拒绝"; exit 9; }
+  done
+  WANT="$PAIR_UUIDS"
+  echo "[pair-guard] PAIRING-SCAN ARM: uuids=$WANT（MANIFEST phase02.pairing_scan 注册项）" | tee "$SBX/${TAG}.pairing-scan.txt"
+else
+  WANT=${ROLE_UUIDS[$TP]:?unknown tp}
+fi
 GOT=$("$HERE/nvml_bind.py" snapshot | "$VENV/bin/python" -c "
 import json,sys
 cards=json.load(sys.stdin)
@@ -89,17 +118,29 @@ mkdir -p "$VLLM_CACHE_ROOT" "$SBX/log-$TAG"
 CMD=("$VENV/bin/python" -m vllm.entrypoints.cli.main serve "$TARGET"
   --served-model-name qwen3.8-27b --host 127.0.0.1 --port "$PORT"
   --tensor-parallel-size "$TP"
-  --max-model-len "$MODEL_LEN" --gpu-memory-utilization 0.95 --max-num-seqs "$MS" --max-num-batched-tokens 2048
-  --mamba-ssm-cache-dtype float16 --mamba-cache-mode align --prefix-match-unit 128 --async-scheduling
+  --max-model-len "$MODEL_LEN" --gpu-memory-utilization 0.95 --max-num-seqs "$MS" --max-num-batched-tokens "$NBT"
+  --mamba-ssm-cache-dtype float16 --mamba-cache-mode align --prefix-match-unit "$MATCH_UNIT" --async-scheduling
   --language-model-only --enable-prefix-caching --generation-config vllm --kv-cache-dtype "$KV_DTYPE"
   --block-size 128
-  --compilation-config '{"max_cudagraph_capture_size":8,"custom_ops":["+rms_norm","+silu_and_mul"]}')
+  --compilation-config "{\"max_cudagraph_capture_size\":$CG_CAP,\"custom_ops\":[\"+rms_norm\",\"+silu_and_mul\"]${CG_MODE:+,\"cudagraph_mode\":\"$CG_MODE\"}}")
 [[ -n "$KV_MEM" && "$KV_MEM" != "auto" ]] && CMD+=(--kv-cache-memory-bytes "$KV_MEM")
-# EXTRA_SERVE_ARGS: 附加 serve 参数（如 Layer B 观测开关），空格分隔
+# Phase 02 方向旗标（实名见 vllm029-phase02-direction-probes.json）
+[[ $BSS == 1 ]] && CMD+=(--enable-batch-sharded-sampling)
+[[ -n "$QUEUED_REQS" ]] && CMD+=(--max-num-queued-reqs "$QUEUED_REQS")
+[[ -n "$QUEUED_TOKENS" ]] && CMD+=(--max-num-queued-tokens "$QUEUED_TOKENS")
+case "$RETENTION" in
+  ""|UNSET) ;;
+  none|dense) CMD+=(--prefix-cache-retention-interval none);;   # None=密集保留（help L1032-1041）
+  *) CMD+=(--prefix-cache-retention-interval "$RETENTION");;
+esac
+# EXTRA_SERVE_ARGS: 附加 serve 参数（如观测开关），空格分隔
 read -ra _EXTRA <<< "${EXTRA_SERVE_ARGS:-}"
 CMD+=("${_EXTRA[@]}")
 if [[ $SPEC == 1 ]]; then
-  CMD+=(--speculative-config "{\"method\":\"dflash\",\"model\":\"$DRAFT\",\"num_speculative_tokens\":7}")
+  SPECJSON="{\"method\":\"dflash\",\"model\":\"$DRAFT\",\"num_speculative_tokens\":$SPEC_K"
+  [[ $DRAFT_TP -ge 1 ]] && SPECJSON+=",\"draft_tensor_parallel_size\":$DRAFT_TP"
+  SPECJSON+="}"
+  CMD+=(--speculative-config "$SPECJSON")
 fi
 
 printf '%s\n' "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES" "VLLM_CACHE_ROOT=$VLLM_CACHE_ROOT" \

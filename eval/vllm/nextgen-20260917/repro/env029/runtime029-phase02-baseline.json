@@ -1,0 +1,114 @@
+{
+ "purpose": "runtime029_phase02_baseline——Phase 02 只读起点（打补丁+补装后终态）",
+ "frozen_utc": "2026-09-18T13:12:34.433196+00:00",
+ "env": "/data/tools/vllm29-env",
+ "python_version": "Python 3.12.3",
+ "pip_freeze_file": "freeze-phase02-baseline.txt",
+ "pip_freeze_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+ "package_versions": {
+  "vllm": "0.29.0",
+  "torch": "2.13.0",
+  "transformers": "5.17.0",
+  "flashinfer-python": "0.6.18",
+  "triton": "3.7.1",
+  "pandas": "3.0.6",
+  "pyarrow": "25.0.1",
+  "nccl": null,
+  "cuda-runtime": null,
+  "xformers": null
+ },
+ "torch_cuda": "13.0",
+ "vllm_tree": {
+  "root": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm",
+  "files_hashed": 2537,
+  "sha256_post_patch": "4632d624c2bd2373a746a978a1022a12633abf4036f956fc3fb82e3d047a75c8",
+  "note": "打补丁后终态；与 phase01.baseline_tree_sha256_pre_patch(45c5c919…) 不同属预期"
+ },
+ "patch_unit_files_sha256": {
+  "config_cache.py.patch": "1dd272ee96cfdb5aed3003073e540b52bd80b50773e4fd6bbb17cf3903ced164",
+  "model_executor_layers_attention_attention.py.patch": "1c10b60b8cf4326795d8d7b6620f4a557a6cf0cd3009e12890d5ea27c64bbf98",
+  "model_executor_layers_logits_processor.py.patch": "41d204c63921f0358cceddc3fb9b2db9d8284047d4a1f6226fea1d145c52805b",
+  "model_executor_models_qwen3_5.py.patch": "0dabe44ad7efc9a95cca87ce085ef19a3592975592067277775b8710a9e99c2f",
+  "model_executor_models_qwen3_5_mtp.py.patch": "2530edf48239fff4474aaae0b63ed2d915b080798d4992902e233b996509676c",
+  "model_executor_models_qwen3_dflash.py.patch": "44af007103d38e8fc523380f71f4aaf95c8c61c1516568c332d74724f2e76786",
+  "model_executor_models_qwen3_dflash2.py.patch": "3acf6c44874941e3cabf76766551b09977f07f524dbf9b538984df433eca5b3a",
+  "platforms_cuda.py.patch": "0743e0afaf333e457544f115f3130b3c4e960d9cd940244ae5d2f4138d3f4941",
+  "platforms_interface.py.patch": "811fd948bfd07c57057ad38e1dfa7fc9140c34618b37e96f2147fd5b3da8351a",
+  "utils_torch_utils.py.patch": "563f7f209f5af6fa6218d98970280341014b602530cac5cfaf6481dd61db6c78",
+  "v1_attention_backends_registry.py.patch": "43548ae3b159d44754278e7f9dad2141cf97a49c79b0ba03e54a03c2fad8b171",
+  "v1_core_kv_cache_coordinator.py.patch": "d84f819001a39b95e4989cdab16a8a205c00cc6dee44c468e1d899931ecec794",
+  "v1_core_kv_cache_utils.py.patch": "3114c6627944d91ecc9e20ca0be447231f37653f879bfffa236ba70e79fcc404",
+  "v1_core_single_type_kv_cache_manager.py.patch": "e3701f0b5e7f2888b5639987dfb9c68537e02d9ef8cf232b58cfa12e13baadb7",
+  "v1_kv_cache_interface.py.patch": "c9a20bd81e4763fe33b7e259b4c8608f0e4e3c18c0ae6f6558056b79b1702b89",
+  "v1_worker_gpu_model_runner.py.patch": "b3581230aab808e3cf16ef291e3f98fd0fad208ef1d9c9b0a98511d60435ffc9",
+  "v1_worker_gpu_model_states_mamba_hybrid.py.patch": "cadef1dfaeac63904b572e26db951eb706c6ca219fb5f2b7a90a8cfcbb441aa5",
+  "v1_worker_gpu_spec_decode_dflash2_speculator.py.patch": "501caffd0969be75f8b00230e9d9357f9c13cf7d65337e4dec7858344f042eab"
+ },
+ "patched_file_integrity": {
+  "checked": [
+   {
+    "file": "model_executor/models/qwen3_5.py",
+    "match_with_phase01_ledger": true,
+    "sha256_now": "ab0617a2f06b06f7fbf0c2d4b2b91b6bc4d73813dbc79f104c69a67772dff383"
+   },
+   {
+    "file": "model_executor/models/qwen3_5_mtp.py",
+    "match_with_phase01_ledger": true,
+    "sha256_now": "ef538140213a31c96e6d3c3d4957f6fbd428702053dcf2970228ac2e7147730e"
+   },
+   {
+    "file": "model_executor/layers/logits_processor.py",
+    "match_with_phase01_ledger": true,
+    "sha256_now": "89dad76031eeac8d1e910bafeace91c48fc134e2174f4d07afbebfde795a3d0f"
+   }
+  ],
+  "drift": [],
+  "verdict": "CLEAN"
+ },
+ "symbol_provenance": {
+  "sys_path": [
+   "",
+   "/data/tools/vllm29-env/lib/python3.12/site-packages/cv2",
+   "/data/tools/vllm29-env/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages",
+   "/data/tools/vllm29-env/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages",
+   "/usr/lib/python312.zip",
+   "/usr/lib/python3.12",
+   "/usr/lib/python3.12/lib-dynload",
+   "/data/tools/vllm29-env/lib/python3.12/site-packages",
+   "/data/tools/vllm29-env/lib/python3.12/site-packages/setuptools/_vendor"
+  ],
+  "overlay_in_path": [],
+  "symbols": {
+   "qwen3_5": {
+    "module": "vllm.model_executor.models.qwen3_5",
+    "file": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5.py",
+    "sha256": "ab0617a2f06b06f7fbf0c2d4b2b91b6bc4d73813dbc79f104c69a67772dff383"
+   },
+   "qwen3_5_mtp": {
+    "module": "vllm.model_executor.models.qwen3_5_mtp",
+    "file": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5_mtp.py",
+    "sha256": "ef538140213a31c96e6d3c3d4957f6fbd428702053dcf2970228ac2e7147730e"
+   },
+   "logits_processor": {
+    "module": "vllm.model_executor.layers.logits_processor",
+    "file": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm/model_executor/layers/logits_processor.py",
+    "sha256": "89dad76031eeac8d1e910bafeace91c48fc134e2174f4d07afbebfde795a3d0f"
+   },
+   "kv_cache_utils": {
+    "module": "vllm.v1.core.kv_cache_utils",
+    "file": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm/v1/core/kv_cache_utils.py",
+    "sha256": "e2af850b6035a9361a7a69eabd6ac7e6a6006a6ac7de1da1d40338c5ee2528fd"
+   },
+   "attention_registry": {
+    "module": "vllm.v1.attention.backends.registry",
+    "file": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm/v1/attention/backends/registry.py",
+    "sha256": "fb26267556964930a4cf65c9b68779af7519a0df3bdee191ed3f200f5aba2121"
+   },
+   "platforms_cuda": {
+    "module": "vllm.platforms.cuda",
+    "file": "/data/tools/vllm29-env/lib/python3.12/site-packages/vllm/platforms/cuda.py",
+    "sha256": "e23b60405643605ccf8e47af1470f8808d0742361a07ae2c6917c32a54d88738"
+   }
+  }
+ }
+}
