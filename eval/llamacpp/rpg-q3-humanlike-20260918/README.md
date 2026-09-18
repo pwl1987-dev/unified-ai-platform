@@ -2,6 +2,8 @@
 
 本包只回答一个问题：在 **同一模型 revision、同一 llama.cpp、同一 RTX 4090、同一 32K 配置** 下，Q3_K_M 相对 Q4_K_M 的速度、显存、长上下文和 RPG 行为差异有多大。
 
+> **谱系更正（2026-09-19）**：本包测试对象属于历史 step-863 线，不是当前 main。当前上游 main 为 `ba6d29fb2505241d7dae88df4fda9038999c3ca9`，即 V3 step-576、0.7 strength；当前 main 不发布 Q3_K_M。旧 Q3/Q4 实测数据本身不变，仅纠正版本身份。
+
 ## 结论
 
 - **Q3_K_M 可作为“速度/显存档”，暂不建议取代 Q4_K_M 主档。**
@@ -66,12 +68,13 @@ Q3 的典型额外失败包括：
 
 这类失败与游戏对“NPC 有自己目标、不会无条件讨好玩家”的要求直接相关，所以即使 Q3 更快，也不能只看 tok/s 决策。
 
-## 当前主线说明
+## 当前主线与下一步
 
-2026-09-18 检查到上游当前主线已发布新的 step-863 Q3_K_M/Q4_K_M，并声明由 merged BF16 直接量化。GPU 服务器对 `huggingface.co` 直连超时，`hf-mirror.com` 单连接约 150KB/s，无法在本轮合理时间内取回 13GB+16GB 权重；因此本包**不把旧 revision 的行为结论冒充当前 step-863 的最终结论**。
+截至 2026-09-19，上游 main 为 `ba6d29fb2505241d7dae88df4fda9038999c3ca9`：V3 step-576、0.7 strength。当前发布物包含 Q4_K_M / Q5_K_M / Q6_K / Q8_0 / IQ4_XS 和 BF16 两分片，**Q3_K_M 请求返回 404**。
 
-后续动作：取回当前 step-863 Q3/Q4 后，复跑同一 behavior / autonomy / canonical-state patch / 32K-64K Gate；只有当前 Q3 在自主性和 patch Gate 不显著退化，才升级为正式“Fast/Q3”部署档。
+本包的 Q3/Q4 哈希对应历史 step-863 corrected 线；因此这些数据保留为“Q3 量化可行性/速度收益”证据，不作为 current step-576 的直接部署结论。
 
+当前实验正在从公开 step-576 BF16 companion 重建统一源的 **Q3_K_M + Q4_K_M control**：使用上游记录的 llama.cpp commit `95ef7fc16054e63b427a3ef00188e055ef7586d8`，并用同一 WikiText train 校准语料重新生成 imatrix。只有 current Q3 完成 autonomy + patch + 32K/64K Gate 后，才可升级为正式 Fast/Q3 档。
 ## 工程建议
 
 - 默认质量档：当前 Humanlike **Q4_K_M + llama.cpp**。
