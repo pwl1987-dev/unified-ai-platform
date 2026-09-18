@@ -16,4 +16,4 @@
   逐字节一致 → 现产配置冻结。证据与逐条复核见 `semantic-gate-20260908/report.md`
 - `rpg-q3-humanlike-20260918/`：**外部 RPG Q3_K_M 量化验证**。同 Humanlike revision 下对比 Q3/Q4 的
   4090 单卡显存、decode、32K needle 与 NPC 自主性；当前结论为 Q3 适合作为 Fast/低显存实验档，
-  Q4 继续作为默认质量档，待当前 step-863 Q3/Q4 完成同门禁复验后再升级。
+  Q4 继续作为默认质量档。该数据属于历史 step-863；当前 main 已切到 step-576@0.7 且不发布 Q3，正在从 current BF16 companion 重建同源 Q3/Q4 control 后再决定 Fast/Q3 档。
