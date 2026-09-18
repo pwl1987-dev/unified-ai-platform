@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-18",
+  "model": "LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-GGUF",
+  "paired_revision": "f507809ddaaf8298e3b336d20573e43760cb55da",
+  "runtime": "llama-server:cuda12.4-b10715",
+  "gpu": "RTX 4090 24GB GPU5",
+  "context": 32768,
+  "q3": {
+    "bytes": 13316373376,
+    "sha256": "ee9e839de6c1fa2ce4fd0b32adff97251f7f6b45bccd3f4d1da431fcab809d91",
+    "vram_mib": 13628,
+    "behavior_decode_tps_median": 61.788432154520365,
+    "integration_decode_tps_median": 57.36972619357299,
+    "autonomy_decode_tps_median": 63.04203604995661,
+    "needle_correct": "6/6",
+    "patch_valid": "0/15",
+    "integration_semantic": "3/15",
+    "autonomy_manual": "16/24"
+  },
+  "q4": {
+    "bytes": 16559197056,
+    "sha256": "16a9fb618b7c6f662864aa1d673aa49b41d2b3fd42f7577f6b5e04ff217f6d91",
+    "vram_mib": 16540,
+    "behavior_decode_tps_median": 54.96386859905256,
+    "integration_decode_tps_median": 49.139779620168326,
+    "autonomy_decode_tps_median": 54.44891705474217,
+    "needle_correct": "6/6",
+    "patch_valid": "0/15",
+    "integration_semantic": "3/15",
+    "autonomy_manual": "20/24"
+  },
+  "q3_vs_q4": {
+    "vram_saved_mib": 2912,
+    "vram_saved_percent": 17.61,
+    "behavior_decode_uplift_percent": 12.42,
+    "integration_decode_uplift_percent": 16.75,
+    "autonomy_decode_uplift_percent": 15.78
+  },
+  "decision": "Q3_K_M is a fast/low-VRAM tier candidate, not the default quality tier until current step-863 passes autonomy and patch gates."
+}
