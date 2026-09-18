@@ -35,6 +35,15 @@
    "hunk": "_flashinfer_topk() 增 env 开关（4 行+注释；.orig 备份）",
    "trigger": "LB29B spec boot 实证：flashinfer 0.6.18 topk JIT 于 EngineCore init 死（CCCL 头不兼容同 0.28）",
    "activation": "VLLM_DFLASH2_TORCH_TOPK=1"
+  },
+  {
+   "unit": "d_kvarn_core + e_env_hooks",
+   "applied_utc": "2026-09-18",
+   "layer": "C",
+   "scope": "6 新文件 5157 行 + 11 clean hooks + kv_cache_utils 3 hunk 手工适配 + model_runner unit-e",
+   "status": "PORTED_BUT_INERT (STOP_LOSS)",
+   "note": "boot 可达 KVARN backend 激活；内容正确性因布局契约失败（4 尝试记录见 P4-LAYERC）；文件保留在树内（仅 kvarn_* dtype 激活）",
+   "kvarn_attn_state": "pristine + attempt-4 flush permute（.orig 未动，恢复源=overlay）"
   }
  ]
 }

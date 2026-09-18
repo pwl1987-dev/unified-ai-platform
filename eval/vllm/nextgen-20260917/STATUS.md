@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 01（KV 因果裁决 + 0.29 资格认证，计划 v1.2）— **执行中**
-- **Last Completed**: Phase 00 全量（2026-09-17，commit #1=80e7d15 / #2=899eb5a）
-- **Current Task**: P0 引导（MANIFEST v2 + schema 1.1 + gates 冻结 + 0.29 环境已建：vllm 0.29.0@g98dff2a81，能力探针完成，CLI 差异=--kv-cache-memory→--kv-cache-memory-bytes + help 分组制）
-- **Next Task**: P1 KV 因果 A/B（0.28 栈 2×2 屏蔽 → 3-boot 矩阵）→ P2/P3 Layer A/B → P4 Layer X/C → P5 Gate A-S/A-X → P6 收口
+- **Phase**: 01（KV 因果裁决 + 0.29 资格认证，计划 v1.2）— **主体完成，P5 证据套件遗留**
+- **Last Completed**: P0-P4（2026-09-18，见事件日志；Layer A/B/X 全 PASS、Layer C 止损、P1 因果反转）
+- **Current Task**: 无（跨会话收口点）
+- **Next Task**: P5 遗留——2h 稳定门（MASTER 混合流量 generator）+ open-loop 双曲线（D565/P220K 分列）+ Gate-A full-quality 套件（Humaneval/XFC/GSM8K/IFEval）+ graph-replay 证据（profiler 路径，gauge 未暴露）→ Gate A-S/A-X 终判 + P6 六态全量归档 + 报告 + 收尾 commit
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -49,3 +49,7 @@ classify 端到端双向验证通过（2026-09-17）。
 - 2026-09-18: **P1 因果裁决（重大反转）**——2×2 屏蔽四臂全 2/5（kvarn/bf16 × target-only/spec），bf16 与 kvarn 输出逐字节一致；判别探针 seed99@220K 双 dtype 5/5、seed2 5/5、**seed1@128K 同败**→ ≥220K 召回失败为码集（夹具内容）依赖，**与 KV dtype/spec/长度均无因果**，DECISIONS #6 归因勘误、≥200K 质量冻结令解除。附带：bf16@220K 容量可行（2.03×）但 TTFT +7.7%；fp8 在 0.28 栈 UNSUPPORTED（flashinfer CCCL JIT 环境限制，双后端尝试皆死），FP8_DIAGNOSTIC 顺延 0.29。runner 勘误：stage2 dtype 映射 bug（臂标签误传 serve）已修。
 - 2026-09-18: P2 Layer A TP1 Qualify 收口 + P3 Layer B Screen 收口——LA TP1 3-boot：0.28=57.838 / 0.29=57.863（**+0.043%**，跨 boot 漂移 ≤0.016%，verbatim 双侧 100/100×3）；LB：0.29+DFlash2 首跑（**unit-c 实证必移并移植**：flashinfer 0.6.18 topk JIT 同 CCCL 死，env 开关恢复），F512 0.28=144.962 / 0.29=**146.014（+0.73%）**，**四通路（0.28/0.29×tonly/spec）探针同 hash `0bd1ecd6…` 跨版本逐位无损**，接受率 33.11%→33.43%（+0.33pp）。勘误：boot029 kv-mem=auto 守卫、run_arm --boot-tag、p3 metrics gauge 过滤待宽采。
 - 2026-09-18: **P1.2 矩阵收口**——kvarn/bf16 同分布镜像（3 真 boot × S1/S3=2/5、S2=5/5，9/9 格完全确定，Phase 00 跨 boot 债清偿）；seed99 参考码集 6/6 全 5/5；TTFT same-KV reference：kvarn **96.645s**（漂移 0.07%）/ bf16 **104.219s**（0.03%，较 kvarn +7.8%）。P1 全线完成。Layer A TP2 最小资格臂运行中。
+- 2026-09-18: Layer A TP2 资格臂 PASS（F512 84.946→84.968 +0.026%、verbatim 100/100、MRV2 实证）——Layer A 双拓扑完整。**Layer B Qualify PASS**：3-boot 中位 0.28=145.008 / 0.29=145.012（+0.003% 逐位级平价），无损探针 8/8 boot 同 hash `0bd1ecd6…`，接受率 33.11%→33.43%（gap +0.33pp << 5pp，地板 20% PASS）。graph-replay gauge 宽采样仍空（`--cudagraph-metrics` 不出 Prometheus 名）——证据路径转 profiler，列 P5 遗留。
+- 2026-09-18: **Layer X bridge PASS**——0.29 bf16+spec@220K 生产形制：容量 1.42×、MRV2、seed99/seed2 全中（5/5）、seed1 对照精确复现 2/5（跨版本确定性等价）、TTFT 中位 104.125s vs 同 KV 参照 104.219s（**−0.09%**，门 ≤+5%）。0.29 获得独立于 KVarN 的长上下文资格 profile。
+- 2026-09-18: **Layer C 止损（4/6 尝试）**——补丁面浅（11/13 hook 干净、~535 LOC、6/6 导入、KVARN backend 激活、可 boot）但 0.28 flat-tile 内核 × 0.29 V2 带页填充 4D 池的布局契约非重排可解（#2/#4 输出逐字节同损坏、#3 整池拷贝 OOM×2）；正解=内核寻址重写=侵入 core 红线。裁决：0.29 长上下文=Layer X bf16 承接；0.28+kvarn 保留认证；KVarN-on-0.29 入 Phase 03 Debt。清场：GPU2/3/4 18MiB、19701/19702 无监听。
+- 2026-09-18: **Gate A-S 机器判定（基于既有证据，2h 门待补）**：性能 0.29 vs 0.28 同形制 = TP1 tonly +0.043% / TP1 spec +0.003% / TP2 tonly +0.026%，全部 ≤3% 高度一致档；质量 verbatim 双侧 100/100×3、四通路无损同 hash、接受率 +0.33pp；MRV2 实证 TP1+TP2。Gate A-X 候选=Layer X（bf16 eligible；needle 全中 + TTFT −0.09%）。终判（A-S AND A-X）待 2h 稳定门与 full-quality 套件（P5 遗留）。
