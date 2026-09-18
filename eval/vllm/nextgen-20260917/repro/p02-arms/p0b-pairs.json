@@ -1,0 +1,32 @@
+{
+  "plan": "P0B-PAIRS — 拓扑双对 Screen（3+4 冻结对 vs 2+4 对照对；CPU/NUMA 冻结=整链同一 taskset cpuset）",
+  "note": "gates-phase02.yaml:pairing_scan。PAIR34 用默认冻结位；PAIR24 显式 pair_uuids（授权卡集内）。每对 1 boot：D565-F512-C1 ×3 + P32K-NS-C1 ×3（P32K 按冷/暖分轨解读）。busbw 由 p0b_p1_chain.sh 独立采集。",
+  "port": 19702,
+  "arms": [
+    {
+      "key": "PAIR34",
+      "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+               "nbt": 2048, "cold": true, "patch": "a"},
+      "cells": [
+        {"exp_prefix": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+         "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+        {"exp_prefix": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+         "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+      ],
+      "probes": {}
+    },
+    {
+      "key": "PAIR24",
+      "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+               "nbt": 2048, "cold": true, "patch": "a",
+               "pair_uuids": "GPU-41a1986d-e745-9e40-c520-09490081fd44,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e"},
+      "cells": [
+        {"exp_prefix": "V29-T2-PAIR24-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+         "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+        {"exp_prefix": "V29-T2-PAIR24-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+         "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+      ],
+      "probes": {}
+    }
+  ]
+}
