@@ -1,0 +1,31 @@
+{
+ "duration_s": 7200,
+ "requests": 1370,
+ "http_error_rate": 0.0,
+ "timeouts": 0,
+ "cancels": 107,
+ "retries": 135,
+ "canary_checks": 24,
+ "canary_failures": 0,
+ "preemptions": 1789706531.8011827,
+ "vram_start_mib": 23168,
+ "vram_final_mib": 23168,
+ "vram_upward_drift_pct": 0.0,
+ "lat_p50": 2.255,
+ "kinds": {
+  "cancel": 107,
+  "d565-ns": 472,
+  "p32k-ns": 202,
+  "p4k-ns": 299,
+  "retry": 135,
+  "json-mode": 155
+ },
+ "gate": {
+  "crashes": true,
+  "http_error_rate_le_0.001": true,
+  "preempt_le_10": false,
+  "vram_drift_le_2pct": true,
+  "canary_zero_fail": true
+ },
+ "PASS": false
+}

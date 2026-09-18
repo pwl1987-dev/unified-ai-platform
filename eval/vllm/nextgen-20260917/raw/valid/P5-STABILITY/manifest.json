@@ -1,0 +1,12 @@
+{
+ "experiment_id": "P5-STABILITY",
+ "evidence_kind": "stability-2h",
+ "status": "VALID_PASS",
+ "evidence_class": "valid",
+ "classification_reason": "GATE_PASS",
+ "note": "2h 混合流量稳定门 PASS 5/5（boot gate-a-029c: 0.29 spec 32K MS4 GPU2 TP1; 2026-09-18 12:42-14:42）。1370 请求 0 http err/0 timeout; canary 24 检 0 败; preempt=0; VRAM 漂移 0.0%。preempt 首判值 1.7897e9 为 `_created` gauge 误加（erratum §8.9），corrected verdict 以 vllm:num_preemptions_total 终值 0.0 重评；原始 stability-2h.json 留痕 + stability-2h-corrected.json。与 Phase 08 2h 门同 generator 同标签。",
+ "boot": "gate-a-029c",
+ "server": "http://127.0.0.1:19701",
+ "duration_s": 7200,
+ "created_utc": "2026-09-18T06:46:34Z"
+}

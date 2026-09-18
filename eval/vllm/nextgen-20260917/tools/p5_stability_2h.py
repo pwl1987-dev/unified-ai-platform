@@ -52,11 +52,11 @@ def preempt_count(base):
     try:
         with urllib.request.urlopen(base + "/metrics", timeout=5) as r:
             body = r.read().decode()
-        for ln in body.splitlines():
-            if ln.startswith("vllm:preemption_mode_recompute") or "preempt" in ln:
-                pass
+        # 只取 _total 计数器：`vllm:num_preemptions_created` 是 Prometheus
+        # `_created` gauge（值=进程启动 epoch 秒），误加会把时间戳当抢占数。
         vals = [float(ln.rsplit(" ", 1)[1]) for ln in body.splitlines()
-                if ln.startswith("vllm:num_preemptions") or ln.startswith("vllm:preemption")]
+                if ln.startswith("vllm:num_preemptions_total")
+                or ln.startswith("vllm:preemption_total")]
         return sum(vals)
     except Exception:  # noqa: BLE001
         return None

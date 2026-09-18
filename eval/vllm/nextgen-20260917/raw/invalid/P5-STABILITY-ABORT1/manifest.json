@@ -1,0 +1,9 @@
+{
+ "experiment_id": "P5-STABILITY-ABORT1",
+ "evidence_kind": "stability-2h",
+ "status": "ABORTED",
+ "evidence_class": "invalid",
+ "classification_reason": "INTERRUPTED",
+ "note": "稳定门第一次尝试中止：p32k workload make_prompt(32768) 顶满 max_model_len=32768 → 142× HTTP 400（输出+模板余量为零）。修正 make_prompt(30000) 后以新 boot gate-a-029c 重跑（即 P5-STABILITY）。stability-log.jsonl 留 400 记录。",
+ "created_utc": "2026-09-18T06:46:34Z"
+}

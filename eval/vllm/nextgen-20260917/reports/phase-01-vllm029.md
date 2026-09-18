@@ -16,9 +16,10 @@
 | **P3 Layer B** | **PASS**（Qualify 145.008 vs 145.012 = +0.003%；**四通路跨版本同 hash `0bd1ecd6…` 逐位无损**；接受率 33.11→33.43%；unit-c 实证必移并移植） |
 | **P4 Layer X bridge** | **PASS**（0.29 bf16+spec@220K：容量 1.42×、needle 三态等价、TTFT −0.09% vs 同 KV 参照）——0.29 长上下文资格 profile |
 | **P4 Layer C KVarN port** | **STOP-LOSS**（4/6 尝试；布局契约 0.28-flat vs 0.29-padded-4D 非重排可解，正解=内核寻址重写=侵入 core 红线） |
-| **Gate A-S**（预判） | 性能 ≤3% 高度一致档 ×3 形制；质量全同；MRV2 实证——2h 门后终判 |
-| **Gate A-X** | 候选 = Layer X（bf16 eligible）；终判待 2h 门/full-quality |
-| P5 证据套件 | full-quality / 2h 稳定门 / open-loop 双曲线：见 §6（数据槽） |
+| **Gate A-S** | **PASS**（性能 ≤3% 高度一致档 ×3 形制；质量全同；2h 稳定门 5/5） |
+| **Gate A-X** | **PASS**（候选 = Layer X bf16 bridge：needle 5/5×2 seed、容量 1.42×、TTFT −0.09%） |
+| **Overall Gate A** | **PASS**（A-S AND A-X）；candidate 台账：0.29 复合 profile=PASS / KVarN-on-0.29=REJECTED / FP8=DEFERRED_TO_PHASE03 |
+| P5 证据套件 | full-quality **PASS** / 2h 稳定门 **PASS**（5/5，preempt `_created` gauge 勘误 §8.9）/ 双曲线 §6.3 |
 | SLO | 维持 SLO_UNDECIDED；本报告附完整吞吐-延迟曲线（§6.3） |
 
 ## §1 P1 因果裁决（0.28 认证栈）
@@ -130,7 +131,20 @@
 - Gate 处置：不宣称 0.95 ratio 达标（NOT_DETERMINED），以 capture+计数器+签名三重间接证据放行至 Phase 02，Debt 清偿后补正式判定
 
 ### 6.2 2h 稳定门（混合流量 + canary）
-<!-- STABILITY_TABLE -->
+
+**PASS（5/5 判据全过；勘误后判定，见 §8.9）**——boot `gate-a-029c`（0.29 spec 32K MS4，GPU2 TP1），2026-09-18 12:42–14:42：
+
+| 指标 | 值 | 判据 | 结果 |
+|---|---|---|---|
+| 请求总量 | 1370（D565×472 / P4K×299 / P32K@30000tok×202 / JSON×155 / cancel×107 / retry×135） | — | — |
+| HTTP 错误率 | 0.0 | ≤0.001 | ✅ |
+| 超时/崩溃 | 0 / 0 | 0 | ✅ |
+| canary（ccdet 期望 hash，每 300s） | 24 检 0 败 | =0 | ✅ |
+| 抢占（`vllm:num_preemptions_total`） | 0 | ≤10 | ✅（勘误：首判把 `_created` 时间戳 gauge 误计入——§8.9） |
+| VRAM 上漂 | 0.0%（23168→23168 MiB） | ≤2% | ✅ |
+| 延迟 P50（全混合流量） | 2.255 s | 记录项 | — |
+
+与 Phase 08 未来的 2h 门同一 generator/同一标签语义（D565 35%/P4K 20%/P32K 15%/JSON 12%/cancel 10%/retry 10%）。勘误链：原始 `stability-2h.json`（含 bug 值 1.7897e9）保留不动，判定以 `stability-2h-corrected.json` + cumulative counter 终值 0.0（含全窗，单调不回退）为准。
 
 ### 6.3 吞吐-延迟双曲线
 
@@ -140,12 +154,64 @@
 - 偏差记录：25–90% 子饱和点在容量-1 系统上与 C1 基线无信息差，未跑（容量裁定）
 - SLO 含义：220K 档为"单飞行深度"服务形态，准入控制必须限制在途 1
 
-**D565（S-profile）**：<!-- D565_CURVES -->
+**D565（S-profile）**：boot `gate-a-029c`（0.29 spec 32K MS4，GPU2 TP1）；每请求独立 `cache_salt`（冷前缀曲线口径，prefix 分轨不适用）。
+
+closed-loop（C×3 reps，全 0 失败）：
+
+| 并发 | TTFT 中位 | TPOT 中位 | 完成/失败 |
+|---|---|---|---|
+| C1 | 0.292 s | 0.0230 s/tok | 3/0 |
+| C2 | 0.576 s | 0.0404 | 6/0 |
+| C4 | 1.025 s | 0.0428 | 12/0 |
+| C8 | 2.021 s | 0.0479 | 24/0 |
+
+- 保守饱和估计 **0.4534 rps**（C8 串行最坏时延口径：max(TTFT)+mean(TPOT)×256，忽略重叠 → 天然低估）
+
+open-loop（Poisson 到达 = 估计×{25,50,75,90,110}%；warmup 120s / measure 300s / min 60 / max 900s 全冻结执行）：
+
+| 点 | arrival | achieved | 完成 | TTFT P50/P95/P99 | TPOT |
+|---|---|---|---|---|---|
+| r25 | 0.1134 | 0.1467 | 44 | 0.257 / 0.343 / **INSUFFICIENT_SAMPLES**（44<60 冻结规则） | 0.0266 |
+| r50 | 0.2267 | 0.2733 | 82 | 0.258 / 0.348 / 1.267 | 0.0328 |
+| r75 | 0.3401 | 0.4833 | 145 | 0.307 / 0.528 / 1.354 | 0.0371 |
+| r90 | 0.4081 | 0.5667 | 170 | 0.325 / 0.527 / 0.903 | 0.0391 |
+| r110 | 0.4987 | 0.6133 | 184 | 0.328 / 1.18 / **1.937** | 0.0405 |
+
+- 读法：**全部 5 点 0 失败、P99 ≤2s**——测试上限（110%×保守估计=0.499 rps offered，achieved 0.613）仍未触及真实饱和拐点（保守估计口径低估所致）；TTFT P50 全程 ~0.26–0.33 s 平坦，P99 在 r110 起翘（1.94s）= 接近排队主导区的早期信号
+- 口径注记：achieved>arrival 系固定窗计数偏置（warmup 期在途请求落入测量窗）+ Poisson 方差，非超线性服务能力；SLO 定标时以 arrival 列为准
+- SLO_UNDECIDED 义务达成：D565 与 P220K 两条独立曲线齐备（P220K 见上），Phase 08 定 SLO 时直接取用
 
 
 ## §7 放行判定
 
-<!-- FINAL_VERDICT：Gate A-S / A-X / Overall；Phase 02 建议 -->
+### Gate A-S（短/交互 32K profile）——**PASS**
+| 判据 | 结果 | 证据 |
+|---|---|---|
+| 性能不退 >5% | ✅（≤3% 高度一致档） | Layer A TP1 Qualify 3-boot **+0.043%**、TP2 **+0.026%**（§2）；Layer B **+0.003%**（§3）；四通路逐位无损 `0bd1ecd6…` |
+| 质量过 | ✅ | full-quality PASS（§6.1：HE 复跑与 0.28 全同 97、XFC 75% 全同、IFEval 改善、BFCL 双版本同形态不可用列 Debt） |
+| 3-boot 可复现 | ✅ | Layer A/B 各 3 独立 boot；质量轴 boot 方差 ±4.9pp 以复跑收敛 |
+| 2h 稳定门 | ✅ | §6.2：1370 请求 0 错、24 canary 0 败、preempt=0、VRAM 漂移 0.0% |
+
+### Gate A-X（≥128K/220K 长上下文）——**PASS**（候选 = Layer X bf16 bridge）
+| 判据 | 结果 | 证据 |
+|---|---|---|
+| 候选资格 | ✅ bf16/native = eligible | gates-phase01.yaml 冻结资格表；KVarN 候选因 Layer C stop-loss 退场（§4.2）；FP8 路径不必要（bf16 已可容 220K） |
+| needle（修正协议：多 seed + seed99 阳性对照） | ✅ | seed99 **5/5**、seed2 **5/5**；seed1 对照 2/5 与 0.28 逐态等价（§1 已证码集依赖，非 KV 因果） |
+| 容量 | ✅ 1.42×（319K tokens @220K 形制） | §4.1；注意 220K 档并发上限=1（§6.3 容量裁定） |
+| 性能（same-KV 配对） | ✅ TTFT 104.125s vs P1 bf16 参照 104.219s = **−0.09%**（门 ≤+5%） | §4.1 |
+
+### Overall Gate A = **PASS**（A-S AND A-X）
+
+**四层状态落盘**（schema 1.1，无非法状态）：
+- 实验状态：Phase 01 全链 VALID_PASS（Layer C = VALID_FAIL/STOP_LOSS 单元，不拖累 Gate——A-X 候选已切换 Layer X）
+- candidate_decision 台账：**0.29 栈（Layer A+B+X 复合 profile）= PASS**；KVarN-on-0.29 = **REJECTED**（止损证据链 §4.2）；FP8-KV = **DEFERRED_TO_PHASE03**（calibrated scale，优先级降）
+- Gate 判定：A-S PASS / A-X PASS / Overall PASS
+
+### Phase 02 建议
+1. 0.29 已具承接资格：32K 交互 profile（spec+DFlash2）与 ≥128K 长上下文 profile（bf16 native）双线可用；Phase 02 以后以 0.29 为主实验栈。
+2. **生产切换不自动发生**（铁律 9 拍板制）：0.28+kvarn 生产认证保留至 Phase 08 切换窗口，届时按 MASTER 流程交证据拍板。
+3. Phase 03 Debt 优先级（§9）：① KVarN-on-0.29 内核寻址重写（若要收回 7.8% TTFT 差价与 3.02× 容量）；② BFCL tool-call 形态门（当前双版本 0.0 不可用）；③ graph-replay 逐 dispatch 计量（上游缺口）。
+4. 220K 档生产形态提醒：bf16@220K 并发上限=1，准入控制必须限流在途 1（§6.3）；需要并发长上下文时用 128K 档或等 KVarN 回归。
 
 ## §8 勘误与流程事故
 
@@ -157,6 +223,7 @@
 6. Layer C a3 boot OOM ×2：TP2 换代间隙显存未泄净假说被干净 GPU 复现推翻——真因为 reshape 整池拷贝（止损证据链一部分）
 7. **脱敏**：staging TP2 server-log-tail 含 `mq_connect_ip=本机内网IP`（2 文件）已按规则表替换；P6 归档批处理须规则化执行
 8. 归档批处理首版对 needle/verbatim 目录误走全 schema（SCHEMA_FAIL 70 目录）——按 Phase 00 NDL 最小 manifest 先例救援归位
+9. 稳定门 `preempt_count()` 把 Prometheus `vllm:num_preemptions_created`（`_created` gauge，值=进程启动 epoch 秒）与 `_total` 计数器同求和 → 首判 preempt=1.7897e9 误 FAIL；修复为只读 `_total`，真实计数器终值 0.0（cumulative 含全窗）→ 判定改 PASS；原始 JSON 留痕 + corrected JSON 重评，未重跑流量
 
 ## §9 Phase 03 Verification Debt
 

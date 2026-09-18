@@ -1,0 +1,14 @@
+{
+ "experiment_id": "P5-CURVES",
+ "evidence_kind": "throughput-latency-curves",
+ "status": "VALID_PASS",
+ "evidence_class": "valid",
+ "classification_reason": "GATE_PASS",
+ "note": "SLO_UNDECIDED 义务双曲线（boot gate-a-029c: 0.29 spec 32K MS4 GPU2 TP1）。D565: closed C1/C2/C4/C8 x3 reps 全 0 败（饱和估计 0.4534 rps 保守口径）+ Poisson 25-110% 5 点 0 败、P99<=2s、r25 INSUFFICIENT_SAMPLES(44<60 冻结规则)。P220K: 容量退化版（KV 319K -> 并发上限 1）closed C1 x3 + 110% 过载单点（achieved 0.0067 rps 钳制、TTFT P50 278.8s、P99 INSUFFICIENT_SAMPLES）。每点 warmup/measure/min_completed/max_test 按 gates-phase01.yaml 冻结值执行。口径注记: achieved>arrival 为固定窗计数偏置+Poisson 方差，SLO 定标以 arrival 为准。",
+ "boot": "gate-a-029c",
+ "fixtures": [
+  "d565",
+  "p220k"
+ ],
+ "created_utc": "2026-09-18T07:23:43Z"
+}
