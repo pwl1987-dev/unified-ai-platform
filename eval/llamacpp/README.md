@@ -14,3 +14,6 @@
   cache-reuse×DFlash 草稿的语义稳定性四层判定（EXACT/BENIGN-DIFF/UNRESOLVED/FAIL，零 LLM
   Judge，阈值冻结）。结案：FAIL=0、唯一分歧轴=冷-暖近平局翻转（全部裁良性）、跨副本/跨重启
   逐字节一致 → 现产配置冻结。证据与逐条复核见 `semantic-gate-20260908/report.md`
+- `rpg-q3-humanlike-20260918/`：**外部 RPG Q3_K_M 量化验证**。同 Humanlike revision 下对比 Q3/Q4 的
+  4090 单卡显存、decode、32K needle 与 NPC 自主性；当前结论为 Q3 适合作为 Fast/低显存实验档，
+  Q4 继续作为默认质量档，待当前 step-863 Q3/Q4 完成同门禁复验后再升级。
