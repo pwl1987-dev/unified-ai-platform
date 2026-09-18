@@ -1,0 +1,203 @@
+{
+ "arms_file": "repro/p02-arms/tp1-control.json",
+ "arms": {
+  "TP1CTL-B01": {
+   "done": true,
+   "boot_ready": true,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-tp1ctl-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-tp1ctl setsid bash boot029_nextgen.sh p02-tp1ctl-b01 19701 1 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128",
+   "pid": 3699112,
+   "pgid": 3699090,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 53636,
+    "mrv2": true
+   },
+   "cells": {
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/TP1CTL-B01-VERBATIM"
+    }
+   },
+   "superseded_by_v1": true
+  },
+  "TP1CTL-B02": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-tp1ctl-b02",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-tp1ctl setsid bash boot029_nextgen.sh p02-tp1ctl-b02 19701 1 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128",
+   "pid": 3703637,
+   "pgid": 3703615,
+   "boot_tag": "B02",
+   "capacity": {
+    "kv_tokens": 63769,
+    "mrv2": true
+   },
+   "cells": {
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/TP1CTL-B02-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "TP1CTL-B03": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-tp1ctl-b03",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-tp1ctl setsid bash boot029_nextgen.sh p02-tp1ctl-b03 19701 1 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128",
+   "pid": 3707521,
+   "pgid": 3707505,
+   "boot_tag": "B03",
+   "capacity": {
+    "kv_tokens": 63769,
+    "mrv2": true
+   },
+   "cells": {
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/TP1CTL-B03-VERBATIM"
+    }
+   },
+   "done": true
+  }
+ },
+ "errata": "B01 首跑：model_len 32768 顶满致 P32K 全 400 空证据（evidence-guard 缺失 + 形制设计错），已修 arms v1 + runner 防线；旧 12 目录保留 audit"
+}

@@ -72,7 +72,9 @@ def stop(pgid: int | None) -> None:
 def boot_cmd(arm: dict, port: int, boot_tag: str) -> tuple[str, str]:
     b = arm["boot"]
     tag = f"p02-{arm['key'].lower()}-{boot_tag.lower()}"
-    parts = [f"cd {HERE} && VLLM_CACHE_ROOT={SBX}/cache-{tag} setsid bash boot029_nextgen.sh",
+    # 编译缓存按 arm 键共享（同 arm 3-boot 复用，认证形制=cache 钉死）；log/exp 目录按 boot 分
+    cache_key = f"p02-{arm['key'].lower()}"
+    parts = [f"cd {HERE} && VLLM_CACHE_ROOT={SBX}/cache-{cache_key} setsid bash boot029_nextgen.sh",
              tag, str(port), str(b["tp"]), str(b["ms"])]
     kv = b.get("kv_dtype") or "auto"
     parts += ["--kv-dtype", kv, "--model-len", str(b.get("model_len", 32768)),
@@ -95,7 +97,8 @@ def boot_cmd(arm: dict, port: int, boot_tag: str) -> tuple[str, str]:
         parts += ["--retention", str(b["retention"])]
     if b.get("pair_uuids"):
         parts += ["--pair-uuids", b["pair_uuids"]]
-    if b.get("cold"):
+    # --cold 只在缓存组不存在时生效（同 arm 后续 boot 暖启复用，认证形制）
+    if b.get("cold") and not os.path.isdir(f"{SBX}/cache-{cache_key}"):
         parts += ["--cold"]
     if b.get("kv_mem"):
         parts += ["--kv-mem", str(b["kv_mem"])]
@@ -145,7 +148,24 @@ def run_cell(cell: dict, port: int, arm: dict, tag: str, pgid: int, pid: int,
     if cell.get("warm_prefix"):
         cmd.append("--warm-prefix")
     r = subprocess.run(cmd, timeout=cell["max_tokens"] * 60 + 5400)
-    return {"rc": r.returncode, "exp_prefix": cell["exp_prefix"], "cell": {
+    rc = r.returncode
+    # 空-成功陷阱防线：bench 可能 rc=0 但零请求成功（如 P32K 顶满 model-len 全 400）
+    # ——逐 rep 校验 metrics，无效证据记 rc=30，禁止 done=True。
+    mode_key = "F512" if cell["mode"] == "f512" else "NS"
+    for i in range(1, cell["reps"] + 1):
+        md = os.path.join(STAGING,
+                          f"{cell['exp_prefix']}-{mode_key}-{boot_tag}-R{i:02d}", "metrics.json")
+        try:
+            m = json.load(open(md))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if (m.get("requests_ok", 0) < 1 or m.get("http_errors", 0) > 0
+                or m["aggregate"].get("sum_output_tokens", 0) < 1):
+            rc = 30
+            print(f"[evidence-guard] {md}: requests_ok={m.get('requests_ok')} "
+                  f"http_errors={m.get('http_errors')} sum_out={m['aggregate'].get('sum_output_tokens')}"
+                  " → 无效证据 rc=30", flush=True)
+    return {"rc": rc, "exp_prefix": cell["exp_prefix"], "cell": {
         k: cell[k] for k in ("fixture", "mode", "concurrency", "max_tokens", "reps")}}
 
 
@@ -166,21 +186,22 @@ def main() -> int:
     for arm in plan["arms"]:
         if args.only and arm["key"] not in args.only:
             continue
-        rec = doc["arms"].get(arm["key"], {})
+        rec_key = f"{arm['key']}-{args.boot_tag}"   # 每 boot 独立 record（3-boot 互不跳过）
+        rec = doc["arms"].get(rec_key, {})
         if rec.get("done"):
-            print(f"[{arm['key']}] done (skip)", flush=True)
+            print(f"[{rec_key}] done (skip)", flush=True)
             continue
         cmd_str, tag = boot_cmd(arm, port, args.boot_tag)
         log_dir = os.path.join(SBX, f"log-{tag}")
-        print(f"[{arm['key']}] booting: {cmd_str}", flush=True)
+        print(f"[{rec_key}] booting: {cmd_str}", flush=True)
         r = subprocess.run(["bash", "-c", f"{cmd_str} > {SBX}/boot-{tag}.log 2>&1"],
                            timeout=3600)
         if r.returncode != 0:
             rec.update({"done": False, "boot_ready": False, "boot_rc": r.returncode,
                         "log": log_dir, "boot_cmd": cmd_str})
-            doc["arms"][arm["key"]] = rec
+            doc["arms"][rec_key] = rec
             json.dump(doc, open(out_path, "w"), indent=1, ensure_ascii=False)
-            print(f"[{arm['key']}] BOOT FAIL rc={r.returncode}（配置拒绝=UNSUPPORTED 候选，留证）",
+            print(f"[{rec_key}] BOOT FAIL rc={r.returncode}（配置拒绝=UNSUPPORTED 候选，留证）",
                   flush=True)
             continue
         pgid = int(open(os.path.join(log_dir, "server.pgid")).read().strip())
@@ -194,7 +215,7 @@ def main() -> int:
             ck = f"{cell['exp_prefix']}-{args.boot_tag}"
             if cells_out.get(ck, {}).get("rc") == 0:
                 continue
-            print(f"[{arm['key']}] cell {ck}", flush=True)
+            print(f"[{rec_key}] cell {ck}", flush=True)
             cells_out[ck] = run_cell(cell, port, arm, tag, pgid, pid, args.boot_tag)
             rec["cells"] = cells_out
             json.dump(doc, open(out_path, "w"), indent=1, ensure_ascii=False)
@@ -231,11 +252,11 @@ def main() -> int:
         all_ok = (all(c.get("rc") == 0 for c in rec.get("cells", {}).values())
                   and all(p.get("rc") == 0 for p in rec.get("probes", {}).values()))
         rec["done"] = all_ok
-        doc["arms"][arm["key"]] = rec
+        doc["arms"][rec_key] = rec
         json.dump(doc, open(out_path, "w"), indent=1, ensure_ascii=False)
         stop(pgid)
         time.sleep(10)
-        print(f"[{arm['key']}] done={all_ok} stopped pgid={pgid}", flush=True)
+        print(f"[{rec_key}] done={all_ok} stopped pgid={pgid}", flush=True)
 
     print(json.dumps({k: {"done": v.get("done"), "boot_ready": v.get("boot_ready"),
                           "cells_ok": sum(1 for c in v.get("cells", {}).values() if c.get("rc") == 0),

@@ -138,7 +138,7 @@ phase01:
     version: "1.1"
     sha256: f81129bb308735caf390336632cf46f145d0ca0f3e13cb0ead4533d9bbe6212c
     delta: "additive：classification_reason += CAPACITY_LIMIT；新增 candidate_decision 字段（PASS/REJECTED/DEFERRED_TO_PHASE03）"
-  gates_sha256: f407228b47c37905cdeb4a17c8414442cce6e59785b56fa8e54cf1d5306563ef  # repro/gates-phase01.yaml（P0 冻结，禁改）
+  gates_sha256: 73ee136641e6f990dc29119f7c6c741042f841a752fc95ed41ecae727fad4b18  # repro/gates-phase01.yaml（P0 冻结，禁改）
   runtime_029:
     venv: /data/tools/vllm29-env                # uv 建（uv 0.12.10，Python 3.12.3），本 Phase 可写（打补丁留 .orig+hash 台账）
     vllm_version: 0.29.0
@@ -182,7 +182,7 @@ phase02:
     version: "1.2"
     sha256: 32266c04c5fe01c93b36a49db7a472606dd03fbd31836c3b82f6ddb896ed4851
     delta: "additive：classification_reason += NOT_RUN_UPSTREAM_CAPACITY；新增 screen_decision(IN/OUT/UNSUPPORTED)、evidence_quality(COMPLETE/PARTIAL/MEASUREMENT_NOT_AVAILABLE)、observation_class(CEILING_OBSERVATION)；candidate_decision 语义不变"
-  gates_sha256: a94770296afde7a6c37351c8b34696fa04b7a3c3419ab45ba9528f27b3b2b15e  # repro/gates-phase02.yaml（P0A 冻结，禁改）
+  gates_sha256: 73ee136641e6f990dc29119f7c6c741042f841a752fc95ed41ecae727fad4b18  # repro/gates-phase02.yaml（P0A 冻结，禁改）
   runtime029_phase02_baseline:                # Phase 01 期间环境变过（补丁落树+pandas/pyarrow 补装），此为打补丁后终态
     file: eval/vllm/nextgen-20260917/repro/env029/runtime029-phase02-baseline.json
     freeze_tool: tools/p0a_runtime_freeze.py

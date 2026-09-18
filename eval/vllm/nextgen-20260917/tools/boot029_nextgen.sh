@@ -110,6 +110,9 @@ overlay_env_guard() {
 export CUDA_VISIBLE_DEVICES="$WANT"
 export CUDA_HOME=$CUDA13 PATH="$CUDA13/bin:$VENV/bin:$PATH"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True VLLM_USE_FLASHINFER_SAMPLER=0
+# unit-c（REQUIRED_029，Layer B 实证）：flashinfer 0.6.18 topk JIT 于 cu13 死（CCCL 头不兼容）
+# ——env 开关强制 torch.topk。Phase 02 起固化在配方内（Phase 01 曾靠 runner 环境携带，新会话丢失即重现已勘误）
+export VLLM_DFLASH2_TORCH_TOPK=1
 export VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-$SBX/cache-$TAG}"
 
 if [[ $COLD == 1 ]]; then rm -rf "$VLLM_CACHE_ROOT"; echo "[cache] COLD: removed $VLLM_CACHE_ROOT"; fi

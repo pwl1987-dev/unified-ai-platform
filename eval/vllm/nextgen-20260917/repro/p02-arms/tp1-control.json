@@ -1,0 +1,23 @@
+{
+  "plan": "P1-TP1CTL — TP1 同栈对照臂（Gate B B-L2 的 TP1 侧分母，Qualify 3 boot）",
+  "note": "GPU2 空闲窗口先行。配方 = b0_l32 同栈镜像 TP1：bf16 显式 / MS4 / spec k7 / NBT2048。model_len=36864（勘正 v1：32768 顶满致 P32K fixture 400，B01 首跑 4 cell P32K 全空-成功——evidence-guard 已加防线，旧 12 目录保留为 audit）。boot：B01 → B02 → B03 共享 cache-p02-tp1ctl（--cold 仅首启生效）。",
+  "port": 19701,
+  "arms": [
+    {
+      "key": "TP1CTL",
+      "boot": {"tp": 1, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+               "nbt": 2048, "cold": true, "patch": "a"},
+      "cells": [
+        {"exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+         "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+        {"exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565",
+         "fixture": "d565", "mode": "f512", "concurrency": 2, "max_tokens": 512, "reps": 3},
+        {"exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+         "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+        {"exp_prefix": "V29-T1-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L032K",
+         "fixture": "p32k", "mode": "ns", "concurrency": 2, "max_tokens": 256, "reps": 3}
+      ],
+      "probes": {"verbatim": true}
+    }
+  ]
+}

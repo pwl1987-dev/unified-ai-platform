@@ -1,0 +1,200 @@
+(EngineCore pid=3693581) 
+[rank0]:[W919 04:08:07.161244769 CUDACachingAllocator.cpp:508] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 20709376, total: 25250627584).
+(EngineCore pid=3693581) INFO 09-19 04:08:07 [default_loader.py:430] Loading weights took 0.27 seconds
+(EngineCore pid=3693581) INFO 09-19 04:08:07 [model_runner.py:405] Model loading took 15.61 GiB memory and 4.788541 seconds
+(EngineCore pid=3693581) INFO 09-19 04:08:07 [topk_topp_sampler.py:46] FlashInfer top-p/top-k sampling disabled via VLLM_USE_FLASHINFER_SAMPLER=0.
+(EngineCore pid=3693581) INFO 09-19 04:08:07 [interface.py:943] Setting attention block size to 512 tokens to ensure that attention page size is >= mamba page size.
+(EngineCore pid=3693581) INFO 09-19 04:08:07 [interface.py:967] Padding mamba page size by 17.97% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=3693581) INFO 09-19 04:08:07 [utils.py:306] Using LBNHC KV cache layout.
+(EngineCore pid=3693581) INFO 09-19 04:08:09 [caching.py:343] reconstructed serializable fn from standalone compile artifacts. num_artifacts=23 num_submods=65
+(EngineCore pid=3693581) INFO 09-19 04:08:09 [decorators.py:313] Directly load AOT compilation from path /data/sandbox/nextgen-20260917/cache-p02-tp1ctl/torch_compile_cache/torch_aot_compile/399d5321ec46b5eb1f4bcc6d2b4d07f589f2a1b99da62b79d2350487f96cbf62/rank_0_0/model
+(EngineCore pid=3693581) INFO 09-19 04:08:09 [monitor.py:53] torch.compile took 0.81 s in total
+(EngineCore pid=3693581) INFO 09-19 04:08:10 [monitor.py:81] Initial profiling/warmup run took 1.19 s
+(EngineCore pid=3693581) INFO 09-19 04:08:10 [caching.py:343] reconstructed serializable fn from standalone compile artifacts. num_artifacts=3 num_submods=6
+(EngineCore pid=3693581) INFO 09-19 04:08:10 [decorators.py:313] Directly load AOT compilation from path /data/sandbox/nextgen-20260917/cache-p02-tp1ctl/torch_compile_cache/torch_aot_compile/93eb29449f98d399a680f9f3dac305766555ab6a7046489488a3abcad3610424/rank_0_0/model
+(EngineCore pid=3693581) INFO 09-19 04:08:10 [monitor.py:53] torch.compile took 0.13 s in total
+(EngineCore pid=3693581) INFO 09-19 04:08:10 [monitor.py:81] Initial profiling/warmup run took 0.00 s
+(EngineCore pid=3693581) INFO 09-19 04:08:10 [logits_processor.py:42] VLLM_DFLASH2_TORCH_TOPK=1; vocab top-k uses torch.topk
+(EngineCore pid=3693581) INFO 09-19 04:08:12 [kv_cache_utils.py:1394] Sliding-window bucket(s) are the smallest; using group_size 8 (pads the sliding-window group instead of the full-attention/mamba layers)
+(EngineCore pid=3693581) WARNING 09-19 04:08:12 [kv_cache_utils.py:1529] Add 3 padding layers, may waste at most 60.00% KV cache memory
+(EngineCore pid=3693581) Capturing CUDA graphs (PIECEWISE):   0%|          | 0/4 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):  25%|██▌       | 1/4 [00:00<00:02,  1.44it/s]Capturing CUDA graphs (PIECEWISE):  50%|█████     | 2/4 [00:01<00:01,  1.45it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:01<00:00,  2.84it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:01<00:00,  2.37it/s]
+(EngineCore pid=3693581) Capturing CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00,  1.99it/s]Capturing CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00,  1.99it/s]
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [speculator.py:141] Capturing model for DFlash2 speculator...
+(EngineCore pid=3693581) Capturing dflash2 CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing dflash2 CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00, 71.97it/s]
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [model_runner.py:970] Graph capturing finished in 2 secs, took 0.14 GiB
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [gpu_worker.py:625] Available KV cache memory: 5.72 GiB
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9500 is equivalent to --gpu-memory-utilization=0.9442 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9558. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [kv_cache_utils.py:1394] Sliding-window bucket(s) are the smallest; using group_size 8 (pads the sliding-window group instead of the full-attention/mamba layers)
+(EngineCore pid=3693581) WARNING 09-19 04:08:14 [kv_cache_utils.py:1529] Add 3 padding layers, may waste at most 60.00% KV cache memory
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [kv_cache_utils.py:2235] GPU KV cache size: 61,334 tokens, Maximum concurrency for 32,768 tokens per request: 1.87x
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [kernel_warmup.py:124] JIT kernel warmup starting.
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [kernel_warmup.py:134] JIT kernel warmup finished in 0.00s.
+(EngineCore pid=3693581) INFO 09-19 04:08:14 [qwen_triton_warmup.py:270] Warming up Qwen Triton kernels for model_type=qwen3_5_text.
+(EngineCore pid=3693581) Capturing CUDA graphs (PIECEWISE):   0%|          | 0/4 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):  25%|██▌       | 1/4 [00:00<00:00,  5.39it/s]Capturing CUDA graphs (PIECEWISE):  75%|███████▌  | 3/4 [00:00<00:00,  8.95it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:00<00:00,  9.04it/s]
+(EngineCore pid=3693581) Capturing CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00, 12.38it/s]
+(EngineCore pid=3693581) INFO 09-19 04:08:16 [speculator.py:141] Capturing model for DFlash2 speculator...
+(EngineCore pid=3693581) Capturing dflash2 CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s]Capturing dflash2 CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00, 108.41it/s]
+(EngineCore pid=3693581) INFO 09-19 04:08:16 [model_runner.py:970] Graph capturing finished in 1 secs, took 0.09 GiB
+(EngineCore pid=3693581) INFO 09-19 04:08:16 [gpu_worker.py:797] CUDA graph pool memory: 0.09 GiB (actual), 0.14 GiB (estimated), difference: 0.05 GiB (59.1%).
+(EngineCore pid=3693581) INFO 09-19 04:08:16 [gpu_worker.py:860] Free memory on device (23.11/23.52 GiB) on startup. Desired GPU memory utilization is (0.95, 22.34 GiB). Actual usage is 16.06 GiB for consumed memory (weights + non-torch), 0.56 GiB for peak activation, and 0.09 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=5889672397` (5.49 GiB) to fit into requested memory, or `--kv-cache-memory=6721107968` (6.26 GiB) to fully utilize gpu memory. Current kv cache memory in use is 5.72 GiB.
+(EngineCore pid=3693581) INFO 09-19 04:08:29 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(EngineCore pid=3693581) INFO 09-19 04:08:29 [torch_utils.py:282] Reducing Torch threads from 64 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=3693581) INFO 09-19 04:08:29 [core.py:361] init engine (profile, create kv cache, warmup model) took 21.80 s (compilation: 0.94 s)
+(EngineCore pid=3693581) INFO 09-19 04:08:29 [kv_cache_utils.py:772] kvarn-v2 hash unit: groups=[512, 512, 512, 512, 512, 512, 512, 512, 512] requested=128 scheduler=512 hash=128
+(EngineCore pid=3693581) WARNING 09-19 04:08:29 [kv_cache_coordinator.py:660] Disabling fine-grained prefix-cache hits because these KV cache managers require block-aligned lookups: SlidingWindowManager.
+(EngineCore pid=3693581) INFO 09-19 04:08:29 [kernel.py:369] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(APIServer pid=3693180) INFO 09-19 04:08:29 [entry.py:135] Supported tasks: ['generate']
+(APIServer pid=3693180) INFO 09-19 04:08:31 [hf.py:547] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=3693180) INFO 09-19 04:08:31 [entry.py:139] Starting vLLM server on http://127.0.0.1:19701
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:61] Available routes are:
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /docs, Methods: HEAD, GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /load, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /version, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /health, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /metrics, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /tokenize, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /detokenize, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/models, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /ping, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /ping, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /invocations, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/responses, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/completions, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/messages, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /generative_scoring, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/messages/render, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/completions/render, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=3693180) INFO 09-19 04:08:31 [launcher.py:70] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=3693180) INFO:     Started server process [3693180]
+(APIServer pid=3693180) INFO:     Waiting for application startup.
+(APIServer pid=3693180) INFO:     Application startup complete.
+(APIServer pid=3693180) INFO:     127.0.0.1:60378 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60396 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60382 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60404 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60408 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60416 - "GET /metrics HTTP/1.1" 200 OK
+(EngineCore pid=3693581) WARNING 09-19 04:08:35 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _prepare_dflash_inputs_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=3693180) INFO:     127.0.0.1:60422 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60428 - "GET /metrics HTTP/1.1" 200 OK
+(EngineCore pid=3693581) WARNING 09-19 04:08:35 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _compute_local_logits_stats_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=3693180) INFO:     127.0.0.1:60440 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60454 - "GET /metrics HTTP/1.1" 200 OK
+(EngineCore pid=3693581) WARNING 09-19 04:08:35 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _rejection_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=3693180) INFO:     127.0.0.1:60464 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60472 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60486 - "GET /metrics HTTP/1.1" 200 OK
+(EngineCore pid=3693581) WARNING 09-19 04:08:35 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _resample_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=3693180) INFO:     127.0.0.1:60502 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60518 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60532 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60548 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:60550 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO 09-19 04:08:41 [loggers.py:310] Engine 000: Avg prompt throughput: 47.9 tokens/s, Avg generation throughput: 5.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3693180) INFO 09-19 04:08:41 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.71, Accepted throughput: 3.90 tokens/s, Drafted throughput: 10.08 tokens/s, Accepted: 46 tokens, Drafted: 119 tokens, Per-position acceptance rate: 0.824, 0.588, 0.471, 0.353, 0.176, 0.176, 0.118, Avg Draft acceptance rate: 38.7%
+(APIServer pid=3693180) INFO:     127.0.0.1:56536 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:56540 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO 09-19 04:08:51 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3693180) INFO:     127.0.0.1:54390 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:54406 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41942 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41952 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:47092 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:47094 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41040 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41056 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41066 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41078 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41080 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41096 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41100 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41108 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41118 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41126 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:41128 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39136 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39146 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39152 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39160 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39170 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39180 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39182 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39198 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39206 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39210 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39216 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39230 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39240 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO 09-19 04:09:31 [loggers.py:310] Engine 000: Avg prompt throughput: 56.5 tokens/s, Avg generation throughput: 24.3 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 14.8%, Prefix cache hit rate: 0.0%
+(APIServer pid=3693180) INFO 09-19 04:09:31 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.18, Accepted throughput: 3.32 tokens/s, Drafted throughput: 10.64 tokens/s, Accepted: 166 tokens, Drafted: 532 tokens, Per-position acceptance rate: 0.724, 0.461, 0.368, 0.237, 0.145, 0.132, 0.118, Avg Draft acceptance rate: 31.2%
+(APIServer pid=3693180) INFO:     127.0.0.1:39244 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39250 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39264 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39266 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39268 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39284 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39292 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39296 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39312 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39326 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39338 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39350 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39358 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39364 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39370 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39382 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39396 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39402 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39408 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39412 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39426 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39436 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39444 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39448 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39454 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39466 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39472 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39474 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39484 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39492 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39496 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39506 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39510 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39514 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39526 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39534 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39542 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39550 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39554 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39566 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39568 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39572 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39582 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39588 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39598 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39600 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39602 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39606 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39614 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39628 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39644 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39660 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39672 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39688 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39704 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39718 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39726 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=3693180) INFO:     127.0.0.1:39740 - "GET /metrics HTTP/1.1" 200 OK

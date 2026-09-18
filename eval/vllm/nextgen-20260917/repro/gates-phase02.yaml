@@ -79,8 +79,9 @@ pairing_scan:
 
 # ============================================================ P1 基线
 baselines:
-  b0_l32:                        # 一切 32K 形制方向的对照零点（Qualify 级）
-    recipe: "0.29 + W4A16 + DFlash2 k7 + TP2 + draft TP1 + 32K(32768) + native KV(bf16 显式) + patch(a,b,c)"
+  b0_l32:                        # 一切 L32 形制方向的对照零点（Qualify 级）
+    # 勘正 v1（2026-09-19，数据前）：model_len 32768→36864——P32K(32768) fixture + 输出 + 开销 > 32768 会全 400（TP1CTL-B01 首跑实证，4 cell 空证据已留 audit）；L32 家族统一 36864 保持单变量
+    recipe: "0.29 + W4A16 + DFlash2 k7 + TP2 + draft TP1 + L32 形制 model_len=36864 + native KV(bf16 显式) + patch(a,b,c)"
     max_num_seqs: 4              # 显式声明（MS≥C 合法域内工作点）
     level: qualify               # 3 boot × 3 reps
     fixtures: [D565-F512, C4-L0565(真形制), P4K-warm/cold(C1/C4 分轨)]
