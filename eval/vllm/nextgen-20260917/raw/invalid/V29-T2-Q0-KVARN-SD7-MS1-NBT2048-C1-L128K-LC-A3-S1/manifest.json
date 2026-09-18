@@ -1,0 +1,8 @@
+{
+ "experiment_id": "V29-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L128K-LC-A3-S1",
+ "evidence_kind": "needle-probe-attempt",
+ "status": "ABORTED",
+ "evidence_class": "invalid",
+ "classification_reason": "INTERRUPTED",
+ "note": "Layer C attempt#3 OOM（boot 未达 READY，证据在 P4-LAYERC/layer-c-report.json）"
+}

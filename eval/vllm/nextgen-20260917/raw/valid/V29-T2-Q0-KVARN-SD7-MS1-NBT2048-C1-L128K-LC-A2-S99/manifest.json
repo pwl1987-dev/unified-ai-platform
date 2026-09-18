@@ -1,0 +1,11 @@
+{
+ "experiment_id": "V29-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L128K-LC-A2-S99",
+ "evidence_kind": "needle-probe",
+ "status": "VALID_FAIL",
+ "evidence_class": "valid",
+ "classification_reason": "QUALITY_FAIL",
+ "candidate_decision": "REJECTED",
+ "note": "Layer C 移植尝试（布局契约止损，见 P4-LAYERC）",
+ "needles_hit": "0/5",
+ "ttft_s": 49.962
+}

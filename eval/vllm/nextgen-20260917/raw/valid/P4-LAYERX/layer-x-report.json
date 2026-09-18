@@ -1,0 +1,43 @@
+{
+ "boot_ready": true,
+ "log": "/data/sandbox/nextgen-20260917/log-lx-b16-220k",
+ "mrv2_proven": true,
+ "kv_cache_size_line": "(EngineCore pid=2306728) INFO 09-18 07:35:31 [kv_cache_utils.py:2032] GPU KV cache size: 318,995 tokens, Maximum concurrency for 225,280 tokens per request: 1.42x",
+ "kv_tokens": 318995,
+ "capacity_margin": 1.4159934303977273,
+ "needle_s99": {
+  "PASS": true,
+  "hits": "5/5",
+  "ttft_s": 103.866
+ },
+ "needle_s2": {
+  "PASS": true,
+  "hits": "5/5",
+  "ttft_s": 104.01
+ },
+ "needle_s1": {
+  "PASS": false,
+  "hits": "2/5",
+  "ttft_s": 104.116
+ },
+ "ttft_seed99_reps_s": [
+  104.186,
+  104.125,
+  104.083
+ ],
+ "ttft_median_s": 104.125,
+ "ttft_vs_same_kv_reference": {
+  "reference_028_bf16_s": 104.219,
+  "delta_pct": -0.09,
+  "gate_max_pct": 5.0
+ },
+ "boot_done": true,
+ "verdict": {
+  "gate": "PASS",
+  "capacity_margin": 1.4159934303977273,
+  "needle_recallable_sets": "seed99 5/5 + seed2 5/5（修正协议）；seed1 2/5 已知失败对照精确复现（跨版本确定性等价）",
+  "ttft_vs_same_kv": "-0.09% vs 0.28-bf16 104.219s（门 ≤+5%）",
+  "mrv2": true,
+  "meaning": "0.29 具备独立于 KVarN port 的长上下文资格 profile（bf16+DFlash2@220K 生产形制）"
+ }
+}

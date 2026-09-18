@@ -1,0 +1,29 @@
+{
+  "verdict": "STOP_LOSS_PORT_LAYOUT_CONTRACT",
+  "decided_utc": "2026-09-18",
+  "stop_loss_rule": "gates-phase01.yaml layer_c_stop_loss（LOC≤3000/files≤40/attempts≤6/禁侵入 core）",
+  "attempts_used": 4,
+  "attempts": [
+    {"n": 1, "tag": "lc-kvarn-128k", "change": "无（原样移植后首跑）", "result": "kvarn_attn.py:2031 flush 形状不匹配崩溃（[14,2,26880] vs [14,2,128,210]）——V2 池为 4D"},
+    {"n": 2, "tag": "lc-kvarn-128k-a2", "change": "flush 写入按目标形状 reshape", "result": "不崩但输出确定性损坏（'duct Register Register…'，0/5）——读路径布局假设不符"},
+    {"n": 3, "tag": "lc-kvarn-a3/a3b", "change": "入口 4D→3D 归一化（update/forward/_flat_block）", "result": "图捕获期 CUDA OOM——池带页填充非连续，reshape 整池拷贝（两次复现，干净 GPU 亦然）"},
+    {"n": 4, "tag": "lc-kvarn-a4", "change": "flush 按 (blk,H,slot) 嵌套 permute 落位", "result": "输出与 #2 逐字节相同损坏——字节重排层面无解"}
+  ],
+  "diagnosis": "0.28 kvarn 内核按 flat-tile [B,H,tile_bytes] + stride(0)/stride(1) 寻址；0.29 V2 分配器给出带页填充的 4D [B,H,blk,slot_padded] 池。正确适配需重写内核内部寻址（侵入 core 红线），非补丁级工程",
+  "port_surface": {
+    "new_files_copied": "6 文件 5157 行（kvarn_attn/4×ops/quantization.kvarn）",
+    "hook_patches_clean": "11/13",
+    "hook_patches_manual": "kv_cache_utils.py（3 hunk 手工适配）+ model_runner.py（unit-e env 钩子）",
+    "imports": "6/6 模块导入零错",
+    "boot": "KVARN backend 激活（'Using KVARN attention backend out of potential backends: [KVARN]'）+ V2 Model Runner",
+    "invasiveness_within_lines": "改动 ~535 LOC（红线 3000）/ 13 文件（红线 40）——止损非因体量，因布局契约"
+  },
+  "consequence": {
+    "layer_c_quality_chain": "未进入（128K sanity 即未过）",
+    "gate_ax_candidate": "Layer X bridge（bf16 native，eligible）——0.29 长上下文由此承接",
+    "kvarn_certification": "保留在 0.28 认证栈（生产不变）",
+    "phase03_debt": "KVarN 0.29 移植需上游布局契约对齐或内核寻址重写——列入 Phase 03 Verification Debt"
+  },
+  "residual_state": "vllm29-env 树内 kvarn 文件+钩子保留（INERT：仅 kv-cache-dtype=kvarn_* 时激活；Layer A/B/X 全部 native/auto 路径不受影响）；attempt-4 的 flush permute 保留在 kvarn_attn.py（.orig 备份在 overlay）",
+  "logs": ["/data/sandbox/nextgen-20260917/log-lc-kvarn-128k", "…-a2", "…-a3", "…-a3b", "…-a4"]
+}

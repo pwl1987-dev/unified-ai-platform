@@ -1,0 +1,10 @@
+{
+ "experiment_id": "V29-T2-Q0-KVB16-SD7-MS1-NBT2048-C1-L220K-LX-S99R1",
+ "evidence_kind": "needle-probe",
+ "status": "VALID_PASS",
+ "evidence_class": "valid",
+ "classification_reason": null,
+ "note": "可召回码集（seed99/seed2）",
+ "needles_hit": "5/5",
+ "ttft_s": 104.186
+}

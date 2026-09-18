@@ -1,0 +1,24 @@
+{
+ "LA28REF-TP2": {
+  "done": true,
+  "boot_ready": true,
+  "log": "/data/sandbox/nextgen-20260917/log-la2-la28ref-tp2",
+  "rc": {
+   "d565": 0,
+   "p4k": 0,
+   "verbatim": 0
+  },
+  "mrv2_proven": null
+ },
+ "LA29A-TP2": {
+  "done": true,
+  "boot_ready": true,
+  "log": "/data/sandbox/nextgen-20260917/log-la2-la29a-tp2",
+  "rc": {
+   "d565": 0,
+   "p4k": 0,
+   "verbatim": 0
+  },
+  "mrv2_proven": true
+ }
+}

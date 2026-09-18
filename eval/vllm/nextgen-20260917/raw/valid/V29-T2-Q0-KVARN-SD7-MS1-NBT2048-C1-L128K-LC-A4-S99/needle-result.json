@@ -1,0 +1,55 @@
+{
+ "experiment_id": "V29-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L128K-LC-A4-S99",
+ "prompt_tokens_target": 128000,
+ "actual_prompt_tokens": 128141,
+ "seed": 99,
+ "fixture_sha256": "bb2808676a4250bbcb6eb7a022caf84f4f6e56cb0f3539065678b75ebc87aca4",
+ "needle_position_fractions": [
+  0.1,
+  0.3,
+  0.5,
+  0.7,
+  0.9
+ ],
+ "ttft_s": 47.9,
+ "wall_s": 50.339,
+ "completion_tokens": 64,
+ "needles_hit": "0/5",
+ "per_needle": {
+  "523601": false,
+  "499248": false,
+  "309794": false,
+  "728557": false,
+  "287487": false
+ },
+ "PASS": false,
+ "answer": "duct Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Register Regist",
+ "cache_salt": "formal-needle-V29-T2-Q0-KVARN-SD7-MS1-NBT2048-C1-L128K-LC-A4-S99",
+ "kv_usage_peak": null,
+ "vram_peak_mib": 15222,
+ "preempt_observed": false,
+ "sampler_stats": {
+  "metrics_endpoint": {
+   "requested_interval_ms": 100,
+   "actual_interval_ms_min": 34.8,
+   "actual_interval_ms_median": 100.1,
+   "actual_interval_ms_max": 102.3,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 102.3,
+   "sampler_exit_code": 0,
+   "samples_collected": 504,
+   "errors": []
+  },
+  "nvml": {
+   "requested_interval_ms": 500,
+   "actual_interval_ms_min": 0.0,
+   "actual_interval_ms_median": 0.0,
+   "actual_interval_ms_max": 508.3,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 508.3,
+   "sampler_exit_code": 0,
+   "samples_collected": 202,
+   "errors": []
+  }
+ }
+}

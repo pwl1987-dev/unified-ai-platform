@@ -1,0 +1,10 @@
+{
+ "experiment_id": "V28-T2-Q0-KVB16-SD1-MS1-NBT2048-C1-L220K-P1M-B01-S1R2",
+ "evidence_kind": "needle-probe",
+ "status": "VALID_FAIL",
+ "evidence_class": "valid",
+ "classification_reason": "QUALITY_FAIL",
+ "note": "对照码集（S1/S3）预期失败——码集依赖，非质量回退（DECISIONS 2026-09-18）",
+ "needles_hit": "2/5",
+ "ttft_s": 104.219
+}

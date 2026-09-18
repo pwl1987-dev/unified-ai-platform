@@ -1,0 +1,8 @@
+{
+ "experiment_id": "P4-LAYERC",
+ "evidence_kind": "aggregate-report",
+ "status": "VALID_FAIL",
+ "evidence_class": "valid",
+ "classification_reason": "QUALITY_FAIL",
+ "candidate_decision": "REJECTED"
+}

@@ -1,0 +1,9 @@
+{
+ "experiment_id": "V29-T2-Q0-KVAUTO-SD0-MS1-NBT2048-C1-L032K-LA29A-TP2-VERBATIM",
+ "evidence_kind": "verbatim-probe",
+ "status": "VALID_PASS",
+ "evidence_class": "valid",
+ "classification_reason": null,
+ "exact_lines_ok": 100,
+ "line_count": 100
+}

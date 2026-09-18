@@ -1,0 +1,60 @@
+{
+ "fixture": "p220k",
+ "capacity_note": "KV 319K/220K -> max concurrent=1；closed C2+ 不可行（容量退化）",
+ "params": {
+  "prompt_tokens": 220000,
+  "max_tokens": 128,
+  "warmup_s": 60,
+  "measure_s": 900,
+  "min_completed": 20,
+  "max_test_s": 3600
+ },
+ "closed_loop_c1": [
+  {
+   "rep": 0,
+   "ok": 1,
+   "fail": 0,
+   "ttfts": [
+    109.961
+   ],
+   "tpots": [
+    0.2188
+   ]
+  },
+  {
+   "rep": 1,
+   "ok": 1,
+   "fail": 0,
+   "ttfts": [
+    110.34
+   ],
+   "tpots": [
+    0.2194
+   ]
+  },
+  {
+   "rep": 2,
+   "ok": 1,
+   "fail": 0,
+   "ttfts": [
+    110.481
+   ],
+   "tpots": [
+    0.2198
+   ]
+  }
+ ],
+ "saturation_rate_est": 0.00722,
+ "open_loop_overload": {
+  "tag": "r110",
+  "arrival_rate": 0.0079,
+  "achieved_rate": 0.0067,
+  "completed": 6,
+  "failed": 0,
+  "enough_samples": false,
+  "ttft_p50": 278.839,
+  "ttft_p95": 316.517,
+  "ttft_p99": "INSUFFICIENT_SAMPLES",
+  "tpot_mean": 0.2194
+ }
+}
