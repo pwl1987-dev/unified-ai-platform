@@ -1,0 +1,294 @@
+{
+ "arms_file": "/data/sandbox/nextgen-20260917/p1-b0-baselines-resolved.json",
+ "arms": {
+  "B0L32-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-b0l32-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-b0l32 setsid bash boot029_nextgen.sh p02-b0l32-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --pair-uuids GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e --cold",
+   "pid": 3850631,
+   "pgid": 3850612,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0L32-B01-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "B0L32-B02": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-b0l32-b02",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-b0l32 setsid bash boot029_nextgen.sh p02-b0l32-b02 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --pair-uuids GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e",
+   "pid": 3854770,
+   "pgid": 3854752,
+   "boot_tag": "B02",
+   "capacity": {
+    "kv_tokens": 298231
+   },
+   "cells": {
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM-B02": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0L32-B02-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "B0L32-B03": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-b0l32-b03",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-b0l32 setsid bash boot029_nextgen.sh p02-b0l32-b03 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --pair-uuids GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e",
+   "pid": 3857777,
+   "pgid": 3857759,
+   "boot_tag": "B03",
+   "capacity": {
+    "kv_tokens": 298231
+   },
+   "cells": {
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM-B03": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0L32-B03-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "B0X128-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-b0x128-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-b0x128 setsid bash boot029_nextgen.sh p02-b0x128-b01 19702 2 2 --kv-dtype bfloat16 --model-len 135168 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --pair-uuids GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e --cold",
+   "pid": 3860488,
+   "pgid": 3860469,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 374381
+   },
+   "cells": {
+    "V29-T2-Q0-KVBF16-SD7-MS2-NBT2048-X128-C1-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS2-NBT2048-X128-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    },
+    "V29-T2-Q0-KVBF16-SD7-MS2-NBT2048-X128-C2-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS2-NBT2048-X128-C2-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X128-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X128-B01-ND131072-S99"
+    },
+    "needle-seed2": {
+     "rc": 2,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X128-B01-ND131072-S2"
+    },
+    "needle-seed1": {
+     "rc": 2,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X128-B01-ND131072-S1"
+    }
+   },
+   "done": false
+  },
+  "B0X220-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-b0x220-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-b0x220 setsid bash boot029_nextgen.sh p02-b0x220-b01 19702 2 1 --kv-dtype bfloat16 --model-len 225280 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --pair-uuids GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e --cold",
+   "pid": 3867655,
+   "pgid": 3867636,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 392039
+   },
+   "cells": {
+    "V29-T2-Q0-KVBF16-SD7-MS1-NBT2048-X220-C1-L220K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS1-NBT2048-X220-C1-L220K",
+     "cell": {
+      "fixture": "p220k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X220-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X220-B01-ND220000-S99"
+    },
+    "needle-seed2": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X220-B01-ND220000-S2"
+    },
+    "needle-seed1": {
+     "rc": 2,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/B0X220-B01-ND220000-S1"
+    }
+   },
+   "done": false
+  }
+ }
+}

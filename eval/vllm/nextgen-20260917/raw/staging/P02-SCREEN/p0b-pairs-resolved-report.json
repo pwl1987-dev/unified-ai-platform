@@ -1,0 +1,41 @@
+{
+ "arms_file": "/data/sandbox/nextgen-20260917/p0b-pairs-resolved.json",
+ "arms": {
+  "PAIR34-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-pair34-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-pair34 setsid bash boot029_nextgen.sh p02-pair34-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --pair-uuids GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae,GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e --cold",
+   "pid": 3847486,
+   "pgid": 3847467,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  }
+ }
+}
