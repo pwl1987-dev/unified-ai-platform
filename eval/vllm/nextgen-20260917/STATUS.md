@@ -63,3 +63,12 @@ classify 端到端双向验证通过（2026-09-17）。
 - 2026-09-19: **工作对灵活化（用户拍板）**——不死等 GPU3+4：chain v2（pid 见 sandbox 锁）自动选对，优先级 3+4 > 2+5 > 2+6 > 2+7（GPU0/1 恒禁碰；rpg-bakeoff 零触碰）；任一授权卡腾出即组对开跑 busbw+PAIR-bench+B0 三形制；MANIFEST phase02.pairing_scan.working_pair_flexibility 入册（X2-220K vs Layer X 104.125s 跨对引用 caveat + 3+4 空闲补对照半）。勘误：U6/U7 UUID 凭记忆各有一处 typo，已 nvidia-smi 权威校对。
 - 2026-09-19 13:33: **自治链 v2 完整跑完（工作对=冻结 3+4；bakeoff 12:28 退场被抓）**——P0B：busbw 双测 14.34/14.37 GB/s@256MB（|Δ|=0.21%）；PAIR34 前哨 D565-C1 agg 168.58/decode 182.4；对照半与工作半同对复跑（exp 目录覆盖，单测有效，重复证据以 busbw 双测为准）；对照对 2+X 未获得（窗口期 GPU2 被 bakeoff humanlike 占用）→ 按 gates 默认维持 3+4（topo 全 PXB/NUMA0 等价注记）。**B0 三形制全成**：B0-L32 Qualify 3-boot（D565-F512-C1 agg 中位 164.63/decode 177.4/spread 1.40%；C4-NS 201.71 spread 3.20% 旗标；P4K cold/warm 中位 114.89/115.28——COLD cell R02/03 暖污染按分轨解读）；B0-X128（C1 真并发 TTFT 50.6/106.3s、C2 max_running=2 ✓）；B0-X220（C1 bench 暖主导 1.23s，冷 TTFT 由 needle 三态实证 **104.18/104.25/104.30 vs Layer X 104.125 = +0.1%**）。**needle 三态精确复现 Phase 01 签名**：seed1=2/5（命中值逐位同款 941235,900875）、seed99 双档 5/5、seed2@220K 5/5；**新数据点：seed2@128K=2/5**（码集×长度非正交，X128 阳性对照以 seed99 为准）。TP2 vs TP1 预览：C1 decode +22.4%、D565 TTFT −17%、P32K 冷 TTFT −22%。
 - 2026-09-19 18:2x: **batch1 终判（14 臂全数据 + B0C24F 同形分母补测）**——screen_decision：**IN = {NBT3072, DRAFT-TP2}**（NBT3072@P32K +17.2%/+17.8% vs 高窗分母为最强信号；DTP2 C1 边际+C4 无伤）；OUT = NBT1024/4096、CG-FULL8/16（FULL 反慢 C1 -3.5%、cap16 C8 -7.7%）、ARFI、ARNOCA（+1.4~2.5% 佳但 <3% 噪声线）、MS1/MS2、MS8（C2 -5.3% 违线，C8 吞吐档 envelope 点留档）、BSS（**boot 级 SUPPORTED 实证——MRv2+spec+bss 共存推翻源码 V1 列表预期**，但 C2 -6.2% 性能回退 OUT）。方法学：B0-L32 三 boot 落全天低点（-2.5% 漂移带），B0C24F（18:1x）与 screen 臂同时段构成受控比较面。勘误：ARNOCA 首轮 extra 误入 boot CLI（rc=2）已修 EXTRA_SERVE_ARGS 通道并补跑 2/2。
+
+## 2026-09-20 P2-DYNK 终判 ✅（k 阶梯 + TONLY 基线 + k8 复核）
+- 链 21:42-22:09 四 boot 全成（K5/K6/TONLY/K8CHECK，同晚窗口互比）。
+- **k8 CLOSED**：capture sizes [1,2,4,8] < verify batch 9 → 逐步 graph miss（ms/step 55.1 vs 18.6，decode -65%）；位置8接受非零但双条件不满足。
+- **k6 OUT**：全轴被支配（P32K -4.9% vs K7；D565 噪声平手）。
+- **k5 IN→Qualify（条件）**：P32K +7.6%（>漂移带）、D565 平手、总接受率 0.446/0.383、KV 容量全 spec 臂最高（+17,362 tok vs K7）；条件=P32K pos1 跨k gap 14.4pp 超地板，Qualify 3-boot 复核，仍超回退 K7。
+- **TONLY 结构性发现**：D565 spec 净赢 2.13×（TP2 价值由投机驱动，TP2-TONLY 85.1 < TP1-spec 144.9）；**P32K 全 spec 臂 decode 输 TONLY 21-30%、暖 TTFT 输 33%** —— Phase 03 L2 spec-off 正式 A/B 建议（plan 不加第十方向，如实记录不擅改）。
+- 接受率分桶 PARTIAL（聚合计数器无逐请求差分）；drafter/verify 分解 not_exposed（Phase 03 profiler Debt）。
+- 证据：raw/staging/P02-SCREEN/p2-dynk-eval.json / p2-dynk-decisions.json / p2-dynk-report.json。

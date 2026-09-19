@@ -1,0 +1,30 @@
+{
+  "plan": "P2-DYNK — dynamic k / 投机细化（k5/k6 阶梯 + tonly 参考 + k8 一次性能力复核）",
+  "note": "k7=B0 已有。dynamic-k 对 dflash 源码级不支持（P0A.4 探针结论，P2.4 即记录）。acceptance 从 server metrics 快照提取（bench 五件套内含）；k8 臂只判 CG 覆盖 verify batch + 第 8 位非零接受，不进阶梯。tonly 臂兼作 token-diff 基线与净收益分母。",
+  "port": 19702,
+  "arms": [
+    {"key": "K5", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+                            "nbt": 2048, "k": 5, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-K5-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-K5-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+     ], "probes": {"verbatim": true}},
+    {"key": "K6", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+                            "nbt": 2048, "k": 6, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-K6-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-K6-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+     ], "probes": {"verbatim": true}},
+    {"key": "TONLY", "boot": {"tp": 2, "ms": 4, "spec": 0, "kv_dtype": "bfloat16", "model_len": 36864,
+                               "nbt": 2048, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-TONLY-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-TONLY-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+     ], "probes": {"verbatim": true}},
+    {"key": "K8CHECK", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+                                 "nbt": 2048, "k": 8, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-K8-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 2}
+     ], "probes": {}}
+  ]
+}

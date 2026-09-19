@@ -1,0 +1,878 @@
+{
+ "record": "P2-DYNK 阶梯评估",
+ "cells": {
+  "K5-D565": {
+   "label": "K5-D565",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-K5-C1-L0565-F512-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 167.746,
+     "decode_med": 181.607,
+     "ttft_med": 0.2385,
+     "decode_wall_s": 2.814
+    },
+    {
+     "run": "V29-T2-SCR-K5-C1-L0565-F512-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 168.496,
+     "decode_med": 181.579,
+     "ttft_med": 0.2244,
+     "decode_wall_s": 2.814
+    },
+    {
+     "run": "V29-T2-SCR-K5-C1-L0565-F512-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 167.965,
+     "decode_med": 181.483,
+     "ttft_med": 0.2326,
+     "decode_wall_s": 2.816
+    }
+   ],
+   "acceptance": {
+    "drafts": 471.0,
+    "proposed": 2355.0,
+    "accepted": 1050.0,
+    "total_acceptance": 0.4459,
+    "accepted_per_draft": 2.2293,
+    "pos_accepted": {
+     "0": 360,
+     "1": 261,
+     "2": 201,
+     "3": 138,
+     "4": 90
+    },
+    "pos_rate": {
+     "0": 0.7643,
+     "1": 0.5541,
+     "2": 0.4268,
+     "3": 0.293,
+     "4": 0.1911
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.725,
+     "2": 0.7701,
+     "3": 0.6866,
+     "4": 0.6522
+    },
+    "max_adjacent_cond_drop_pp": 8.35,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 1521.0,
+     "client": 1536,
+     "ratio": 0.9902
+    }
+   }
+  },
+  "K5-P32K": {
+   "label": "K5-P32K",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-K5-C1-L032K-NS-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 236,
+     "agg_tok_s": 17.293,
+     "decode_med": 61.521,
+     "ttft_med": 9.8272,
+     "decode_wall_s": 3.82
+    },
+    {
+     "run": "V29-T2-SCR-K5-C1-L032K-NS-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 236,
+     "agg_tok_s": 56.9,
+     "decode_med": 61.454,
+     "ttft_med": 0.3237,
+     "decode_wall_s": 3.824
+    },
+    {
+     "run": "V29-T2-SCR-K5-C1-L032K-NS-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 236,
+     "agg_tok_s": 56.969,
+     "decode_med": 61.533,
+     "ttft_med": 0.3236,
+     "decode_wall_s": 3.819
+    }
+   ],
+   "acceptance": {
+    "drafts": 240.0,
+    "proposed": 1200.0,
+    "accepted": 459.0,
+    "total_acceptance": 0.3825,
+    "accepted_per_draft": 1.9125,
+    "pos_accepted": {
+     "0": 171,
+     "1": 135,
+     "2": 66,
+     "3": 48,
+     "4": 39
+    },
+    "pos_rate": {
+     "0": 0.7125,
+     "1": 0.5625,
+     "2": 0.275,
+     "3": 0.2,
+     "4": 0.1625
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.7895,
+     "2": 0.4889,
+     "3": 0.7273,
+     "4": 0.8125
+    },
+    "max_adjacent_cond_drop_pp": 30.06,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 699.0,
+     "client": 708,
+     "ratio": 0.9873
+    }
+   }
+  },
+  "K6-D565": {
+   "label": "K6-D565",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-K6-C1-L0565-F512-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 168.734,
+     "decode_med": 183.164,
+     "ttft_med": 0.2445,
+     "decode_wall_s": 2.79
+    },
+    {
+     "run": "V29-T2-SCR-K6-C1-L0565-F512-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 169.946,
+     "decode_med": 183.334,
+     "ttft_med": 0.2255,
+     "decode_wall_s": 2.787
+    },
+    {
+     "run": "V29-T2-SCR-K6-C1-L0565-F512-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 169.674,
+     "decode_med": 183.079,
+     "ttft_med": 0.2264,
+     "decode_wall_s": 2.791
+    }
+   ],
+   "acceptance": {
+    "drafts": 458.0,
+    "proposed": 2748.0,
+    "accepted": 1062.0,
+    "total_acceptance": 0.3865,
+    "accepted_per_draft": 2.3188,
+    "pos_accepted": {
+     "0": 336,
+     "1": 249,
+     "2": 192,
+     "3": 126,
+     "4": 87,
+     "5": 72
+    },
+    "pos_rate": {
+     "0": 0.7336,
+     "1": 0.5437,
+     "2": 0.4192,
+     "3": 0.2751,
+     "4": 0.19,
+     "5": 0.1572
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.7411,
+     "2": 0.7711,
+     "3": 0.6562,
+     "4": 0.6905,
+     "5": 0.8276
+    },
+    "max_adjacent_cond_drop_pp": 11.49,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 1520.0,
+     "client": 1536,
+     "ratio": 0.9896
+    }
+   }
+  },
+  "K6-P32K": {
+   "label": "K6-P32K",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-K6-C1-L032K-NS-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 243,
+     "agg_tok_s": 16.985,
+     "decode_med": 54.563,
+     "ttft_med": 9.8717,
+     "decode_wall_s": 4.435
+    },
+    {
+     "run": "V29-T2-SCR-K6-C1-L032K-NS-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 243,
+     "agg_tok_s": 51.069,
+     "decode_med": 54.55,
+     "ttft_med": 0.322,
+     "decode_wall_s": 4.436
+    },
+    {
+     "run": "V29-T2-SCR-K6-C1-L032K-NS-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 243,
+     "agg_tok_s": 51.079,
+     "decode_med": 54.576,
+     "ttft_med": 0.3232,
+     "decode_wall_s": 4.434
+    }
+   ],
+   "acceptance": {
+    "drafts": 272.0,
+    "proposed": 1632.0,
+    "accepted": 436.0,
+    "total_acceptance": 0.2672,
+    "accepted_per_draft": 1.6029,
+    "pos_accepted": {
+     "0": 164,
+     "1": 116,
+     "2": 63,
+     "3": 42,
+     "4": 30,
+     "5": 21
+    },
+    "pos_rate": {
+     "0": 0.6029,
+     "1": 0.4265,
+     "2": 0.2316,
+     "3": 0.1544,
+     "4": 0.1103,
+     "5": 0.0772
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.7073,
+     "2": 0.5431,
+     "3": 0.6667,
+     "4": 0.7143,
+     "5": 0.7
+    },
+    "max_adjacent_cond_drop_pp": 16.42,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 708.0,
+     "client": 729,
+     "ratio": 0.9712
+    }
+   }
+  },
+  "TONLY-D565": {
+   "label": "TONLY-D565",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-TONLY-C1-L0565-F512-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 81.805,
+     "decode_med": 85.089,
+     "ttft_med": 0.2533,
+     "decode_wall_s": 6.005
+    },
+    {
+     "run": "V29-T2-SCR-TONLY-C1-L0565-F512-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 83.222,
+     "decode_med": 85.073,
+     "ttft_med": 0.1456,
+     "decode_wall_s": 6.007
+    },
+    {
+     "run": "V29-T2-SCR-TONLY-C1-L0565-F512-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 83.172,
+     "decode_med": 85.047,
+     "ttft_med": 0.1475,
+     "decode_wall_s": 6.008
+    }
+   ]
+  },
+  "TONLY-P32K": {
+   "label": "TONLY-P32K",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-TONLY-C1-L032K-NS-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 234,
+     "agg_tok_s": 18.723,
+     "decode_med": 78.046,
+     "ttft_med": 9.5125,
+     "decode_wall_s": 2.985
+    },
+    {
+     "run": "V29-T2-SCR-TONLY-C1-L032K-NS-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 234,
+     "agg_tok_s": 73.167,
+     "decode_med": 78.058,
+     "ttft_med": 0.2132,
+     "decode_wall_s": 2.985
+    },
+    {
+     "run": "V29-T2-SCR-TONLY-C1-L032K-NS-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 234,
+     "agg_tok_s": 73.235,
+     "decode_med": 78.135,
+     "ttft_med": 0.2132,
+     "decode_wall_s": 2.982
+    }
+   ]
+  },
+  "K8-D565": {
+   "label": "K8-D565",
+   "n_runs": 2,
+   "perf": [
+    {
+     "run": "V29-T2-SCR-K8-C1-L0565-F512-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 61.13,
+     "decode_med": 62.831,
+     "ttft_med": 0.2427,
+     "decode_wall_s": 8.133
+    },
+    {
+     "run": "V29-T2-SCR-K8-C1-L0565-F512-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 61.268,
+     "decode_med": 62.915,
+     "ttft_med": 0.2346,
+     "decode_wall_s": 8.122
+    }
+   ],
+   "acceptance": {
+    "drafts": 295.0,
+    "proposed": 2360.0,
+    "accepted": 700.0,
+    "total_acceptance": 0.2966,
+    "accepted_per_draft": 2.3729,
+    "pos_accepted": {
+     "0": 217,
+     "1": 157,
+     "2": 109,
+     "3": 69,
+     "4": 51,
+     "5": 39,
+     "6": 37,
+     "7": 21
+    },
+    "pos_rate": {
+     "0": 0.7356,
+     "1": 0.5322,
+     "2": 0.3695,
+     "3": 0.2339,
+     "4": 0.1729,
+     "5": 0.1322,
+     "6": 0.1254,
+     "7": 0.0712
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.7235,
+     "2": 0.6943,
+     "3": 0.633,
+     "4": 0.7391,
+     "5": 0.7647,
+     "6": 0.9487,
+     "7": 0.5676
+    },
+    "max_adjacent_cond_drop_pp": 38.11,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 995.0,
+     "client": 1024,
+     "ratio": 0.9717
+    }
+   }
+  },
+  "K7-PAIR34-D565": {
+   "label": "K7-PAIR34-D565",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 168.191,
+     "decode_med": 182.606,
+     "ttft_med": 0.2458,
+     "decode_wall_s": 2.798
+    },
+    {
+     "run": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 168.821,
+     "decode_med": 182.362,
+     "ttft_med": 0.2307,
+     "decode_wall_s": 2.802
+    },
+    {
+     "run": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 168.58,
+     "decode_med": 182.112,
+     "ttft_med": 0.2312,
+     "decode_wall_s": 2.806
+    }
+   ],
+   "acceptance": {
+    "drafts": 452.0,
+    "proposed": 3164.0,
+    "accepted": 1063.0,
+    "total_acceptance": 0.336,
+    "accepted_per_draft": 2.3518,
+    "pos_accepted": {
+     "0": 314,
+     "1": 233,
+     "2": 180,
+     "3": 120,
+     "4": 78,
+     "5": 72,
+     "6": 66
+    },
+    "pos_rate": {
+     "0": 0.6947,
+     "1": 0.5155,
+     "2": 0.3982,
+     "3": 0.2655,
+     "4": 0.1726,
+     "5": 0.1593,
+     "6": 0.146
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.742,
+     "2": 0.7725,
+     "3": 0.6667,
+     "4": 0.65,
+     "5": 0.9231,
+     "6": 0.9167
+    },
+    "max_adjacent_cond_drop_pp": 10.58,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 1515.0,
+     "client": 1536,
+     "ratio": 0.9863
+    }
+   }
+  },
+  "K7-PAIR34-P32K": {
+   "label": "K7-PAIR34-P32K",
+   "n_runs": 3,
+   "perf": [
+    {
+     "run": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-NS-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 210,
+     "agg_tok_s": 15.563,
+     "decode_med": 57.449,
+     "ttft_med": 9.8558,
+     "decode_wall_s": 3.638
+    },
+    {
+     "run": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-NS-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 210,
+     "agg_tok_s": 53.103,
+     "decode_med": 57.433,
+     "ttft_med": 0.3155,
+     "decode_wall_s": 3.639
+    },
+    {
+     "run": "V29-T2-PAIR34-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K-NS-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 210,
+     "agg_tok_s": 53.098,
+     "decode_med": 57.448,
+     "ttft_med": 0.3168,
+     "decode_wall_s": 3.638
+    }
+   ],
+   "acceptance": {
+    "drafts": 222.0,
+    "proposed": 1554.0,
+    "accepted": 396.0,
+    "total_acceptance": 0.2548,
+    "accepted_per_draft": 1.7838,
+    "pos_accepted": {
+     "0": 138,
+     "1": 93,
+     "2": 57,
+     "3": 42,
+     "4": 27,
+     "5": 24,
+     "6": 15
+    },
+    "pos_rate": {
+     "0": 0.6216,
+     "1": 0.4189,
+     "2": 0.2568,
+     "3": 0.1892,
+     "4": 0.1216,
+     "5": 0.1081,
+     "6": 0.0676
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.6739,
+     "2": 0.6129,
+     "3": 0.7368,
+     "4": 0.6429,
+     "5": 0.8889,
+     "6": 0.625
+    },
+    "max_adjacent_cond_drop_pp": 26.39,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 618.0,
+     "client": 630,
+     "ratio": 0.981
+    }
+   }
+  },
+  "K7-B0L32-D565": {
+   "label": "K7-B0L32-D565",
+   "n_runs": 9,
+   "perf": [
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B01-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 162.122,
+     "decode_med": 175.254,
+     "ttft_med": 0.2423,
+     "decode_wall_s": 2.916
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B01-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 163.022,
+     "decode_med": 175.266,
+     "ttft_med": 0.2251,
+     "decode_wall_s": 2.916
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B01-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 162.916,
+     "decode_med": 175.135,
+     "ttft_med": 0.225,
+     "decode_wall_s": 2.918
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B02-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 163.78,
+     "decode_med": 177.41,
+     "ttft_med": 0.2458,
+     "decode_wall_s": 2.88
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B02-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 164.633,
+     "decode_med": 177.439,
+     "ttft_med": 0.2301,
+     "decode_wall_s": 2.88
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B02-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 164.641,
+     "decode_med": 177.405,
+     "ttft_med": 0.2294,
+     "decode_wall_s": 2.88
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B03-R01",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 163.872,
+     "decode_med": 177.587,
+     "ttft_med": 0.2469,
+     "decode_wall_s": 2.877
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B03-R02",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 165.304,
+     "decode_med": 177.735,
+     "ttft_med": 0.2223,
+     "decode_wall_s": 2.875
+    },
+    {
+     "run": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565-F512-B03-R03",
+     "requests_ok": 1,
+     "http_errors": 0,
+     "sum_output_tokens": 512,
+     "agg_tok_s": 165.215,
+     "decode_med": 177.465,
+     "ttft_med": 0.2195,
+     "decode_wall_s": 2.88
+    }
+   ],
+   "acceptance": {
+    "drafts": 1392.0,
+    "proposed": 9744.0,
+    "accepted": 3148.0,
+    "total_acceptance": 0.3231,
+    "accepted_per_draft": 2.2615,
+    "pos_accepted": {
+     "0": 949,
+     "1": 666,
+     "2": 498,
+     "3": 375,
+     "4": 258,
+     "5": 228,
+     "6": 174
+    },
+    "pos_rate": {
+     "0": 0.6818,
+     "1": 0.4784,
+     "2": 0.3578,
+     "3": 0.2694,
+     "4": 0.1853,
+     "5": 0.1638,
+     "6": 0.125
+    },
+    "consistency_all_ok": true,
+    "cond_rate": {
+     "1": 0.7018,
+     "2": 0.7477,
+     "3": 0.753,
+     "4": 0.688,
+     "5": 0.8837,
+     "6": 0.7632
+    },
+    "max_adjacent_cond_drop_pp": 12.05,
+    "emitted_vs_client_tokens": {
+     "emitted_est": 4540.0,
+     "client": 4608,
+     "ratio": 0.9852
+    }
+   }
+  }
+ },
+ "summary": {
+  "K5-D565": {
+   "n": 3,
+   "decode_med": 181.579,
+   "agg_med": 167.965,
+   "ttft_med": 0.233,
+   "total_acceptance": 0.4459,
+   "accepted_per_draft": 2.2293,
+   "pos_rate": {
+    "0": 0.7643,
+    "1": 0.5541,
+    "2": 0.4268,
+    "3": 0.293,
+    "4": 0.1911
+   },
+   "max_adj_cond_drop_pp": 8.35,
+   "speedup_vs_tonly": 2.1344
+  },
+  "K5-P32K": {
+   "n": 3,
+   "decode_med": 61.521,
+   "agg_med": 56.9,
+   "ttft_med": 0.324,
+   "total_acceptance": 0.3825,
+   "accepted_per_draft": 1.9125,
+   "pos_rate": {
+    "0": 0.7125,
+    "1": 0.5625,
+    "2": 0.275,
+    "3": 0.2,
+    "4": 0.1625
+   },
+   "max_adj_cond_drop_pp": 30.06,
+   "speedup_vs_tonly": 0.7881
+  },
+  "K6-D565": {
+   "n": 3,
+   "decode_med": 183.164,
+   "agg_med": 169.674,
+   "ttft_med": 0.226,
+   "total_acceptance": 0.3865,
+   "accepted_per_draft": 2.3188,
+   "pos_rate": {
+    "0": 0.7336,
+    "1": 0.5437,
+    "2": 0.4192,
+    "3": 0.2751,
+    "4": 0.19,
+    "5": 0.1572
+   },
+   "max_adj_cond_drop_pp": 11.49,
+   "speedup_vs_tonly": 2.153
+  },
+  "K6-P32K": {
+   "n": 3,
+   "decode_med": 54.563,
+   "agg_med": 51.069,
+   "ttft_med": 0.323,
+   "total_acceptance": 0.2672,
+   "accepted_per_draft": 1.6029,
+   "pos_rate": {
+    "0": 0.6029,
+    "1": 0.4265,
+    "2": 0.2316,
+    "3": 0.1544,
+    "4": 0.1103,
+    "5": 0.0772
+   },
+   "max_adj_cond_drop_pp": 16.42,
+   "speedup_vs_tonly": 0.699
+  },
+  "TONLY-D565": {
+   "n": 3,
+   "decode_med": 85.073,
+   "agg_med": 83.172,
+   "ttft_med": 0.147
+  },
+  "TONLY-P32K": {
+   "n": 3,
+   "decode_med": 78.058,
+   "agg_med": 73.167,
+   "ttft_med": 0.213
+  },
+  "K8-D565": {
+   "n": 2,
+   "decode_med": 62.873,
+   "agg_med": 61.199,
+   "ttft_med": 0.239,
+   "total_acceptance": 0.2966,
+   "accepted_per_draft": 2.3729,
+   "pos_rate": {
+    "0": 0.7356,
+    "1": 0.5322,
+    "2": 0.3695,
+    "3": 0.2339,
+    "4": 0.1729,
+    "5": 0.1322,
+    "6": 0.1254,
+    "7": 0.0712
+   },
+   "max_adj_cond_drop_pp": 38.11,
+   "speedup_vs_tonly": 0.739
+  },
+  "K7-PAIR34-D565": {
+   "n": 3,
+   "decode_med": 182.362,
+   "agg_med": 168.58,
+   "ttft_med": 0.231,
+   "total_acceptance": 0.336,
+   "accepted_per_draft": 2.3518,
+   "pos_rate": {
+    "0": 0.6947,
+    "1": 0.5155,
+    "2": 0.3982,
+    "3": 0.2655,
+    "4": 0.1726,
+    "5": 0.1593,
+    "6": 0.146
+   },
+   "max_adj_cond_drop_pp": 10.58
+  },
+  "K7-PAIR34-P32K": {
+   "n": 3,
+   "decode_med": 57.448,
+   "agg_med": 53.098,
+   "ttft_med": 0.317,
+   "total_acceptance": 0.2548,
+   "accepted_per_draft": 1.7838,
+   "pos_rate": {
+    "0": 0.6216,
+    "1": 0.4189,
+    "2": 0.2568,
+    "3": 0.1892,
+    "4": 0.1216,
+    "5": 0.1081,
+    "6": 0.0676
+   },
+   "max_adj_cond_drop_pp": 26.39
+  },
+  "K7-B0L32-D565": {
+   "n": 9,
+   "decode_med": 177.41,
+   "agg_med": 163.872,
+   "ttft_med": 0.229,
+   "total_acceptance": 0.3231,
+   "accepted_per_draft": 2.2615,
+   "pos_rate": {
+    "0": 0.6818,
+    "1": 0.4784,
+    "2": 0.3578,
+    "3": 0.2694,
+    "4": 0.1853,
+    "5": 0.1638,
+    "6": 0.125
+   },
+   "max_adj_cond_drop_pp": 12.05
+  }
+ }
+}

@@ -1,0 +1,157 @@
+{
+ "arms_file": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/repro/p02-arms/p2-dynk.json",
+ "arms": {
+  "K5-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-k5-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-k5 setsid bash boot029_nextgen.sh p02-k5-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 5 --match-unit 128 --cold",
+   "pid": 4098391,
+   "pgid": 4098374,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 305285
+   },
+   "cells": {
+    "V29-T2-SCR-K5-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-K5-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-K5-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-K5-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/K5-B01-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "K6-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-k6-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-k6 setsid bash boot029_nextgen.sh p02-k6-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 6 --match-unit 128 --cold",
+   "pid": 4101705,
+   "pgid": 4101682,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 296350
+   },
+   "cells": {
+    "V29-T2-SCR-K6-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-K6-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-K6-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-K6-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/K6-B01-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "TONLY-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-tonly-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-tonly setsid bash boot029_nextgen.sh p02-tonly-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 0 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 4105081,
+   "pgid": 4105064,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 425826,
+    "mrv2": true
+   },
+   "cells": {
+    "V29-T2-SCR-TONLY-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-TONLY-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-TONLY-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-TONLY-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/TONLY-B01-VERBATIM"
+    }
+   },
+   "done": true
+  },
+  "K8CHECK-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-k8check-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-k8check setsid bash boot029_nextgen.sh p02-k8check-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 8 --match-unit 128 --cold",
+   "pid": 4108273,
+   "pgid": 4108255,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 281491
+   },
+   "cells": {
+    "V29-T2-SCR-K8-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-K8-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 2
+     }
+    }
+   },
+   "done": true
+  }
+ }
+}

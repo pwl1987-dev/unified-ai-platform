@@ -1,0 +1,123 @@
+{
+ "record": "P2-DYNK 终判（k 阶梯 + TONLY 基线 + k8 能力复核）",
+ "evidence": {
+  "eval": "raw/staging/P02-SCREEN/p2-dynk-eval.json",
+  "chain_report": "raw/staging/P02-SCREEN/p2-dynk-report.json",
+  "windows": "K5/K6/TONLY/K8 同晚 21:49-22:09 窗口互比；K7 参照=PAIR34(12:28 单boot)与 B0-L32(12:35-12:59 3boot)，跨窗漂移带 ±2.5% 已知",
+  "counter_discipline": "精确族名 _total（排 _created）；per-pos 按 position 标签；自洽 sum(pos)==accepted 全过；emitted(=accepted+drafts)/client 比对 0.97-0.99"
+ },
+ "acceptance_gate_check": {
+  "total_floor_020": {
+   "K5-D565": 0.4459,
+   "K5-P32K": 0.3825,
+   "K6-D565": 0.3865,
+   "K6-P32K": 0.2672,
+   "K7-D565": 0.336,
+   "K7-P32K": 0.2548,
+   "K8-D565": 0.2966,
+   "verdict": "ALL_PASS"
+  },
+  "per_position_gap_8pp": {
+   "reading_A_adjacent_cond_drop": "各臂相邻条件接受率最大降幅: K5-D565 8.35 / K6-D565 11.49 / K7-B0L32 12.05 / K7-PAIR34 10.58 pp —— 含在位基线 k7 全体超 8pp，该读法无区分度（floor 原文未定义参照系，如实记录）",
+   "reading_B_cross_k_vs_K7": "K5-D565 max 7.0pp PASS / K6-D565 3.9pp PASS / K5-P32K max 14.4pp(pos1: 0.5625 vs K7 0.4189) FAIL / K6-P32K 3.5pp PASS"
+  }
+ },
+ "verdicts": {
+  "k8": {
+   "decision": "CLOSED",
+   "reason": "else_rule 触发：CG 不覆盖 verify batch —— capture sizes [1,2,4,8] 封顶 8 < k+1=9 token（log-p02-k8check server.txt: cudagraph_capture_sizes=[1,2,4,8]）；位置8接受率非零(pos_rate 0.0712)但双条件须同时满足。实证：decode 62.9 tok/s vs K7 同形 182.4（-65%），ms/step 55.1 vs 18.6（3.1x，逐步 graph miss）",
+   "evidence_quality": "COMPLETE"
+  },
+  "k6": {
+   "decision": "OUT",
+   "reason": "全轴被支配：P32K decode 54.6（vs K7 57.4 -4.9%、vs K5 同窗 61.5 -11.3%）；D565 183.2 vs K5 181.6 (+0.9% 噪声内)；接受结构全过但无任何主轴赢",
+   "evidence_quality": "COMPLETE"
+  },
+  "k5": {
+   "decision": "IN_conditional_Qualify",
+   "reason": "P32K decode 61.5 vs K7 57.4 (+7.6%，跨窗但>漂移带2.5%；同窗 vs K6 +12.7% 传递成立)；D565 181.6 vs 182.4 (-0.4% 噪声平手)；总接受率 0.446/0.383 全过地板；KV 容量 305,285 tok 为全 spec 臂最高（vs K7 +17,362 tok）。条件：P32K pos1 跨k gap 14.4pp 超地板（单boot 样本 drafts=240），Qualify 3-boot 以 ~3x 样本复核，仍超则回退 K7",
+   "evidence_quality": "COMPLETE"
+  },
+  "k7": {
+   "decision": "INCUMBENT_HELD",
+   "reason": "在位配方维持为 fallback；若 K5 Qualify 复核失败则保持 k7"
+  }
+ },
+ "tonly_findings": {
+  "d565": {
+   "tonly_decode_med": 85.073,
+   "k7_spec": 182.362,
+   "net": "spec 净赢 2.13x（同晚窗）；TP2-TONLY 85.1 < TP1-spec 144.9 —— TP2 价值由投机解码驱动"
+  },
+  "p32k": {
+   "tonly_decode_med": 78.058,
+   "spec_range": "54.6-61.5",
+   "tonly_ttft_warm": 0.213,
+   "spec_ttft_warm": "0.317-0.324",
+   "net": "P32K 下 spec 全臂 decode 输 TONLY 21-30%、暖 TTFT 输 33%（draft 模型 32K prefill 罚 + 长上下文 verify 代价 47.8ms/step vs 12.75ms/tok）",
+   "implication": "对 L2 主曲线(P32K)的结构性发现：spec-off 变体在长上下文 decode/TTFT 双优。plan v1.2 不加第十方向 —— 记录为 Phase 03 L2 spec-off 正式 A/B 建议；Phase 02 P4 L2 组装时在报告中如实标注"
+  },
+  "token_diff_quality": "staging 未存 per-request 文本，K vs TONLY 逐 token diff 不可回放 —— evidence_quality=PARTIAL；Tier-A 替代证据：K5/K6/TONLY verbatim 各 100/100 PASS"
+ },
+ "net_benefit_ledger_d565_c1": {
+  "K5": {
+   "tokens_per_step": 3.229,
+   "accepted_per_step": 2.229,
+   "ms_per_step": 17.9,
+   "wall_s_1536tok": 8.44,
+   "tonly_wall_s_1536tok": 18.02,
+   "net_wall": "-53.2%"
+  },
+  "K6": {
+   "tokens_per_step": 3.319,
+   "accepted_per_step": 2.319,
+   "ms_per_step": 18.3,
+   "wall_s_1536tok": 8.37,
+   "net_wall": "-53.6%"
+  },
+  "K7": {
+   "tokens_per_step": 3.352,
+   "accepted_per_step": 2.352,
+   "ms_per_step": 18.6,
+   "wall_s_1536tok": 8.41,
+   "net_wall": "-53.3%"
+  },
+  "K8": {
+   "tokens_per_step": 3.373,
+   "ms_per_step": 55.1,
+   "note": "eager 回退，非 drafter/verify 正常分解"
+  },
+  "drafter_vs_verify_split": "not_exposed_by_counters —— 需 phase 级计时，Phase 03 profiler Debt",
+  "sched_bubble": "not_exposed_by_counters"
+ },
+ "vram_ledger": {
+  "kv_tokens_per_boot": {
+   "TONLY": 425826,
+   "K5": 305285,
+   "K6": 296350,
+   "K7_B0L32": 287923,
+   "K8": 281491
+  },
+  "kv_bytes_per_token": "~48.3 KiB（12.95GiB/281491tok, K8 boot 实测）",
+  "spec_total_cost_k7_vs_tonly": "137,903 tok ≈ 6.4 GiB/GPU（draft 权重+draft KV+spec 缓冲）",
+  "k_sensitivity": "k 每加 1 ≈ -8,700 KV tok（K5→K8 单调）；K5 vs K7 释放 +17,362 tok ≈ +830 MiB"
+ },
+ "bucket_analysis": {
+  "status": "PARTIAL",
+  "reason": "prometheus 仅聚合计数器，zh/en/code/tool_json 分桶需逐请求 counter 差分或专用 fixture；本次以 D565/P32K 两形状 + verbatim 三桶记录",
+  "available": {
+   "d565_short": {
+    "K5": 0.4459,
+    "K6": 0.3865,
+    "K7": 0.336
+   },
+   "p32k_long": {
+    "K5": 0.3825,
+    "K6": 0.2672,
+    "K7": 0.2548
+   },
+   "verbatim_probe": "K5/K6 100/100 exact（TONLY 亦 100/100）"
+  }
+ },
+ "dynamic_k_support": "NOT_SUPPORTED 复认（0.29 dflash 仅 suffix-decoding，能力探针 repro/capabilities/vllm029-phase02-direction-probes.json）—— P2.4 结论：fixed-k 阶梯为唯一可用面，k 分布不可得"
+}
