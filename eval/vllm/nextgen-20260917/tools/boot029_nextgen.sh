@@ -122,13 +122,14 @@ CMD=("$VENV/bin/python" -m vllm.entrypoints.cli.main serve "$TARGET"
   --served-model-name qwen3.8-27b --host 127.0.0.1 --port "$PORT"
   --tensor-parallel-size "$TP"
   --max-model-len "$MODEL_LEN" --gpu-memory-utilization 0.95 --max-num-seqs "$MS" --max-num-batched-tokens "$NBT"
-  --mamba-ssm-cache-dtype float16 --mamba-cache-mode align --prefix-match-unit "$MATCH_UNIT" --async-scheduling
+  --mamba-ssm-cache-dtype float16 --mamba-cache-mode align --async-scheduling
   --language-model-only --enable-prefix-caching --generation-config vllm --kv-cache-dtype "$KV_DTYPE"
   --block-size 128
   --compilation-config "{\"max_cudagraph_capture_size\":$CG_CAP,\"custom_ops\":[\"+rms_norm\",\"+silu_and_mul\"]${CG_MODE:+,\"cudagraph_mode\":\"$CG_MODE\"}}")
 [[ -n "$KV_MEM" && "$KV_MEM" != "auto" ]] && CMD+=(--kv-cache-memory-bytes "$KV_MEM")
 # Phase 02 方向旗标（实名见 vllm029-phase02-direction-probes.json）
 [[ $BSS == 1 ]] && CMD+=(--enable-batch-sharded-sampling)
+[[ "$MATCH_UNIT" != "0" ]] && CMD+=(--prefix-match-unit "$MATCH_UNIT")   # 0=省略（引擎默认，MUDEF 臂）
 [[ -n "$QUEUED_REQS" ]] && CMD+=(--max-num-queued-reqs "$QUEUED_REQS")
 [[ -n "$QUEUED_TOKENS" ]] && CMD+=(--max-num-queued-tokens "$QUEUED_TOKENS")
 case "$RETENTION" in

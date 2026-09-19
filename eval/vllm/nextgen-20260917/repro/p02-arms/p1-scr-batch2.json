@@ -1,0 +1,77 @@
+{
+ "plan": "P1-SCR-BATCH2 — policy 三向（match-unit / retention / admission）Screen",
+ "gates": "repro/gates-phase02.yaml directions.{prefix_match_unit,prefix_retention,admission_control}",
+ "chain": "tools/p1_batch2_chain.py（12 boot 断点续跑；GPU3+4；端口 19702）",
+ "fixtures": {
+  "file": "/data/sandbox/nextgen-20260917/p1-batch2-fixtures.json (version 3)",
+  "discipline": "token 级构造 + round-trip/seam 双校验；d565rw base 597 tok / p4krw base 4117 tok；rewrite {1,8,32,128} × 4 变体",
+  "salt_semantics": "cache_salt 只进首块哈希（kv_cache_utils.py:604-612）：同 salt 共享 / 异 salt 全断"
+ },
+ "arms": [
+  {
+   "key": "MUDEF",
+   "boot": "L32 基配方 + prefix-match-unit 省略（引擎默认）",
+   "cells": "tailrw 全单元"
+  },
+  {
+   "key": "MU32",
+   "boot": "match-unit 32",
+   "cells": "同上（fixture 冻结集跨臂可比）"
+  },
+  {
+   "key": "MU64",
+   "boot": "match-unit 64",
+   "cells": "同上"
+  },
+  {
+   "key": "MU128",
+   "boot": "match-unit 128（在位形态）",
+   "cells": "同上"
+  },
+  {
+   "key": "RETDEF",
+   "boot": "retention UNSET（对照）",
+   "cells": "tailrw + multiturn + churn40"
+  },
+  {
+   "key": "RET0",
+   "boot": "--prefix-cache-retention-interval 0（仅语义 checkpoint）",
+   "cells": "同上"
+  },
+  {
+   "key": "RET1024",
+   "boot": "interval 1024（周期 checkpoint）",
+   "cells": "同上"
+  },
+  {
+   "key": "RETNONE",
+   "boot": "interval none（密集）",
+   "cells": "同上"
+  },
+  {
+   "key": "ADMCTL",
+   "boot": "L32 基配方（无阀对照）",
+   "cells": "open-loop p4k+p32k（closed C1-8×2 → 0.9/1.1 过载点）"
+  },
+  {
+   "key": "ADMQ8",
+   "boot": "--max-num-queued-reqs 8（在途阀，超限 503）",
+   "cells": "同上"
+  },
+  {
+   "key": "ADMQ32",
+   "boot": "--max-num-queued-reqs 32",
+   "cells": "同上"
+  },
+  {
+   "key": "ADMX220",
+   "boot": "X220 形制 + ms1 + queued-reqs 1（在途=1）",
+   "cells": "P220K C1 ns×3（同 B0-X220 形制）+ verbatim"
+  }
+ ],
+ "judgement_refs": {
+  "match_unit": "finer_hits_rule ≥3% net / error 0 / metadata net",
+  "retention": "warm ≥3% / partial ≥3% / cold 退步 ≤1% / VRAM ≤512MiB",
+  "admission": "过载点 p95 保护 / 仅 503 可重试单调 / 非过载 goodput 退步 ≤5% / x220 在途=1 preempt=0 oom=0 err≤0.001"
+ }
+}
