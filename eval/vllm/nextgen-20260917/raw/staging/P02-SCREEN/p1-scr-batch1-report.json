@@ -1,0 +1,510 @@
+{
+ "arms_file": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/repro/p02-arms/p1-scr-batch1.json",
+ "arms": {
+  "MS8BASE-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-ms8base-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-ms8base setsid bash boot029_nextgen.sh p02-ms8base-b01 19702 2 8 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3921813,
+   "pgid": 3921796,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-MS8-NBT2048-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS8-NBT2048-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-MS8-NBT2048-C2-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS8-NBT2048-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-MS8-NBT2048-C4-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS8-NBT2048-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-MS8-NBT2048-C8-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS8-NBT2048-C8-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 8,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "MS2-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-ms2-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-ms2 setsid bash boot029_nextgen.sh p02-ms2-b01 19702 2 2 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3933250,
+   "pgid": 3933233,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-MS2-NBT2048-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS2-NBT2048-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-MS2-NBT2048-C2-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS2-NBT2048-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "MS1-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-ms1-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-ms1 setsid bash boot029_nextgen.sh p02-ms1-b01 19702 2 1 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3936566,
+   "pgid": 3936543,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-MS1-NBT2048-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-MS1-NBT2048-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "NBT1024-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-nbt1024-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-nbt1024 setsid bash boot029_nextgen.sh p02-nbt1024-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 1024 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3939274,
+   "pgid": 3939257,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 295980
+   },
+   "cells": {
+    "V29-T2-SCR-NBT1024-C1-P4K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT1024-C1-P4K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-NBT1024-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT1024-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "NBT3072-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-nbt3072-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-nbt3072 setsid bash boot029_nextgen.sh p02-nbt3072-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 3072 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3948545,
+   "pgid": 3948528,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 281538
+   },
+   "cells": {
+    "V29-T2-SCR-NBT3072-C1-P4K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT3072-C1-P4K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-NBT3072-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT3072-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "NBT4096-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-nbt4096-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-nbt4096 setsid bash boot029_nextgen.sh p02-nbt4096-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 4096 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3952139,
+   "pgid": 3952122,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 274039
+   },
+   "cells": {
+    "V29-T2-SCR-NBT4096-C1-P4K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT4096-C1-P4K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-NBT4096-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT4096-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "NBT1024X128-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-nbt1024x128-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-nbt1024x128 setsid bash boot029_nextgen.sh p02-nbt1024x128-b01 19702 2 2 --kv-dtype bfloat16 --model-len 135168 --spec 1 --patch a --nbt 1024 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3965156,
+   "pgid": 3965139,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 380117
+   },
+   "cells": {
+    "V29-T2-SCR-NBT1024-X128-C1-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT1024-X128-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "done": true
+  },
+  "NBT4096X128-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-nbt4096x128-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-nbt4096x128 setsid bash boot029_nextgen.sh p02-nbt4096x128-b01 19702 2 2 --kv-dtype bfloat16 --model-len 135168 --spec 1 --patch a --nbt 4096 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3974359,
+   "pgid": 3974342,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 364931
+   },
+   "cells": {
+    "V29-T2-SCR-NBT4096-X128-C1-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-NBT4096-X128-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "done": true
+  },
+  "CGFULL8-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-cgfull8-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-cgfull8 setsid bash boot029_nextgen.sh p02-cgfull8-b01 19702 2 8 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cg-mode FULL --cold",
+   "pid": 3977755,
+   "pgid": 3977738,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 290544
+   },
+   "cells": {
+    "V29-T2-SCR-CGFULL8-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-CGFULL8-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-CGFULL8-C8-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-CGFULL8-C8-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 8,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "CGFULL16-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-cgfull16-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-cgfull16 setsid bash boot029_nextgen.sh p02-cgfull16-b01 19702 2 8 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 16 --k 7 --match-unit 128 --cg-mode FULL --cold",
+   "pid": 3988494,
+   "pgid": 3988477,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 290020
+   },
+   "cells": {
+    "V29-T2-SCR-CGFULL16-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-CGFULL16-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-CGFULL16-C8-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-CGFULL16-C8-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 8,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "ARFI-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-arfi-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_ALLREDUCE_USE_FLASHINFER=1 VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-arfi setsid bash boot029_nextgen.sh p02-arfi-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 4007002,
+   "pgid": 4006985,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-ARFI-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-ARFI-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-ARFI-C4-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-ARFI-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "ARNOCA-B01": {
+   "done": true,
+   "boot_ready": true,
+   "boot_rc": 2,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-arnoca-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  EXTRA_SERVE_ARGS='--disable-custom-all-reduce' VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-arnoca setsid bash boot029_nextgen.sh p02-arnoca-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 4089229,
+   "pgid": 4089212,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-ARNOCA-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-ARNOCA-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-ARNOCA-C4-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-ARNOCA-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   }
+  },
+  "DRAFTTP2-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-drafttp2-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-drafttp2 setsid bash boot029_nextgen.sh p02-drafttp2-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --draft-tp 2 --cold",
+   "pid": 4010830,
+   "pgid": 4010813,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-DTP2-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-DTP2-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-DTP2-C2-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-DTP2-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-DTP2-C4-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-DTP2-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  },
+  "BSSON-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-bsson-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-bsson setsid bash boot029_nextgen.sh p02-bsson-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --bss 1 --cold",
+   "pid": 4020927,
+   "pgid": 4020904,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "V29-T2-SCR-BSS1-C2-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-BSS1-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 2,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-SCR-BSS1-C4-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-BSS1-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 4,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    }
+   },
+   "done": true
+  }
+ }
+}

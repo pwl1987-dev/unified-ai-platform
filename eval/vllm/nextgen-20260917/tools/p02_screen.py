@@ -75,6 +75,10 @@ def boot_cmd(arm: dict, port: int, boot_tag: str) -> tuple[str, str]:
     # 编译缓存按 arm 键共享（同 arm 3-boot 复用，认证形制=cache 钉死）；log/exp 目录按 boot 分
     cache_key = f"p02-{arm['key'].lower()}"
     env_prefix = " ".join(f"{k}={v}" for k, v in b.get("env", {}).items())
+    # extra = 服参（非 boot 脚本旗标）→ EXTRA_SERVE_ARGS 通道（boot 脚本有自己的严格 CLI 解析）
+    extra_serve = " ".join(b.get("extra", [])).replace("'", "'\\''")
+    if extra_serve:
+        env_prefix += f" EXTRA_SERVE_ARGS='{extra_serve}'"
     parts = [f"cd {HERE} && {env_prefix} VLLM_CACHE_ROOT={SBX}/cache-{cache_key} setsid bash boot029_nextgen.sh",
              tag, str(port), str(b["tp"]), str(b["ms"])]
     kv = b.get("kv_dtype") or "auto"
@@ -103,8 +107,6 @@ def boot_cmd(arm: dict, port: int, boot_tag: str) -> tuple[str, str]:
         parts += ["--cold"]
     if b.get("kv_mem"):
         parts += ["--kv-mem", str(b["kv_mem"])]
-    if b.get("extra"):
-        parts += list(b["extra"])
     return " ".join(parts), tag
 
 

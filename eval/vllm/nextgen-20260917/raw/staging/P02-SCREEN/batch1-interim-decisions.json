@@ -1,0 +1,54 @@
+{
+ "record": "P1-SCR-BATCH1 中期判定底稿（终判待 ARNOCA 补跑 + B0C24F 分母）",
+ "drift_band_finding": "B0-L32 3-boot（12:35-12:59）中位 164.63/177.4 低于其前（PAIR34@12:28 168.58/182.4）与后（16:04+ 单 boot 簇 168.6-169.8/182-183）约 2.5%——跨时段漂移带 ±2.5%；单 boot Screen vs B0 中位的 +3~4.2% 判读必须保守（<3% 噪声纪律 + 漂移带 → borderline 需 Qualify 复核）",
+ "interim": {
+  "nbt3072": {
+   "verdict": "IN_candidate",
+   "evidence": "P32K: agg +17.2% / decode +17.8% / cold_ttft -2.1%（远超漂移带）",
+   "next": "Qualify 3-boot"
+  },
+  "nbt1024": {
+   "verdict": "borderline",
+   "evidence": "P4K agg +8.5%（goodput +59.5% 疑 warm-track 组成膨胀）/ P32K -0.4%",
+   "next": "Qualify 复核 P4K 面"
+  },
+  "nbt4096": {
+   "verdict": "OUT_lean",
+   "evidence": "P4K -1.1% / P32K +3.9% decode 但 goodput -11.1%；X128 cold_ttft -4.3% 为唯一亮点"
+  },
+  "cg_full8": {
+   "verdict": "OUT",
+   "evidence": "C1 -3.5%/-3.7%（FULL 反而慢）；C8 -0.4% 噪声"
+  },
+  "cg_full16": {
+   "verdict": "OUT",
+   "evidence": "C8 -7.7%/-7.1%（cap16 恶化并发）"
+  },
+  "arfi": {
+   "verdict": "pending_denominator",
+   "evidence": "C1 -1.3% 噪声；C4 待 B0C24F"
+  },
+  "dtp2": {
+   "verdict": "borderline_IN",
+   "evidence": "C1 +3.7~4.1% 处漂移带上沿；C4 +42% 需同形分母",
+   "next": "Qualify"
+  },
+  "ms1": {
+   "verdict": "borderline",
+   "evidence": "C1 +4.2%（仅交互档可用，MS1 禁一切并发）"
+  },
+  "ms8": {
+   "verdict": "borderline",
+   "evidence": "C1 +3.9%；C8 解锁 419-438 tok/s 聚合（吞吐档）"
+  },
+  "bss": {
+   "verdict": "SUPPORTED_boot_proven",
+   "evidence": "server 配置实证 enable_batch_sharded_sampling=True + MRv2 + spec 共存（推翻 V1 列表预期）；C2/C4 待分母"
+  },
+  "arnoca": {
+   "verdict": "pending_rerun",
+   "evidence": "首轮 boot_rc=2 管道 bug（extra 误入 boot CLI）；EXTRA_SERVE_ARGS 通道修复后重跑中"
+  }
+ },
+ "x128_nbt_note": "NBT-X128 两臂 agg -48% 为 reps=2 中位数混冷/暖伪影（B0-X128 reps=3 中位=暖），不可作回归证据；可比指标仅 cold_ttft（1024:+3.0% / 4096:-4.3%）与 decode（双双 -10%，Screen 级存疑待 Qualify）"
+}

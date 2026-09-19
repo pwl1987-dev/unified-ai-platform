@@ -1,0 +1,16 @@
+{
+  "plan": "P1-B0C24F — B0 缺失分母补测（D565-F512 C2/C4；batch1 各臂用了 F512 形 C2/C4 而 B0 只有 C4-NS，缺同形分母）",
+  "note": "1 boot MS4 spec bf16 L36K NBT2048；产出后 ARFI/DTP2/BSS1/MS2 的 C2/C4 全部可同形比较。",
+  "port": 19702,
+  "arms": [
+    {"key": "B0C24F", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864,
+                                "nbt": 2048, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C2-L0565-F512",
+        "fixture": "d565", "mode": "f512", "concurrency": 2, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-Q0-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565-F512",
+        "fixture": "d565", "mode": "f512", "concurrency": 4, "max_tokens": 512, "reps": 3}
+     ],
+     "probes": {}}
+  ]
+}
