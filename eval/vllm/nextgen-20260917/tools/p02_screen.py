@@ -74,7 +74,8 @@ def boot_cmd(arm: dict, port: int, boot_tag: str) -> tuple[str, str]:
     tag = f"p02-{arm['key'].lower()}-{boot_tag.lower()}"
     # 编译缓存按 arm 键共享（同 arm 3-boot 复用，认证形制=cache 钉死）；log/exp 目录按 boot 分
     cache_key = f"p02-{arm['key'].lower()}"
-    parts = [f"cd {HERE} && VLLM_CACHE_ROOT={SBX}/cache-{cache_key} setsid bash boot029_nextgen.sh",
+    env_prefix = " ".join(f"{k}={v}" for k, v in b.get("env", {}).items())
+    parts = [f"cd {HERE} && {env_prefix} VLLM_CACHE_ROOT={SBX}/cache-{cache_key} setsid bash boot029_nextgen.sh",
              tag, str(port), str(b["tp"]), str(b["ms"])]
     kv = b.get("kv_dtype") or "auto"
     parts += ["--kv-dtype", kv, "--model-len", str(b.get("model_len", 32768)),

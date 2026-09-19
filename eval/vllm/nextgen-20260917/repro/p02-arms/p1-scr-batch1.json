@@ -1,0 +1,79 @@
+{
+  "plan": "P1-SCR-BATCH1 — 9 向 Screen 第一批（6 向 14 boot；admission/match-unit/retention 留第二批需新工具）",
+  "note": "全部 TP2@3+4（pair_uuids 空=冻结对），单变量 vs B0-L32/B0-X128（MS8-BASE 同时充当 MS 三角 MS8 档与 CG C8 基线）。NBT 的 P128K 半用独立 X128 boot（model_len 不同不能同 boot）只测两极值 1024/4096。CG-FULL16 无条件跑（两步门在评估时判，浪费至多 1 boot）。BSS 预期可能配置拒绝→UNSUPPORTED 留证。",
+  "port": 19702,
+  "arms": [
+    {"key": "MS8BASE", "boot": {"tp": 2, "ms": 8, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-MS8-NBT2048-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-MS8-NBT2048-C2-L0565", "fixture": "d565", "mode": "f512", "concurrency": 2, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-MS8-NBT2048-C4-L0565", "fixture": "d565", "mode": "f512", "concurrency": 4, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-MS8-NBT2048-C8-L0565", "fixture": "d565", "mode": "f512", "concurrency": 8, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "MS2", "boot": {"tp": 2, "ms": 2, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-MS2-NBT2048-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-MS2-NBT2048-C2-L0565", "fixture": "d565", "mode": "f512", "concurrency": 2, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "MS1", "boot": {"tp": 2, "ms": 1, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-MS1-NBT2048-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "NBT1024", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 1024, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-NBT1024-C1-P4K", "fixture": "p4k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-NBT1024-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+     ], "probes": {}},
+    {"key": "NBT3072", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 3072, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-NBT3072-C1-P4K", "fixture": "p4k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-NBT3072-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+     ], "probes": {}},
+    {"key": "NBT4096", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 4096, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-NBT4096-C1-P4K", "fixture": "p4k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-NBT4096-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3}
+     ], "probes": {}},
+    {"key": "NBT1024X128", "boot": {"tp": 2, "ms": 2, "spec": 1, "kv_dtype": "bfloat16", "model_len": 135168, "nbt": 1024, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-NBT1024-X128-C1-L128K", "fixture": "p128k", "mode": "ns", "concurrency": 1, "max_tokens": 128, "reps": 2}
+     ], "probes": {}},
+    {"key": "NBT4096X128", "boot": {"tp": 2, "ms": 2, "spec": 1, "kv_dtype": "bfloat16", "model_len": 135168, "nbt": 4096, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-NBT4096-X128-C1-L128K", "fixture": "p128k", "mode": "ns", "concurrency": 1, "max_tokens": 128, "reps": 2}
+     ], "probes": {}},
+    {"key": "CGFULL8", "boot": {"tp": 2, "ms": 8, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cg_mode": "FULL", "cg_cap": 8, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-CGFULL8-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-CGFULL8-C8-L0565", "fixture": "d565", "mode": "f512", "concurrency": 8, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "CGFULL16", "boot": {"tp": 2, "ms": 8, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cg_mode": "FULL", "cg_cap": 16, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-CGFULL16-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-CGFULL16-C8-L0565", "fixture": "d565", "mode": "f512", "concurrency": 8, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "ARFI", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a",
+                              "env": {"VLLM_ALLREDUCE_USE_FLASHINFER": "1"}},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-ARFI-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-ARFI-C4-L0565", "fixture": "d565", "mode": "f512", "concurrency": 4, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "ARNOCA", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a",
+                                "extra": ["--disable-custom-all-reduce"]},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-ARNOCA-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-ARNOCA-C4-L0565", "fixture": "d565", "mode": "f512", "concurrency": 4, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "DRAFTTP2", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "draft_tp": 2, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-DTP2-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-DTP2-C2-L0565", "fixture": "d565", "mode": "f512", "concurrency": 2, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-DTP2-C4-L0565", "fixture": "d565", "mode": "f512", "concurrency": 4, "max_tokens": 512, "reps": 3}
+     ], "probes": {}},
+    {"key": "BSSON", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "bss": 1, "cold": true, "patch": "a"},
+     "cells": [
+       {"exp_prefix": "V29-T2-SCR-BSS1-C2-L0565", "fixture": "d565", "mode": "f512", "concurrency": 2, "max_tokens": 512, "reps": 3},
+       {"exp_prefix": "V29-T2-SCR-BSS1-C4-L0565", "fixture": "d565", "mode": "f512", "concurrency": 4, "max_tokens": 512, "reps": 3}
+     ], "probes": {}}
+  ]
+}
