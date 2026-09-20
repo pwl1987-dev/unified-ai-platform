@@ -1,0 +1,62 @@
+{
+ "record": "P32K boot 级双峰 —— 方差表征实验结论 + 认证协议修正",
+ "experiment": "p3_p32k_variance.py：B0 形 8 boot 全冷编译（W 系列 cache key 派生缺陷致亦全冷，n=8 冷分布；暖编译态由 B0R-B02/03 数据点补充）；每 boot P32K-NS-C1×3 + D565-F512-C1×1",
+ "results": {
+  "p32k_per_boot": {
+   "VAR-C1": [
+    57.5,
+    57.4,
+    57.5
+   ],
+   "VAR-C2": [
+    69.9,
+    69.9,
+    69.9
+   ],
+   "VAR-C3": [
+    69.9,
+    69.8,
+    69.9
+   ],
+   "VAR-C4": [
+    69.8,
+    69.7,
+    69.8
+   ],
+   "VAR-W1": [
+    69.8,
+    69.8,
+    69.9
+   ],
+   "VAR-W2": [
+    69.9,
+    69.8,
+    69.9
+   ],
+   "VAR-W3": [
+    69.9,
+    69.8,
+    69.9
+   ],
+   "VAR-W4": [
+    69.9,
+    69.8,
+    69.8
+   ]
+  },
+  "d565_control": {
+   "VAR-C1": 173.2,
+   "其余 7 boot": "182.3-183.7（+5.3% 同向弱化）"
+  },
+  "capacity": "全 boot 287,923（无差异）",
+  "init_s": "全 164.75-166.31（全冷编译，无差异）"
+ },
+ "conclusion": {
+  "phenomenon": "唯一慢 boot = VAR-C1 = ~10h idle 后的首个 boot（57.5 vs 69.9，-17.8%）；随后 7 个 back-to-back boot 快态紧致 spread 0.14% —— 慢态=平台冷启动惩罚（GPU 时钟/链路/缓存冷），非编译态、非容量、非臂配置",
+  "protocol_fix": "P32K 认证协议修正：弃置 idle 后首个 boot（平台暖 boot，量其数据但标记 WARMUP 不入判定），后续 back-to-back boot 入证",
+  "caveats": "N3072 昨日 B03 慢（连续活动中）未完全归因——修正协议下重测将覆盖；历史单 boot 数字（PAIR34/dynk 晚窗）大概率属慢态，跨窗比较一律带 ±18% 平台态 caveat",
+  "production_implication": "220K/32K 长上下文生产负载在服务冷启动后首个 boot 有 ~18% decode 慢态——生产热机（boot 后跑暖流量再接客）应进 Phase 08 部署手册"
+ },
+ "next": "p3_p32k_certify.py 运行中：WARMUP 弃置 boot + [B0R,N3072]×3 轮交替 back-to-back —— P32K 轴认证 A/B",
+ "tonly_note": "P32K spec-off 优势结论对平台态稳健（TONLY 78.1 与 spec 臂同窗测得；即便同为慢态，快态下 TONLY≈94+ vs spec≈70 方向不变）"
+}

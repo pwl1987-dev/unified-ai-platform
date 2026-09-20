@@ -86,3 +86,9 @@ classify 端到端双向验证通过（2026-09-17）。
 - **K5 pos1 复核不过**（3-boot 复现 +12.7pp > 8pp 地板）→ 按冻结规则回退 K7；规则张力（K5 pos1 高=其总接受率高的机制）如实记录供 Phase 03 复议。
 - **Lineage**：composite_L2 = B0 + NBT3072（待 P32K 认证）；portable = NBT3072@X128 recheck（未跑）+ q4 护栏。
 - 证据：raw/staging/P03-QUALIFY/{p3-qualify-eval, p3-qualify-decisions, p32k-variance-report}.json。
+
+## 2026-09-21 P32K 方差表征定案 ✅ → 修正协议认证 A/B 运行中
+- 8 全冷 boot 实验：**唯一慢 boot = 10h idle 后首个 boot**（57.5 vs 69.9，−17.8%）；随后 7 个 back-to-back boot spread **0.14%**。慢态=平台冷启动惩罚（D565 同向 +5.3%）；与编译态/容量/臂配置无关。
+- **认证协议修正**：弃置 idle 后首 boot，back-to-back 入证。生产含义：长上下文冷启动慢态 ~18% → Phase 08 热机手册素材。
+- 历史跨窗单 boot 数字（PAIR34/dynk 晚窗等）一律补 ±18% 平台态 caveat；P32K spec-off 结论方向稳健不受影响。
+- p3_p32k_certify.py：WARMUP 弃置 + [B0R,N3072]×3 交替（~08:30 完）→ composite_L2 定案 → P4。
