@@ -1,0 +1,157 @@
+{
+ "arm": "ADMQ8",
+ "fixture": "p32k",
+ "params": {
+  "prompt_tokens": 32768,
+  "max_tokens": 256,
+  "warmup_s": 60,
+  "measure_s": 240,
+  "min_completed": 12,
+  "max_test_s": 900,
+  "closed_reps": 2
+ },
+ "ts": "2026-09-20 09:14:45",
+ "closed_loop": {
+  "1": [
+   {
+    "rep": 0,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     9.8315
+    ],
+    "tpot_mean": 0.0478
+   },
+   {
+    "rep": 1,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     9.752
+    ],
+    "tpot_mean": 0.0477
+   }
+  ],
+  "2": [
+   {
+    "rep": 0,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     19.9392,
+     10.0302
+    ],
+    "tpot_mean": 0.0935
+   },
+   {
+    "rep": 1,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     19.9892,
+     10.0505
+    ],
+    "tpot_mean": 0.0938
+   }
+  ],
+  "4": [
+   {
+    "rep": 0,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     10.0623,
+     20.5456,
+     30.674,
+     40.6108
+    ],
+    "tpot_mean": 0.2276
+   },
+   {
+    "rep": 1,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     10.072,
+     30.6992,
+     20.5617,
+     40.6411
+    ],
+    "tpot_mean": 0.2337
+   }
+  ],
+  "8": [
+   {
+    "rep": 0,
+    "ok": 8,
+    "fail": 0,
+    "ttfts": [
+     10.0629,
+     20.5543,
+     30.6868,
+     40.6348,
+     73.4111,
+     62.7589,
+     52.6084,
+     83.557
+    ],
+    "tpot_mean": 0.2919
+   },
+   {
+    "rep": 1,
+    "ok": 8,
+    "fail": 0,
+    "ttfts": [
+     10.0667,
+     30.6961,
+     20.5563,
+     40.6399,
+     52.0372,
+     62.6701,
+     72.4716,
+     83.7479
+    ],
+    "tpot_mean": 0.2916
+   }
+  ]
+ },
+ "saturation_rate_est": 0.0505,
+ "closed_preemptions_delta": 0.0,
+ "open_points": [
+  {
+   "tag": "admq8-p32k-r0.9",
+   "arrival_rate": 0.0455,
+   "sent": 13,
+   "served_ok": 13,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 10.034,
+   "ttft_p95": 26.915,
+   "ttft_p99": 26.915,
+   "tpot_mean": 0.1543,
+   "waiting_max": 2.0,
+   "running_max": 4.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  },
+  {
+   "tag": "admq8-p32k-r1.1",
+   "arrival_rate": 0.0556,
+   "sent": 19,
+   "served_ok": 19,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 10.06,
+   "ttft_p95": 23.471,
+   "ttft_p99": 23.471,
+   "tpot_mean": 0.1179,
+   "waiting_max": 2.0,
+   "running_max": 4.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  }
+ ],
+ "monotonic_503": true
+}

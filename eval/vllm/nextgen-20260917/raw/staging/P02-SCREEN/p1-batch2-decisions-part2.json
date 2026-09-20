@@ -1,0 +1,141 @@
+{
+ "record": "P1-SCR-BATCH2 判定 part2 终版：admission（CTL/Q8/Q32/Q4/X220）",
+ "evidence": "raw/staging/P02-SCREEN/p1-batch2-{arm}-openloop-{p4k,p32k}.json；closed C1-8×2 → 饱和估计 → 0.9/1.1 过载点（Poisson，逐请求唯一 salt 纯冷形态）",
+ "open_loop_table": {
+  "p4k_sat": {
+   "ADMCTL": 0.2397,
+   "ADMQ8": 0.2382,
+   "ADMQ32": 0.239
+  },
+  "p32k_sat": {
+   "ADMCTL": 0.0517,
+   "ADMQ8": 0.0505,
+   "ADMQ32": 0.0544
+  },
+  "p4k_points": [
+   {
+    "arm": "CTL",
+    "p95_0.9": 2.249,
+    "p95_1.1": 6.524,
+    "rej": 0
+   },
+   {
+    "arm": "Q8",
+    "p95_0.9": 8.402,
+    "p95_1.1": 6.184,
+    "rej": 0,
+    "note": "0.9 点 p95 高为小样本突发噪声（40 样本 p95=第38值）"
+   },
+   {
+    "arm": "Q32",
+    "p95_0.9": 2.057,
+    "p95_1.1": 4.867,
+    "rej": 0
+   }
+  ],
+  "p32k_points": [
+   {
+    "arm": "CTL",
+    "p95_0.9": 17.104,
+    "p95_1.1": 23.963,
+    "rej": 0
+   },
+   {
+    "arm": "Q8",
+    "p95_0.9": 26.915,
+    "p95_1.1": 23.471,
+    "rej": 0
+   },
+   {
+    "arm": "Q32",
+    "p95_0.9": 18.037,
+    "p95_1.1": 22.756,
+    "rej": 0
+   }
+  ],
+  "waiting_max_observed": "全臂全点 ≤3 —— 阀 8/32 从未触及"
+ },
+ "findings": {
+  "valve_inert": "q8/q32 在 0.9/1.1× 过载点全程 0 拒绝（waiting_max 3 << 8）——Screen 负载下阀不 binding，p95 差异全部落在小样本噪声带内（p32k 每点仅 11-20 样本）",
+  "overload_phenomenon_real": "无阀时 1.1× 过载尾部膨胀实证：p4k p95 2.25→6.52（2.9x）、p32k 17.1→24.0（+40%）——阀要保护的现象真实存在，但 q≥8 档位在 MS4 服务速率下追不上积压",
+  "admq4_probe": "紧阀 q4（在途=MS=4，零排队、超额即 503）补臂运行中——机制的最锐利探针",
+  "x220_inflight1": {
+   "verdict": "PASS（gates.admission_control.x220_inflight1 三条件全过）",
+   "cold_ttft_r01": 103.95,
+   "b0x220_r01_same_form": 104.01,
+   "layer_x_gate_104125_delta_pct": -0.17,
+   "preemptions": 0,
+   "oom": 0,
+   "http_error_rate": 0.0,
+   "verbatim": "100/100 PASS",
+   "warm_r02r03": "1.22/1.22s —— 与 B0-X220 逐 rep 完全同构（容量同 392,039 KV tok，MS1 mamba 槽少→KV 池大于 MS4 的 287,923）；在途=1 对顺序 C1 零代价",
+   "implication": "X2 220K 生产形态可安全挂 --max-num-queued-reqs 1 作为护栏（防误并发打爆），记录为 composite_X2 候选护栏"
+  }
+ },
+ "quality": "open-loop 点样本量 Screen 级（p32k 11-20/点）；p95 分位读数须带此 caveat；ADMQ4 结果出来后补终判",
+ "admq4_results": {
+  "p4k": {
+   "sat_est": 0.1835,
+   "note_sat": "closed 阶段被阀节流（C8→4ok/4×503），点标签为节流后相对值——与 CTL 的绝对到达率不匹配，比较按保守处理",
+   "points": [
+    {
+     "ratio": 0.9,
+     "served": 25,
+     "rej503": 0,
+     "p50": 1.154,
+     "p95": 1.882
+    },
+    {
+     "ratio": 1.1,
+     "served": 31,
+     "rej503": 2,
+     "p50": 1.205,
+     "p95": 1.849
+    }
+   ],
+   "waiting_max": 0.0
+  },
+  "p32k": {
+   "sat_est": 0.0454,
+   "points": [
+    {
+     "ratio": 0.9,
+     "served": 12,
+     "rej503": 0,
+     "p50": 10.051,
+     "p95": 20.801
+    },
+    {
+     "ratio": 1.1,
+     "served": 17,
+     "rej503": 3,
+     "p50": 10.613,
+     "p95": 19.694
+    }
+   ],
+   "waiting_max": 1.0
+  },
+  "closed_c8_throttle_proof": "C8 闭环每 rep (4 ok, 4 fail-503) —— 在途阀在并发批量下精确砍半（机制实证）",
+  "mechanism": "q4=零排队运行：waiting_max 0-1，超额即 503（可重试）；服务侧 p95 双点压平（p4k 1.85-1.88 vs 无阀 6.52@1.1x；p32k 19.7 vs 24.0@1.1x = -17.7%）"
+ },
+ "verdicts": {
+  "admission_q4": {
+   "screen_decision": "IN（policy envelope 候选，q=MS 零排队形态）",
+   "judgement_check": {
+    "overload_p95_protection": "p4k 双点 PASS（1.882/1.849 ≤ CTL 2.249/6.524）；p32k 1.1 点 PASS（19.694 ≤ 23.963）；p32k 0.9 点 20.801 vs 17.104 = +22% 小样本反例（12 样本 p95=第11值）如实记录",
+    "rejection_predictability": "PASS：全部拒绝均为 503（other_err=0 全臂全点）；单调 0→2 / 0→3",
+    "served_goodput_non_overload": "PASS：0.9 点到达≈达成（p4k 25/25、p32k 12/12 无损）；p50 持平或更优（1.154 vs 1.211）",
+    "aggregate_tradeoff_by_design": "C8 闭环砍半属预期（plan 冻结：admission 压 P95 主动让 aggregate 不算 OUT）"
+   },
+   "caveats": "饱和估计被自身阀节流污染（相对点）；生产 q 值需按目标 TTFT×预填充吞吐调参（help 文档公式），Phase 03/08 部署参数"
+  },
+  "admission_q8_q32": {
+   "screen_decision": "OUT",
+   "reason": "Screen 负载全程不 binding（0 拒绝、waiting_max ≤3 << 8/32），p95 差异均在噪声带——惰性阀不提供保护也不伤性能，无入围价值；若部署需要宽松阀，q8 无害（记录备查）"
+  },
+  "x220_inflight1": {
+   "screen_decision": "PASS/envelope 保留",
+   "reason": "三条件全过（preempt 0 / oom 0 / err 0）+ 冷 TTFT 103.95（vs B0 同形 104.01，vs Layer X 门 104.125：-0.17% ≤+5%）+ verbatim 100/100 + 与 B0-X220 逐 rep 同构（暖 1.22/1.23）；--max-num-queued-reqs 1 作为 X2 220K 单租户生产护栏进 composite_X2 候选"
+  }
+ }
+}

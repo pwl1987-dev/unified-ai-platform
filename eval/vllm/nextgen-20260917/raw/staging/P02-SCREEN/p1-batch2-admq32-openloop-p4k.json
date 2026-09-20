@@ -1,0 +1,157 @@
+{
+ "arm": "ADMQ32",
+ "fixture": "p4k",
+ "params": {
+  "prompt_tokens": 4096,
+  "max_tokens": 256,
+  "warmup_s": 30,
+  "measure_s": 120,
+  "min_completed": 30,
+  "max_test_s": 300,
+  "closed_reps": 2
+ },
+ "ts": "2026-09-20 09:42:40",
+ "closed_loop": {
+  "1": [
+   {
+    "rep": 0,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     1.2286
+    ],
+    "tpot_mean": 0.0217
+   },
+   {
+    "rep": 1,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     1.1487
+    ],
+    "tpot_mean": 0.0217
+   }
+  ],
+  "2": [
+   {
+    "rep": 0,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     1.6953,
+     2.2934
+    ],
+    "tpot_mean": 0.051
+   },
+   {
+    "rep": 1,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     1.6864,
+     2.2775
+    ],
+    "tpot_mean": 0.0505
+   }
+  ],
+  "4": [
+   {
+    "rep": 0,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     3.8429,
+     1.6881,
+     4.6116,
+     2.5478
+    ],
+    "tpot_mean": 0.0677
+   },
+   {
+    "rep": 1,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     3.8423,
+     4.61,
+     1.6886,
+     2.5476
+    ],
+    "tpot_mean": 0.0698
+   }
+  ],
+  "8": [
+   {
+    "rep": 0,
+    "ok": 8,
+    "fail": 0,
+    "ttfts": [
+     3.8499,
+     2.5546,
+     1.6935,
+     4.6203,
+     7.8841,
+     10.8245,
+     13.4084,
+     12.2123
+    ],
+    "tpot_mean": 0.0784
+   },
+   {
+    "rep": 1,
+    "ok": 8,
+    "fail": 0,
+    "ttfts": [
+     3.85,
+     2.5543,
+     1.6942,
+     4.6206,
+     9.3937,
+     10.6189,
+     12.1192,
+     13.4552
+    ],
+    "tpot_mean": 0.0784
+   }
+  ]
+ },
+ "saturation_rate_est": 0.239,
+ "closed_preemptions_delta": 0.0,
+ "open_points": [
+  {
+   "tag": "admq32-p4k-r0.9",
+   "arrival_rate": 0.2151,
+   "sent": 41,
+   "served_ok": 41,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 1.359,
+   "ttft_p95": 2.057,
+   "ttft_p99": 2.253,
+   "tpot_mean": 0.0541,
+   "waiting_max": 1.0,
+   "running_max": 4.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  },
+  {
+   "tag": "admq32-p4k-r1.1",
+   "arrival_rate": 0.2629,
+   "sent": 47,
+   "served_ok": 47,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 1.698,
+   "ttft_p95": 4.867,
+   "ttft_p99": 6.385,
+   "tpot_mean": 0.0675,
+   "waiting_max": 2.0,
+   "running_max": 4.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  }
+ ],
+ "monotonic_503": true
+}

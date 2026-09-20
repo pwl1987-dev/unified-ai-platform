@@ -1,0 +1,263 @@
+{
+ "arms": {
+  "MUDEF": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-mudef-b01",
+   "pid": 41668,
+   "pgid": 41650,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {},
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.1873, \"warm_full\": 0.1775, \"rw_1\": 0.1772, \"rw_8\": 0.1775, \"rw_32\": 0.1775, \"rw_128\": 0.1775}, \"p4krw\": {\"cold_ref\": 1.139, \"warm_full\": 0.1736, \"rw_1\": 0.1715, \"rw_8\": 0.1717, \"rw_32\": 0.3162, \"rw_128\": 0.3163}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-mudef-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "MU32": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-mu32-b01",
+   "pid": 44383,
+   "pgid": 44366,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_match_unit": "32"
+   },
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.1874, \"warm_full\": 0.178, \"rw_1\": 0.1781, \"rw_8\": 0.178, \"rw_32\": 0.1784, \"rw_128\": 0.1779}, \"p4krw\": {\"cold_ref\": 1.1405, \"warm_full\": 0.1721, \"rw_1\": 0.1718, \"rw_8\": 0.1719, \"rw_32\": 0.3164, \"rw_128\": 0.3168}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-mu32-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "MU64": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-mu64-b01",
+   "pid": 47053,
+   "pgid": 47036,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_match_unit": "64"
+   },
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.1887, \"warm_full\": 0.178, \"rw_1\": 0.1786, \"rw_8\": 0.1782, \"rw_32\": 0.1779, \"rw_128\": 0.1781}, \"p4krw\": {\"cold_ref\": 1.1399, \"warm_full\": 0.1722, \"rw_1\": 0.1719, \"rw_8\": 0.172, \"rw_32\": 0.3161, \"rw_128\": 0.3166}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-mu64-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "MU128": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-mu128-b01",
+   "pid": 49789,
+   "pgid": 49772,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.1876, \"warm_full\": 0.1777, \"rw_1\": 0.1778, \"rw_8\": 0.1779, \"rw_32\": 0.1775, \"rw_128\": 0.1777}, \"p4krw\": {\"cold_ref\": 1.1403, \"warm_full\": 0.1735, \"rw_1\": 0.1718, \"rw_8\": 0.1719, \"rw_32\": 0.3161, \"rw_128\": 0.3162}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-mu128-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "RETDEF": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-retdef-b01",
+   "pid": 52513,
+   "pgid": 52496,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.1882, \"warm_full\": 0.178, \"rw_1\": 0.1786, \"rw_8\": 0.1779, \"rw_32\": 0.178, \"rw_128\": 0.1782}, \"p4krw\": {\"cold_ref\": 1.1407, \"warm_full\": 0.1722, \"rw_1\": 0.1724, \"rw_8\": 0.1721, \"rw_32\": 0.3166, \"rw_128\": 0.3166}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-retdef-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "RET0": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-ret0-b01",
+   "pid": 55266,
+   "pgid": 55249,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_cache_retention_interval": "0",
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.1842, \"warm_full\": 0.1776, \"rw_1\": 0.1777, \"rw_8\": 0.1781, \"rw_32\": 0.1776, \"rw_128\": 0.1781}, \"p4krw\": {\"cold_ref\": 1.1403, \"warm_full\": 1.1388, \"rw_1\": 0.1715, \"rw_8\": 0.1718, \"rw_32\": 0.3162, \"rw_128\": 0.3161}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-ret0-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "RET1024": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-ret1024-b01",
+   "pid": 57977,
+   "pgid": 57960,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_cache_retention_interval": "1024",
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "tailrw": {
+     "rc": 0,
+     "tail": "{\"d565rw\": {\"cold_ref\": 0.184, \"warm_full\": 0.1781, \"rw_1\": 0.178, \"rw_8\": 0.1783, \"rw_32\": 0.1784, \"rw_128\": 0.1781}, \"p4krw\": {\"cold_ref\": 1.1413, \"warm_full\": 0.3182, \"rw_1\": 0.1721, \"rw_8\": 0.172, \"rw_32\": 0.3166, \"rw_128\": 0.3165}}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-ret1024-cells.json\n"
+    }
+   },
+   "done": true
+  },
+  "RETNONE": {
+   "done": false,
+   "boot_ready": false,
+   "rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-retnone-b01"
+  },
+  "ADMCTL": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-admctl-b01",
+   "pid": 60851,
+   "pgid": 60834,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "openloop_p4k": {
+     "rc": 0,
+     "tail": "{\"closed\": 1, \"ok\": 2, \"fail\": 0}\n{\"closed\": 2, \"ok\": 4, \"fail\": 0}\n{\"closed\": 4, \"ok\": 8, \"fail\": 0}\n{\"closed\": 8, \"ok\": 16, \"fail\": 0}\n{\"arrival_rate\": 0.2157, \"served_ok\": 29, \"rejected_503\": 0, \"ttft_p95\": 2.249}\n{\"arrival_rate\": 0.2636, \"served_ok\": 46, \"rejected_503\": 0, \"ttft_p95\": 6.524}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-admctl-openloop-p4k.json\n"
+    },
+    "openloop_p32k": {
+     "rc": 0,
+     "tail": "{\"closed\": 1, \"ok\": 2, \"fail\": 0}\n{\"closed\": 2, \"ok\": 4, \"fail\": 0}\n{\"closed\": 4, \"ok\": 8, \"fail\": 0}\n{\"closed\": 8, \"ok\": 16, \"fail\": 0}\n{\"arrival_rate\": 0.0466, \"served_ok\": 12, \"rejected_503\": 0, \"ttft_p95\": 17.104}\n{\"arrival_rate\": 0.0569, \"served_ok\": 18, \"rejected_503\": 0, \"ttft_p95\": 23.963}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-admctl-openloop-p32k.json\n"
+    }
+   },
+   "done": true
+  },
+  "ADMQ8": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-admq8-b01",
+   "pid": 70904,
+   "pgid": 70886,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "max_num_queued_reqs": "8",
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "openloop_p4k": {
+     "rc": 0,
+     "tail": "{\"closed\": 1, \"ok\": 2, \"fail\": 0}\n{\"closed\": 2, \"ok\": 4, \"fail\": 0}\n{\"closed\": 4, \"ok\": 8, \"fail\": 0}\n{\"closed\": 8, \"ok\": 16, \"fail\": 0}\n{\"arrival_rate\": 0.2143, \"served_ok\": 40, \"rejected_503\": 0, \"ttft_p95\": 8.402}\n{\"arrival_rate\": 0.262, \"served_ok\": 45, \"rejected_503\": 0, \"ttft_p95\": 6.184}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-admq8-openloop-p4k.json\n"
+    },
+    "openloop_p32k": {
+     "rc": 0,
+     "tail": "{\"closed\": 1, \"ok\": 2, \"fail\": 0}\n{\"closed\": 2, \"ok\": 4, \"fail\": 0}\n{\"closed\": 4, \"ok\": 8, \"fail\": 0}\n{\"closed\": 8, \"ok\": 16, \"fail\": 0}\n{\"arrival_rate\": 0.0455, \"served_ok\": 13, \"rejected_503\": 0, \"ttft_p95\": 26.915}\n{\"arrival_rate\": 0.0556, \"served_ok\": 19, \"rejected_503\": 0, \"ttft_p95\": 23.471}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-admq8-openloop-p32k.json\n"
+    }
+   },
+   "done": true
+  },
+  "ADMQ32": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-admq32-b01",
+   "pid": 80710,
+   "pgid": 80693,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "flags_effective": {
+    "max_num_queued_reqs": "32",
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "openloop_p4k": {
+     "rc": 0,
+     "tail": "{\"closed\": 1, \"ok\": 2, \"fail\": 0}\n{\"closed\": 2, \"ok\": 4, \"fail\": 0}\n{\"closed\": 4, \"ok\": 8, \"fail\": 0}\n{\"closed\": 8, \"ok\": 16, \"fail\": 0}\n{\"arrival_rate\": 0.2151, \"served_ok\": 41, \"rejected_503\": 0, \"ttft_p95\": 2.057}\n{\"arrival_rate\": 0.2629, \"served_ok\": 47, \"rejected_503\": 0, \"ttft_p95\": 4.867}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-admq32-openloop-p4k.json\n"
+    },
+    "openloop_p32k": {
+     "rc": 0,
+     "tail": "{\"closed\": 1, \"ok\": 2, \"fail\": 0}\n{\"closed\": 2, \"ok\": 4, \"fail\": 0}\n{\"closed\": 4, \"ok\": 8, \"fail\": 0}\n{\"closed\": 8, \"ok\": 16, \"fail\": 0}\n{\"arrival_rate\": 0.049, \"served_ok\": 11, \"rejected_503\": 0, \"ttft_p95\": 18.037}\n{\"arrival_rate\": 0.0599, \"served_ok\": 20, \"rejected_503\": 0, \"ttft_p95\": 22.756}\nwritten /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/P02-SCREEN/p1-batch2-admq32-openloop-p32k.json\n"
+    }
+   },
+   "done": true
+  },
+  "ADMX220": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-admx220-b01",
+   "pid": 90498,
+   "pgid": 90475,
+   "capacity": {
+    "kv_tokens": 392039
+   },
+   "flags_effective": {
+    "max_num_queued_reqs": "1",
+    "prefix_match_unit": "128"
+   },
+   "cells": {
+    "p220k_c1": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SCR-ADM220-Q1-MS1-NBT2048-X220-C1-L220K",
+     "cell": {
+      "fixture": "p220k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    },
+    "verbatim": {
+     "rc": 0,
+     "PASS": true
+    }
+   },
+   "done": true
+  },
+  "ADMQ4": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-admq4-b01",
+   "pid": 96132,
+   "pgid": 96109,
+   "capacity": {
+    "kv_tokens": 287923
+   },
+   "cells": {
+    "openloop_p4k": {
+     "rc": 0
+    },
+    "openloop_p32k": {
+     "rc": 0
+    }
+   },
+   "done": true
+  }
+ }
+}

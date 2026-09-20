@@ -1,0 +1,149 @@
+{
+ "arm": "ADMQ4",
+ "fixture": "p32k",
+ "params": {
+  "prompt_tokens": 32768,
+  "max_tokens": 256,
+  "warmup_s": 60,
+  "measure_s": 240,
+  "min_completed": 12,
+  "max_test_s": 900,
+  "closed_reps": 2
+ },
+ "ts": "2026-09-20 10:47:50",
+ "closed_loop": {
+  "1": [
+   {
+    "rep": 0,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     9.835
+    ],
+    "tpot_mean": 0.0478
+   },
+   {
+    "rep": 1,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     9.7873
+    ],
+    "tpot_mean": 0.0479
+   }
+  ],
+  "2": [
+   {
+    "rep": 0,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     10.0534,
+     20.0131
+    ],
+    "tpot_mean": 0.0963
+   },
+   {
+    "rep": 1,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     10.0663,
+     20.0197
+    ],
+    "tpot_mean": 0.0963
+   }
+  ],
+  "4": [
+   {
+    "rep": 0,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     20.5881,
+     10.08,
+     30.7465,
+     40.7095
+    ],
+    "tpot_mean": 0.2084
+   },
+   {
+    "rep": 1,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     10.0819,
+     20.5934,
+     30.7489,
+     40.7114
+    ],
+    "tpot_mean": 0.1949
+   }
+  ],
+  "8": [
+   {
+    "rep": 0,
+    "ok": 4,
+    "fail": 4,
+    "ttfts": [
+     20.6024,
+     10.0893,
+     30.7577,
+     40.7181
+    ],
+    "tpot_mean": 0.2135
+   },
+   {
+    "rep": 1,
+    "ok": 4,
+    "fail": 4,
+    "ttfts": [
+     10.0915,
+     20.6081,
+     30.7732,
+     40.7001
+    ],
+    "tpot_mean": 0.241
+   }
+  ]
+ },
+ "saturation_rate_est": 0.0454,
+ "closed_preemptions_delta": 0.0,
+ "open_points": [
+  {
+   "tag": "admq4-p32k-r0.9",
+   "arrival_rate": 0.0408,
+   "sent": 12,
+   "served_ok": 12,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 10.051,
+   "ttft_p95": 20.801,
+   "ttft_p99": 20.801,
+   "tpot_mean": 0.0978,
+   "waiting_max": 1.0,
+   "running_max": 3.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  },
+  {
+   "tag": "admq4-p32k-r1.1",
+   "arrival_rate": 0.0499,
+   "sent": 20,
+   "served_ok": 17,
+   "rejected_503": 3,
+   "other_err": 0,
+   "rejection_share": 0.15,
+   "ttft_p50": 10.613,
+   "ttft_p95": 19.694,
+   "ttft_p99": 19.694,
+   "tpot_mean": 0.16,
+   "waiting_max": 1.0,
+   "running_max": 4.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  }
+ ],
+ "monotonic_503": true
+}

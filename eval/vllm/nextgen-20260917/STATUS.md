@@ -72,3 +72,10 @@ classify 端到端双向验证通过（2026-09-17）。
 - **TONLY 结构性发现**：D565 spec 净赢 2.13×（TP2 价值由投机驱动，TP2-TONLY 85.1 < TP1-spec 144.9）；**P32K 全 spec 臂 decode 输 TONLY 21-30%、暖 TTFT 输 33%** —— Phase 03 L2 spec-off 正式 A/B 建议（plan 不加第十方向，如实记录不擅改）。
 - 接受率分桶 PARTIAL（聚合计数器无逐请求差分）；drafter/verify 分解 not_exposed（Phase 03 profiler Debt）。
 - 证据：raw/staging/P02-SCREEN/p2-dynk-eval.json / p2-dynk-decisions.json / p2-dynk-report.json。
+
+## 2026-09-20 P1-SCR-BATCH2 ✅（policy 三向：match-unit / retention / admission）
+- 12+2 boot 链（GPU3+4，RETNONE 预期失败=CLI 拒 int 外值）。fixture 纪律：token 级构造+round-trip/seam 双校验（d565rw/p4krw，rewrite 1/8/32/128×4）。
+- **match-unit UNSUPPORTED**：一切显式值（32/64/128）触发 'Disabling fine-grained prefix-cache hits…SlidingWindowManager'（省略旗标无告警），四臂全单元零行为差——混合架构（SW/Mamba 组）强制块对齐，细粒度命中从未生效。在位形态维持。
+- **retention OUT**：值域=省略(None=密集)/0(语义)/1024(周期)；显式值 warm_full 全线大退步（0=1.139s、1024=0.318s vs 密集 0.172s，+560%/+85%）；partial 全等；VRAM 0。churn 观察：显式值暖存活 6.2×（0.186 vs 1.155）——Phase 03 稳态画像 A/B 素材。
+- **admission：q4 IN**（零排队、503 单调可重试、过载 p95 双钳：p4k 1.85 vs 6.52 / p32k 19.7 vs 24.0；C8 砍半=设计内交换）；q8/q32 OUT（惰性：0 拒绝、waiting≤3）；**x220 在途=1 PASS**（冷 TTFT 103.95 vs 104.125 门 -0.17%，preempt/oom/err 全 0，verbatim 100/100）→ composite_X2 护栏候选。
+- 证据：raw/staging/P02-SCREEN/p1-batch2-*（report/cells/openloop/decisions-part1/part2）。

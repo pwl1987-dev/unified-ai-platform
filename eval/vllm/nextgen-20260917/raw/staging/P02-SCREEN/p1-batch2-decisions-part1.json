@@ -1,0 +1,30 @@
+{
+ "record": "P1-SCR-BATCH2 中段判定：match-unit / retention 两向（admission 臂链仍在跑）",
+ "evidence": {
+  "cells": "raw/staging/P02-SCREEN/p1-batch2-{arm}-cells.json × 8",
+  "fixtures": "/data/sandbox/nextgen-20260917/p1-batch2-fixtures.json v3（token 级构造+round-trip/seam 双校验；d565rw 597 tok / p4krw 4117 tok；rewrite 1/8/32/128 × 4 变体）",
+  "flags_verified": "各臂 server.txt non-default args 实证（见 p1-batch2-report.json flags_effective）",
+  "capacity": "全部 287,923 KV tok（无 VRAM 差异）"
+ },
+ "match_unit": {
+  "screen_decision": "UNSUPPORTED",
+  "reason": "四臂全单元零行为差（p4krw rw_32 med 0.3161/0.3162/0.3161/0.3162；rw_1 全 0.1715-0.1721；若 32 粒度生效，rw_32 共享 4085 应命中 4080 → TTFT≈warm 0.17，实测 0.316=块对齐 3968 的重算签名）——细粒度命中从未生效",
+  "warning_foresics": "告警 'Disabling fine-grained prefix-cache hits … SlidingWindowManager' 在一切显式值下各出现 1 次（MU32/MU64/MU128 均 1；MUDEF=省略旗标 0 次；后继 ADM 臂亦 1）。即：告警由『显式传旗标』触发，SW/Mamba 组强制自身块对齐，请求粒度被覆盖",
+  "default_arm_note": "MUDEF（省略）与 MU32/64/128（显式）行为一致；在位形态维持（boot 脚本默认显式 128 等价省略）",
+  "capability_note": "0.29 prefix-match-unit 旗标面存在但对本混合架构（SW/Mamba 组）无效——help 文档化行为与实际管理器约束不符，留档 repro/capabilities/；机制细节（各组物理块尺寸）profiler Debt"
+ },
+ "retention": {
+  "screen_decision": "OUT",
+  "value_space_note": "省略旗标=None=密集（RETDEF，在位 B0 形态）；0=仅语义 checkpoint；1024=周期；'none' 字符串被 CLI 拒（int 型）——密集态即省略态，值域全覆盖",
+  "warm_full_p4k_med": {
+   "RETDEF_dense": 0.1722,
+   "RET0_semantic": 1.1388,
+   "RET1024_periodic": 0.3182
+  },
+  "verdict_detail": "对冻结判据：RET0 warm_full +560% 退步、RET1024 +85% 退步（门槛=改善≥3%）；partial（rw_1/rw_8）三臂全等 0.171-0.172 无改善；cold_ref 三臂 1.139-1.141 退步 0%；VRAM 0 MiB。两显式值全轴不过 → OUT，在位（省略=密集）维持",
+  "churn_observation_phase03": "40×p4k 唯一 salt 灌满后暖复访：RETDEF 1.155（暖失效=冷）vs RET0 0.186 / RET1024 0.186（6.2× 存活）——多租户/稳态冷邻接负载下周期保留有真实价值，Phase 03 可做稳态画像 A/B",
+  "multiturn_observation": "5 轮瀑布：RETDEF [1.139,0.181,0.192,0.205,0.215] / RET0 [1.138,1.147,0.192,0.205,0.215]（turn2 慢=语义 junction 需共享事件触发）/ RET1024 [1.140,0.325,0.192,0.204,0.215]——机制细节留 profiler Debt"
+ },
+ "quality": "verbatim 未在本批 MU/RET 臂跑（改写/多轮单元自带 temp=0 确定性形态）；Tier-B 面由 ADMX220 verbatim 补",
+ "pending": "admission（ADMCTL/ADMQ8/ADMQ32 open-loop + ADMX220 在途=1）链仍在跑，判定待链完成后补"
+}

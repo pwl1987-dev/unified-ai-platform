@@ -1,0 +1,157 @@
+{
+ "arm": "ADMCTL",
+ "fixture": "p32k",
+ "params": {
+  "prompt_tokens": 32768,
+  "max_tokens": 256,
+  "warmup_s": 60,
+  "measure_s": 240,
+  "min_completed": 12,
+  "max_test_s": 900,
+  "closed_reps": 2
+ },
+ "ts": "2026-09-20 08:36:19",
+ "closed_loop": {
+  "1": [
+   {
+    "rep": 0,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     9.8296
+    ],
+    "tpot_mean": 0.0478
+   },
+   {
+    "rep": 1,
+    "ok": 1,
+    "fail": 0,
+    "ttfts": [
+     9.7647
+    ],
+    "tpot_mean": 0.0479
+   }
+  ],
+  "2": [
+   {
+    "rep": 0,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     10.0313,
+     19.9656
+    ],
+    "tpot_mean": 0.1097
+   },
+   {
+    "rep": 1,
+    "ok": 2,
+    "fail": 0,
+    "ttfts": [
+     19.9969,
+     10.0564
+    ],
+    "tpot_mean": 0.0979
+   }
+  ],
+  "4": [
+   {
+    "rep": 0,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     10.0616,
+     20.5591,
+     30.6963,
+     40.641
+    ],
+    "tpot_mean": 0.2064
+   },
+   {
+    "rep": 1,
+    "ok": 4,
+    "fail": 0,
+    "ttfts": [
+     10.0662,
+     40.6517,
+     20.5622,
+     30.7032
+    ],
+    "tpot_mean": 0.2256
+   }
+  ],
+  "8": [
+   {
+    "rep": 0,
+    "ok": 8,
+    "fail": 0,
+    "ttfts": [
+     10.0665,
+     20.5611,
+     30.7039,
+     51.9284,
+     40.6497,
+     62.3366,
+     73.6784,
+     83.7336
+    ],
+    "tpot_mean": 0.2829
+   },
+   {
+    "rep": 1,
+    "ok": 8,
+    "fail": 0,
+    "ttfts": [
+     10.0867,
+     30.7415,
+     20.5887,
+     40.6964,
+     51.8208,
+     63.3142,
+     73.9134,
+     83.7323
+    ],
+    "tpot_mean": 0.2769
+   }
+  ]
+ },
+ "saturation_rate_est": 0.0517,
+ "closed_preemptions_delta": 0.0,
+ "open_points": [
+  {
+   "tag": "admctl-p32k-r0.9",
+   "arrival_rate": 0.0466,
+   "sent": 12,
+   "served_ok": 12,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 9.807,
+   "ttft_p95": 17.104,
+   "ttft_p99": 17.104,
+   "tpot_mean": 0.0791,
+   "waiting_max": 1.0,
+   "running_max": 2.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  },
+  {
+   "tag": "admctl-p32k-r1.1",
+   "arrival_rate": 0.0569,
+   "sent": 18,
+   "served_ok": 18,
+   "rejected_503": 0,
+   "other_err": 0,
+   "rejection_share": 0.0,
+   "ttft_p50": 10.61,
+   "ttft_p95": 23.963,
+   "ttft_p99": 23.963,
+   "tpot_mean": 0.1463,
+   "waiting_max": 2.0,
+   "running_max": 4.0,
+   "preemptions_delta": 0.0,
+   "note": "warmup+measure 全段合并（Screen 级）"
+  }
+ ],
+ "monotonic_503": true
+}
