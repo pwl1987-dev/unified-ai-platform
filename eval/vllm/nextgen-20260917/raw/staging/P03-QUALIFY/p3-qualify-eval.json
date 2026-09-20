@@ -1,0 +1,557 @@
+{
+ "per_boot": {
+  "B0R": {
+   "C1-L0565": {
+    "B01": {
+     "decode_med": 178.724,
+     "agg_med": 165.952,
+     "ttft_med": 0.2262
+    },
+    "B02": {
+     "decode_med": 185.592,
+     "agg_med": 171.762,
+     "ttft_med": 0.2275
+    },
+    "B03": {
+     "decode_med": 185.932,
+     "agg_med": 172.348,
+     "ttft_med": 0.2224
+    }
+   },
+   "C4-L0565": {
+    "B01": {
+     "decode_med": 57.714,
+     "agg_med": 199.42,
+     "ttft_med": 0.6535
+    },
+    "B02": {
+     "decode_med": 62.293,
+     "agg_med": 202.726,
+     "ttft_med": 0.6499
+    },
+    "B03": {
+     "decode_med": 62.986,
+     "agg_med": 203.876,
+     "ttft_med": 0.649
+    }
+   },
+   "C1-P4K-COLD": {
+    "B01": {
+     "decode_med": 137.441,
+     "agg_med": 116.552,
+     "ttft_med": 0.2329
+    },
+    "B02": {
+     "decode_med": 126.779,
+     "agg_med": 114.145,
+     "ttft_med": 0.2314
+    },
+    "B03": {
+     "decode_med": 126.507,
+     "agg_med": 113.96,
+     "ttft_med": 0.2308
+    }
+   },
+   "C1-P4K-WARM": {
+    "B01": {
+     "decode_med": 137.497,
+     "agg_med": 117.124,
+     "ttft_med": 0.2261
+    },
+    "B02": {
+     "decode_med": 126.687,
+     "agg_med": 114.013,
+     "ttft_med": 0.2293
+    },
+    "B03": {
+     "decode_med": 126.706,
+     "agg_med": 114.28,
+     "ttft_med": 0.2276
+    }
+   },
+   "C1-L032K": {
+    "B01": {
+     "decode_med": 58.103,
+     "agg_med": 54.193,
+     "ttft_med": 0.319
+    },
+    "B02": {
+     "decode_med": 67.619,
+     "agg_med": 62.155,
+     "ttft_med": 0.3157
+    },
+    "B03": {
+     "decode_med": 67.603,
+     "agg_med": 62.322,
+     "ttft_med": 0.3078
+    }
+   }
+  },
+  "NBT3072Q": {
+   "C1-L0565": {
+    "B01": {
+     "decode_med": 184.421,
+     "agg_med": 170.733,
+     "ttft_med": 0.228
+    },
+    "B02": {
+     "decode_med": 184.531,
+     "agg_med": 170.737,
+     "ttft_med": 0.2296
+    },
+    "B03": {
+     "decode_med": 184.535,
+     "agg_med": 170.918,
+     "ttft_med": 0.2265
+    }
+   },
+   "C4-L0565": {
+    "B01": {
+     "decode_med": 58.259,
+     "agg_med": 191.159,
+     "ttft_med": 0.6495
+    },
+    "B02": {
+     "decode_med": 61.082,
+     "agg_med": 200.963,
+     "ttft_med": 0.5079
+    },
+    "B03": {
+     "decode_med": 60.088,
+     "agg_med": 204.795,
+     "ttft_med": 0.6495
+    }
+   },
+   "C1-P4K-COLD": {
+    "B01": {
+     "decode_med": 142.009,
+     "agg_med": 119.864,
+     "ttft_med": 0.2321
+    },
+    "B02": {
+     "decode_med": 140.276,
+     "agg_med": 118.742,
+     "ttft_med": 0.2321
+    },
+    "B03": {
+     "decode_med": 137.247,
+     "agg_med": 116.73,
+     "ttft_med": 0.2288
+    }
+   },
+   "C1-P4K-WARM": {
+    "B01": {
+     "decode_med": 141.85,
+     "agg_med": 119.61,
+     "ttft_med": 0.2338
+    },
+    "B02": {
+     "decode_med": 140.332,
+     "agg_med": 118.589,
+     "ttft_med": 0.2348
+    },
+    "B03": {
+     "decode_med": 137.421,
+     "agg_med": 116.854,
+     "ttft_med": 0.2291
+    }
+   },
+   "C1-L032K": {
+    "B01": {
+     "decode_med": 59.215,
+     "agg_med": 55.029,
+     "ttft_med": 0.3307
+    },
+    "B02": {
+     "decode_med": 66.36,
+     "agg_med": 60.986,
+     "ttft_med": 0.3284
+    },
+    "B03": {
+     "decode_med": 59.255,
+     "agg_med": 55.14,
+     "ttft_med": 0.326
+    }
+   }
+  },
+  "DTP2Q": {
+   "C1-L0565": {
+    "B01": {
+     "decode_med": 175.24,
+     "agg_med": 162.758,
+     "ttft_med": 0.2298
+    },
+    "B02": {
+     "decode_med": 177.576,
+     "agg_med": 164.519,
+     "ttft_med": 0.2333
+    },
+    "B03": {
+     "decode_med": 177.445,
+     "agg_med": 164.644,
+     "ttft_med": 0.23
+    }
+   },
+   "C4-L0565": {
+    "B01": {
+     "decode_med": 57.949,
+     "agg_med": 199.413,
+     "ttft_med": 0.6484
+    },
+    "B02": {
+     "decode_med": 61.075,
+     "agg_med": 205.655,
+     "ttft_med": 0.6543
+    },
+    "B03": {
+     "decode_med": 59.148,
+     "agg_med": 209.376,
+     "ttft_med": 0.6486
+    }
+   },
+   "C1-P4K-COLD": {
+    "B01": {
+     "decode_med": 125.195,
+     "agg_med": 113.499,
+     "ttft_med": 0.2193
+    },
+    "B02": {
+     "decode_med": 139.592,
+     "agg_med": 118.3,
+     "ttft_med": 0.2303
+    },
+    "B03": {
+     "decode_med": 127.821,
+     "agg_med": 114.916,
+     "ttft_med": 0.2329
+    }
+   },
+   "C1-P4K-WARM": {
+    "B01": {
+     "decode_med": 125.468,
+     "agg_med": 113.086,
+     "ttft_med": 0.2315
+    },
+    "B02": {
+     "decode_med": 139.702,
+     "agg_med": 118.209,
+     "ttft_med": 0.2325
+    },
+    "B03": {
+     "decode_med": 127.898,
+     "agg_med": 114.907,
+     "ttft_med": 0.2347
+    }
+   },
+   "C1-L032K": {
+    "B01": {
+     "decode_med": 56.763,
+     "agg_med": 52.964,
+     "ttft_med": 0.3247
+    },
+    "B02": {
+     "decode_med": 67.632,
+     "agg_med": 62.052,
+     "ttft_med": 0.3229
+    },
+    "B03": {
+     "decode_med": 59.214,
+     "agg_med": 55.047,
+     "ttft_med": 0.3269
+    }
+   }
+  },
+  "K5Q": {
+   "C1-L0565": {
+    "B01": {
+     "decode_med": 181.424,
+     "agg_med": 167.86,
+     "ttft_med": 0.2313
+    },
+    "B02": {
+     "decode_med": 181.563,
+     "agg_med": 168.404,
+     "ttft_med": 0.224
+    },
+    "B03": {
+     "decode_med": 180.332,
+     "agg_med": 166.987,
+     "ttft_med": 0.2314
+    }
+   },
+   "C4-L0565": {
+    "B01": {
+     "decode_med": 56.278,
+     "agg_med": 194.218,
+     "ttft_med": 0.6492
+    },
+    "B02": {
+     "decode_med": 55.506,
+     "agg_med": 183.51,
+     "ttft_med": 0.6486
+    },
+    "B03": {
+     "decode_med": 58.249,
+     "agg_med": 198.422,
+     "ttft_med": 0.6479
+    }
+   },
+   "C1-P4K-COLD": {
+    "B01": {
+     "decode_med": 138.594,
+     "agg_med": 123.759,
+     "ttft_med": 0.2286
+    },
+    "B02": {
+     "decode_med": 133.819,
+     "agg_med": 119.878,
+     "ttft_med": 0.2297
+    },
+    "B03": {
+     "decode_med": 135.031,
+     "agg_med": 116.884,
+     "ttft_med": 0.2328
+    }
+   },
+   "C1-P4K-WARM": {
+    "B01": {
+     "decode_med": 138.429,
+     "agg_med": 123.46,
+     "ttft_med": 0.2315
+    },
+    "B02": {
+     "decode_med": 134.075,
+     "agg_med": 120.123,
+     "ttft_med": 0.2292
+    },
+    "B03": {
+     "decode_med": 135.266,
+     "agg_med": 117.257,
+     "ttft_med": 0.2299
+    }
+   },
+   "C1-L032K": {
+    "B01": {
+     "decode_med": 61.519,
+     "agg_med": 56.968,
+     "ttft_med": 0.3191
+    },
+    "B02": {
+     "decode_med": 62.335,
+     "agg_med": 57.801,
+     "ttft_med": 0.3135
+    },
+    "B03": {
+     "decode_med": 62.317,
+     "agg_med": 57.749,
+     "ttft_med": 0.3156
+    }
+   }
+  }
+ },
+ "summary": {
+  "B0R": {
+   "C1-L0565": {
+    "decode_boot_meds": [
+     178.724,
+     185.592,
+     185.932
+    ],
+    "decode_3boot_med": 185.592,
+    "spread_pct": 3.88
+   },
+   "C4-L0565": {
+    "decode_boot_meds": [
+     57.714,
+     62.293,
+     62.986
+    ],
+    "decode_3boot_med": 62.293,
+    "spread_pct": 8.46
+   },
+   "C1-P4K-COLD": {
+    "decode_boot_meds": [
+     137.441,
+     126.779,
+     126.507
+    ],
+    "decode_3boot_med": 126.779,
+    "spread_pct": 8.62
+   },
+   "C1-P4K-WARM": {
+    "decode_boot_meds": [
+     137.497,
+     126.687,
+     126.706
+    ],
+    "decode_3boot_med": 126.706,
+    "spread_pct": 8.53
+   },
+   "C1-L032K": {
+    "decode_boot_meds": [
+     58.103,
+     67.619,
+     67.603
+    ],
+    "decode_3boot_med": 67.603,
+    "spread_pct": 14.08
+   }
+  },
+  "NBT3072Q": {
+   "C1-L0565": {
+    "decode_boot_meds": [
+     184.421,
+     184.531,
+     184.535
+    ],
+    "decode_3boot_med": 184.531,
+    "spread_pct": 0.06,
+    "impr_vs_b0r_pct": -0.57
+   },
+   "C4-L0565": {
+    "decode_boot_meds": [
+     58.259,
+     61.082,
+     60.088
+    ],
+    "decode_3boot_med": 60.088,
+    "spread_pct": 4.7,
+    "impr_vs_b0r_pct": -3.54
+   },
+   "C1-P4K-COLD": {
+    "decode_boot_meds": [
+     142.009,
+     140.276,
+     137.247
+    ],
+    "decode_3boot_med": 140.276,
+    "spread_pct": 3.39,
+    "impr_vs_b0r_pct": 10.65
+   },
+   "C1-P4K-WARM": {
+    "decode_boot_meds": [
+     141.85,
+     140.332,
+     137.421
+    ],
+    "decode_3boot_med": 140.332,
+    "spread_pct": 3.16,
+    "impr_vs_b0r_pct": 10.75
+   },
+   "C1-L032K": {
+    "decode_boot_meds": [
+     59.215,
+     66.36,
+     59.255
+    ],
+    "decode_3boot_med": 59.255,
+    "spread_pct": 12.06,
+    "impr_vs_b0r_pct": -12.35
+   }
+  },
+  "DTP2Q": {
+   "C1-L0565": {
+    "decode_boot_meds": [
+     175.24,
+     177.576,
+     177.445
+    ],
+    "decode_3boot_med": 177.445,
+    "spread_pct": 1.32,
+    "impr_vs_b0r_pct": -4.39
+   },
+   "C4-L0565": {
+    "decode_boot_meds": [
+     57.949,
+     61.075,
+     59.148
+    ],
+    "decode_3boot_med": 59.148,
+    "spread_pct": 5.29,
+    "impr_vs_b0r_pct": -5.05
+   },
+   "C1-P4K-COLD": {
+    "decode_boot_meds": [
+     125.195,
+     139.592,
+     127.821
+    ],
+    "decode_3boot_med": 127.821,
+    "spread_pct": 11.26,
+    "impr_vs_b0r_pct": 0.82
+   },
+   "C1-P4K-WARM": {
+    "decode_boot_meds": [
+     125.468,
+     139.702,
+     127.898
+    ],
+    "decode_3boot_med": 127.898,
+    "spread_pct": 11.13,
+    "impr_vs_b0r_pct": 0.94
+   },
+   "C1-L032K": {
+    "decode_boot_meds": [
+     56.763,
+     67.632,
+     59.214
+    ],
+    "decode_3boot_med": 59.214,
+    "spread_pct": 18.36,
+    "impr_vs_b0r_pct": -12.41
+   }
+  },
+  "K5Q": {
+   "C1-L0565": {
+    "decode_boot_meds": [
+     181.424,
+     181.563,
+     180.332
+    ],
+    "decode_3boot_med": 181.424,
+    "spread_pct": 0.68,
+    "impr_vs_b0r_pct": -2.25
+   },
+   "C4-L0565": {
+    "decode_boot_meds": [
+     56.278,
+     55.506,
+     58.249
+    ],
+    "decode_3boot_med": 56.278,
+    "spread_pct": 4.87,
+    "impr_vs_b0r_pct": -9.66
+   },
+   "C1-P4K-COLD": {
+    "decode_boot_meds": [
+     138.594,
+     133.819,
+     135.031
+    ],
+    "decode_3boot_med": 135.031,
+    "spread_pct": 3.54,
+    "impr_vs_b0r_pct": 6.51
+   },
+   "C1-P4K-WARM": {
+    "decode_boot_meds": [
+     138.429,
+     134.075,
+     135.266
+    ],
+    "decode_3boot_med": 135.266,
+    "spread_pct": 3.22,
+    "impr_vs_b0r_pct": 6.76
+   },
+   "C1-L032K": {
+    "decode_boot_meds": [
+     61.519,
+     62.335,
+     62.317
+    ],
+    "decode_3boot_med": 62.317,
+    "spread_pct": 1.31,
+    "impr_vs_b0r_pct": -7.82
+   }
+  }
+ }
+}

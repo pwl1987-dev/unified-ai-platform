@@ -1,0 +1,816 @@
+{
+ "arms": {
+  "B0R": {
+   "B01": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-b0r-b01",
+    "pid": 106964,
+    "pgid": 106947,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B02": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-b0r-b02",
+    "pid": 111364,
+    "pgid": 111348,
+    "capacity": {
+     "kv_tokens": 298231
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B03": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-b0r-b03",
+    "pid": 114506,
+    "pgid": 114490,
+    "capacity": {
+     "kv_tokens": 298231
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-B0R-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  "NBT3072Q": {
+   "B01": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-nbt3072q-b01",
+    "pid": 117520,
+    "pgid": 117503,
+    "capacity": {
+     "kv_tokens": 281538
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B02": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-nbt3072q-b02",
+    "pid": 123061,
+    "pgid": 123039,
+    "capacity": {
+     "kv_tokens": 290111
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B03": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-nbt3072q-b03",
+    "pid": 126304,
+    "pgid": 126288,
+    "capacity": {
+     "kv_tokens": 290111
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT3072-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-NBT3072-KVBF16-SD7-MS4-NBT3072-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  "DTP2Q": {
+   "B01": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-dtp2q-b01",
+    "pid": 129403,
+    "pgid": 129386,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B02": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-dtp2q-b02",
+    "pid": 134528,
+    "pgid": 134512,
+    "capacity": {
+     "kv_tokens": 298231
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B03": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-dtp2q-b03",
+    "pid": 137552,
+    "pgid": 137536,
+    "capacity": {
+     "kv_tokens": 298231
+    },
+    "cells": {
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-DTP2-KVBF16-SD7-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  "K5Q": {
+   "B01": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-k5q-b01",
+    "pid": 141285,
+    "pgid": 141262,
+    "capacity": {
+     "kv_tokens": 305285
+    },
+    "cells": {
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B02": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-k5q-b02",
+    "pid": 146681,
+    "pgid": 146659,
+    "capacity": {
+     "kv_tokens": 316215
+    },
+    "cells": {
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   },
+   "B03": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-k5q-b03",
+    "pid": 149779,
+    "pgid": 149763,
+    "capacity": {
+     "kv_tokens": 316215
+    },
+    "cells": {
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C4-L0565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C4-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "ns",
+       "concurrency": 4,
+       "max_tokens": 512,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-COLD": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-COLD",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-WARM": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-P4K-WARM",
+      "cell": {
+       "fixture": "p4k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     }
+    },
+    "done": true
+   }
+  }
+ }
+}

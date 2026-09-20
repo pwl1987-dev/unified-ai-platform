@@ -1,0 +1,65 @@
+{
+ "record": "P3-Qualify 终判（12/12 boot 零失败；同窗 B0R 对照；认证口径=跨 boot spread≤3%）",
+ "evidence": "raw/staging/P03-QUALIFY/p3-qualify-eval.json + p3-qualify-report.json；exp 前缀 V29-T2-Q3-{B0R,NBT3072,DTP2,K5}-*",
+ "certified_axes": {
+  "c1_d565": {
+   "spreads_pct": {
+    "B0R": 3.88,
+    "NBT3072Q": 0.06,
+    "DTP2Q": 1.32,
+    "K5Q": 0.68
+   },
+   "decode_3boot": {
+    "B0R": 185.59,
+    "NBT3072Q": 184.53,
+    "DTP2Q": 177.44,
+    "K5Q": 181.42
+   },
+   "vs_b0r_pct": {
+    "NBT3072Q": -0.57,
+    "DTP2Q": -4.39,
+    "K5Q": -2.25
+   },
+   "verdict": "无臂过 ≥3% 改善线；DTP2 认证级回退（spread 1.32% 紧致）"
+  },
+  "p4k_cold_warm": {
+   "spreads_ok": [
+    "NBT3072Q 3.16-3.39",
+    "K5Q 3.22-3.54"
+   ],
+   "spreads_fail": [
+    "DTP2Q 11.1-11.3",
+    "B0R 8.5-8.6"
+   ],
+   "vs_b0r_pct": {
+    "NBT3072Q": "+10.65/+10.75",
+    "K5Q": "+6.51/+6.76"
+   },
+   "verdict": "NBT3072 短提示轴真实 +10.7%（认证）；K5 +6.5-6.8%（但 pos1 地板不过，见下）"
+  }
+ },
+ "p32k_axis": {
+  "status": "SUSPENDED_UNCERTIFIED",
+  "phenomenon": "boot 级确定性双峰：同臂同窗 58.1 vs 67.6 tok/s（16%），boot 内 rep ±0.1% 极致紧致",
+  "non_explanations": "编译冷/暖不映射（NBT3072Q D565 三 boot 全平 184.4-184.5 但 P32K 59.2/66.4/59.3）；KV 容量不映射（NBT3072Q-B03 暖容量 290,111 仍慢）",
+  "action": "p3_p32k_variance.py 表征实验运行中（B0 形 8 boot：4 全冷 + 4 共享暖，P32K+D565 双轴）——P4 L2 组装的前置依赖",
+  "screen_reversal_note": "NBT3072 P32K 信号（Screen +17.2%）在 Qualify 形制下不可复现（分母分子双不稳定）；DTP2 C1 信号（+3.7-4.1%）反转为认证级 -4.4% —— 单 boot Screen 信号 <2x 门槛者一律 provisional（方法论教训，落 P5 报告）"
+ },
+ "k5_pos1_recheck": {
+  "result": "3 boot 复现：pos_rate[1] = 0.555/0.554/0.529（drafts 470-471/boot，D565 轴），均值 0.546",
+  "vs_k7_ref": "0.4189（PAIR34-P32K）→ +12.7pp；vs K7-B0L32-D565 0.4784 → +6.8pp",
+  "verdict": "超 8pp 结构地板复现（非单 boot 噪声）→ 按冻结规则回退 K7",
+  "tension_note": "K5 pos1 接受率高于 K7 是其总接受率更高的机制本身，地板本意是抓 drafter/target 失配误报——规则冲突如实记录，Phase 03 可复议；Phase 02 纪律内执行回退"
+ },
+ "verdicts": {
+  "nbt3072": "IN（短提示轴认证 +10.7%）；P32K 轴悬置待方差表征；composite_L2 当前唯一成员",
+  "dtp2": "OUT（C1 认证级 -4.4%，Screen 信号反转；lineage 除名）",
+  "k5": "OUT/fallback-K7（pos1 地板复核不过）",
+  "b0r_note": "B0R 自身 P4K/P32K spread 超线（8.5-14.1%）——对照臂的不稳定性本身就是发现，进方差实验议题"
+ },
+ "lineage_state": {
+  "composite_L2": "B0 + NBT3072（单步 forward-addition 待 P32K 认证后执行）",
+  "portable_winners": "NBT3072@X128 recheck 未跑（portable_winner_rule: capacity_delta≤0.005 / ttft≤0.01）+ q4 护栏（x220 已证）",
+  "gate_b_implication": "无 scalar 胜者存活下，B-L2 判定回归战役核心问题=TP2 vs TP1 同栈对照（TP1CTL 已有），L2 Profile=B0 配方(+NBT3072 若认证)"
+ }
+}

@@ -1,0 +1,200 @@
+(Worker pid=150130) INFO 09-20 12:55:14 [gpu_worker.py:429] Using V2 Model Runner
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [model_runner.py:383] Loading model from scratch...
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [cuda.py:677] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [mm_encoder_attention.py:372] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [compressed_tensors_wNa16.py:137] Using MarlinLinearKernel for CompressedTensorsWNA16
+(Worker_TP1 pid=150131) INFO 09-20 12:55:15 [compressed_tensors_wNa16.py:137] Using MarlinLinearKernel for CompressedTensorsWNA16
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [qwen_gdn_linear_attn.py:167] Using Triton/FLA GDN prefill kernel (requested=auto, head_k_dim=128).
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [qwen_gdn_linear_attn.py:511] Falling back to the Triton GDN decode path: the fused CUDA kernel requires a BF16 GDN model with K=V=128, SiLU or sigmoid gating, non-interleaved GQA layout, BF16 convolution cache, BF16 or FP32 recurrent state, and a GPU with compute capability 8.0+
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [qwen_gdn_linear_attn.py:519] GDN decode kernel: triton
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [cuda.py:618] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [flash_attn.py:897] Using FlashAttention version 2
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:15 [compilation.py:1354] Op 'rms_norm' not present in model, enabling with '+rms_norm' has no effect
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [weight_utils.py:863] Filesystem type for checkpoints: XFS. Checkpoint size: 14.99 GiB. Available RAM: 441.39 GiB.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:15 [weight_utils.py:886] Auto-prefetch is disabled because the filesystem (XFS) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards:   0% Completed | 0/7 [00:00<?, ?it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards:  14% Completed | 1/7 [00:00<00:02,  2.52it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards:  29% Completed | 2/7 [00:00<00:01,  2.79it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards:  43% Completed | 3/7 [00:00<00:01,  3.27it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards:  57% Completed | 4/7 [00:01<00:00,  3.75it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards: 100% Completed | 7/7 [00:01<00:00,  7.68it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards: 100% Completed | 7/7 [00:01<00:00,  5.28it/s]
+(Worker_TP0 pid=150130) 
+(Worker_TP0 pid=150130) INFO 09-20 12:55:16 [default_loader.py:430] Loading weights took 1.33 seconds
+(Worker_TP1 pid=150131) INFO 09-20 12:55:16 [eagle3_utils.py:28] Using Eagle3 auxiliary layers from config: (6, 20, 34, 48, 62)
+(Worker_TP1 pid=150131) INFO 09-20 12:55:16 [kernel.py:369] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(Worker_TP0 pid=150130) INFO 09-20 12:55:17 [eagle3_utils.py:28] Using Eagle3 auxiliary layers from config: (6, 20, 34, 48, 62)
+(Worker_TP0 pid=150130) INFO 09-20 12:55:17 [kernel.py:369] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:17 [vllm.py:1924] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:17 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(Worker_TP0 pid=150130) INFO 09-20 12:55:17 [weight_utils.py:863] Filesystem type for checkpoints: XFS. Checkpoint size: 1.19 GiB. Available RAM: 441.30 GiB.
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+(Worker_TP0 pid=150130) Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00, 350.69it/s]
+(Worker_TP0 pid=150130) 
+(Worker_TP0 pid=150130) INFO 09-20 12:55:17 [default_loader.py:430] Loading weights took 0.15 seconds
+(Worker_TP1 pid=150131) INFO 09-20 12:55:18 [model_runner.py:405] Model loading took 8.11 GiB memory and 3.306747 seconds
+(Worker_TP0 pid=150130) INFO 09-20 12:55:18 [model_runner.py:405] Model loading took 8.11 GiB memory and 3.313356 seconds
+(Worker_TP1 pid=150131) INFO 09-20 12:55:18 [interface.py:943] Setting attention block size to 512 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1 pid=150131) INFO 09-20 12:55:18 [interface.py:967] Padding mamba page size by 20.75% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:18 [topk_topp_sampler.py:46] FlashInfer top-p/top-k sampling disabled via VLLM_USE_FLASHINFER_SAMPLER=0.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:18 [interface.py:943] Setting attention block size to 512 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:18 [interface.py:967] Padding mamba page size by 20.75% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=149987) INFO 09-20 12:55:18 [torch_utils.py:282] Reducing Torch threads from 16 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=149987) INFO 09-20 12:55:18 [utils.py:306] Using LBNHC KV cache layout.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:19 [caching.py:343] reconstructed serializable fn from standalone compile artifacts. num_artifacts=23 num_submods=65
+(Worker_TP1 pid=150131) INFO 09-20 12:55:19 [caching.py:343] reconstructed serializable fn from standalone compile artifacts. num_artifacts=23 num_submods=65
+(Worker_TP0 pid=150130) INFO 09-20 12:55:19 [decorators.py:313] Directly load AOT compilation from path /data/sandbox/nextgen-20260917/cache-p02-k5q/torch_compile_cache/torch_aot_compile/8307e02522e99559cf1c5bb42356f1d55d73b22e2ad81e02ea0ddcca43a7670f/rank_0_0/model
+(Worker_TP0 pid=150130) INFO 09-20 12:55:19 [monitor.py:53] torch.compile took 0.78 s in total
+(Worker_TP1 pid=150131) INFO 09-20 12:55:19 [decorators.py:313] Directly load AOT compilation from path /data/sandbox/nextgen-20260917/cache-p02-k5q/torch_compile_cache/torch_aot_compile/8307e02522e99559cf1c5bb42356f1d55d73b22e2ad81e02ea0ddcca43a7670f/rank_1_0/model
+(Worker_TP0 pid=150130) INFO 09-20 12:55:20 [monitor.py:81] Initial profiling/warmup run took 0.98 s
+(Worker_TP0 pid=150130) INFO 09-20 12:55:20 [caching.py:343] reconstructed serializable fn from standalone compile artifacts. num_artifacts=3 num_submods=6
+(Worker_TP1 pid=150131) INFO 09-20 12:55:20 [caching.py:343] reconstructed serializable fn from standalone compile artifacts. num_artifacts=3 num_submods=6
+(Worker_TP0 pid=150130) INFO 09-20 12:55:20 [decorators.py:313] Directly load AOT compilation from path /data/sandbox/nextgen-20260917/cache-p02-k5q/torch_compile_cache/torch_aot_compile/b6cb38047ab8836e0378025de13e56b23a79a143b3ffa99c80042fa3fdea459a/rank_0_0/model
+(Worker_TP0 pid=150130) INFO 09-20 12:55:20 [monitor.py:53] torch.compile took 0.12 s in total
+(Worker_TP1 pid=150131) INFO 09-20 12:55:20 [decorators.py:313] Directly load AOT compilation from path /data/sandbox/nextgen-20260917/cache-p02-k5q/torch_compile_cache/torch_aot_compile/b6cb38047ab8836e0378025de13e56b23a79a143b3ffa99c80042fa3fdea459a/rank_1_0/model
+(Worker_TP0 pid=150130) INFO 09-20 12:55:20 [monitor.py:81] Initial profiling/warmup run took 0.01 s
+(Worker_TP0 pid=150130) INFO 09-20 12:55:20 [logits_processor.py:42] VLLM_DFLASH2_TORCH_TOPK=1; vocab top-k uses torch.topk
+(Worker_TP1 pid=150131) INFO 09-20 12:55:21 [kv_cache_utils.py:1394] Sliding-window bucket(s) are the smallest; using group_size 8 (pads the sliding-window group instead of the full-attention/mamba layers)
+(Worker_TP0 pid=150130) INFO 09-20 12:55:21 [kv_cache_utils.py:1394] Sliding-window bucket(s) are the smallest; using group_size 8 (pads the sliding-window group instead of the full-attention/mamba layers)
+(Worker_TP1 pid=150131) WARNING 09-20 12:55:21 [kv_cache_utils.py:1529] Add 3 padding layers, may waste at most 60.00% KV cache memory
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:21 [kv_cache_utils.py:1529] Add 3 padding layers, may waste at most 60.00% KV cache memory
+(Worker_TP0 pid=150130) Capturing CUDA graphs (PIECEWISE):   0%|          | 0/4 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):  25%|██▌       | 1/4 [00:00<00:00,  3.60it/s]Capturing CUDA graphs (PIECEWISE):  50%|█████     | 2/4 [00:00<00:00,  5.33it/s]Capturing CUDA graphs (PIECEWISE):  75%|███████▌  | 3/4 [00:00<00:00,  6.51it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:00<00:00,  7.10it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:00<00:00,  6.28it/s]
+(Worker_TP0 pid=150130) Capturing CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s](Worker_TP1 pid=150131) INFO 09-20 12:55:22 [speculator.py:141] Capturing model for DFlash2 speculator...
+Capturing CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00,  9.19it/s]Capturing CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00,  9.18it/s]
+(Worker_TP0 pid=150130) INFO 09-20 12:55:22 [speculator.py:141] Capturing model for DFlash2 speculator...
+(Worker_TP0 pid=150130) Capturing dflash2 CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s](Worker_TP1 pid=150131) INFO 09-20 12:55:22 [model_runner.py:970] Graph capturing finished in 1 secs, took 0.23 GiB
+Capturing dflash2 CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00, 71.11it/s]
+(Worker_TP0 pid=150130) INFO 09-20 12:55:22 [model_runner.py:970] Graph capturing finished in 1 secs, took 0.23 GiB
+(Worker_TP1 pid=150131) INFO 09-20 12:55:23 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9500 is equivalent to --gpu-memory-utilization=0.9403 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9597. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:23 [gpu_worker.py:625] Available KV cache memory: 13.34 GiB
+(Worker_TP0 pid=150130) INFO 09-20 12:55:23 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9500 is equivalent to --gpu-memory-utilization=0.9403 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9597. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=149987) INFO 09-20 12:55:23 [kv_cache_utils.py:1394] Sliding-window bucket(s) are the smallest; using group_size 8 (pads the sliding-window group instead of the full-attention/mamba layers)
+(EngineCore pid=149987) WARNING 09-20 12:55:23 [kv_cache_utils.py:1529] Add 3 padding layers, may waste at most 60.00% KV cache memory
+(EngineCore pid=149987) INFO 09-20 12:55:23 [kv_cache_utils.py:2235] GPU KV cache size: 316,215 tokens, Maximum concurrency for 36,864 tokens per request: 8.58x
+(Worker_TP1 pid=150131) INFO 09-20 12:55:23 [kernel_warmup.py:124] JIT kernel warmup starting.
+(Worker_TP1 pid=150131) INFO 09-20 12:55:23 [kernel_warmup.py:134] JIT kernel warmup finished in 0.00s.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:23 [kernel_warmup.py:124] JIT kernel warmup starting.
+(Worker_TP1 pid=150131) INFO 09-20 12:55:23 [qwen_triton_warmup.py:270] Warming up Qwen Triton kernels for model_type=qwen3_5_text.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:23 [kernel_warmup.py:134] JIT kernel warmup finished in 0.00s.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:23 [qwen_triton_warmup.py:270] Warming up Qwen Triton kernels for model_type=qwen3_5_text.
+(Worker_TP0 pid=150130) Capturing CUDA graphs (PIECEWISE):   0%|          | 0/4 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):  25%|██▌       | 1/4 [00:00<00:00,  4.96it/s]Capturing CUDA graphs (PIECEWISE):  50%|█████     | 2/4 [00:00<00:00,  6.94it/s]Capturing CUDA graphs (PIECEWISE):  75%|███████▌  | 3/4 [00:00<00:00,  7.89it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:00<00:00,  8.40it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 4/4 [00:00<00:00,  7.70it/s]
+(Worker_TP0 pid=150130) Capturing CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s](Worker_TP1 pid=150131) INFO 09-20 12:55:24 [speculator.py:141] Capturing model for DFlash2 speculator...
+Capturing CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00, 10.00it/s]
+(Worker_TP0 pid=150130) INFO 09-20 12:55:24 [speculator.py:141] Capturing model for DFlash2 speculator...
+(Worker_TP0 pid=150130) Capturing dflash2 CUDA graphs (FULL):   0%|          | 0/1 [00:00<?, ?it/s](Worker_TP1 pid=150131) INFO 09-20 12:55:24 [model_runner.py:970] Graph capturing finished in 1 secs, took 0.09 GiB
+(Worker_TP1 pid=150131) INFO 09-20 12:55:24 [gpu_worker.py:797] CUDA graph pool memory: 0.09 GiB (actual), 0.23 GiB (estimated), difference: 0.14 GiB (165.9%).
+(Worker_TP1 pid=150131) INFO 09-20 12:55:24 [gpu_worker.py:860] Free memory on device (22.92/23.52 GiB) on startup. Desired GPU memory utilization is (0.95, 22.34 GiB). Actual usage is 8.49 GiB for consumed memory (weights + non-torch), 0.51 GiB for peak activation, and 0.09 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=14076953805` (13.11 GiB) to fit into requested memory, or `--kv-cache-memory=14694479872` (13.69 GiB) to fully utilize gpu memory. Current kv cache memory in use is 13.34 GiB.
+Capturing dflash2 CUDA graphs (FULL): 100%|██████████| 1/1 [00:00<00:00, 95.57it/s]
+(Worker_TP0 pid=150130) INFO 09-20 12:55:24 [model_runner.py:970] Graph capturing finished in 1 secs, took 0.09 GiB
+(Worker_TP0 pid=150130) INFO 09-20 12:55:24 [gpu_worker.py:797] CUDA graph pool memory: 0.09 GiB (actual), 0.23 GiB (estimated), difference: 0.14 GiB (165.9%).
+(Worker_TP0 pid=150130) INFO 09-20 12:55:24 [gpu_worker.py:860] Free memory on device (22.92/23.52 GiB) on startup. Desired GPU memory utilization is (0.95, 22.34 GiB). Actual usage is 8.49 GiB for consumed memory (weights + non-torch), 0.51 GiB for peak activation, and 0.09 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=14076953805` (13.11 GiB) to fit into requested memory, or `--kv-cache-memory=14694479872` (13.69 GiB) to fully utilize gpu memory. Current kv cache memory in use is 13.34 GiB.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:25 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP1 pid=150131) INFO 09-20 12:55:25 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP0 pid=150130) INFO 09-20 12:55:25 [torch_utils.py:282] Reducing Torch threads from 16 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=149987) INFO 09-20 12:55:25 [core.py:361] init engine (profile, create kv cache, warmup model) took 7.83 s (compilation: 0.90 s)
+(EngineCore pid=149987) INFO 09-20 12:55:27 [kv_cache_utils.py:772] kvarn-v2 hash unit: groups=[512, 512, 512, 512, 512, 512, 512, 512, 512] requested=128 scheduler=512 hash=128
+(EngineCore pid=149987) INFO 09-20 12:55:27 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(EngineCore pid=149987) WARNING 09-20 12:55:27 [kv_cache_coordinator.py:660] Disabling fine-grained prefix-cache hits because these KV cache managers require block-aligned lookups: SlidingWindowManager.
+(EngineCore pid=149987) INFO 09-20 12:55:27 [kernel.py:369] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(EngineCore pid=149987) WARNING 09-20 12:55:27 [vllm.py:1924] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(EngineCore pid=149987) INFO 09-20 12:55:27 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=149779) INFO 09-20 12:55:27 [entry.py:135] Supported tasks: ['generate']
+(APIServer pid=149779) INFO 09-20 12:55:28 [hf.py:547] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=149779) INFO 09-20 12:55:28 [entry.py:139] Starting vLLM server on http://127.0.0.1:19702
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:61] Available routes are:
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /openapi.json, Methods: GET, HEAD
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /docs, Methods: GET, HEAD
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /docs/oauth2-redirect, Methods: GET, HEAD
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /redoc, Methods: GET, HEAD
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /load, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /version, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /health, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /metrics, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /tokenize, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /detokenize, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/models, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /ping, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /ping, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /invocations, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/responses, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/completions, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/messages, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /generative_scoring, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/messages/render, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/completions/render, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=149779) INFO 09-20 12:55:28 [launcher.py:70] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=149779) INFO:     Started server process [149779]
+(APIServer pid=149779) INFO:     Waiting for application startup.
+(APIServer pid=149779) INFO:     Application startup complete.
+(APIServer pid=149779) INFO:     127.0.0.1:38696 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38698 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38718 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38706 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38726 - "GET /metrics HTTP/1.1" 200 OK
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _prepare_dflash_inputs_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=149779) INFO:     127.0.0.1:38728 - "GET /metrics HTTP/1.1" 200 OK
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _compute_local_logits_stats_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _rejection_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0 pid=150130) WARNING 09-20 12:55:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _resample_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=149779) INFO:     127.0.0.1:38736 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38740 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38750 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38764 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:38776 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO 09-20 12:55:39 [loggers.py:310] Engine 000: Avg prompt throughput: 48.4 tokens/s, Avg generation throughput: 5.5 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=149779) INFO 09-20 12:55:39 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.15, Accepted throughput: 3.69 tokens/s, Drafted throughput: 8.57 tokens/s, Accepted: 43 tokens, Drafted: 100 tokens, Per-position acceptance rate: 0.800, 0.450, 0.400, 0.350, 0.150, Avg Draft acceptance rate: 43.0%
+(APIServer pid=149779) INFO:     127.0.0.1:38786 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:51066 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO 09-20 12:55:49 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=149779) INFO:     127.0.0.1:51072 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:49162 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:48138 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:48146 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:50392 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:50394 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52256 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52264 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52270 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52268 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52282 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52284 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52290 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52292 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52298 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52304 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52318 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52320 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52328 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52340 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52344 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52350 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52362 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52372 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52380 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52386 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52398 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52404 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52410 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52412 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO 09-20 12:56:29 [loggers.py:310] Engine 000: Avg prompt throughput: 56.5 tokens/s, Avg generation throughput: 32.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=149779) INFO 09-20 12:56:29 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.14, Accepted throughput: 4.46 tokens/s, Drafted throughput: 10.40 tokens/s, Accepted: 223 tokens, Drafted: 520 tokens, Per-position acceptance rate: 0.731, 0.510, 0.423, 0.298, 0.183, Avg Draft acceptance rate: 42.9%
+(APIServer pid=149779) INFO:     127.0.0.1:52418 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52424 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52426 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52434 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52448 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52454 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52458 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52466 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52474 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=149779) INFO:     127.0.0.1:52484 - "GET /metrics HTTP/1.1" 200 OK

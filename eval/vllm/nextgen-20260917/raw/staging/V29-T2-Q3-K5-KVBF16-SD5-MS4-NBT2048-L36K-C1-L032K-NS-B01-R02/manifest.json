@@ -1,0 +1,72 @@
+{
+ "experiment_id": "V29-T2-Q3-K5-KVBF16-SD5-MS4-NBT2048-L36K-C1-L032K-NS-B01-R02",
+ "status": "VALID_PASS",
+ "evidence_class": "staging",
+ "classification_reason": null,
+ "created_utc": "2026-09-20T04:46:37Z",
+ "harness_git_sha": "f745320cc2617690fa5d596e247c36852087b0a3",
+ "harness_files_sha256": {
+  "bench_nextgen.py": "02aa2ceda3455bc9300c535e0410f0dadad1de30797ccc6d3eda61d912180fe0",
+  "sseparser.py": "bf82c5298588a5a5db8aee79d6fe5c77b08df9a3e2ab6b514384d705b251f2fc",
+  "nvml_bind.py": "0d0f49fef5d17efac061ff5a681dde96eb4811b09ea6a6fbd25f92fbdbd4ee1c"
+ },
+ "host_snapshot_sha256": "6a08a3748937c2ff5df6eb1958b0ea1b06976e6642bfe60dc930f81e6181af39",
+ "env_lock_sha256": "e76f5dd199b4b39e0c440ba1797e9cab8775adb2389273d776e337b3acb90e9b",
+ "gpu": {
+  "cards": [
+   {
+    "logical_index": 3,
+    "uuid": "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae",
+    "pci_bdf": "00000000:11:00.0",
+    "role": "tp_rank_0",
+    "power_limit_w": 450.0
+   },
+   {
+    "logical_index": 4,
+    "uuid": "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e",
+    "pci_bdf": "00000000:16:00.0",
+    "role": "tp_rank_1",
+    "power_limit_w": 450.0
+   }
+  ],
+  "power_limit_w": 450.0,
+  "initial_temp_c": [
+   36
+  ]
+ },
+ "server": {
+  "port": 19702,
+  "pid": 141285,
+  "pgid": 141262,
+  "tp": 2,
+  "max_num_seqs": 4,
+  "launch_cmd_file": "launch-cmd.txt",
+  "cache_root": "/data/sandbox/nextgen-20260917/cache-p02-k5q-b01"
+ },
+ "fixture": {
+  "name": "p32k",
+  "sha256": "b46c61b06d9d8cb07764523c0fef2fcb5c895906ae7bc50e807517df2046cb09",
+  "requested_output_tokens": 256,
+  "actual_input_tokens": 32817
+ },
+ "recipe": {
+  "runtime": "vllm-0.28.0",
+  "kv_profile": "kvarn_k4v2_g128",
+  "quant": "W4A16-autoround-g128",
+  "spec": "dflash2-k7",
+  "nbt": 2048,
+  "cudagraph": "cg8-custom-ops"
+ },
+ "timing": {
+  "start_utc": "1970-01-15T16:05:07Z",
+  "end_utc": "1970-01-15T16:05:11Z",
+  "duration_s": 4.144
+ },
+ "files": {
+  "raw_events": "raw-events.jsonl",
+  "metrics": "metrics.json",
+  "sampler_metrics": "sampler-metrics.jsonl",
+  "nvml": "nvml-samples.jsonl"
+ },
+ "client_version": "bench_nextgen-1"
+}

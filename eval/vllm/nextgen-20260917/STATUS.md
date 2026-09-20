@@ -79,3 +79,10 @@ classify 端到端双向验证通过（2026-09-17）。
 - **retention OUT**：值域=省略(None=密集)/0(语义)/1024(周期)；显式值 warm_full 全线大退步（0=1.139s、1024=0.318s vs 密集 0.172s，+560%/+85%）；partial 全等；VRAM 0。churn 观察：显式值暖存活 6.2×（0.186 vs 1.155）——Phase 03 稳态画像 A/B 素材。
 - **admission：q4 IN**（零排队、503 单调可重试、过载 p95 双钳：p4k 1.85 vs 6.52 / p32k 19.7 vs 24.0；C8 砍半=设计内交换）；q8/q32 OUT（惰性：0 拒绝、waiting≤3）；**x220 在途=1 PASS**（冷 TTFT 103.95 vs 104.125 门 -0.17%，preempt/oom/err 全 0，verbatim 100/100）→ composite_X2 护栏候选。
 - 证据：raw/staging/P02-SCREEN/p1-batch2-*（report/cells/openloop/decisions-part1/part2）。
+
+## 2026-09-21 P3-Qualify 终判（12/12 boot 零失败）+ P32K boot 级双峰发现
+- **认证轴（spread≤3%）**：C1-D565 无臂过线（NBT3072 −0.6%/K5 −2.3%/DTP2 **−4.4% 认证回退→OUT**）；P4K NBT3072 **+10.7% 真实**、K5 +6.5-6.8%（但 pos1 不过）。
+- **P32K 轴 SUSPENDED**：boot 级确定性双峰（58.1 vs 67.6，boot 内 ±0.1%），编译态/容量均不映射；p3_p32k_variance.py 8-boot 表征实验已发射——P4 L2 组装前置依赖。Screen→Qualify 反转 ×2（NBT3072-P32K、DTP2-C1）：单 boot 信号 <2× 门槛一律 provisional（方法论）。
+- **K5 pos1 复核不过**（3-boot 复现 +12.7pp > 8pp 地板）→ 按冻结规则回退 K7；规则张力（K5 pos1 高=其总接受率高的机制）如实记录供 Phase 03 复议。
+- **Lineage**：composite_L2 = B0 + NBT3072（待 P32K 认证）；portable = NBT3072@X128 recheck（未跑）+ q4 护栏。
+- 证据：raw/staging/P03-QUALIFY/{p3-qualify-eval, p3-qualify-decisions, p32k-variance-report}.json。
