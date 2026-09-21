@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 02（TP2 主基线深挖 → L2/X2 Profile + Gate B，计划 v1.2 机器契约修正版）— **执行中（P0A）**
-- **Last Completed**: Phase 01 全相位 P0-P6（2026-09-18，commit `b42fe23`）——**Gate A Overall PASS（A-S ∧ A-X）**；candidate 台账 0.29 复合 profile=PASS / KVarN-on-0.29=REJECTED / FP8=DEFERRED_TO_PHASE03；详见 reports/phase-01-vllm029.md §7
-- **Current Task**: P0A 冻结（STATUS reconciliation ✅ → MANIFEST v3 → runtime 终态快照 → schema 1.2 + gates-phase02.yaml 冻结 → 能力探针 → runner 整备）
-- **Next Task**: P0B 拓扑双对 Screen → P1 三形制基线 + 9 向分类型 Screen → P2 dynamic-k → P3 Qualify + 双 lineage → P4 L2/X2 + Gate B → P5 收口
+- **Phase**: 02（TP2 主基线深挖 → L2/X2 Profile + Gate B，计划 v1.2 机器契约修正版）— **完成（P0A→P5 全链）**
+- **Last Completed**: Phase 02 全相位（2026-09-21）——**Gate B Overall PASS（B-L2 ∧ B-X2）**；composite_L2=B0 配方 / composite_X2=B0+q4 护栏；SLO 双曲线全档 + ceiling 245K/262K seed99 双 PASS（262,144 模型硬上限）；详见 reports/phase-02-tp2.md
+- **Current Task**: —（待 Phase 03 计划评审；TP1-C4 补测挂 GPU2 外部占用）
+- **Next Task**: Phase 03（Debt 清单见 reports/phase-02-tp2.md §9；生产切换 Phase 08 拍板制）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -110,3 +110,10 @@ classify 端到端双向验证通过（2026-09-17）。
 - **ceiling 链全过**：P245K seed99 5/5（TTFT 128.5s，KV 容量 394,941 tok，驻留 1.57×）→ **P262K seed99 5/5（TTFT 133.7s）= 模型绝对硬上限 262,144 工作**；两档均 CEILING_OBSERVATION（正式认证归 Phase 03）。
 - 262K 参数化取证：268288>262144 boot 拒绝 → 靶 262000 装配超限 400 → 终靶 261888（离线预验证 262,095≤262,144）——fixture 装配超靶 +153 tok 是根因，靶值偏离透明记录。
 - 证据：raw/staging/P04-SLO/{p4-slo-report, p4-slo-decisions}.json + V29-T2-SLO-*/ + SCEIL*/。
+
+## 2026-09-21 Phase 02 终判收口（P5）✅
+- **Gate B Overall PASS**：TP2 成为交互/长上下文主基线（composite_L2=B0 / composite_X2=B0+q4）；9 向全部 scalar 胜者死于认证形制（3% 线+多 boot 门槛反向验证有效）；envelope 胜者 q4 护栏 + x220 在途=1。
+- 报告 reports/phase-02-tp2.md（§8 六态归档 / §9 Phase 03 Debt 11 项）；DECISIONS.md 新增 9 行正式结论。
+- 平台冷启动惩罚（idle 首 boot −18%）+ 认证协议修正三要素 + Screen→Qualify 反转 ×2 制度化（<2× 门槛一律 provisional）。
+- 遗留：TP1-C4 补测挂 GPU2（外部 pid 占用，释放即补）；SLO D565 open p95 非单调为 Screen 级小样本（Phase 03 认证重跑）。
+- 清场终验：GPU3/4=18 MiB、19701/19702 无监听、登记 PGID 全退、GPU2/5/6/7 外部进程零触碰、GPU0/1 生产未动、:8000 只读 health=200。
