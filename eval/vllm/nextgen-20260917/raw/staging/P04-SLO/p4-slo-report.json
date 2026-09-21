@@ -1,0 +1,772 @@
+{
+ "stages": {
+  "warmup": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-slowarm-b01",
+    "capacity": {
+     "kv_tokens": 287923
+    }
+   },
+   "skipped": false
+  },
+  "l2_d565": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-sl2d565-b01",
+    "capacity": {
+     "kv_tokens": 287923
+    }
+   },
+   "cells": [
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C2-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C4-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C8-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "ns",
+      "concurrency": 8,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   ],
+   "curves": {
+    "closed": {
+     "1": [
+      {
+       "rep": 0,
+       "ok": 1,
+       "fail": 0,
+       "ttfts": [
+        0.2424
+       ],
+       "tpot_mean": 0.0182
+      },
+      {
+       "rep": 1,
+       "ok": 1,
+       "fail": 0,
+       "ttfts": [
+        0.1879
+       ],
+       "tpot_mean": 0.0182
+      }
+     ],
+     "2": [
+      {
+       "rep": 0,
+       "ok": 2,
+       "fail": 0,
+       "ttfts": [
+        0.1885,
+        0.3852
+       ],
+       "tpot_mean": 0.0536
+      },
+      {
+       "rep": 1,
+       "ok": 2,
+       "fail": 0,
+       "ttfts": [
+        0.1889,
+        0.3853
+       ],
+       "tpot_mean": 0.0537
+      }
+     ],
+     "4": [
+      {
+       "rep": 0,
+       "ok": 4,
+       "fail": 0,
+       "ttfts": [
+        0.7119,
+        0.7114,
+        0.1913,
+        0.7117
+       ],
+       "tpot_mean": 0.0542
+      },
+      {
+       "rep": 1,
+       "ok": 4,
+       "fail": 0,
+       "ttfts": [
+        0.7132,
+        0.713,
+        0.1917,
+        0.713
+       ],
+       "tpot_mean": 0.0539
+      }
+     ],
+     "8": [
+      {
+       "rep": 0,
+       "ok": 8,
+       "fail": 0,
+       "ttfts": [
+        0.7139,
+        2.479,
+        0.193,
+        0.7126,
+        0.7134,
+        5.9316,
+        4.7473,
+        5.5022
+       ],
+       "tpot_mean": 0.0552
+      },
+      {
+       "rep": 1,
+       "ok": 8,
+       "fail": 0,
+       "ttfts": [
+        0.7136,
+        0.7127,
+        0.7133,
+        0.1924,
+        4.2245,
+        2.4954,
+        5.6241,
+        5.3572
+       ],
+       "tpot_mean": 0.0543
+      }
+     ]
+    },
+    "sat_est": 0.4097,
+    "open": [
+     {
+      "tag": "SL2D565-d565-r0.25",
+      "arrival_rate": 0.1024,
+      "sent": 37,
+      "served_ok": 37,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 0.188,
+      "ttft_p95": 0.279,
+      "ttft_p99": 0.287,
+      "tpot_mean": 0.0266,
+      "waiting_max": 0.0,
+      "running_max": 3.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2D565-d565-r0.5",
+      "arrival_rate": 0.2049,
+      "sent": 91,
+      "served_ok": 91,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 0.188,
+      "ttft_p95": 1.567,
+      "ttft_p99": 2.672,
+      "tpot_mean": 0.0333,
+      "waiting_max": 2.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2D565-d565-r0.75",
+      "arrival_rate": 0.3073,
+      "sent": 141,
+      "served_ok": 141,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 0.201,
+      "ttft_p95": 0.318,
+      "ttft_p99": 0.644,
+      "tpot_mean": 0.0383,
+      "waiting_max": 2.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2D565-d565-r0.9",
+      "arrival_rate": 0.3688,
+      "sent": 159,
+      "served_ok": 159,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 0.208,
+      "ttft_p95": 0.313,
+      "ttft_p99": 1.846,
+      "tpot_mean": 0.0401,
+      "waiting_max": 2.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2D565-d565-r1.1",
+      "arrival_rate": 0.4507,
+      "sent": 179,
+      "served_ok": 179,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 0.215,
+      "ttft_p95": 0.596,
+      "ttft_p99": 2.297,
+      "tpot_mean": 0.0425,
+      "waiting_max": 2.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     }
+    ]
+   }
+  },
+  "l2_p32k": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-sl2p32k-b01",
+    "capacity": {
+     "kv_tokens": 287923
+    }
+   },
+   "cells": [
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C2-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C4-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-L2-NBT2048-L36K-C8-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 8,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   ],
+   "curves": {
+    "closed": {
+     "1": [
+      {
+       "rep": 0,
+       "ok": 1,
+       "fail": 0,
+       "ttfts": [
+        10.162
+       ],
+       "tpot_mean": 0.048
+      },
+      {
+       "rep": 1,
+       "ok": 1,
+       "fail": 0,
+       "ttfts": [
+        10.172
+       ],
+       "tpot_mean": 0.0481
+      }
+     ],
+     "2": [
+      {
+       "rep": 0,
+       "ok": 2,
+       "fail": 0,
+       "ttfts": [
+        10.4318,
+        20.7425
+       ],
+       "tpot_mean": 0.1015
+      },
+      {
+       "rep": 1,
+       "ok": 2,
+       "fail": 0,
+       "ttfts": [
+        10.4248,
+        20.7233
+       ],
+       "tpot_mean": 0.1006
+      }
+     ],
+     "4": [
+      {
+       "rep": 0,
+       "ok": 4,
+       "fail": 0,
+       "ttfts": [
+        10.421,
+        21.2781,
+        31.7967,
+        42.1483
+       ],
+       "tpot_mean": 0.2342
+      },
+      {
+       "rep": 1,
+       "ok": 4,
+       "fail": 0,
+       "ttfts": [
+        10.4236,
+        21.2827,
+        31.7983,
+        42.1496
+       ],
+       "tpot_mean": 0.2166
+      }
+     ],
+     "8": [
+      {
+       "rep": 0,
+       "ok": 8,
+       "fail": 0,
+       "ttfts": [
+        21.2941,
+        10.4368,
+        31.8098,
+        42.1593,
+        53.2283,
+        63.7841,
+        76.1003,
+        86.6572
+       ],
+       "tpot_mean": 0.3195
+      },
+      {
+       "rep": 1,
+       "ok": 8,
+       "fail": 0,
+       "ttfts": [
+        31.8427,
+        10.4364,
+        21.3082,
+        42.2,
+        54.5887,
+        65.5801,
+        76.1149,
+        86.4857
+       ],
+       "tpot_mean": 0.2804
+      }
+     ]
+    },
+    "sat_est": 0.0505,
+    "open": [
+     {
+      "tag": "SL2P32K-p32k-r0.25",
+      "arrival_rate": 0.0126,
+      "sent": 8,
+      "served_ok": 8,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 10.079,
+      "ttft_p95": 10.165,
+      "ttft_p99": 10.165,
+      "tpot_mean": 0.048,
+      "waiting_max": 0.0,
+      "running_max": 1.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2P32K-p32k-r0.5",
+      "arrival_rate": 0.0253,
+      "sent": 18,
+      "served_ok": 18,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 14.592,
+      "ttft_p95": 29.953,
+      "ttft_p99": 29.953,
+      "tpot_mean": 0.1646,
+      "waiting_max": 2.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2P32K-p32k-r0.75",
+      "arrival_rate": 0.0379,
+      "sent": 33,
+      "served_ok": 33,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 13.481,
+      "ttft_p95": 34.547,
+      "ttft_p99": 40.024,
+      "tpot_mean": 0.2236,
+      "waiting_max": 3.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2P32K-p32k-r0.9",
+      "arrival_rate": 0.0455,
+      "sent": 23,
+      "served_ok": 23,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 10.393,
+      "ttft_p95": 22.12,
+      "ttft_p99": 29.64,
+      "tpot_mean": 0.133,
+      "waiting_max": 3.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SL2P32K-p32k-r1.1",
+      "arrival_rate": 0.0556,
+      "sent": 31,
+      "served_ok": 31,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 15.155,
+      "ttft_p95": 33.254,
+      "ttft_p99": 35.643,
+      "tpot_mean": 0.2126,
+      "waiting_max": 3.0,
+      "running_max": 4.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     }
+    ]
+   }
+  },
+  "x2_p128k": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-sx2p128-b01",
+    "capacity": {
+     "kv_tokens": 374381
+    }
+   },
+   "cells": [
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-X2-NBT2048-X128-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    },
+    {
+     "rc": 0,
+     "exp_prefix": "V29-T2-SLO-X2-NBT2048-X128-C2-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    }
+   ],
+   "curves": {
+    "closed": {
+     "1": [
+      {
+       "rep": 0,
+       "ok": 1,
+       "fail": 0,
+       "ttfts": [
+        53.3507
+       ],
+       "tpot_mean": 0.1381
+      },
+      {
+       "rep": 1,
+       "ok": 1,
+       "fail": 0,
+       "ttfts": [
+        53.2912
+       ],
+       "tpot_mean": 0.138
+      }
+     ],
+     "2": [
+      {
+       "rep": 0,
+       "ok": 2,
+       "fail": 0,
+       "ttfts": [
+        53.3883,
+        111.4144
+       ],
+       "tpot_mean": 0.371
+      },
+      {
+       "rep": 1,
+       "ok": 2,
+       "fail": 0,
+       "ttfts": [
+        53.4279,
+        110.4013
+       ],
+       "tpot_mean": 0.3662
+      }
+     ],
+     "4": [
+      {
+       "rep": 0,
+       "ok": 4,
+       "fail": 0,
+       "ttfts": [
+        53.4173,
+        110.408,
+        169.453,
+        226.5464
+       ],
+       "tpot_mean": 0.4909
+      },
+      {
+       "rep": 1,
+       "ok": 4,
+       "fail": 0,
+       "ttfts": [
+        53.568,
+        112.4219,
+        169.3587,
+        228.4588
+       ],
+       "tpot_mean": 0.379
+      }
+     ],
+     "8": [
+      {
+       "rep": 0,
+       "ok": 8,
+       "fail": 0,
+       "ttfts": [
+        53.4599,
+        112.4686,
+        169.2559,
+        229.8357,
+        286.8298,
+        345.6648,
+        402.5796,
+        462.1851
+       ],
+       "tpot_mean": 0.4343
+      },
+      {
+       "rep": 1,
+       "ok": 8,
+       "fail": 0,
+       "ttfts": [
+        53.3515,
+        112.0639,
+        168.9035,
+        227.5959,
+        286.3596,
+        343.1635,
+        403.0893,
+        461.6187
+       ],
+       "tpot_mean": 0.4342
+      }
+     ]
+    },
+    "sat_est": 0.0155,
+    "open": [
+     {
+      "tag": "SX2P128-p128k-r0.25",
+      "arrival_rate": 0.0039,
+      "sent": 6,
+      "served_ok": 6,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 53.321,
+      "ttft_p95": 135.544,
+      "ttft_p99": 135.544,
+      "tpot_mean": 0.2989,
+      "waiting_max": 2.0,
+      "running_max": 2.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SX2P128-p128k-r0.5",
+      "arrival_rate": 0.0077,
+      "sent": 7,
+      "served_ok": 7,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 52.871,
+      "ttft_p95": 132.465,
+      "ttft_p99": 132.465,
+      "tpot_mean": 0.2749,
+      "waiting_max": 2.0,
+      "running_max": 2.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SX2P128-p128k-r0.75",
+      "arrival_rate": 0.0116,
+      "sent": 12,
+      "served_ok": 12,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 92.557,
+      "ttft_p95": 135.713,
+      "ttft_p99": 135.713,
+      "tpot_mean": 0.3752,
+      "waiting_max": 2.0,
+      "running_max": 2.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SX2P128-p128k-r0.9",
+      "arrival_rate": 0.0139,
+      "sent": 21,
+      "served_ok": 21,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 198.333,
+      "ttft_p95": 309.574,
+      "ttft_p99": 355.238,
+      "tpot_mean": 0.4566,
+      "waiting_max": 6.0,
+      "running_max": 2.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     },
+     {
+      "tag": "SX2P128-p128k-r1.1",
+      "arrival_rate": 0.017,
+      "sent": 18,
+      "served_ok": 18,
+      "rejected_503": 0,
+      "other_err": 0,
+      "rejection_share": 0.0,
+      "ttft_p50": 105.171,
+      "ttft_p95": 262.83,
+      "ttft_p99": 262.83,
+      "tpot_mean": 0.3969,
+      "waiting_max": 6.0,
+      "running_max": 2.0,
+      "preemptions_delta": 0.0,
+      "note": "warmup+measure 全段合并（Screen 级）"
+     }
+    ]
+   },
+   "capacity_note": {
+    "c4_workpoint_tokens": 526000,
+    "kv_tokens": 374381,
+    "verdict": "CAPACITY_LIMIT"
+   }
+  },
+  "ceiling_245k": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-sceil245k-b01",
+    "capacity": {
+     "kv_tokens": 394941
+    }
+   },
+   "needle": {
+    "rc": 0,
+    "PASS": true,
+    "needles_hit": "5/5",
+    "ttft_s": 128.505
+   },
+   "observation_class": "CEILING_OBSERVATION"
+  },
+  "ceiling_262k": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-sceil262k-b01",
+    "capacity": {
+     "kv_tokens": 395979
+    }
+   },
+   "needle": {
+    "rc": 0,
+    "PASS": true,
+    "needles_hit": "5/5",
+    "ttft_s": 133.72
+   },
+   "prompt_target": 261888,
+   "model_len": 262144,
+   "observation_class": "CEILING_OBSERVATION"
+  }
+ }
+}

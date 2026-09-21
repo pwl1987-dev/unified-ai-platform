@@ -104,3 +104,9 @@ classify 端到端双向验证通过（2026-09-17）。
 - **B-X2 PASS**：seed99 128K 5/5 + 220K 全过；TTFT 220K 103.95（−0.17% vs 104.125 门）；容量边际 1.42/1.78；C4/C8@128K=CAPACITY_LIMIT 端点；designated 口径；q4 在途护栏随附。
 - **Overall = PASS**：TP2 适合成为交互/长上下文主基线。
 - 证据：raw/staging/P03-QUALIFY/gate-b-verdict.json + GATEB P32K C1/C2 补件（G1/G2 状态锚自洽）。
+
+## 2026-09-21 P4-SLO 双曲线 + ceiling 晋级链 ✅（Phase 02 GPU 实验全部完成）
+- **SLO_UNDECIDED 义务解除**：L2（D565 micro + P32K 主曲线）closed C1-C8 + open 5 点全档；X2 P128K closed C1/C2 + C4 CAPACITY_LIMIT 端点（附实测排队补充）+ open 5 点；arrival 列齐全，全点 0 503。
+- **ceiling 链全过**：P245K seed99 5/5（TTFT 128.5s，KV 容量 394,941 tok，驻留 1.57×）→ **P262K seed99 5/5（TTFT 133.7s）= 模型绝对硬上限 262,144 工作**；两档均 CEILING_OBSERVATION（正式认证归 Phase 03）。
+- 262K 参数化取证：268288>262144 boot 拒绝 → 靶 262000 装配超限 400 → 终靶 261888（离线预验证 262,095≤262,144）——fixture 装配超靶 +153 tok 是根因，靶值偏离透明记录。
+- 证据：raw/staging/P04-SLO/{p4-slo-report, p4-slo-decisions}.json + V29-T2-SLO-*/ + SCEIL*/。

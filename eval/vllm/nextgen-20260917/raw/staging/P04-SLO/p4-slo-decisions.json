@@ -1,0 +1,81 @@
+{
+  "record": "P4-SLO 判定——L2/X2 双曲线（SLO_UNDECIDED 义务解除）+ ceiling 晋级链 245K→262K（seed99）",
+  "boot_forms": {
+    "l2": "TP2 MS4 spec k7 draftTP1 NBT2048 kv-bf16 L36K（= composite_L2 = B0 配方，P3 认证）",
+    "x2": "TP2 MS2 spec k7 draftTP1 NBT2048 kv-bf16 X128K（= composite_X2 = B0 配方可移植集，P3 认证）",
+    "ceiling": "TP2 MS1 spec k7 draftTP1 NBT2048 kv-bf16 len=251392/262144（在途=1 生产形态）",
+    "cache": "每档 COLD（VLLM_CACHE_ROOT 钉死 per-boot 专目录），boot 后立即测量（含暖机协议见各 cell）"
+  },
+  "l2": {
+    "verdict": "SLO_UNDECIDED 解除——P32K 主曲线 + D565 micro 曲线均产出完整双曲线",
+    "obligation": "四档 C1/C2/C4/C8 全请求 ✓（closed 2-rep 曲线 + ns 3-rep cell 两层）+ arrival 列 ✓（open-loop 5 点 0.25/0.5/0.75/0.9/1.1×）",
+    "d565_micro": {
+      "closed_tpot_s": {"C1": 0.0182, "C2": 0.0536, "C4": 0.0542, "C8": 0.0552},
+      "closed_ttft_p50_s": {"C1": 0.19, "C2": 0.19, "C4": 0.19, "C8": 0.71},
+      "open_p95_ttft_s_by_ratio": {"0.25": 0.279, "0.5": 1.567, "0.75": 0.318, "0.9": 0.313, "1.1": 0.596},
+      "sat_est_req_s": 0.4097,
+      "note": "open p95 非单调（r0.5 1.57 vs r0.75 0.32）＝小样本 Screen 级方差（warmup+measure 合并口径），Phase 03 定档时重跑认证形制"
+    },
+    "p32k_main": {
+      "closed_tpot_s": {"C1": 0.048, "C2": 0.1015, "C4": 0.2342, "C8": 0.3195},
+      "closed_ttft_s_first_last": {"C1": 10.16, "C8_max": 86.66},
+      "open_p95_ttft_s_by_ratio": {"0.25": 10.165, "0.5": 29.953, "0.75": 34.547, "0.9": 22.12, "1.1": 33.254},
+      "sat_est_req_s": 0.0505
+    },
+    "openloop_503": "两 fixture 全 5 点 0 rejected_503 / 0 other_err（在途远低于 MS4 阈；admission 守门参数 q4 保留为 Phase 03 配方项）"
+  },
+  "x2_p128k": {
+    "verdict": "双曲线产出；C4 档按冻结容量规则记 CAPACITY_LIMIT 端点（另含实测排队补充数据）",
+    "capacity": {
+      "kv_tokens": 374381,
+      "c4_workpoint_tokens": 526000,
+      "rule": "C4 稳态驻留 4×(131072+128+开销) ≈ 526K > 374K → 数学不可行",
+      "verdict": "CAPACITY_LIMIT",
+      "supplementary": "C4/C8 实测照跑（排队串行化后服务成功，C8 TTFT 至 462s，max_running 受 MS2 约束）——作为排队行为补充证据，不改变端点判定"
+    },
+    "closed": {
+      "C1_ttft_s": 53.35, "C1_tpot_s": 0.1381,
+      "C2_ttft_s_second": 111.41, "C2_tpot_s": 0.371,
+      "note": "C2 第二请求 TTFT 翻倍＝MS2+chunked prefill 交织受限形态（与 X220 在途=1 生产形态不同档）"
+    },
+    "open_p95_ttft_s_by_ratio": {"0.25": 135.544, "0.5": 132.465, "0.75": 135.713, "0.9": 309.574, "1.1": 262.83},
+    "openloop_503": "全 5 点 0 rejected_503（sat_est 0.0155 req/s，1.1×=0.017 仍在容量内）"
+  },
+  "ceiling": {
+    "rule": "245K PASS 才进 262K；两档永远只标 CEILING_OBSERVATION，正式 3-boot×3-seed 认证归 Phase 03",
+    "p245k": {
+      "needle_seed99": "5/5 PASS",
+      "ttft_s": 128.505,
+      "kv_tokens": 394941,
+      "max_resident_concurrency": 1.57,
+      "observation_class": "CEILING_OBSERVATION"
+    },
+    "p262k": {
+      "needle_seed99": "5/5 PASS",
+      "ttft_s": 133.72,
+      "prompt_target": 261888,
+      "model_len": 262144,
+      "model_len_semantics": "262144 = 模型 max_position_embeddings 硬上限（绝对天花板）",
+      "kv_tokens": 395979,
+      "observation_class": "CEILING_OBSERVATION"
+    },
+    "forensics_262k": [
+      "首跑 max_model_len=268288 > derived 262144 → ModelConfig pydantic 校验拒绝（boot rc=11）——链参数化 bug，非容量",
+      "二跑 len=262144 + prompt 靶 262000：fixture 装配实测 262153 tok（超靶 +153），+64 输出 = 262217 > 262144 → HTTP 400",
+      "终跑 len=262144 + 靶 261888：离线 tokenizer 预验证 262021+模板~10+64 = 262095 ≤ 262144（headroom 49）→ PASS",
+      "靶值偏离 262000→261888 已在 prompt_target 字段透明记录（模型硬上限下的最大可行 needle 形制）"
+    ]
+  },
+  "evidence": {
+    "report": "raw/staging/P04-SLO/p4-slo-report.json",
+    "cells": "raw/staging/V29-T2-SLO-*/（ns 3-rep per-cell JSON + sampler metrics .gz）",
+    "ceiling_raw": "raw/staging/SCEIL245K-B01-ND245000-S99/ 与 SCEIL262K-B01-ND261888-S99/",
+    "chain": "tools/p4_slo_chain.py（断点续跑；262K 参数化修复注释在源码 S5 段）",
+    "runlog": "/data/sandbox/nextgen-20260917/p4-slo-runlog.txt"
+  },
+  "phase03_debt_new": [
+    "D565 open-loop p95 非单调（Screen 级小样本）——L2 定档认证时重跑",
+    "X2 P128K C2 第二请求 TTFT 翻倍形态——若生产需要 C2 档需调 MS/NBT 后重测",
+    "ceiling 245K/262K 仅 CEILING_OBSERVATION——正式认证（3-boot×3-seed）留 Phase 03"
+  ]
+}
