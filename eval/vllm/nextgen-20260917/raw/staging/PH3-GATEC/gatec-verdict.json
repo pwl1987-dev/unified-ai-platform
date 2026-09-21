@@ -1,0 +1,138 @@
+{
+ "gate_c": {
+  "question": "至少产出短上下文质量/极速档、128K-220K 日常档、238K-262K 极限档",
+  "per_tier": {
+   "short": "PASS",
+   "daily": "PASS",
+   "extreme": "PASS"
+  },
+  "formal_selection": "0.29 主栈 = NATIVE_BF16（FP8E4/FP8C UNSUPPORTED；KVARN 0.28 = CROSS_RUNTIME_REFERENCE 保留至 Phase 08）",
+  "global_rule": "单 route UNSUPPORTED 不拖垮 Gate C——FP8 两路缺席由 NATIVE 承担"
+ },
+ "fp8_split_conclusion": {
+  "FP8E4_diagnostic": {
+   "kv_route": [
+    "FP8_E4M3_STATIC_SCALE_1_0",
+    "FP8_E4M3_CALIBRATED"
+   ],
+   "experiment_status": "UNSUPPORTED",
+   "classification_reason": "SERVER_CRASH（boot 级，EngineCore init）",
+   "evidence": [
+    "F8E4L32 boot rc=11：flashinfer 0.6.18 fp8_e4m3 prefill 内核 JIT ninja rc=1（cuda_toolkit.h:41 CCCL×cu13 nvcc #error）→ /data/sandbox/nextgen-20260917/log-p02-f8e4l32-b01/server.txt",
+    "F8E4X128 boot rc=11：同根因 → log-p02-f8e4x128-b01/server.txt",
+    "F8E4TRITON 诊断臂（VLLM_ATTENTION_BACKEND=TRITON_ATTN env）boot rc=11：崩溃点仍为 flashinfer/jit/cpp_ext.py 同一 fp8_e4m3 prefill ninja 编译（后端 env 不改变该路径）→ log-p02-f8e4triton-b01/server.txt"
+   ],
+   "root_cause_family": "与 0.28 栈 FP8 UNSUPPORTED 同族（Phase 01 DECISIONS 2026-09-18 P1 附带裁定顺延路径证实）——flashinfer 自带 CCCL 头与其所用 nvcc 不兼容，fp8-KV prefill 内核 JIT 编译必死；config 层通过（Using fp8_e4m3…/resolved kv_cache_dtype=torch.float8_e4m3fn）",
+   "fp8c_implication": "FP8C artifact 构建取消：calibrated scales 不改变内核编译路径，同一阻断 → FP8C_KV_ONLY 阻断在 serving 层（非校准层）；隔离构建环境（fp8c-build 容器）保留待上游修复后 Phase 04+ 重开",
+   "gate_c_implication": "0.29 主栈 KV 选型减为 NATIVE_BF16；daily tier 由 NATIVE 承担（C4/C8@128K 维持 CAPACITY_LIMIT 端点）；KVARN 0.28 为 CROSS_RUNTIME_REFERENCE",
+   "upstream_debt": "flashinfer ≥0.6.19 或 CCCL 修复后重开 FP8E4/FP8C（probe→boot→KV-only 校准链已就绪：build_fp8c_artifact.py/verify_fp8c_artifact.py/校准语料 71b08a93…）"
+  },
+  "FP8C_production_candidate": "UNSUPPORTED（同 serving 层阻断；artifact 未构建——构建/验证链就绪待上游修复）"
+ },
+ "kvarn_reference_conclusion": {
+  "eligibility": "CROSS_RUNTIME_REFERENCE（禁止同栈 winner/tie-break/越域质量 FAIL）",
+  "points": {
+   "d565_c1": {
+    "reps": 3,
+    "ttft_wall_s": [
+     4.419956361874938,
+     3.3740207320079207,
+     3.368740990990773
+    ],
+    "tok_s_median": 151.7441833015239
+   },
+   "needles": {
+    "p224k": {
+     "hit": "5/5",
+     "ttft": 98.898
+    },
+    "p238k": {
+     "hit": "5/5",
+     "ttft": 107.679
+    },
+    "p245k": {
+     "hit": "5/5",
+     "ttft": 112.033
+    }
+   },
+   "kv_tokens_kvarn": 492266
+  },
+  "retention": "legacy/extreme reference 保留至 Phase 08 切换窗口"
+ },
+ "profiles": {
+  "short": {
+   "runtime": "0.29 frozen（tree 4632d624…）+ W4A16 + DFlash2 k7 spec + TP2 + draftTP1",
+   "kv_route": "NATIVE_BF16",
+   "context_envelope": "D565/P4K/P32K（model_len 36864）",
+   "certified_axes": {
+    "d565_decode_tok_s": 182.406,
+    "p32k_decode_tok_s": 69.837,
+    "p32k_warm_ttft_s": 0.2989
+   },
+   "conditional_routing": "P32K 级工作负载 spec-off 更优（decode +12%/agg +33%/暖TTFT −39%，P0B 认证证据）——生产路由建议，非配方变更"
+  },
+  "daily": {
+   "runtime": "同 short（X2 形制）",
+   "kv_route": "NATIVE_BF16",
+   "context_envelope": "128K（C1-C2；C4=CAPACITY_LIMIT 端点 526K>374K KV）/ 220K（在途=1，q4 护栏）",
+   "references": "Phase 02 B0-X128/X220 + Gate B（seed99 全档 5/5；220K TTFT −0.17%；容量 1.42×/1.78×）",
+   "fp8_unlock": "FP8-KV UNSUPPORTED（flashinfer JIT CCCL 墙）——128K C4 解锁落空，上游修复后 Phase 04+ 复评"
+  },
+  "extreme": {
+   "runtime": "同 short（MS1 在途=1）",
+   "kv_route": "NATIVE_BF16",
+   "tiers": {
+    "238k": {
+     "boots_valid": 3,
+     "all_needles_pass": true,
+     "no_oom": true,
+     "kv_tokens_capacity": 394148,
+     "workpoint_tokens": 238245,
+     "kv_capacity_margin": 0.6544,
+     "model_position_margin_tokens": 5467,
+     "ttft_s_min_max": [
+      116.3,
+      116.7
+     ],
+     "certified": true,
+     "label": "PRODUCTION_SAFE"
+    },
+    "245k": {
+     "boots_valid": 3,
+     "all_needles_pass": true,
+     "no_oom": true,
+     "kv_tokens_capacity": 394941,
+     "workpoint_tokens": 245241,
+     "kv_capacity_margin": 0.6104,
+     "model_position_margin_tokens": 6151,
+     "ttft_s_min_max": [
+      121.3,
+      121.6
+     ],
+     "certified": true,
+     "label": "PRODUCTION_SAFE"
+    },
+    "262k": {
+     "boots_valid": 3,
+     "all_needles_pass": true,
+     "no_oom": true,
+     "kv_tokens_capacity": 395979,
+     "workpoint_tokens": 262137,
+     "kv_capacity_margin": 0.5106,
+     "model_position_margin_tokens": 7,
+     "ttft_s_min_max": [
+      133.7,
+      134.0
+     ],
+     "certified": true,
+     "label": "HARD_CEILING_CAPABILITY_PASS"
+    }
+   },
+   "production_safe_candidates": [
+    "238k",
+    "245k"
+   ],
+   "hard_ceiling": "262k（position 余量 7 token——MODEL_POSITION_BOUNDARY；永不默认生产工作点）"
+  }
+ }
+}

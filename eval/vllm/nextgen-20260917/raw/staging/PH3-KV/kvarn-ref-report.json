@@ -1,0 +1,54 @@
+{
+ "boot": {
+  "tag": "PH3-KVARN28-B01",
+  "log": "/data/sandbox/nextgen-20260917/log-PH3-KVARN28-B01",
+  "pgid": 951881
+ },
+ "xref": {
+  "cross_runtime_reference": true,
+  "runtime": "0.28+kvarn（vllm28-env 只读）",
+  "kv_route": "KVARN_K4V2_G128",
+  "frozen_recipe_max_model_len": 245760,
+  "forbidden_claims": [
+   "同栈 winner 加速比",
+   "行485 tie-break 跨版本",
+   "262K 越域质量 FAIL"
+  ]
+ },
+ "capacity": {
+  "kv_tokens_kvarn": 492266
+ },
+ "d565_c1": {
+  "reps": 3,
+  "ttft_wall_s": [
+   4.419956361874938,
+   3.3740207320079207,
+   3.368740990990773
+  ],
+  "tok_s_median": 151.7441833015239
+ },
+ "needles": {
+  "p224k": {
+   "rc": 0,
+   "PASS": true,
+   "needles_hit": "5/5",
+   "ttft_s": 98.898
+  },
+  "p238k": {
+   "rc": 0,
+   "PASS": true,
+   "needles_hit": "5/5",
+   "ttft_s": 107.679
+  },
+  "p245k": {
+   "rc": 0,
+   "PASS": true,
+   "needles_hit": "5/5",
+   "ttft_s": 112.033
+  }
+ },
+ "done": true,
+ "out_of_domain_marks": {
+  "262k": "不在 frozen 0.28 recipe 能力域（max_model_len=245760）——非质量 FAIL"
+ }
+}

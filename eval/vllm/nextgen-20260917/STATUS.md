@@ -2,9 +2,9 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 03（KV 四路对决 → 三档 Profile + Gate C，v1.1 执行合同）— **执行中（P0A 契约落地完成）**
+- **Phase**: 03（KV 四路对决 → 三档 Profile + Gate C，v1.1 执行合同）— **完成（P0A→P4 全链，Gate C 三档 PASS）**
 - **Last Completed**: Phase 02 全相位（2026-09-21）——**Gate B Overall PASS（B-L2 ∧ B-X2）**；composite_L2=B0 配方 / composite_X2=B0+q4 护栏；SLO 定标曲线全档 + ceiling 245K/262K seed99 双 PASS（262,144 模型硬上限；**Erratum EP03-A2：正式 SLO 状态仍 SLO_UNDECIDED**）；详见 reports/phase-02-tp2.md（§11 勘误）
-- **Current Task**: P0B L2 终形（P32K spec-off 正式 A/B 先于 KV 主矩阵）
+- **Current Task**: —（Phase 03 已收口；Next=Phase 04 权重量化计划评审）
 - **Next Task**: P1 KV 四路对决（NATIVE/FP8E4/FP8C/KVARN-0.28 参考）→ P2 三档 Profile → P3 Gate C → P4 收口；TP1-C4 补测=机会式（GPU2 空闲才补）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
@@ -127,3 +127,13 @@ classify 端到端双向验证通过（2026-09-17）。
 - **fixture 扩表**：needle-p{238,245,262}k-s{99,2,5}-ph3 9 档 + p245k/p262k prompt；离线 tokenizer 装配验证全过（**新事实：chat 模板 +52 token → 262K 档 position 余量仅 7 token**；238K 余 5467/245K 余 6151）。
 - **校准/评测物理隔离**：独立合成语料 64 样本（sha 71b08a93…，seed 20260921，非 ulmus filler 族）+ fixtures/eval/phase03-manifest.json + overlap checker **PASS**（15 needle 码零泄漏）。
 - MANIFEST v4（phase03 块）；下一步 P0B（GPU3+4）：P32K spec-off 正式 A/B → NBT3072@P4K → K5 复议 → churn 首跑；TP1-C4 机会式。
+
+## 2026-09-22 Phase 03 终判收口（P0A→P4）✅
+- **Gate C 三档 PASS**：short=L2（0.29+NATIVE+spec k7）/ daily=X2（128K/220K NATIVE bf16 + q4 护栏）/ extreme=NATIVE 238K/245K PRODUCTION_SAFE + 262K HARD_CEILING 单列——0.29 主栈 KV 正式选型 = NATIVE_BF16。
+- **FP8E4/FP8C = UNSUPPORTED**（三 boot 取证：flashinfer 0.6.18 fp8_e4m3 prefill JIT CCCL×cu13 nvcc 墙，与 0.28 同根因家族；TRITON env 不改路径）；FP8C artifact 构建取消、链路就绪待上游（Phase 04 Debt #2）。
+- **238K/245K/262K 正式认证**：27 格全 5/5（3 boot × 3 seed）；262K 双余量分账（KV +51.1% vs position 仅 7 token → MODEL_POSITION_BOUNDARY，不作默认工作点）；TTFT 116.3/121.3/133.7s ±0.2%。
+- **P0B**：spec-off A/B → MAINTAIN_SPEC_ON（P32K +12~39% vs D565 −53% 路由分裂——条件路由发现）；K5 维持 REJECTED + 规则修正建议；NBT3072@P4K 免复验。
+- **KVARN 0.28 参考**：224/238/245K 全 5/5、KV 池 492K（CROSS_RUNTIME_REFERENCE，保留至 Phase 08）。**churn**：RETDEF 维持（显式 1024 p95 +29%，亚压力域）。
+- 事故与修复：freeze fail-open（EP03-A1）/双链重复发射/僵尸 server/churn 三处自伤 bug（sample 行数、counter_total 参序、model 名 404）——全部即时落盘、铁律 5 处置、补偿重跑；探针自检制度固化（负载前单请求 probe）。
+- SLO_UNDECIDED 维持（EP03-A2 口径）；TP1-C4 顺延（GPU2 外占 15h+）。
+- Phase 04 Debt 9 项移交（报告 §9）。

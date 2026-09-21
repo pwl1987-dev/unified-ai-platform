@@ -1,0 +1,636 @@
+{
+ "arms": {
+  "RETDEF": {
+   "tag": "RETDEF",
+   "requests": 603,
+   "ok": 603,
+   "err": 0,
+   "ttft_p50": 0.2107013249769807,
+   "ttft_p95": 0.2752214970532805,
+   "short_ttft_firsthalf_p50": 0.22346222889609635,
+   "short_ttft_secondhalf_p50": 0.2101659718900919,
+   "kv_usage_peak": 0.1776084407971864,
+   "prefix_first": {
+    "vllm:prefix_cache_queries_total": 54.0,
+    "vllm:prefix_cache_hits_total": 0.0,
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:external_prefix_cache_hits_total": 0.0
+   },
+   "prefix_last": {
+    "vllm:prefix_cache_queries_total": 2955235.0,
+    "vllm:prefix_cache_hits_total": 2478592.0,
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:external_prefix_cache_hits_total": 0.0
+   },
+   "prefix_delta": {
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:prefix_cache_hits_total": 2478592.0,
+    "vllm:prefix_cache_queries_total": 2955181.0,
+    "vllm:external_prefix_cache_hits_total": 0.0
+   },
+   "sampler_n": 132,
+   "raw_results_tail": [
+    {
+     "ok": true,
+     "ttft": 0.21029402199201286,
+     "tok": 24,
+     "t": 1790023454.0070882,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2104263009969145,
+     "tok": 24,
+     "t": 1790023454.7170498,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.20997607498429716,
+     "tok": 25,
+     "t": 1790023456.0296233,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21059571392834187,
+     "tok": 20,
+     "t": 1790023456.6529868,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21001787506975234,
+     "tok": 20,
+     "t": 1790023457.630095,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.209531876957044,
+     "tok": 24,
+     "t": 1790023458.8479476,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21034396113827825,
+     "tok": 19,
+     "t": 1790023459.4496348,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22367437509819865,
+     "tok": 24,
+     "t": 1790023460.1730402,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21056176791898906,
+     "tok": 19,
+     "t": 1790023460.774879,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2098954350221902,
+     "tok": 19,
+     "t": 1790023462.149253,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21022475487552583,
+     "tok": 20,
+     "t": 1790023462.802809,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21006302093155682,
+     "tok": 20,
+     "t": 1790023463.4258354,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21132521703839302,
+     "tok": 19,
+     "t": 1790023465.226272,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21100931987166405,
+     "tok": 25,
+     "t": 1790023467.586306,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21035066805779934,
+     "tok": 19,
+     "t": 1790023468.1878011,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2236752558965236,
+     "tok": 20,
+     "t": 1790023468.8242846,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21001884993165731,
+     "tok": 20,
+     "t": 1790023469.4470868,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2103679310530424,
+     "tok": 25,
+     "t": 1790023470.1786358,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21039697085507214,
+     "tok": 24,
+     "t": 1790023470.8886487,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21013308898545802,
+     "tok": 25,
+     "t": 1790023471.6200633,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21020953287370503,
+     "tok": 21,
+     "t": 1790023472.2646286,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21040396601893008,
+     "tok": 25,
+     "t": 1790023473.0771668,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.20995173300616443,
+     "tok": 19,
+     "t": 1790023473.6782448,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22368618589825928,
+     "tok": 20,
+     "t": 1790023474.3147748,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21061242907308042,
+     "tok": 25,
+     "t": 1790023476.1423686,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21050162706524134,
+     "tok": 19,
+     "t": 1790023476.743917,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2236546860076487,
+     "tok": 20,
+     "t": 1790023477.3803966,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22377834003418684,
+     "tok": 20,
+     "t": 1790023478.0168338,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21038606599904597,
+     "tok": 20,
+     "t": 1790023478.6399548,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22367092408239841,
+     "tok": 20,
+     "t": 1790023479.2764866,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2102762230206281,
+     "tok": 20,
+     "t": 1790023479.899581,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21032264200039208,
+     "tok": 19,
+     "t": 1790023480.5010946,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2236405850853771,
+     "tok": 23,
+     "t": 1790023481.2025924,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21089151105843484,
+     "tok": 20,
+     "t": 1790023482.5700293,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21043322002515197,
+     "tok": 20,
+     "t": 1790023483.4264379,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2101513808593154,
+     "tok": 20,
+     "t": 1790023484.242757,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2103272331878543,
+     "tok": 20,
+     "t": 1790023485.8894484,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2102477450389415,
+     "tok": 20,
+     "t": 1790023486.5126274,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.211736906087026,
+     "tok": 20,
+     "t": 1790023487.1371725,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21770544303581119,
+     "tok": 24,
+     "t": 1790023489.9889886,
+     "long": false
+    }
+   ],
+   "done": true,
+   "capacity": {
+    "kv_tokens": 298231
+   }
+  },
+  "RET1024": {
+   "tag": "RET1024",
+   "requests": 603,
+   "ok": 603,
+   "err": 0,
+   "ttft_p50": 0.21063223876990378,
+   "ttft_p95": 0.3555077910423279,
+   "short_ttft_firsthalf_p50": 0.2235756958834827,
+   "short_ttft_secondhalf_p50": 0.21087694307789207,
+   "kv_usage_peak": 0.1776084407971864,
+   "prefix_first": {
+    "vllm:prefix_cache_queries_total": 54.0,
+    "vllm:prefix_cache_hits_total": 0.0,
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:external_prefix_cache_hits_total": 0.0
+   },
+   "prefix_last": {
+    "vllm:prefix_cache_queries_total": 2963751.0,
+    "vllm:prefix_cache_hits_total": 2472448.0,
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:external_prefix_cache_hits_total": 0.0
+   },
+   "prefix_delta": {
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:prefix_cache_hits_total": 2472448.0,
+    "vllm:prefix_cache_queries_total": 2963697.0,
+    "vllm:external_prefix_cache_hits_total": 0.0
+   },
+   "sampler_n": 132,
+   "raw_results_tail": [
+    {
+     "ok": true,
+     "ttft": 0.21013267687521875,
+     "tok": 25,
+     "t": 1790024210.110278,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2100762720219791,
+     "tok": 25,
+     "t": 1790024210.8418891,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21166440704837441,
+     "tok": 25,
+     "t": 1790024212.1347268,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21046020090579987,
+     "tok": 19,
+     "t": 1790024212.7364357,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21086314413696527,
+     "tok": 19,
+     "t": 1790024213.7145677,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21068686014041305,
+     "tok": 24,
+     "t": 1790024214.9543216,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21040750993415713,
+     "tok": 20,
+     "t": 1790024215.5777237,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2100797558669001,
+     "tok": 24,
+     "t": 1790024216.287484,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2103630229830742,
+     "tok": 19,
+     "t": 1790024216.8892095,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21240626298822463,
+     "tok": 19,
+     "t": 1790024218.2679322,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21019187290221453,
+     "tok": 20,
+     "t": 1790024218.9173295,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21019630087539554,
+     "tok": 20,
+     "t": 1790024219.5404472,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21021743887104094,
+     "tok": 19,
+     "t": 1790024221.3399594,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21161420200951397,
+     "tok": 19,
+     "t": 1790024223.571255,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22386382287368178,
+     "tok": 19,
+     "t": 1790024224.1865792,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22371636191383004,
+     "tok": 20,
+     "t": 1790024224.8233144,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21034169616177678,
+     "tok": 19,
+     "t": 1790024225.4250276,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22353369486518204,
+     "tok": 24,
+     "t": 1790024226.1482697,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21075143688358366,
+     "tok": 19,
+     "t": 1790024226.7502556,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2234678859822452,
+     "tok": 25,
+     "t": 1790024227.4952052,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21009213291108608,
+     "tok": 21,
+     "t": 1790024228.1400273,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.20990989496931434,
+     "tok": 25,
+     "t": 1790024228.9519122,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21016662195324898,
+     "tok": 19,
+     "t": 1790024229.5534332,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22375283506698906,
+     "tok": 20,
+     "t": 1790024230.1902425,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21212906809523702,
+     "tok": 25,
+     "t": 1790024232.0194361,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21037869108840823,
+     "tok": 19,
+     "t": 1790024232.6211092,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2237693548668176,
+     "tok": 25,
+     "t": 1790024233.3664613,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2102283479180187,
+     "tok": 20,
+     "t": 1790024233.9897065,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21043503400869668,
+     "tok": 19,
+     "t": 1790024234.5916,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22352170199155807,
+     "tok": 19,
+     "t": 1790024235.2063975,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2237742708530277,
+     "tok": 19,
+     "t": 1790024235.8216007,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22346775908954442,
+     "tok": 19,
+     "t": 1790024236.436424,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.22383634420111775,
+     "tok": 24,
+     "t": 1790024237.1602042,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21005569002591074,
+     "tok": 20,
+     "t": 1790024238.504633,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2100464019458741,
+     "tok": 20,
+     "t": 1790024239.3615947,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2097527759615332,
+     "tok": 20,
+     "t": 1790024240.1778476,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21189011400565505,
+     "tok": 20,
+     "t": 1790024241.8266397,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.2099872741382569,
+     "tok": 20,
+     "t": 1790024242.4496503,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21030588005669415,
+     "tok": 19,
+     "t": 1790024243.051505,
+     "long": false
+    },
+    {
+     "ok": true,
+     "ttft": 0.21807234804145992,
+     "tok": 25,
+     "t": 1790024245.9482496,
+     "long": false
+    }
+   ],
+   "done": true,
+   "capacity": {
+    "kv_tokens": 298231
+   }
+  }
+ }
+}

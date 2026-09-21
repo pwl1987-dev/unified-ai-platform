@@ -1,0 +1,242 @@
+{
+ "boots": {
+  "boot1": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-d565p95-boot1-b01",
+    "capacity": {
+     "kv_tokens": 287923
+    }
+   },
+   "closed": {
+    "1": [
+     {
+      "rep": 0,
+      "ok": 1,
+      "fail": 0,
+      "ttfts": [
+       0.3238
+      ],
+      "tpot_mean": 0.0182
+     },
+     {
+      "rep": 1,
+      "ok": 1,
+      "fail": 0,
+      "ttfts": [
+       0.1778
+      ],
+      "tpot_mean": 0.0182
+     }
+    ],
+    "2": [
+     {
+      "rep": 0,
+      "ok": 2,
+      "fail": 0,
+      "ttfts": [
+       0.3492,
+       0.1835
+      ],
+      "tpot_mean": 0.0431
+     },
+     {
+      "rep": 1,
+      "ok": 2,
+      "fail": 0,
+      "ttfts": [
+       0.1774,
+       0.3626
+      ],
+      "tpot_mean": 0.0437
+     }
+    ],
+    "4": [
+     {
+      "rep": 0,
+      "ok": 4,
+      "fail": 0,
+      "ttfts": [
+       0.662,
+       0.6617,
+       0.1788,
+       0.6616
+      ],
+      "tpot_mean": 0.0551
+     },
+     {
+      "rep": 1,
+      "ok": 4,
+      "fail": 0,
+      "ttfts": [
+       0.6642,
+       0.6638,
+       0.1805,
+       0.6637
+      ],
+      "tpot_mean": 0.0551
+     }
+    ],
+    "8": [
+     {
+      "rep": 0,
+      "ok": 8,
+      "fail": 0,
+      "ttfts": [
+       0.3493,
+       0.181,
+       0.6678,
+       0.6685,
+       2.6385,
+       5.259,
+       5.7896,
+       6.3729
+      ],
+      "tpot_mean": 0.0576
+     },
+     {
+      "rep": 1,
+      "ok": 8,
+      "fail": 0,
+      "ttfts": [
+       0.6649,
+       0.6646,
+       0.1836,
+       0.6649,
+       3.7223,
+       5.5504,
+       5.3506,
+       6.1906
+      ],
+      "tpot_mean": 0.0567
+     }
+    ]
+   },
+   "sat_est": 0.3864,
+   "open": [
+    {
+     "tag": "BOOT1-r0.25",
+     "arrival_rate": 0.0966,
+     "sent": 68,
+     "served_ok": 68,
+     "rejected_503": 0,
+     "other_err": 0,
+     "rejection_share": 0.0,
+     "ttft_p50": 0.176,
+     "ttft_p95": 0.205,
+     "ttft_p99": 0.244,
+     "tpot_mean": 0.0227,
+     "waiting_max": 4.0,
+     "running_max": 4.0,
+     "preemptions_delta": 0.0,
+     "note": "warmup+measure 全段合并（Screen 级）"
+    },
+    {
+     "tag": "BOOT1-r0.5",
+     "arrival_rate": 0.1932,
+     "sent": 149,
+     "served_ok": 149,
+     "rejected_503": 0,
+     "other_err": 0,
+     "rejection_share": 0.0,
+     "ttft_p50": 0.176,
+     "ttft_p95": 0.278,
+     "ttft_p99": 0.329,
+     "tpot_mean": 0.0325,
+     "waiting_max": 4.0,
+     "running_max": 4.0,
+     "preemptions_delta": 0.0,
+     "note": "warmup+measure 全段合并（Screen 级）"
+    },
+    {
+     "tag": "BOOT1-r0.75",
+     "arrival_rate": 0.2898,
+     "sent": 223,
+     "served_ok": 223,
+     "rejected_503": 0,
+     "other_err": 0,
+     "rejection_share": 0.0,
+     "ttft_p50": 0.177,
+     "ttft_p95": 0.409,
+     "ttft_p99": 1.011,
+     "tpot_mean": 0.0378,
+     "waiting_max": 4.0,
+     "running_max": 4.0,
+     "preemptions_delta": 0.0,
+     "note": "warmup+measure 全段合并（Screen 级）"
+    },
+    {
+     "tag": "BOOT1-r0.9",
+     "arrival_rate": 0.3477,
+     "sent": 240,
+     "served_ok": 240,
+     "rejected_503": 0,
+     "other_err": 0,
+     "rejection_share": 0.0,
+     "ttft_p50": 0.193,
+     "ttft_p95": 0.421,
+     "ttft_p99": 1.126,
+     "tpot_mean": 0.0404,
+     "waiting_max": 4.0,
+     "running_max": 4.0,
+     "preemptions_delta": 0.0,
+     "note": "warmup+measure 全段合并（Screen 级）"
+    },
+    {
+     "tag": "BOOT1-r1.1",
+     "arrival_rate": 0.425,
+     "sent": 311,
+     "served_ok": 311,
+     "rejected_503": 0,
+     "other_err": 0,
+     "rejection_share": 0.0,
+     "ttft_p50": 0.238,
+     "ttft_p95": 1.639,
+     "ttft_p99": 2.849,
+     "tpot_mean": 0.0451,
+     "waiting_max": 4.0,
+     "running_max": 4.0,
+     "preemptions_delta": 0.0,
+     "note": "warmup+measure 全段合并（Screen 级）"
+    }
+   ]
+  }
+ },
+ "p95_monotonicity": {
+  "per_boot": {
+   "boot1": {
+    "monotone": true,
+    "points": [
+     [
+      0.0966,
+      0.205
+     ],
+     [
+      0.1932,
+      0.278
+     ],
+     [
+      0.2898,
+      0.409
+     ],
+     [
+      0.3477,
+      0.421
+     ],
+     [
+      0.425,
+      1.639
+     ]
+    ],
+    "spearman_rho": 1.0
+   }
+  },
+  "conclusion": "MONOTONE_CONFIRMED——Phase 02 非单调为 Screen 级小样本伪影；认证窗口（600s/点，68-311 样本/点=Phase 02 的 1.1-5.2×）下 5 点严格单调，1.1× 过载点尾部 3.9× 陡升符合饱和行为（sat_est 0.3864）",
+  "params": {
+   "warmup_s": 120,
+   "measure_s": 600,
+   "min_completed": 200,
+   "max_test_s": 1500
+  },
+  "scope_note": "1-boot 认证窗口（boot2 按预算裁定跳过，跨 boot 复现归 Phase 04 SLO 定标）；slo_status 维持 SLO_UNDECIDED"
+ }
+}

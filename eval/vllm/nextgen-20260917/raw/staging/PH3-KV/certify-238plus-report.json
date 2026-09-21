@@ -1,0 +1,339 @@
+{
+ "stages": {
+  "warmup": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-238k-w0-w0",
+    "pgid": 888462,
+    "capacity": {
+     "kv_tokens": 394148
+    }
+   },
+   "note": "W0 平台暖机（不计 evidence boot）"
+  },
+  "238k_B1": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-238k-b01-b01",
+    "pgid": 892321,
+    "capacity": {
+     "kv_tokens": 394148
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.302
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.43
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.566
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 5467
+  },
+  "238k_B2": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-238k-b02-b02",
+    "pgid": 898767,
+    "capacity": {
+     "kv_tokens": 394148
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.334
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.458
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.638
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 5467
+  },
+  "238k_B3": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-238k-b03-b03",
+    "pgid": 905200,
+    "capacity": {
+     "kv_tokens": 394148
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.509
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.65
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 116.664
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 5467
+  },
+  "245k_B1": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-245k-b01-b01",
+    "pgid": 911598,
+    "capacity": {
+     "kv_tokens": 394941
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.348
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.505
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.513
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 6151
+  },
+  "245k_B2": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-245k-b02-b02",
+    "pgid": 918134,
+    "capacity": {
+     "kv_tokens": 394941
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.257
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.383
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.455
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 6151
+  },
+  "245k_B3": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-245k-b03-b03",
+    "pgid": 924704,
+    "capacity": {
+     "kv_tokens": 394941
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.405
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.537
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 121.63
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 6151
+  },
+  "262k_B1": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-262k-b01-b01",
+    "pgid": 931420,
+    "capacity": {
+     "kv_tokens": 395979
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.751
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.979
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 134.0
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 7
+  },
+  "262k_B2": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-262k-b02-b02",
+    "pgid": 938218,
+    "capacity": {
+     "kv_tokens": 395979
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.766
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.923
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 134.018
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 7
+  },
+  "262k_B3": {
+   "info": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-cert238p-262k-b03-b03",
+    "pgid": 945065,
+    "capacity": {
+     "kv_tokens": 395979
+    }
+   },
+   "needles": {
+    "s99": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.706
+    },
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.814
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 133.927
+    }
+   },
+   "preempt_oom": {
+    "oom_lines": 0,
+    "preempt_mentions": 0
+   },
+   "valid_observation": true,
+   "position_margin_tokens": 7
+  }
+ }
+}

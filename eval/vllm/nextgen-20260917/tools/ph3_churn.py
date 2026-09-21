@@ -78,7 +78,9 @@ def prefix_counters(m: dict) -> dict:
     out = {}
     for k in m:
         if "prefix_cache" in k and k.endswith("_total"):
-            out[k] = counter_total(k, m)
+            v = counter_total(m, k)   # p02_common 签名：counter_total(metrics, family)
+            if v is not None:
+                out[k] = v
     return out
 
 
@@ -130,10 +132,11 @@ def run_churn(api: str, base: str, tag: str) -> dict:
             mt = 128
         else:
             tn = rng.randrange(TENANTS)
-            uniq_tail = "\n".join(rng.sample(tail_lines, 24)) + f"\n唯一尾 {rng.randrange(1<<30)}"
+            k = min(24, len(tail_lines))
+            uniq_tail = "\n".join(rng.sample(tail_lines, k)) + f"\n唯一尾 {rng.randrange(1<<30)}"
             prompt = tenant_bases[tn] + "\n" + uniq_tail
             mt = 64
-        pload = {"model": "qwen", "messages": [{"role": "user", "content": prompt}],
+        pload = {"model": "qwen3.8-27b", "messages": [{"role": "user", "content": prompt}],
                  "max_tokens": mt, "temperature": 0, "stream": True}
         res = stream_once(api, pload, 600)
         res["t"] = time.time()
@@ -201,7 +204,20 @@ def main() -> int:
             json.dump(doc, open(report_path, "w"), indent=1, ensure_ascii=False)
             continue
         time.sleep(20)   # 健康 stabilise
-        r = run_churn(f"http://127.0.0.1:{PORT}/v1", f"http://127.0.0.1:{PORT}", key)
+        probe = stream_once(f"http://127.0.0.1:{PORT}/v1", {"model": "qwen3.8-27b",
+                           "messages": [{"role": "user", "content": "回复 OK"}],
+                           "max_tokens": 8, "temperature": 0, "stream": False}, 60)
+        if not probe.get("ok"):
+            print(f"[{key}] PROBE FAIL（负载前单请求自检）: {probe.get('err')}", flush=True)
+            doc["arms"][key] = {"done": False, "error": f"PROBE_FAIL: {probe.get('err')}"}
+            json.dump(doc, open(report_path, "w"), indent=1, ensure_ascii=False)
+            stop(pgid)
+            continue
+        print(f"[{key}] probe OK", flush=True)
+        try:
+            r = run_churn(f"http://127.0.0.1:{PORT}/v1", f"http://127.0.0.1:{PORT}", key)
+        finally:
+            stop(pgid)   # 异常路径同样清场——防僵尸 server 占端口污染后续臂
         r["done"] = True
         r["capacity"] = parse_capacity(log)
         doc["arms"][key] = r
