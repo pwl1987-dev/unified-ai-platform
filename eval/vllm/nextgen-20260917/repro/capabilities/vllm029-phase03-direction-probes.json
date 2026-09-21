@@ -1,0 +1,75 @@
+{
+ "purpose": "Phase 03 P0A.4 能力探针（不猜 CLI，全部源码/文件实证；vllm tree sha=4632d624… post-patch）",
+ "probed_utc": "2026-09-21",
+ "kv_cache_dtype": {
+  "source": "vllm/config/cache.py:39-60 CacheDType Literal",
+  "enum": ["auto", "float16", "bfloat16", "fp8", "fp8_e4m3", "fp8_e5m2", "fp8_inc",
+           "fp8_ds_mla", "turboquant_k8v4", "turboquant_4bit_nc", "turboquant_k3v4_nc",
+           "turboquant_3bit_nc", "kvarn_k4v2_g128", "kvarn_k4v4_g128", "kvarn_k4v2_g64",
+           "kvarn_k4v4_g64", "int4_per_token_head", "int8_per_token_head",
+           "fp8_per_token_head", "nvfp4", "nvfp4_4over6"],
+  "notes": "CUDA 11.8+ 支持 fp8(=fp8_e4m3) 与 fp8_e5m2；kvarn_* 为 0.27.1 port（dense only，kvarn_mla_* 未 port）——枚举存在≠内核可用（Layer C 止损：布局契约，Phase 01 P4-LAYERC 全留证）",
+  "verdict_fp8_cli": "SUPPORTED（CLI/配置面）；boot 级可用性待 P1 最小 boot Screen 实证（0.28 栈曾死于 flashinfer CCCL JIT，0.29 未测）"
+ },
+ "kv_cache_dtype_skip_layers": {
+  "source": "vllm/config/cache.py:170-176",
+  "type": "list[str]",
+  "semantics": "层索引（'0','2','4'）或 attention 类型名（'sliding_window'）",
+  "companion": "skip_page_size_padded 自动块对齐（skip 层 padding 到量化主层 page）",
+  "verdict": "SUPPORTED（配置面真实存在）"
+ },
+ "hybrid_state_accounting": {
+  "mamba_cache_dtype": "MambaDType Literal[auto,float32,float16,bfloat16]——recurrent state 无 fp8（vllm/config/cache.py:74）",
+  "mamba_cache_mode": "all|align|none",
+  "implication": "FP8 KV 只作用于 attention KV；GDN/Mamba state 独立记账（gates hybrid_memory_accounting 实证依据）"
+ },
+ "fp8_calibrated_scale_pathway": {
+  "default_scales": "set_default_quant_scales()：k/v/q/prob_scale 全 1.0（vllm/model_executor/layers/attention/attention.py:148-171）——即 FP8E4（static scale=1.0）默认路径",
+  "checkpoint_scales": "_init_kv_cache_quant：'we make k_scale and v_scale parameters so that it can be loaded from the model checkpoint'（attention.py:235-241）",
+  "official_method": "CompressedTensorsKVCacheMethod（vllm/.../compressed_tensors/compressed_tensors.py:1031）+ config 侧 kv_cache_scheme 键（:88-99,150-151,262）",
+  "e5m2_restriction": "fp8_e5m2 与 fp8 checkpoint 组合显式 ValueError（attention.py:225-233）",
+  "backend_consumers": ["flashinfer（k_scale_ptr/v_scale_ptr triton 反量化, backends/flashinfer.py:162-234）", "flash_attn/fa_utils", "triton_attn", "hpc_attn 等文件含 fp8 cache 分支"],
+  "parent_model_state": {
+   "path": "/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128",
+   "quant_method": "compressed-tensors；format=pack-quantized；status=compressed",
+   "config_groups": "W4/W8/W8 三组（pack-quantized），ignore 207 项",
+   "kv_cache_scheme": null,
+   "implication": "官方 llm-compressor KV-only 校准通路结构可达：在压缩后模型上仅添加 kv_cache_scheme(FP8 per-tensor)+k/v_scale 张量，pack 权重不动——单变量证明在 build 时执行 artifact_single_variable_verification",
+   "text_config.max_position_embeddings": 262144
+  },
+  "verdict": "OFFICIAL_PATHWAY_AVAILABLE（源码级）；artifact 级可行性待隔离构建验证"
+ },
+ "graph_replay_metering_recheck": {
+  "new_capability": "ObservabilityConfig.cudagraph_metrics（config/observability.py:68，默认 False；engine arg arg_utils.py:712 → CLI 可设）",
+  "stat_fields": ["num_unpadded_tokens", "num_padded_tokens", "num_paddings", "runtime_mode"],
+  "output": "CUDAGraphLogging 聚合表（compilation/cuda_graph.py:33+；Unpadded/Padded Tokens, Num Paddings, Runtime Mode, Count）",
+  "debt7_impact": "Phase 01 缺口（逐 dispatch 计量无出口）出现 logging 级出口——非 Prometheus 逐 dispatch，但 padding/replay 效率可证；Phase 03 CG 相关 boot 建议启用，evidence_quality PARTIAL 可望部分升级",
+  "verdict": "PARTIAL_UPGRADE_AVAILABLE"
+ },
+ "docker_and_uv": {
+  "docker": "29.1.3（Server 正常）；nvidia CDI 设备已配置（nvidia.com/gpu=0,1,2…）→ GPU-in-container 可行",
+  "uv": "0.12.10（/home/lytv/miniforge3/bin/uv）",
+  "decision_rule": "FP8C 构建优先 Docker+UV（CDI）；镜像/网络不适配时回退宿主独立 uv venv（新路径，绝不写 vllm29-env/vllm28-env/模型源目录）"
+ },
+ "boot028_kvarn_frozen_recipe": {
+  "source": "repo/eval/vllm/cuda13/usable-concurrency-20260916/repro/start028-captured.sh",
+  "params": {
+   "max_model_len": 245760,
+   "kv_cache_dtype": "kvarn_k4v2_g128",
+   "block_size": 128, "prefix_match_unit": 128,
+   "kv_cache_memory": 4820000000,
+   "mamba_ssm_cache_dtype": "float16", "mamba_cache_mode": "align",
+   "spec": "dflash k7（draft=draft-recal-readable-20260915）",
+   "gpu_mem_util": 0.95, "max_num_batched_tokens": 2048,
+   "async_scheduling": true, "language_model_only": true, "enable_prefix_caching": true,
+   "overlay": "/data/sandbox/vllm-cu130-qual-20260915/overlay-kvarn",
+   "env": "/data/tools/vllm28-env（只读）"
+  },
+  "frozen_rule": "配方不改（gates-phase03 runtime_baseline.reference_028_kvarn）；262K 超出 245760 能力域 → out_of_domain_marks，非质量 FAIL"
+ },
+ "capability_branches_for_P1": {
+  "FP8E4": "parent 模型 + --kv-cache-dtype fp8（scale 默认 1.0）→ 最小 boot Screen；UNSUPPORTED 即归档",
+  "FP8C": "隔离构建（Docker+UV/uv venv）→ llm-compressor kv_cache_scheme(FP8 per-tensor) → artifact 单变量验证 → frozen runtime 加载 → Screen",
+  "KVARN028": "boot028 冻结配方 224K/238K/245K 对照点（CROSS_RUNTIME_REFERENCE）"
+ }
+}

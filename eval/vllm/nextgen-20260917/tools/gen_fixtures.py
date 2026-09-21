@@ -47,7 +47,12 @@ def gen_sha_manifest() -> dict:
                open(os.path.abspath(__file__), "rb").read()).hexdigest(),
            "fixtures": {}}
     for name, target in [("d565", 512), ("p4k", 4096), ("p32k", 32768),
-                         ("p220k", 220000), ("p238k", 238000)]:
+                         ("p128k", 131072), ("p220k", 220000), ("p238k", 238000),
+                         # Phase 03 P0A.5 扩表：238K+ 正式认证档。
+                         # p262k 靶值 261888：needle 装配实测超靶 +133~153 + 模板 ~10 + 输出 64
+                         # = 262095 ≤ 262144（max_position_embeddings 硬上限，headroom 49；
+                         # Phase 02 SCEIL262K-B01 取证在案）
+                         ("p245k", 245000), ("p262k", 261888)]:
         p = make_prompt(target)
         out["fixtures"][name] = {
             "target_tokens": target,
@@ -59,6 +64,16 @@ def gen_sha_manifest() -> dict:
             doc, needles = make_needle_fixture(ctx, seed)
             out["fixtures"][f"needle-p{ctx//1000}k-s{seed}"] = {
                 "target_tokens": ctx, "seed": seed,
+                "prompt_sha256": hashlib.sha256(doc.encode()).hexdigest(),
+                "needles": needles,
+            }
+    # Phase 03 正式认证 needle：238K/245K/262K × s99/s2/s5（gates-phase03 needle_protocol
+    # seeds_frozen=[99,2,5]；262K prompt_target=261888 装配公式沿用 Phase 02）
+    for ctx, pt in ((238000, 238000), (245000, 245000), (262000, 261888)):
+        for seed in (99, 2, 5):
+            doc, needles = make_needle_fixture(pt, seed)
+            out["fixtures"][f"needle-p{ctx//1000}k-s{seed}-ph3"] = {
+                "target_tokens": pt, "seed": seed,
                 "prompt_sha256": hashlib.sha256(doc.encode()).hexdigest(),
                 "needles": needles,
             }

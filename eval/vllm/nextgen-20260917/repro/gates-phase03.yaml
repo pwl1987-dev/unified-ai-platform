@@ -1,0 +1,277 @@
+# gates-phase03.yaml — Phase 03 全门槛冻结（v1.0，P0A 冻结，禁止看结果后修改）
+# 依据：Phase 03 v1.1 执行合同（用户 2026-09-21 批准，13 条执行前修正 + 5 条执行契约）
+#       + MASTER-TEST-PLAN §9（行 454-486 KV 四路对决）+ §17 Gate C（行 831-833）
+#       + Phase 02 报告 §9 Debt 11 项 + gates-phase02.yaml 交接条款（ceiling 正式认证归本相位）
+# 判定口径：scalar 主轴 ≥3% sign-aware；质量轴回退 >2pp 立即失败；policy 按预冻结约束
+# 参数实名纪律：CLI 旗标实名以 repro/capabilities/phase03 探针为准，不猜
+version: 1
+frozen_utc: "2026-09-21"
+measurement_contract_sha: 80e7d15          # Phase 00 commit #1 继承
+runner_safety_baseline: 899eb5a            # stop()/PGID/staging/压缩修复下限继承
+manifest_schema:
+  version: "1.3"
+  sha256: 4e9a724fd9a410aef8d5b84dffd7a4c40e4bb5fd04162b342269e41a262d5739
+runtime_baseline:
+  primary_029:
+    file: repro/env029/runtime029-phase02-baseline.json     # Phase 02 认证基线（不改写）
+    inheritance_audit: repro/env029/runtime029-phase03-inheritance.json  # EVIDENCE_REPAIR
+    vllm_tree_sha256_post_patch: 4632d624c2bd2373a746a978a1022a12633abf4036f956fc3fb82e3d047a75c8
+    rule: "Phase 03 全程只读该环境；任何包/文件变更 = 新实验 ID + ENV_DRIFT（暂停级）"
+  reference_028_kvarn:
+    env: /data/tools/vllm28-env             # 只读禁止装包（铁律 4）
+    boot: tools/boot028_nextgen.sh
+    frozen_recipe: "0.28 生产认证配方（repo/eval/vllm/cuda13/usable-concurrency-20260916/）max_model_len=245760 冻结不改"
+    eligibility: CROSS_RUNTIME_REFERENCE    # 永不参与严格同栈 winner/tie-break/质量 FAIL
+slo_status: SLO_UNDECIDED                   # 单一 Authority = MANIFEST；无预冻结生产 SLO 数值前不变
+
+qualify_protocol:
+  screen: {boots: 1, reps_per_boot: 3}
+  qualify: {boots: 3, reps_per_boot: 3, spread_max: 0.03,
+            rule: "VLLM_CACHE_ROOT 钉死 + 暖机 + 固定同 fixture/seed（认证形制 v2）"}
+  warmup_boot_rule: "idle 后首个 boot 只作 W0 暖机，不计入 3 个 evidence boots（Phase 02 冷启动惩罚制度化）"
+  screen_promotion_rule: "Screen 信号 <2× 门槛一律 provisional；晋级以认证形制为准（Phase 02 反转 ×2 先例）"
+  two_level_rule: "四路 KV 不无条件全长度 3×3；先 Screen 晋级，仅入围三档 Profile 的 route 升正式 Qualify"
+
+status_layering:                            # 继承 schema 1.2 五层 + 1.3 增补
+  experiment_status: [VALID_PASS, VALID_FAIL, INVALID, UNSUPPORTED, ABORTED, REJECTED]
+  classification_reason: [PERF_GATE_FAIL, OOM, QUALITY_FAIL, SERVER_CRASH, HARNESS_ERROR,
+                          ENV_DRIFT, SCHEMA_FAIL, INTERRUPTED, CAPACITY_LIMIT, NOT_RUN_UPSTREAM_CAPACITY]
+  screen_decision: [IN, OUT, UNSUPPORTED]
+  evidence_quality: [COMPLETE, PARTIAL, MEASUREMENT_NOT_AVAILABLE]
+  observation_class: [CEILING_OBSERVATION]
+  candidate_decision: [PASS, REJECTED, DEFERRED_TO_PHASE03, DEFERRED_TO_PHASE04]
+  route_eligibility: [ELIGIBLE, DIAGNOSTIC_ONLY, CROSS_RUNTIME_REFERENCE, UNSUPPORTED]   # schema 1.3
+  capability_label: [PRODUCTION_SAFE, BOUNDARY_PROFILE, HARD_CEILING_CAPABILITY_PASS, UNSUPPORTED]  # schema 1.3
+
+# ============================================================ 两类 Gate + sign-aware（整段继承 phase02）
+metric_sign:
+  ttft_p50: lower
+  ttft_p95: lower
+  ttft_p99: lower
+  tpot_p50: lower
+  e2e_p50: lower
+  goodput_rps: higher
+  aggregate_tok_s: higher
+  http_error_rate: lower
+  accept_rate: higher
+  kv_token_capacity: higher                  # KV 路线核心容量轴
+
+scalar_optimization_gate:
+  improvement_min: 0.03
+  other_axis_regression_max: 0.05
+  quality: quality_two_tier
+
+policy_envelope_gate:
+  principle: "按预冻结约束裁决；容量/P95/质量约束优先于速度单值"
+
+quality_two_tier:                            # 继承 phase02 原文
+  tier_a_exact:
+    ccdet_canary_hash: "与对照 boot 同 hash（期望 0bd1ecd6… 家族）"
+    token_replay: "temp=0+固定 seed 冻结探针集，与对照逐位一致 100%"
+    verbatim: "100/100"
+  tier_b_smoke:
+    framework: [exact, benign, failure]
+    failure_rule: "failure = 否决（不能用速度抵消）"
+    benign_rule: "放行并记录"
+    note: "禁止把 Tier-B 边缘翻转当 Tier-A 违反误判 OUT"
+
+# ============================================================ KV 四路定义与资格（P1）
+kv_routes:
+  native_bf16:
+    kv_route: NATIVE_BF16
+    eligibility: ELIGIBLE
+    runtime: runtime029（继承）
+    role: "质量与性能基线；238K/245K/262K 正式认证承载"
+    data_reuse: "Phase 02 B0-X128/X220/ceiling 数字直接引用（同 tree sha 前提），仅补缺口"
+  fp8e4:
+    kv_route: FP8_E4M3_STATIC_SCALE_1_0
+    eligibility: DIAGNOSTIC_ONLY            # 永不进生产 winner
+    naming_rule: "FP8E4 与 FP8C 分开命名，禁止混算（含图表/结论表述）"
+    scope: "scale=1.0 诊断：容量/速度上界粗探 + 数值行为观察；无 calibrated provenance"
+    minimal_boot_screen: "capability probe → 最小 boot → D565 C1/C4 + P4K/P32K + P128K Screen 级；UNSUPPORTED 即归档不撞墙"
+  fp8c:
+    kv_route: FP8_E4M3_CALIBRATED
+    eligibility: ELIGIBLE                    # 需 calibration_provenance 齐全才生效
+    candidacy_rule: "无真实 calibration provenance（schema 1.3 字段全填 + KV-only 单变量证明过）= 无 Gate C 候选资格"
+    unsupported_branch: "0.29 无法加载正式 calibrated artifact → UNSUPPORTED 归档，留证继续 NATIVE，不停相位；不为跑通 patch frozen runtime"
+  kvarn_028:
+    kv_route: KVARN_K4V2_G128
+    eligibility: CROSS_RUNTIME_REFERENCE
+    runtime: vllm28-env + boot028（0.28 生产认证配方）
+    frozen_domain: "max_model_len=245760；224K/238K/245K 对照点（D565 C1 + needle s99 + 容量）"
+    forbidden_claims:
+      - "禁止用 0.28 KVarN vs 0.29 FP8 速度差宣称 winner"
+      - "禁止 MASTER 行 485 tie-break 跨版本机械套用"
+      - "禁止因 262K 不在 0.28 recipe 能力域判 KVarN 质量 FAIL（标 out_of_domain_marks）"
+    retention: "legacy/extreme reference 保留至 Phase 08"
+
+# ============================================================ FP8C 校准契约（P0A.5/A.6 + 用户契约 #2/#3）
+calibration_contract:
+  isolation_environments:
+    build_env: "Docker+UV 优先；容器环境不适合时独立 uv venv（路径登记 MANIFEST）；绝不污染 vllm29-env（绝不装 llm-compressor 于 serving venv）"
+    model_source: "parent model 目录只读；artifact 输出到新目录（禁止覆盖原模型）"
+  artifact_immutability:
+    required_records: [parent_model_sha256, calibration_dataset_sha256, calibration_recipe_sha256,
+                       calibration_toolchain, artifact_file_manifest_sha256, tokenizer_sha256,
+                       config_sha256, strategy, checkpoint_kv_scale_provenance]
+    strategy: "per-tensor（后端支持时升 per-head，单独臂）"
+  dataset_isolation:                         # 物理隔离，用户契约 #3
+    calibration_dir: fixtures/calibration/phase03-*
+    eval_dir: fixtures/eval/phase03-*
+    mutually_exclusive: true
+    frozen_fields: [dataset_sha256, sample_ids_or_hashes, seed, tokenizer_sha256,
+                    sample_count, max_seq_len, preprocessing_recipe_sha256]
+    overlap_checker: "calibration ∩ evaluation = ∅（按样本 hash）；未过 = INVALID，禁止 FP8C Qualify"
+    forbidden_calibration_data: [s99/s2/s5 needle 码集, ccdet, verbatim, Gate C 最终质量集, Phase 03 最终判定任务]
+  single_variable_verification:              # 用户契约 #2
+    name: artifact_single_variable_verification
+    checks:
+      - parent model identity 明确
+      - tokenizer / chat template 不变
+      - target W4A16 quantization config 不变
+      - 非 KV-cache tensor 不发生意外重新量化
+      - 不新增 W8A8 / FP8 activation / weight quantization
+      - calibration recipe 修改范围只服务 KV scale metadata
+      - artifact 加载后 runtime resolved KV dtype/scales 与声明一致
+    fail_rule: "recipe 同时改 Linear weights / attention activation / 非 KV 数据 → 该 artifact 不得作 FP8C-KV Gate C 候选；先寻官方 KV-only recipe，当前组合做不到 → FP8C_KV_ONLY=UNSUPPORTED；复合量化归 Phase 04"
+
+# ============================================================ FP8 skip_layers（用户契约：条件触发）
+fp8_skip_layers:
+  trigger_rule: "仅当 FP8C base 发生能定位到具体 layer/type 的质量退化时才允许递增"
+  increment: "每次只增加一个最小集合（MASTER §9.1 行 474）"
+  bounded_attempts_max: 2                    # 上限 2 次递增；不得展开成新调参相位
+  record: [skip_set 实名, 触发退化证据, 递增后质量/容量/速度三轴]
+
+# ============================================================ needle 配对判读（用户契约 #8）
+needle_protocol:
+  seeds_frozen: [99, 2, 5]                   # 看结果前冻结；禁看完结果换 seed
+  absolute_gate: "seed99 = 绝对 5/5 门（阳性控制），任何 route 必须全过"
+  paired_interpretation:
+    rule: "FP8 某 seed 失败时，先查同长度 NATIVE paired reference；只有'FP8 相对 NATIVE 新增质量退化'才归因 KV route"
+    pre_existing_failures: "已存在于 NATIVE 的 seed×length 失败（如 seed2@128K=2/5 码集非正交）不得误判为 FP8-specific regression"
+  known_signatures:                          # Phase 01/02 已证码集依赖（非 KV 因果）
+    seed99: 全档 5/5（多 boot 稳定）
+    seed2_220k: 5/5；seed2_128k: 2/5（码集×长度非正交）
+    seed1: 已知负码集对照（2/5 家族），不作质量门
+  quality_fail_line_pp: 2.0                  # 任一质量轴回退 >2pp 立即失败（MASTER 行 484）
+
+# ============================================================ 极限档双边界与四标签（用户契约 #7）
+extreme_tier_labels:
+  margins_split:                             # 两类余量分开报告，禁止互相掩盖
+    kv_capacity_margin: "KV token 池余量 = capacity − workpoint footprint"
+    model_position_margin: "262,144 − (actual_input + output + 模板/协议开销)；Phase 02 实证 262K 档仅 ~49 token"
+  labels:
+    PRODUCTION_SAFE: "须有足够 model_position_margin 与 KV 余量（≥10%）"
+    BOUNDARY_PROFILE: "KV 峰 ≥95% 或 position 余量 < 阈值——边界档，不作默认工作点"
+    HARD_CEILING_CAPABILITY_PASS: "3-boot×3-seed 全过 + 双余量如实报告；仅证明能力，非默认生产工作点"
+    UNSUPPORTED: "配置/后端不支持"
+  production_assignment: "极限生产安全档候选 = 238K/245K；262K 单列为已认证 hard ceiling"
+
+# ============================================================ 238K/245K/262K NATIVE 正式认证（P1）
+formal_certification_238plus:
+  route: native_bf16
+  boots: 3
+  seeds: [99, 2, 5]
+  needle_per_cell: 5
+  hard_budget: "actual_input + requested_output + 模板/协议开销 ≤ max_model_len（离线 tokenizer 逐档预验证；262K 靶 261,888 沿用 Phase 02 装配公式）"
+  pass_rule: "全 boot×seed 5/5 ∧ preemptions=0 ∧ OOM=0 ∧ TTFT 有效 ∧ 双余量分账落盘"
+  238k: {model_len: 243712, label_candidate: PRODUCTION_SAFE}
+  245k: {model_len: 251392, label_candidate: PRODUCTION_SAFE}   # KV 峰≥95% 时降 BOUNDARY_PROFILE
+  262k: {model_len: 262144, prompt_target: 261888,
+         label_on_pass: HARD_CEILING_CAPABILITY_PASS, never_default_workpoint: true}
+  upgrade_rule: "CEILING_OBSERVATION（Phase 02）→ 本门全过转正式认证标签；不过 = 维持 CEILING_OBSERVATION + 原因"
+
+# ============================================================ KV 选型门数值线（MASTER §9.2）
+kv_selection_gate:
+  daily_tier_128k_220k:
+    quality: "质量不退（配对判读 + >2pp 否决线）"
+    perf: "TTFT/吞吐 sign-aware 对比 NATIVE（同形制配对）"
+    kv_margin_min: 0.10                      # ≥10% KV 余量
+  boundary_95_rule: "KV 峰达 95% 以上只能标记边界档（BOUNDARY_PROFILE）"
+  fp8_kvarn_quality_fail_pp: 2.0
+  tie_break_485: "仅同 runtime（0.29 内 FP8C vs NATIVE）适用：容量相同且 FP8C 更快更准 → NATIVE 日常档让位；跨版本（vs KVARN 0.28）禁止套用"
+  hybrid_memory_accounting: "GDN/Mamba hybrid：attention KV 与 recurrent state 显存分开记账（全部 route）"
+
+# ============================================================ P0B L2 终形（先于 KV 主矩阵）
+l2_finalization:
+  spec_off_ab:
+    arms: {A_spec_on: composite_L2(B0 配方), B_spec_off: TONLY（同配方去 spec）}
+    form: "3 evidence boots × 3 reps 认证形制 v2（W0 弃置）"
+    primary_axes: [aggregate_tok_s(P32K-C1), tpot_p50(P32K-C1), ttft_p50_warm(P32K)]
+    screen_signal_reference: "TONLY decode +21-30% / 暖 TTFT +33%（Phase 02 §3）——仅资格线索，判定以认证为准"
+    pass_rule: "spec-off 主轴 sign-aware ≥3% ∧ 其他轴退步 ≤5% ∧ quality_two_tier 过（含接受率台账对齐 target-only token diff）"
+    consequence: "胜出 → composite_L2 修订（spec off）+ DECISIONS 落行；后续 Phase 03 全部短档/NATIVE/FP8 对照统一用新终形"
+  nbt3072_p4k:
+    form: "3-boot × 3 reps 认证；维持判定线 = Phase 02 认证 +10.7% 复现（≥3%）"
+    recheck_rule: "若 spec 终形翻转 → 在新终形上复验一次"
+  k5_pos1_readjudication:
+    question: "pos1 地板规则本意（防末端接受塌缩）vs 机制现实（pos1 高=总接受率高）"
+    rule_line: "维持 K7 回退（保守）除非复议证明 pos1 提升与总接受率提升解耦；纸面裁决落 DECISIONS，不重跑 GPU"
+  tp1_c4_supplement:
+    form: "TP1 D565-C4 3-boot 修正协议（GPU2 空闲才补）"
+    closure: "gate-b-verdict.json PENDING_SUPPLEMENT 轴闭合；不阻塞主线"
+  retention_churn_steady_state:
+    form: "churn 稳态画像 A/B（与 P1 churn 基建共用）；6.2× 存活观察 → 稳态曲线"
+
+# ============================================================ churn / 租户隔离（MASTER §9.1 行 476-477）
+churn_and_isolation:
+  churn_load: "持续到达 + 混合长度（P4K/P32K 主体）+ 周期性长上下文插入；稳态指标：prefix 命中率、驱逐率、TTFT 分布、KV 峰"
+  tenant_isolation: "多租户前缀交叉命中检查：A 租户 prompt 不得从 B 租户 prefix 获得内容（输出 diff 逐位验证）"
+  hash_collision_probe: "构造哈希前缀碰撞样本对（如可用），验证逐块比对兜底"
+  acceptance: "隔离违规=否决级（quality_two_tier failure）；churn 退步按 policy_envelope 约束记录"
+
+# ============================================================ 三档 Profile 与 Gate C（P2/P3）
+profiles:
+  short:
+    shape: "L2 终形（P0B spec 裁决后）+ 32K + 选定 KV route"
+    deliverable: "runtime + KV route + context envelope（D565/P4K/P32K）"
+  daily:
+    shape: "X2 + 128K/220K + 选定 KV route"
+    deliverable: "C1/C2 envelope + 容量边际 + SLO 曲线点"
+    x128_c4_rule: "FP8C 解锁（526K 工作点 < FP8 KV 容量）则补 C4 档；NATIVE 维持 CAPACITY_LIMIT 端点"
+    x220_c2_rule: "同上；未解锁则 Debt #11 条件落档"
+  extreme:
+    shape: "NATIVE 238K/245K（生产安全档候选）+ 262K hard ceiling 单列"
+    deliverable: "三档标签（PRODUCTION_SAFE/BOUNDARY/HARD_CEILING）+ 双余量分账"
+  interaction_check:
+    x2_fp8c: "composite_X2 × FP8C：容量/TTFT 不被牺牲（capacity_delta ≤0.5% 相对 FP8C 单臂、TTFT 退步 ≤1%）"
+    guardrails_kept: "admission q4 在途护栏沿用"
+
+gate_c:
+  question: "至少产出短上下文质量/极速档、128K-220K 日常档、238K-262K 极限档（可为三个不同 KV Profile）"
+  per_tier_verdicts:
+    short: {allowed: [PASS, UNSUPPORTED], rule: "L2 终形 + KV route 定案 + quality_two_tier"}
+    daily: {allowed: [PASS, UNSUPPORTED], rule: "KV 选型门（质量不退 + ≥10% 余量 + TTFT/吞吐）或 NATIVE 维持"}
+    extreme: {allowed: [PASS, BOUNDARY], rule: "238K/245K 正式认证 + 标签分档；BOUNDARY=边界档如实标注"}
+  formal_selection_scope: "0.29 主栈正式选 NATIVE / FP8C；KVARN 0.28 只作 legacy/extreme reference 保留至 Phase 08"
+  global_rule: "单 route UNSUPPORTED 不拖垮 Gate C（分档记录）；FP8E4 永不参与（DIAGNOSTIC_ONLY）"
+  fp8e4_fp8c_split_conclusion: "报告必须分离输出：FP8E4=诊断结论；FP8C=生产候选结论（或 UNSUPPORTED）"
+
+# ============================================================ SLO 补点（P3；状态不变）
+slo_reconciliation:
+  manifest_slo_status: SLO_UNDECIDED         # 单一 Authority；仅在仓库出现预冻结生产 SLO 数值 Authority 时才变
+  phase03_scope: "新解锁并发档曲线补点 + D565 open p95 认证级重跑（Phase 02 Screen 级非单调遗留）"
+  erratum: "Phase 02 报告 §11 EP03-A2（曲线≠Authority）"
+slo_curve_params:                            # 继承 phase02 冻结参数，新档沿用同构
+  closed_loop_concurrencies: [1, 2, 4, 8]
+  infeasible_endpoint: CAPACITY_LIMIT
+  saturation_ratios: [0.25, 0.50, 0.75, 0.90, 1.10]
+  per_fixture_params:
+    D565:  {warmup_s: 120, measurement_s: 300, min_completed_requests: 60,  max_test_duration_s: 900}
+    P32K:  {warmup_s: 120, measurement_s: 420, min_completed_requests: 40,  max_test_duration_s: 1500}
+    P128K: {warmup_s: 240, measurement_s: 900, min_completed_requests: 12,  max_test_duration_s: 3600}
+
+# ============================================================ 暂停条件（用户契约 #13；其余自修自试）
+pause_conditions:
+  - frozen runtime 真实 ENV_DRIFT
+  - 必须修改 measurement contract / Authority
+  - 必须侵入修改 frozen 0.29 serving tree
+  - 缺少真实模型/权限/硬件
+  - 同一问题两轮修复仍不收敛
+gpu_discipline:
+  tp2_primary: [3, 4]                        # 0.29 主矩阵与 0.28 参考臂错峰共用
+  tp1_opportunistic: 2                       # 仅 TP1-C4 补测；GPU2 不空闲不阻塞主线
+  forbidden: [0, 1]                          # llama.cpp 生产卡零触碰
+  no_process_ops: [5, 6, 7]
+  port_8000: 只读 health
+  cleanup: "只 kill manifest 登记且身份核验（PID/PGID/cmdline）通过的自有进程"

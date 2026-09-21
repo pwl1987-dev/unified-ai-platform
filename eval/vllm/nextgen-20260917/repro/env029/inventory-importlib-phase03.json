@@ -1,0 +1,1196 @@
+[
+ {
+  "name": "cuda-python",
+  "version": "13.4.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cuda-bindings",
+  "version": "13.4.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "outlines_core",
+  "version": "0.2.14",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "rich",
+  "version": "15.0.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "triton",
+  "version": "3.7.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "safetensors",
+  "version": "0.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "PyJWT",
+  "version": "2.14.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pydantic-extra-types",
+  "version": "2.11.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "vllm",
+  "version": "0.29.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "astor",
+  "version": "0.8.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pyzmq",
+  "version": "27.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-nvjitlink",
+  "version": "13.4.92",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "jmespath",
+  "version": "1.1.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "lark",
+  "version": "1.2.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tabulate",
+  "version": "0.10.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "truststore",
+  "version": "0.10.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "fastar",
+  "version": "0.12.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "python-dotenv",
+  "version": "1.2.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "grpcio",
+  "version": "1.84.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "markdown-it-py",
+  "version": "4.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cufft",
+  "version": "12.0.0.61",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "sniffio",
+  "version": "1.3.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-cccl",
+  "version": "13.3.4.3.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "httpx",
+  "version": "0.28.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "httptools",
+  "version": "0.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tokenspeed-triton",
+  "version": "3.8.10.post20260906",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "packaging",
+  "version": "26.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "fastapi-cloud-cli",
+  "version": "0.26.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "idna",
+  "version": "3.20",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "rpds-py",
+  "version": "2026.6.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "click",
+  "version": "8.5.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opencv-python-headless",
+  "version": "5.0.0.93",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "httpcore2",
+  "version": "2.13.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "certifi",
+  "version": "2026.7.22",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-ml-py",
+  "version": "13.610.43",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "psutil",
+  "version": "7.2.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "jiter",
+  "version": "0.17.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "mistral_common",
+  "version": "1.11.7",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "depyf",
+  "version": "0.20.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "MarkupSafe",
+  "version": "3.0.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "uvicorn",
+  "version": "0.53.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cutlass-dsl",
+  "version": "4.6.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "xgrammar",
+  "version": "0.2.7",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "Jinja2",
+  "version": "3.1.6",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "aiohttp",
+  "version": "3.14.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "multidict",
+  "version": "6.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pydantic",
+  "version": "2.13.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-proto",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "blake3",
+  "version": "1.0.9",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cachetools",
+  "version": "7.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "ml_dtypes",
+  "version": "0.6.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "regex",
+  "version": "2026.9.10",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "partial-json-parser",
+  "version": "0.2.1.1.post7",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "sympy",
+  "version": "1.14.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "aiosignal",
+  "version": "1.4.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "dill",
+  "version": "0.4.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "flashinfer-python",
+  "version": "0.6.18",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "annotated-doc",
+  "version": "0.0.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "frozenlist",
+  "version": "1.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-exporter-otlp",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-semantic-conventions-ai",
+  "version": "0.5.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "annotated-types",
+  "version": "0.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "aiohappyeyeballs",
+  "version": "2.7.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "mcp-types",
+  "version": "2.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-nvdisasm",
+  "version": "13.4.92",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "typing-inspection",
+  "version": "0.4.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "yarl",
+  "version": "1.25.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pydantic-settings",
+  "version": "2.15.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "instanttensor",
+  "version": "0.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "typing_extensions",
+  "version": "4.16.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-cupti",
+  "version": "13.0.85",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "fastapi-cli",
+  "version": "0.0.32",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "mdurl",
+  "version": "0.1.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-nccl-cu13",
+  "version": "2.29.7",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cuda-tile",
+  "version": "1.6.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pycparser",
+  "version": "3.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pydantic_core",
+  "version": "2.46.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "apache-tvm-ffi",
+  "version": "0.1.11",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "email-validator",
+  "version": "2.3.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cufile",
+  "version": "1.15.1.6",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "rignore",
+  "version": "0.8.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "watchfiles",
+  "version": "1.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tiktoken",
+  "version": "0.14.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "shellingham",
+  "version": "1.5.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cryptography",
+  "version": "50.0.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "googleapis-common-protos",
+  "version": "1.75.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pybase64",
+  "version": "1.5.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "ijson",
+  "version": "3.5.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "compressed-tensors",
+  "version": "0.17.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "hf-xet",
+  "version": "1.6.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "rich-toolkit",
+  "version": "0.20.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "charset-normalizer",
+  "version": "3.5.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "fsspec",
+  "version": "2026.7.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "filelock",
+  "version": "4.0.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cuda-toolkit",
+  "version": "13.0.3.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "docstring_parser",
+  "version": "0.18.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "llguidance",
+  "version": "1.7.6",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "detect-installer",
+  "version": "0.2.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "interegular",
+  "version": "0.3.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "requests",
+  "version": "2.34.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-nvrtc",
+  "version": "13.0.88",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "PyYAML",
+  "version": "6.0.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-crt",
+  "version": "13.4.92",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "propcache",
+  "version": "0.5.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "mpmath",
+  "version": "1.3.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cudnn-cu13",
+  "version": "9.20.0.48",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "six",
+  "version": "1.17.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "h11",
+  "version": "0.16.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "protobuf",
+  "version": "6.33.6",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "sse-starlette",
+  "version": "3.4.11",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-runtime",
+  "version": "13.0.96",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-semantic-conventions",
+  "version": "0.65b0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "torch",
+  "version": "2.13.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "fastsafetensors",
+  "version": "0.4.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "ninja",
+  "version": "1.13.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "httpcore",
+  "version": "1.0.9",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "agent-detector",
+  "version": "2.0.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "httpx2",
+  "version": "2.13.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "sentencepiece",
+  "version": "0.2.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "python-multipart",
+  "version": "0.0.32",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "urllib3",
+  "version": "2.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cuda-pathfinder",
+  "version": "1.8.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "anyio",
+  "version": "4.15.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cloudpickle",
+  "version": "3.1.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "openai-harmony",
+  "version": "0.0.8",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "msgspec",
+  "version": "0.21.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "setproctitle",
+  "version": "1.3.7",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-exporter-otlp-proto-http",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cffi",
+  "version": "2.1.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "mcp",
+  "version": "2.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tokenspeed-mla",
+  "version": "0.1.8",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "prometheus-fastapi-instrumentator",
+  "version": "8.1.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-exporter-otlp-proto-grpc",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "py-cpuinfo",
+  "version": "9.0.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "lm-format-enforcer",
+  "version": "0.11.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "python-json-logger",
+  "version": "4.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cbor2",
+  "version": "6.1.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "sentry-sdk",
+  "version": "2.69.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "huggingface_hub",
+  "version": "1.32.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "prometheus_client",
+  "version": "0.26.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-nvvm",
+  "version": "13.4.92",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cuda-nvcc",
+  "version": "13.4.92",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-exporter-otlp-proto-common",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvtx",
+  "version": "0.2.15",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "loguru",
+  "version": "0.7.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "cuda-core",
+  "version": "1.2.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "referencing",
+  "version": "0.37.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "attrs",
+  "version": "26.1.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "typer",
+  "version": "0.27.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "jsonschema-specifications",
+  "version": "2025.9.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tqdm",
+  "version": "4.70.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "networkx",
+  "version": "3.6.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-api",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-nvtx",
+  "version": "13.0.85",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tokenizers",
+  "version": "0.23.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cudnn-frontend",
+  "version": "1.29.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "torch_c_dlpack_ext",
+  "version": "0.1.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "starlette",
+  "version": "1.6.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "jsonschema",
+  "version": "4.26.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "einops",
+  "version": "0.8.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "Pygments",
+  "version": "2.21.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "model-hosting-container-standards",
+  "version": "0.1.16",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "websockets",
+  "version": "17.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "opentelemetry-sdk",
+  "version": "1.44.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "fastapi",
+  "version": "0.136.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "anthropic",
+  "version": "1.6.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "openai",
+  "version": "3.14.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pynvvideocodec",
+  "version": "2.0.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "supervisor",
+  "version": "4.3.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "humming-kernels",
+  "version": "0.1.12",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nccl4py",
+  "version": "0.5.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "torchaudio",
+  "version": "2.11.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "uvloop",
+  "version": "0.22.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cutlass-dsl-libs-base",
+  "version": "4.6.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "quack-kernels",
+  "version": "0.6.4",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cutlass-dsl-libs-core",
+  "version": "4.6.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pillow",
+  "version": "12.3.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "dnspython",
+  "version": "2.8.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "torchcodec",
+  "version": "0.16.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-nvshmem-cu13",
+  "version": "3.4.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "z3-solver",
+  "version": "4.15.4.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-curand",
+  "version": "10.4.0.35",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "torchvision",
+  "version": "0.28.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cusparse",
+  "version": "12.6.3.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cusparselt-cu13",
+  "version": "0.8.1",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cusolver",
+  "version": "12.0.4.66",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "setuptools",
+  "version": "80.10.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "llvmlite",
+  "version": "0.47.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cutlass-dsl-libs-cu12",
+  "version": "4.6.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pycountry",
+  "version": "26.2.16",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cutlass-dsl-libs-cu13",
+  "version": "4.6.2",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "numba",
+  "version": "0.65.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "numpy",
+  "version": "2.3.5",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "nvidia-cublas",
+  "version": "13.1.1.3",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "transformers",
+  "version": "5.17.0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "tilelang",
+  "version": "0.1.12",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "python-dateutil",
+  "version": "2.9.0.post0",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pandas",
+  "version": "3.0.6",
+  "direct_url_json": null,
+  "local_file": false
+ },
+ {
+  "name": "pyarrow",
+  "version": "25.0.1",
+  "direct_url_json": null,
+  "local_file": false
+ }
+]

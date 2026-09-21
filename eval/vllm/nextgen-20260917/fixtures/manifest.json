@@ -1,6 +1,6 @@
 {
  "generator": "tools/gen_fixtures.py",
- "generator_sha256": "c0bb0639d2d569f6b761cced9811344af415a6e9a684a60a3a55e58260dda179",
+ "generator_sha256": "267a1744dc11bf466a4cb4e69351fa07d14f4d4c9ebc253acc73978ad67fd88c",
  "fixtures": {
   "d565": {
    "target_tokens": 512,
@@ -14,6 +14,10 @@
    "target_tokens": 32768,
    "prompt_sha256": "b46c61b06d9d8cb07764523c0fef2fcb5c895906ae7bc50e807517df2046cb09"
   },
+  "p128k": {
+   "target_tokens": 131072,
+   "prompt_sha256": "efa7359bb4df3077c651d50af8415e6259b367f15795fee271cdb8a81e67207a"
+  },
   "p220k": {
    "target_tokens": 220000,
    "prompt_sha256": "ef8dcca2a2cafb47a450127e0bfdee7bf5526a14b0d28d2b5dab377cb60df758"
@@ -21,6 +25,14 @@
   "p238k": {
    "target_tokens": 238000,
    "prompt_sha256": "85aa2713e72f589969a259318906cdef1d21c28992701a469989611fae46e6d5"
+  },
+  "p245k": {
+   "target_tokens": 245000,
+   "prompt_sha256": "5dd8125cd0a795770fb6c700ea25434c17ae590b3ea9202a82735484e9ee605e"
+  },
+  "p262k": {
+   "target_tokens": 261888,
+   "prompt_sha256": "4c6bd56864f0627dcfbca2865d0d0d7f7e5e36d1d68042a9efb17dc181e53b1c"
   },
   "needle-p220k-s1": {
    "target_tokens": 220000,
@@ -92,6 +104,114 @@
     "670665": 0.5,
     "236758": 0.7,
     "487926": 0.9
+   }
+  },
+  "needle-p238k-s99-ph3": {
+   "target_tokens": 238000,
+   "seed": 99,
+   "prompt_sha256": "75853da7f50f5c8ce4c7afd95c7a2ac5111877342b7a82134b15c3dcc104ac7f",
+   "needles": {
+    "523601": 0.1,
+    "499248": 0.3,
+    "309794": 0.5,
+    "728557": 0.7,
+    "287487": 0.9
+   }
+  },
+  "needle-p238k-s2-ph3": {
+   "target_tokens": 238000,
+   "seed": 2,
+   "prompt_sha256": "1b19ff200fc14e44ff922c48295caa40fff2216211310d8d666fac1e1a02954a",
+   "needles": {
+    "990298": 0.1,
+    "159298": 0.3,
+    "196033": 0.5,
+    "188994": 0.7,
+    "478596": 0.9
+   }
+  },
+  "needle-p238k-s5-ph3": {
+   "target_tokens": 238000,
+   "seed": 5,
+   "prompt_sha256": "6754a9bd7516a08666f2b1f85dced5d0c8e848b5bf5a9f0d472c8a11ac40cc7c",
+   "needles": {
+    "753159": 0.1,
+    "367853": 0.3,
+    "877820": 0.5,
+    "475951": 0.7,
+    "933820": 0.9
+   }
+  },
+  "needle-p245k-s99-ph3": {
+   "target_tokens": 245000,
+   "seed": 99,
+   "prompt_sha256": "c5c4f7de34f710b29e496ffbee15531ca86779263cfc150d2266b6b7168b4076",
+   "needles": {
+    "523601": 0.1,
+    "499248": 0.3,
+    "309794": 0.5,
+    "728557": 0.7,
+    "287487": 0.9
+   }
+  },
+  "needle-p245k-s2-ph3": {
+   "target_tokens": 245000,
+   "seed": 2,
+   "prompt_sha256": "c1cc22d01d1cb17893e51498b771708f0cc205a6a35349fa84981c72854cb851",
+   "needles": {
+    "990298": 0.1,
+    "159298": 0.3,
+    "196033": 0.5,
+    "188994": 0.7,
+    "478596": 0.9
+   }
+  },
+  "needle-p245k-s5-ph3": {
+   "target_tokens": 245000,
+   "seed": 5,
+   "prompt_sha256": "3df722057bcc79e65a7d225b65929ff03e1b5ef9731361ff05d6b5a02fa63de3",
+   "needles": {
+    "753159": 0.1,
+    "367853": 0.3,
+    "877820": 0.5,
+    "475951": 0.7,
+    "933820": 0.9
+   }
+  },
+  "needle-p262k-s99-ph3": {
+   "target_tokens": 261888,
+   "seed": 99,
+   "prompt_sha256": "9f478c1a8737f233b0c7683b6d4e5d94be20a3728940658f2a0901843368ea92",
+   "needles": {
+    "523601": 0.1,
+    "499248": 0.3,
+    "309794": 0.5,
+    "728557": 0.7,
+    "287487": 0.9
+   }
+  },
+  "needle-p262k-s2-ph3": {
+   "target_tokens": 261888,
+   "seed": 2,
+   "prompt_sha256": "b90feb1c73b946cd56dbe55a57fe05b37571e08ff7eb1f74bea31ea1b4d41645",
+   "needles": {
+    "990298": 0.1,
+    "159298": 0.3,
+    "196033": 0.5,
+    "188994": 0.7,
+    "478596": 0.9
+   }
+  },
+  "needle-p262k-s5-ph3": {
+   "target_tokens": 261888,
+   "seed": 5,
+   "prompt_sha256": "07f628ba84a773e38cf1d397507d3730e7a911c5c8f540aa1dfa796a652ada9b",
+   "needles": {
+    "753159": 0.1,
+    "367853": 0.3,
+    "877820": 0.5,
+    "475951": 0.7,
+    "933820": 0.9
    }
   }
  }

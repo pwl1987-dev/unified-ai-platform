@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "nextgen experiment manifest (manifest.json)",
-  "manifest_schema_version": "1.2",
+  "manifest_schema_version": "1.3",
   "type": "object",
   "required": ["experiment_id", "status", "evidence_class", "created_utc",
                "harness_git_sha", "host_snapshot_sha256", "env_lock_sha256",
@@ -101,6 +101,47 @@
       }
     },
     "cpu_governor": {"type": "string"},
-    "files": {"type": "object"}
+    "files": {"type": "object"},
+    "kv_route": {"enum": ["NATIVE_BF16", "FP8_E4M3_STATIC_SCALE_1_0", "FP8_E4M3_CALIBRATED",
+                          "KVARN_K4V2_G128", null],
+                 "description": "Phase 03 增补（schema 1.3 additive）：KV cache 路线实名。FP8E4=static scale 1.0 与 FP8C=calibrated 分离命名，禁止混算"},
+    "route_eligibility": {"enum": ["ELIGIBLE", "DIAGNOSTIC_ONLY", "CROSS_RUNTIME_REFERENCE",
+                                   "UNSUPPORTED", null],
+                          "description": "Phase 03 增补：路线资格。FP8E4 恒为 DIAGNOSTIC_ONLY（不进生产 winner）；KVARN 0.28 恒为 CROSS_RUNTIME_REFERENCE（禁止跨版本 winner 加速比/tie-break/质量 FAIL 判定）"},
+    "capability_label": {"enum": ["PRODUCTION_SAFE", "BOUNDARY_PROFILE",
+                                  "HARD_CEILING_CAPABILITY_PASS", "UNSUPPORTED", null],
+                         "description": "Phase 03 增补：238K/245K/262K 等极限档标签。HARD_CEILING_CAPABILITY_PASS ≠ 默认生产工作点（须 model_position_margin 足够才可 PRODUCTION_SAFE）"},
+    "cross_runtime_reference": {
+      "type": ["object", "null"],
+      "description": "Phase 03 增补：跨版本参考臂登记（KVARN 0.28）",
+      "properties": {
+        "reference_runtime": {"type": "string"},
+        "frozen_recipe": {"type": "string"},
+        "out_of_domain_marks": {"type": "array", "items": {"type": "string"},
+                                "description": "如 262K 标'不在 frozen 0.28 recipe 能力域'，非质量 FAIL"}
+      }
+    },
+    "calibration_provenance": {
+      "type": ["object", "null"],
+      "description": "Phase 03 增补：FP8C artifact lineage（KV-only 单变量证明齐全才可 Gate C 候选）",
+      "properties": {
+        "parent_model_sha256": {"type": "string"},
+        "model_artifact_sha256": {"type": ["string", "object"],
+                                  "description": "artifact 文件清单聚合 SHA 或逐文件 manifest 路径"},
+        "calibration_dataset_sha256": {"type": "string"},
+        "calibration_recipe_sha256": {"type": "string"},
+        "calibration_toolchain": {"type": "object",
+                                  "description": "llm-compressor/compressed-tensors 等版本实名"},
+        "tokenizer_sha256": {"type": "string"},
+        "strategy": {"enum": ["per-tensor", "per-head", null]},
+        "sample_count": {"type": "integer"},
+        "max_seq_len": {"type": "integer"},
+        "seed": {"type": "integer"},
+        "single_variable_verification": {
+          "type": ["object", "null"],
+          "description": "artifact_single_variable_verification 结果：tokenizer/template 不变、W4A16 config 不变、非 KV tensor 未重量化、无新增 W8A8/FP8 activation/weight 量化、resolved dtype/scales 与声明一致；任一不成立 → FP8C_KV_ONLY=UNSUPPORTED"
+        }
+      }
+    }
   }
 }

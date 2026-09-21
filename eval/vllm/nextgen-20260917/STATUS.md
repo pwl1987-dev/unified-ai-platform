@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 02（TP2 主基线深挖 → L2/X2 Profile + Gate B，计划 v1.2 机器契约修正版）— **完成（P0A→P5 全链）**
-- **Last Completed**: Phase 02 全相位（2026-09-21）——**Gate B Overall PASS（B-L2 ∧ B-X2）**；composite_L2=B0 配方 / composite_X2=B0+q4 护栏；SLO 双曲线全档 + ceiling 245K/262K seed99 双 PASS（262,144 模型硬上限）；详见 reports/phase-02-tp2.md
-- **Current Task**: —（待 Phase 03 计划评审；TP1-C4 补测挂 GPU2 外部占用）
-- **Next Task**: Phase 03（Debt 清单见 reports/phase-02-tp2.md §9；生产切换 Phase 08 拍板制）
+- **Phase**: 03（KV 四路对决 → 三档 Profile + Gate C，v1.1 执行合同）— **执行中（P0A 契约落地完成）**
+- **Last Completed**: Phase 02 全相位（2026-09-21）——**Gate B Overall PASS（B-L2 ∧ B-X2）**；composite_L2=B0 配方 / composite_X2=B0+q4 护栏；SLO 定标曲线全档 + ceiling 245K/262K seed99 双 PASS（262,144 模型硬上限；**Erratum EP03-A2：正式 SLO 状态仍 SLO_UNDECIDED**）；详见 reports/phase-02-tp2.md（§11 勘误）
+- **Current Task**: P0B L2 终形（P32K spec-off 正式 A/B 先于 KV 主矩阵）
+- **Next Task**: P1 KV 四路对决（NATIVE/FP8E4/FP8C/KVARN-0.28 参考）→ P2 三档 Profile → P3 Gate C → P4 收口；TP1-C4 补测=机会式（GPU2 空闲才补）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -117,3 +117,13 @@ classify 端到端双向验证通过（2026-09-17）。
 - 平台冷启动惩罚（idle 首 boot −18%）+ 认证协议修正三要素 + Screen→Qualify 反转 ×2 制度化（<2× 门槛一律 provisional）。
 - 遗留：TP1-C4 补测挂 GPU2（外部 pid 占用，释放即补）；SLO D565 open p95 非单调为 Screen 级小样本（Phase 03 认证重跑）。
 - 清场终验：GPU3/4=18 MiB、19701/19702 无监听、登记 PGID 全退、GPU2/5/6/7 外部进程零触碰、GPU0/1 生产未动、:8000 只读 health=200。
+
+## 2026-09-21 Phase 03 P0A 契约落地 ✅（v1.1 执行合同）
+- **freeze fail-open 修复（EP03-A1）**：p0a_runtime_freeze.py 重写为 fail-closed 双路契约（uv pip freeze + importlib.metadata，PEP 503 规范化 name→version 比对；rc/空/包数下限/关键包漂移全 FATAL；temp→校验→atomic rename）；重审计 **EVIDENCE_REPAIR 非 ENV_DRIFT**（199 包双路一致，tree sha 4632d624…/patch 18 件/symbol/关键包零漂移）；freeze 文件重写（sha d6ee86e9…，旧 0 字节 e3b0c442… 勘误留档）。证据 repro/env029/runtime029-phase03-inheritance.json。
+- **SLO reconciliation（EP03-A2）**：MANIFEST slo_status 维持 SLO_UNDECIDED；Phase 02 报告 §0/§7 追加 Erratum 指针 + §11 正式勘误（曲线≠Authority，不改写历史）；DECISIONS 追加 Erratum 行。
+- **gates-phase03.yaml 冻结**（sha 234253…）：KV 四路资格（FP8E4=DIAGNOSTIC_ONLY / FP8C=需 provenance / KVARN=CROSS_RUNTIME_REFERENCE 三禁令）；needle 配对判读（s99/s2/s5 冻结，s99 绝对 5/5 门）；skip_layers 条件触发 bounded≤2；262K 双余量分账 + 四标签（PRODUCTION_SAFE/BOUNDARY_PROFILE/HARD_CEILING_CAPABILITY_PASS/UNSUPPORTED）；238K+ 正式认证门；Gate C 分档判定；暂停条件五条。
+- **schema 1.3 additive**（sha 4e9a724f…）：kv_route/route_eligibility/capability_label/cross_runtime_reference/calibration_provenance。
+- **能力探针**（repro/capabilities/vllm029-phase03-direction-probes.json）：fp8/fp8_e4m3/fp8_e5m2 CLI 面 SUPPORTED；skip_layers 实名（层索引/类型名）；mamba state 独立 dtype（无 fp8→hybrid 分账实证）；**FP8C 官方通路确认**（k/v_scale 为 checkpoint 参数 + CompressedTensorsKVCacheMethod + parent 模型 kv_cache_scheme=null 槽位在）；**Debt #7 新出口**（--cudagraph-metrics 旗标 + CUDAGraphStat）；Docker 29.1.3+CDI 可用；boot028 冻结配方全量回读。
+- **fixture 扩表**：needle-p{238,245,262}k-s{99,2,5}-ph3 9 档 + p245k/p262k prompt；离线 tokenizer 装配验证全过（**新事实：chat 模板 +52 token → 262K 档 position 余量仅 7 token**；238K 余 5467/245K 余 6151）。
+- **校准/评测物理隔离**：独立合成语料 64 样本（sha 71b08a93…，seed 20260921，非 ulmus filler 族）+ fixtures/eval/phase03-manifest.json + overlap checker **PASS**（15 needle 码零泄漏）。
+- MANIFEST v4（phase03 块）；下一步 P0B（GPU3+4）：P32K spec-off 正式 A/B → NBT3072@P4K → K5 复议 → churn 首跑；TP1-C4 机会式。

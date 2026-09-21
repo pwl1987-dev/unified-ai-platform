@@ -1,0 +1,37 @@
+{
+ "purpose": "Phase 03 评测集清单（held-out；禁止用于 calibration）——gates calibration_contract.dataset_isolation",
+ "reference": "fixtures/manifest.json（SHA 冻结）",
+ "perf_fixtures": {
+  "d565": "131ca085aced4ec859845cda24ff38aa07f7584eaafa90f7397838ade5b5eea7",
+  "p4k": "ccd29a1a7ae7044f5548e72864091b0a57d4d2e2065f1eb5a339d8db38b5de5c",
+  "p32k": "b46c61b06d9d8cb07764523c0fef2fcb5c895906ae7bc50e807517df2046cb09",
+  "p128k": "efa7359bb4df3077c651d50af8415e6259b367f15795fee271cdb8a81e67207a",
+  "p220k": "ef8dcca2a2cafb47a450127e0bfdee7bf5526a14b0d28d2b5dab377cb60df758",
+  "p238k": "85aa2713e72f589969a259318906cdef1d21c28992701a469989611fae46e6d5",
+  "p245k": "5dd8125cd0a795770fb6c700ea25434c17ae590b3ea9202a82735484e9ee605e",
+  "p262k": "4c6bd56864f0627dcfbca2865d0d0d7f7e5e36d1d68042a9efb17dc181e53b1c"
+ },
+ "needle_gateC": {
+  "needle-p238k-s99-ph3": "75853da7f50f5c8ce4c7afd95c7a2ac5111877342b7a82134b15c3dcc104ac7f",
+  "needle-p238k-s2-ph3": "1b19ff200fc14e44ff922c48295caa40fff2216211310d8d666fac1e1a02954a",
+  "needle-p238k-s5-ph3": "6754a9bd7516a08666f2b1f85dced5d0c8e848b5bf5a9f0d472c8a11ac40cc7c",
+  "needle-p245k-s99-ph3": "c5c4f7de34f710b29e496ffbee15531ca86779263cfc150d2266b6b7168b4076",
+  "needle-p245k-s2-ph3": "c1cc22d01d1cb17893e51498b771708f0cc205a6a35349fa84981c72854cb851",
+  "needle-p245k-s5-ph3": "3df722057bcc79e65a7d225b65929ff03e1b5ef9731361ff05d6b5a02fa63de3",
+  "needle-p262k-s99-ph3": "9f478c1a8737f233b0c7683b6d4e5d94be20a3728940658f2a0901843368ea92",
+  "needle-p262k-s2-ph3": "b90feb1c73b946cd56dbe55a57fe05b37571e08ff7eb1f74bea31ea1b4d41645",
+  "needle-p262k-s5-ph3": "07f628ba84a773e38cf1d397507d3730e7a911c5c8f540aa1dfa796a652ada9b"
+ },
+ "other_quality_sets": {
+  "verbatim": "tools/verbatim_check.py 冻结探针集（100 条）",
+  "ccdet": "canary hash 探针（0bd1ecd6… 家族）",
+  "token_replay": "temp=0 固定 seed 冻结探针集"
+ },
+ "forbidden_as_calibration": [
+  "s99/s2/s5 needle 码集",
+  "ccdet",
+  "verbatim",
+  "本清单全部条目",
+  "Phase 03 最终判定任务"
+ ]
+}

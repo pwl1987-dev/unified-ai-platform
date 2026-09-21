@@ -1,0 +1,89 @@
+{
+ "purpose": "P0A.5 离线 tokenizer 装配验证（gates formal_certification hard_budget；return_dict 勘误版）",
+ "verified_utc": "2026-09-21",
+ "all_pass": true,
+ "note": "首版 apply_chat_template(tokenize=True) 在 transformers 5.x 默认返回 dict，len=键数导致 tmpl_delta 为负——本版 return_dict=False 修正",
+ "fixtures": {
+  "needle-p238k-s99-ph3": {
+   "doc_tokens": 238129,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 238245,
+   "model_len_cap": 243712,
+   "headroom": 5467,
+   "PASS": true
+  },
+  "needle-p238k-s2-ph3": {
+   "doc_tokens": 238129,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 238245,
+   "model_len_cap": 243712,
+   "headroom": 5467,
+   "PASS": true
+  },
+  "needle-p238k-s5-ph3": {
+   "doc_tokens": 238129,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 238245,
+   "model_len_cap": 243712,
+   "headroom": 5467,
+   "PASS": true
+  },
+  "needle-p245k-s99-ph3": {
+   "doc_tokens": 245125,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 245241,
+   "model_len_cap": 251392,
+   "headroom": 6151,
+   "PASS": true
+  },
+  "needle-p245k-s2-ph3": {
+   "doc_tokens": 245125,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 245241,
+   "model_len_cap": 251392,
+   "headroom": 6151,
+   "PASS": true
+  },
+  "needle-p245k-s5-ph3": {
+   "doc_tokens": 245125,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 245241,
+   "model_len_cap": 251392,
+   "headroom": 6151,
+   "PASS": true
+  },
+  "needle-p262k-s99-ph3": {
+   "doc_tokens": 262021,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 262137,
+   "model_len_cap": 262144,
+   "headroom": 7,
+   "PASS": true
+  },
+  "needle-p262k-s2-ph3": {
+   "doc_tokens": 262021,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 262137,
+   "model_len_cap": 262144,
+   "headroom": 7,
+   "PASS": true
+  },
+  "needle-p262k-s5-ph3": {
+   "doc_tokens": 262021,
+   "tmpl_delta": 52,
+   "output": 64,
+   "total": 262137,
+   "model_len_cap": 262144,
+   "headroom": 7,
+   "PASS": true
+  }
+ }
+}

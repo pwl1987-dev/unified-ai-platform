@@ -1,6 +1,6 @@
 # nextgen-20260917 战役冻结清单（Phase 00 起生效）
 # 本文件是机器可读的战役级事实冻结。修改须走正式修订（MASTER-TEST-PLAN §18）。
-version: 3
+version: 4
 frozen_at_utc: "2026-09-17T00:00:00Z"   # 以 commit #1 实际时间为准，见 git log
 plan: MASTER-TEST-PLAN.md@v1.2
 repo_baseline: f2d1054
@@ -209,3 +209,37 @@ phase02:
   combination: "forward-addition 双 lineage（composite_L2 / portable_winners→composite_X2）"
   ceiling_chain: "P220K PASS → 245K(seed99) → 262K(seed99)；只标 CEILING_OBSERVATION；238K+ 正式认证归 Phase 03"
   gate_b: "B-L2 ∧ B-X2 → Overall PASS；单边 = L2_ONLY / X2_ONLY（详 gates-phase02.yaml:gate_b）"
+
+# ---------------------------------------------------------------------------
+# Phase 03（KV 四路对决 → 三档 Profile + Gate C；v1.1 执行合同 2026-09-21 批准）。
+# 正式修订：version 3 -> 4（§18 流程）。slo_status 维持 SLO_UNDECIDED（Erratum EP03-A2）。
+phase03:
+  plan_version: v1.1                          # 用户 13 条执行前修正 + 5 条执行契约收敛
+  measurement_contract_sha: 80e7d15c6e18247615f5425d2e5ece9cffdfe3d5   # 继承
+  runner_safety_baseline: 899eb5a3ad59b6e548ff7bd507085061f8732089     # 继承下限
+  manifest_schema:
+    version: "1.3"
+    sha256: 4e9a724fd9a410aef8d5b84dffd7a4c40e4bb5fd04162b342269e41a262d5739
+    delta: "additive：新增 kv_route / route_eligibility / capability_label / cross_runtime_reference / calibration_provenance（artifact lineage）"
+  gates_sha256: 2342530052271d36170a563cf9a780719e0e2f9021cb38dd111b136dae28b819  # repro/gates-phase03.yaml（P0A 冻结，禁改）
+  runtime029_inheritance:                     # P0A.1 fail-closed 重审计
+    baseline_file: eval/vllm/nextgen-20260917/repro/env029/runtime029-phase02-baseline.json
+    inheritance_audit: eval/vllm/nextgen-20260917/repro/env029/runtime029-phase03-inheritance.json
+    verdict: EVIDENCE_REPAIR                  # 空 freeze 取证 bug 修复（EP03-A1）；tree/patch/symbol/关键包零漂移
+    freeze_repaired: {packages: 199, sha256: "d6ee86e9…（见 inheritance JSON 全值）"}
+    readonly_rule: "Phase 03 全程只读；任何变更 = 新实验 ID + ENV_DRIFT（暂停级）"
+  reference_028_kvarn:                        # 用户拍板：CROSS_RUNTIME_REFERENCE
+    env: /data/tools/vllm28-env               # 只读禁止装包
+    recipe: eval/vllm/cuda13/usable-concurrency-20260916/repro/start028-captured.sh（冻结不改，max_model_len=245760）
+    forbidden: "跨版本 winner 加速比 / 行485 tie-break 跨版本套用 / 262K 越域质量 FAIL"
+  calibration_contract:                       # FP8C（详 gates-phase03.yaml）
+    corpus: fixtures/calibration/phase03-corpus（dataset_sha256=71b08a93…，64 样本，seed 20260921）
+    eval_manifest: fixtures/eval/phase03-manifest.json（held-out）
+    overlap_check: fixtures/calibration/overlap-check.json（PASS，15 needle 码零泄漏）
+    build_env: "Docker+UV 优先（CDI 可用）；回退宿主独立 uv venv；绝不污染 vllm29-env/vllm28-env/模型源目录"
+    artifact_rule: "新目录 immutable artifact + artifact_single_variable_verification（KV-only 证明，任一不成立 → FP8C_KV_ONLY=UNSUPPORTED）"
+  fixtures_phase03:
+    needle_formal: "needle-p{238,245,262}k-s{99,2,5}-ph3（9 档；离线 tokenizer 装配验证全过，fixtures/manifest-phase03-verification.json）"
+    position_margin_note: "262K 档 chat 模板实测 +52 → position 余量仅 7 token（MODEL_POSITION_BOUNDARY 硬证据；只可 HARD_CEILING_CAPABILITY_PASS）"
+  staging_prefix: "raw/staging/PH3-*（区别 Phase 02 内部 P03-QUALIFY/P04-SLO 目录）"
+  gate_c: "short/daily/extreme 分档 verdict；单 route UNSUPPORTED 不拖垮全局；KVARN 只作 reference 保留至 Phase 08"

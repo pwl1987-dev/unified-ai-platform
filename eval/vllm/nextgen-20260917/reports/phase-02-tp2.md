@@ -18,7 +18,7 @@
 | dynamic-k | k8 **CLOSED**（CG capture 8 < verify 9）；k6 OUT（全轴被支配）；k7 在位维持；**P32K spec-off 双优**（TONLY decode +21-30%、暖 TTFT +33% vs 全 spec 臂）→ Phase 03 正式 A/B |
 | P32K 认证 | NBT3072 @P32K **−3.29% 认证回退**（Screen +17.2% 信号证伪=慢态分母伪影）；B0R 3-boot spread 0.14% |
 | 平台冷启动惩罚 | **新平台现象**：idle 后首 boot −18%（57.5 vs 69.9 tok/s）；back-to-back spread 0.14% → 认证协议修正（WARMUP 弃置） |
-| SLO | **UNDECIDED 解除**：L2（D565+P32K）+ X2（P128K）全档双曲线（closed C1-C8 + open 5 点 arrival 列），全点 0 503 |
+| SLO | **UNDECIDED 解除**：L2（D565+P32K）+ X2（P128K）全档双曲线（closed C1-C8 + open 5 点 arrival 列），全点 0 503（**Erratum EP03-A2**，见 §11：曲线≠SLO Authority，正式状态仍 SLO_UNDECIDED） |
 | ceiling 晋级链 | P245K seed99 **5/5 PASS**（TTFT 128.5s）→ **P262K seed99 5/5 PASS（TTFT 133.7s）= 模型绝对上限 262,144 工作**；两档 CEILING_OBSERVATION |
 | TP1-C4 补测 | PENDING（GPU2 全程被外部任务占用）——B-L2 aggregate 他轴唯一未闭合项 |
 
@@ -82,7 +82,7 @@
 
 ## §7 P4-SLO 双曲线 + ceiling 晋级链（raw/staging/P04-SLO/）
 
-**SLO_UNDECIDED 解除**（全档双曲线 + arrival 列 + CAPACITY_LIMIT 端点）：
+**SLO_UNDECIDED 解除**（全档双曲线 + arrival 列 + CAPACITY_LIMIT 端点）——*Erratum EP03-A2（2026-09-21 追加，见 §11）：本节完成的是 SLO 定标曲线义务，"解除"措辞由勘误修正，正式 SLO 状态仍为 SLO_UNDECIDED*：
 
 | 形制 | closed | open（0.25-1.1× Poisson） | 备注 |
 |---|---|---|---|
@@ -128,3 +128,9 @@
 - 生产切换不自动发生（铁律 9）：本相位结论=候选 profile，Phase 08 窗口拍板
 - 0.28+kvarn 认证继续保留；0.29 生产配方冻结件 `repo/eval/vllm/cuda13/usable-concurrency-20260916/` 不变
 - 证据全集：raw/staging/{P02-SCREEN,P03-QUALIFY,P04-SLO,SCEIL*,V29-T2-*,V29-T1-*}；repro 链 tools/{p02_*,p1_batch2_*,p3_*,p4_*,boot029_nextgen}.py|sh（断点续跑形制）
+
+## §11 勘误（Phase 03 P0A 正式追加，2026-09-21——只追加不改写上文原文）
+
+**EP03-A2（SLO 状态措辞）**：Phase 02 完成的是 SLO 定标所需 throughput-latency curves（closed C1-C8 + open 5 点）；**未形成生产 SLO Authority**（无预冻结的正式生产 TTFT/TPOT/P95 goodput 数值判定门）。正式 SLO 状态仍为 **SLO_UNDECIDED**（MANIFEST `slo_status` 为单一 Authority，保持 SLO_UNDECIDED 不变）。§0 与 §7 的"解除"措辞以本勘误为准。
+
+**EP03-A1（runtime freeze 空 lock 取证缺陷）**：`repro/env029/freeze-phase02-baseline.txt` 在 Phase 02 冻结时实际为 0 字节（sha256=`e3b0c442…`=空文件哈希）。根因：`p0a_runtime_freeze.py` 用 `python -m pip freeze --all` 做包清单，而 uv venv `/data/tools/vllm29-env` 无 pip（`ModuleNotFoundError: No module named pip`）→ rc≠0、stdout 空；旧工具不查 returncode 即写空文件并继续（fail-open）。Phase 03 P0A.1 已按双路契约修复（`uv pip freeze --python` 主 + `importlib.metadata` 交叉，PEP 503 规范化 name→version 比对，rc/空输出/包数下限/关键包漂移全 FATAL，temp→校验→atomic rename）。重审计结论：**EVIDENCE_REPAIR 非 ENV_DRIFT**——vllm tree sha `4632d624…`（2537 文件）、patch-unit 18 件 SHA、台账 sha_after、symbol provenance、关键包版本（vllm 0.29.0/torch 2.13.0/transformers 5.17.0/flashinfer-python 0.6.18/triton 3.7.1/pandas 3.0.6/pyarrow 25.0.1）与 Phase 02 认证基线**零漂移**；freeze 文件重写为 199 包双路一致清单（sha256=`d6ee86e9…`）。证据：`repro/env029/runtime029-phase03-inheritance.json` + `inventory-importlib-phase03.json`。
