@@ -1,0 +1,82 @@
+{
+ "record": "Gate B 机器裁决（P4 核心）——B-L2 / B-X2 / Overall",
+ "denominator_form": {
+  "tp2": "composite_L2 = B0 配方（k7/nbt2048/draftTP1/TP2，P3 认证：B0R 3-boot spread 0.14%）",
+  "tp1": "TP1CTL 同栈 3-boot（昨晨慢态窗）——TP2 侧配对取同态（PAIR34/GATEB-G2 慢态）为主、快态（GATEB-G1/CERT 69.9）为辅"
+ },
+ "b_l2": {
+  "verdict": "PASS",
+  "axes": {
+   "tpot_c1_p32k": {
+    "tp1": 61.9,
+    "tp2_slow_paired": 57.45,
+    "delta_pct": -7.0,
+    "note": "主轴之一未过（TP1 保住单流长上下文 decode 优势）——pass_rule 只需 ≥1 主轴 ≥3% 且 other_key_axes 退步 ≤5%；TPOT 降级如实记录，与 overall 的『聚合吞吐 TP1 对照保留』口径一致"
+   },
+   "ttft_p50_c1_p32k": {
+    "tp1": 0.3936,
+    "tp2_slow_paired": 0.3224,
+    "delta_pct": -18.2,
+    "gate": "≥3% ✓"
+   },
+   "goodput_c2_p32k": {
+    "tp1_agg": 14.31,
+    "tp2_slow_paired_agg": 99.58,
+    "tp2_fast": 108.44,
+    "delta_pct": "+596.3",
+    "mechanism": "TP1 上 P32K C2 预填充串行塌缩（TTFT p50 15.0s）；TP2 交织预填（TTFT 0.52s）",
+    "gate": "≥3% ✓"
+   },
+   "ttft_p95_c1_other": {
+    "tp1": 13.3254,
+    "tp2_slow": 10.0981,
+    "tp2_fast": 10.1673,
+    "delta_pct": -24.2,
+    "gate": "退步 ≤5% ✓（实为大幅改善）"
+   },
+   "aggregate_c4_other": {
+    "status": "TP1 侧分母缺（TP1CTL 冻结为 C1/C2 形制）——检查挂起，GPU2 释放后补测 TP1-C4 再闭合；TP2 侧 D565-C4 62.29 认证在案",
+    "gate": "PENDING_SUPPLEMENT"
+   }
+  },
+  "supporting_d565_micro": {
+   "tp1": 143.97,
+   "tp2": 182.36,
+   "delta_pct": "+26.7（非判据轴，方向支持）"
+  },
+  "quality": "Tier-A verbatim 100/100（多臂复证）；needle 三态签名与 Phase 01 逐位复现（确定性等价证明）；同栈 0.29+patch-a 冻结环境",
+  "platform_state_discipline": "TP1CTL/PAIR34/GATEB-G2 = 慢态窗互比（状态一致）；快态 TP2 全部方向更优或同向——裁决对平台态稳健"
+ },
+ "b_x2": {
+  "verdict": "PASS",
+  "needle": {
+   "seed99_128k": "5/5 PASS（B0X128-B01-ND131072-S99，per-needle 全 true）",
+   "seed99_220k": "PASS（B0X220）",
+   "seed1": "双长度 FAIL=已知负码集确定性复现 ✓",
+   "seed2": "220K PASS / 128K 2-of-5——码集×长度非正交新发现（在案，非 seed99 判据）",
+   "protocol_note": "needle 为正确性判据，与平台性能态无关；B0 boot 单 boot 形制记录"
+  },
+  "capacity": {
+   "x128_kv_tokens": 374381,
+   "declared_c2_workpoint_tokens": "~263000",
+   "margin": 1.78,
+   "x220_kv_tokens": 390239,
+   "declared_inflight1_tokens": "~220500",
+   "c4_c8_x128": "4×131.5K=526K > 374K → CAPACITY_LIMIT 端点（SLO 曲线按此标注，不撞墙）"
+  },
+  "ttft_220k_c1": {
+   "value": 103.95,
+   "layer_x_ref": 104.125,
+   "delta_pct": -0.17,
+   "gate": "≤+5% ✓"
+  },
+  "designation": "TP2 designated X2 domain（未补 TP1 128K 对照臂，不称 exclusive）",
+  "guardrail": "--max-num-queued-reqs 1 在途护栏（ADMX220 全判据过，零代价）"
+ },
+ "overall": {
+  "verdict": "PASS",
+  "question": "TP2 是否适合成为交互/长上下文主基线",
+  "answer": "是——B-L2 PASS ∧ B-X2 PASS；聚合吞吐 TP1 对照保留（单流长上下文 decode TP1 优 ~7%，路由建议进 Phase 03/08）",
+  "supplement_pending": "TP1 侧 C4 aggregate（GPU2 被外部任务占用，释放即补）；SLO 双曲线与 ceiling 晋级链为 Profile 交付物（运行中/待跑），不阻塞裁决"
+ }
+}

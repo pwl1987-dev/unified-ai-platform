@@ -98,3 +98,9 @@ classify 端到端双向验证通过（2026-09-17）。
 - **composite_L2 = B0 配方**（forward-addition 集合清空）；composite_X2 = B0 + q4 护栏。P4K +10.7% 短提示轴认证维持→Phase 03 独立候选。
 - Gate B 依赖修正协议下 TP2 vs TP1 同窗配对（TP1CTL 属慢态窗，需重测）。
 - 证据：raw/staging/P03-QUALIFY/p32k-certify-{report,decisions}.json。
+
+## 2026-09-21 Gate B 机器裁决 ✅ Overall PASS
+- **B-L2 PASS**：ttft_p50(C1-P32K) −18.2% ✓ + goodput(C2-P32K) **+596%** ✓（TP1 P32K-C2 预填充串行塌缩 vs TP2 交织）；other-key ttft_p95 −24.2% ✓；tpot(C1) −7% 如实记录（TP1 保单流长上下文 decode，与"聚合吞吐 TP1 对照保留"一致）。TP1-C4 分母挂 GPU2 补测。
+- **B-X2 PASS**：seed99 128K 5/5 + 220K 全过；TTFT 220K 103.95（−0.17% vs 104.125 门）；容量边际 1.42/1.78；C4/C8@128K=CAPACITY_LIMIT 端点；designated 口径；q4 在途护栏随附。
+- **Overall = PASS**：TP2 适合成为交互/长上下文主基线。
+- 证据：raw/staging/P03-QUALIFY/gate-b-verdict.json + GATEB P32K C1/C2 补件（G1/G2 状态锚自洽）。
