@@ -1,0 +1,346 @@
+{
+ "warmup": {
+  "boot_ready": true,
+  "log": "/data/sandbox/nextgen-20260917/log-p02-warmup-b01",
+  "pgid": 823540,
+  "spec": 1,
+  "capacity": {
+   "kv_tokens": 287923
+  },
+  "cells": {
+   "p32k": {
+    "rc": 0,
+    "exp_prefix": "V29-T2-P0B-WARMUP-L36K-C1-L032K",
+    "cell": {
+     "fixture": "p32k",
+     "mode": "ns",
+     "concurrency": 1,
+     "max_tokens": 256,
+     "reps": 3
+    }
+   },
+   "p32k_warm": {
+    "rc": 0,
+    "exp_prefix": "V29-T2-P0B-WARMUP-L36K-WARM",
+    "cell": {
+     "fixture": "p32k",
+     "mode": "ns",
+     "concurrency": 1,
+     "max_tokens": 256,
+     "reps": 1
+    }
+   },
+   "d565": {
+    "rc": 0,
+    "exp_prefix": "V29-T2-P0B-WARMUP-L36K-C1-L0565",
+    "cell": {
+     "fixture": "d565",
+     "mode": "f512",
+     "concurrency": 1,
+     "max_tokens": 512,
+     "reps": 1
+    }
+   }
+  },
+  "done": true
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "arm": "SPECON",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-speconr1-b01",
+    "pgid": 830096,
+    "spec": 1,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR1-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "p32k_warm": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR1-L36K-WARM",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 1
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR1-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 1,
+   "arm": "SPECOFF",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-specoffr1-b01",
+    "pgid": 835401,
+    "spec": 0,
+    "capacity": {
+     "kv_tokens": 425826,
+     "mrv2": true
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR1-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "p32k_warm": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR1-L36K-WARM",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 1
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR1-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 2,
+   "arm": "SPECON",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-speconr2-b01",
+    "pgid": 840396,
+    "spec": 1,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR2-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "p32k_warm": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR2-L36K-WARM",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 1
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR2-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 2,
+   "arm": "SPECOFF",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-specoffr2-b01",
+    "pgid": 846794,
+    "spec": 0,
+    "capacity": {
+     "kv_tokens": 425826,
+     "mrv2": true
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR2-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "p32k_warm": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR2-L36K-WARM",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 1
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR2-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 3,
+   "arm": "SPECON",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-speconr3-b01",
+    "pgid": 854318,
+    "spec": 1,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR3-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "p32k_warm": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR3-L36K-WARM",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 1
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECONR3-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 3,
+   "arm": "SPECOFF",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-specoffr3-b01",
+    "pgid": 860863,
+    "spec": 0,
+    "capacity": {
+     "kv_tokens": 425826,
+     "mrv2": true
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR3-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "p32k_warm": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR3-L36K-WARM",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 1
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-P0B-SPECOFFR3-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  }
+ ]
+}

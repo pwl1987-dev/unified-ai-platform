@@ -1,0 +1,42 @@
+{
+ "purpose": "Phase 03 P0B 决策汇总（证据定位 + 判定；DECISIONS.md 落行源）",
+ "decided_utc": "2026-09-22",
+ "spec_off_ab": {
+  "verdict": "MAINTAIN_SPEC_ON",
+  "form": "W0 弃置 + 3 轮 × SPECON/SPECOFF back-to-back 交替（认证形制 v2）",
+  "numbers": {
+   "p32k_cold_decode": {"SPECON": 69.84, "SPECOFF": 78.20, "improvement": "+11.98%"},
+   "p32k_cold_agg": {"improvement": "+33.0%"},
+   "p32k_cold_ttft": {"improvement": "-36.4% (lower better)"},
+   "p32k_warm_ttft": {"improvement": "-39.2%"},
+   "p32k_tpot": {"improvement": "-10.7%"},
+   "d565_decode": {"SPECON": 182.41, "SPECOFF": 85.21, "improvement": "-53.3% (other-axis regression >> 5% → 否决)"}
+  },
+  "spread_annotation": "SPECON R2 = 慢态 boot（59.3 家族，spread 15.3% 被 spread 门逮住）；两平台态下 P32K 方向一致（快态 +12%/慢态 +32%）——不影响结论符号",
+  "structural_read": "spec 价值随 prompt 长度反转：D565 短提示 spec 2.13× 优；P32K 长提示 spec 拖累（draft 32K prefill 罚 + verify 开销）。L2 单一配方保留 spec-on；P32K spec-off = 工作负载条件性路由发现，进三档 Profile 路由建议（非 composite 变更）",
+  "evidence": ["raw/staging/PH3-P0B/specoff-certify-report.json", "raw/staging/PH3-P0B/specoff-decision.json", "raw/staging/V29-T2-P0B-*"]
+ },
+ "nbt3072_p4k": {
+  "verdict": "MAINTAIN（免复验）",
+  "reason": "spec 终形未翻转（MAINTAIN_SPEC_ON）→ Phase 02 认证 +10.7% 继续有效（gates recheck_rule 仅在翻转时触发）",
+  "evidence": "raw/staging/P03-QUALIFY/p32k-certify-decisions.json（Phase 02）"
+ },
+ "k5_pos1_readjudication": {
+  "verdict": "维持 K5 REJECTED（独立理由），地板规则修正建议落档",
+  "paper_analysis": "K5 pos1 抬升（P32K +14.4pp vs K7）与总接受率抬升（+12.8pp）各位置同幅（pos0 +9.1pp/pos1 +14.4pp）= 截断选择（去 pos6-7 低接受位）的均匀提升，非 pos1 特异异常——规则本意（防末端塌缩/分布漂移）未被违反；对称 |gap| 判定在正向抬升上误触发",
+  "independent_rejection": "K5 P32K speedup_vs_tonly=0.788<1（decode 61.5 vs TONLY 78.1）；D565 无优势（2.13× vs K7 2.14×）——即使规则修正 K5 仍不入 L2",
+  "rule_correction_proposal": "per-position gap 判定改方向感知（塌缩方向罚 / 抬升方向记录不罚）——作为 Phase 04+ 规则建议，不改已冻结 gates-phase02 语义",
+  "evidence": "raw/staging/P02-SCREEN/p2-dynk-eval.json summary.K5-*"
+ },
+ "fp8_boot_forensics": {
+  "event": "F8E4L32 boot FAIL rc=11 @01:34-01:37（EngineCore init）",
+  "root_cause": "flashinfer 0.6.18 FP8-KV prefill 内核 JIT：nvcc 编译自带 CCCL 头报 cuda_toolkit.h:41 #error 'CUDA compiler and CUDA toolkit headers are incompatible'——与 0.28 栈 FP8 UNSUPPORTED 同根因家族（DECISIONS 2026-09-18 P1 附带裁定预言的顺延路径）",
+  "config_plane_ok": "kv_cache_dtype=fp8_e4m3 配置解析通过（cache.py:340 Using fp8_e4m3…；FlashInfer resolved kv_cache_dtype=torch.float8_e4m3fn）；W4A16 Marlin 加载正常——阻断仅在 JIT 编译层",
+  "classification_flashinfer": "UNSUPPORTED（boot 级，0.29 栈 FLASHINFER 后端）",
+  "diagnostic_followup": "TRITON_ATTN env 诊断臂 ph3-f8e4-triton-diag.json（区分阻断范围；DIAGNOSTIC_ONLY，不构成 Gate C 候选）",
+  "evidence": "/data/sandbox/nextgen-20260917/log-p02-f8e4l32-b01/server.txt（60 处 FAILED/ninja rc=1/#error 链）"
+ },
+ "chain_incidents": [
+  "重复发射事故（人为）：两次 nohup 启动产生双链——按铁律 5 核验 PGID 后杀年轻链（867603 组）+孤儿 boot（867605 已自亡）；NAT238K 臂因此 boot 失败一次，--only 重跑补偿"
+ ]
+}

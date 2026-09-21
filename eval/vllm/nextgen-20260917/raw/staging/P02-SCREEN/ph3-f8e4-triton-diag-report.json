@@ -1,0 +1,12 @@
+{
+ "arms_file": "repro/p02-arms/ph3-f8e4-triton-diag.json",
+ "arms": {
+  "F8E4TRITON-B01": {
+   "done": false,
+   "boot_ready": false,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-f8e4triton-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools && VLLM_ATTENTION_BACKEND=TRITON_ATTN VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-f8e4triton setsid bash boot029_nextgen.sh p02-f8e4triton-b01 19702 2 4 --kv-dtype fp8_e4m3 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold"
+  }
+ }
+}

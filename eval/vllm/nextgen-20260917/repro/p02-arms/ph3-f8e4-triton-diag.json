@@ -1,0 +1,18 @@
+{
+ "plan": "Phase 03 P1 FP8E4 诊断补充臂：TRITON_ATTN 后端（env 旗标，非侵入）。仅定性诊断——不构成 Gate C 候选（backend 与 KV dtype 混淆，单变量纪律），用于区分 FP8 阻断是否 flashinfer-JIT 特有",
+ "arms": [
+  {
+   "key": "F8E4TRITON",
+   "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "fp8_e4m3",
+             "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a",
+             "kv_route": "FP8_E4M3_STATIC_SCALE_1_0", "route_eligibility": "DIAGNOSTIC_ONLY",
+             "env": {"VLLM_ATTENTION_BACKEND": "TRITON_ATTN"}},
+   "cells": [
+     {"exp_prefix": "V29-T2-PH3-F8E4TRI-L36K-C1-L0565", "fixture": "d565", "mode": "f512",
+      "concurrency": 1, "max_tokens": 512, "reps": 3}
+   ],
+   "probes": {},
+   "note": "boot 成功=FP8 阻断系 flashinfer-JIT 特有（triton 路径可走，Phase 04+ 债）；boot 失败=FP8-KV 于 0.29 栈全面 UNSUPPORTED。两分支出证归档"
+  }
+ ]
+}

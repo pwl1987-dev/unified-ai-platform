@@ -26,6 +26,7 @@ TAG=${1:?tag}; PORT=${2:?port}; TP=${3:?tp}; MS=${4:?ms}; shift 4
 KV_DTYPE=auto MODEL_LEN=32768 KV_MEM="" SPEC=0 PATCH=a COLD=0
 NBT=2048 CG_MODE="" CG_CAP=8 DRAFT_TP=0 SPEC_K=7 BSS=0
 QUEUED_REQS="" QUEUED_TOKENS="" RETENTION="" MATCH_UNIT=128 PAIR_UUIDS=""
+TARGET_OVERRIDE=""
 while [[ $# -gt 0 ]]; do case "$1" in
   --kv-dtype) KV_DTYPE=$2; shift 2;;
   --model-len) MODEL_LEN=$2; shift 2;;
@@ -44,6 +45,7 @@ while [[ $# -gt 0 ]]; do case "$1" in
   --retention) RETENTION=$2; shift 2;;
   --match-unit) MATCH_UNIT=$2; shift 2;;
   --pair-uuids) PAIR_UUIDS=$2; shift 2;;
+  --target) TARGET_OVERRIDE=$2; shift 2;;   # Phase 03 FP8C：immutable artifact 路径（parent 只读不动）
   *) echo "unknown arg $1"; exit 2;;
 esac; done
 
@@ -54,6 +56,7 @@ VENV=/data/tools/vllm29-env
 SITE=$VENV/lib/python3.12/site-packages
 CUDA13=$SITE/nvidia/cu13
 TARGET=/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128
+[[ -n "$TARGET_OVERRIDE" ]] && TARGET=$TARGET_OVERRIDE
 DRAFT=/data/sandbox/vllm-cu130-qual-20260915/draft-recal-readable-20260915
 
 # ---- 物理卡位 Gate（与 MANIFEST gpu_identity_gate 一致）----

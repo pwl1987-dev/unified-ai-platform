@@ -1,0 +1,51 @@
+{
+ "arms_file": "repro/p02-arms/ph3-kv-duel.json",
+ "arms": {
+  "NAT238K-B01": {
+   "done": true,
+   "boot_ready": true,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-nat238k-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-nat238k setsid bash boot029_nextgen.sh p02-nat238k-b01 19702 2 1 --kv-dtype bfloat16 --model-len 243712 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128",
+   "pid": 879186,
+   "pgid": 879164,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 394148
+   },
+   "cells": {
+    "V29-T2-PH3-NAT238K-C1-L238K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH3-NAT238K-C1-L238K",
+     "cell": {
+      "fixture": "p238k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/NAT238K-B01-ND238000-S99"
+    }
+   }
+  },
+  "F8E4L32-B01": {
+   "done": false,
+   "boot_ready": false,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-f8e4l32-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-f8e4l32 setsid bash boot029_nextgen.sh p02-f8e4l32-b01 19702 2 4 --kv-dtype fp8_e4m3 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold"
+  },
+  "F8E4X128-B01": {
+   "done": false,
+   "boot_ready": false,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-f8e4x128-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-f8e4x128 setsid bash boot029_nextgen.sh p02-f8e4x128-b01 19702 2 2 --kv-dtype fp8_e4m3 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold"
+  }
+ }
+}

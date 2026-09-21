@@ -102,6 +102,8 @@ def boot_cmd(arm: dict, port: int, boot_tag: str) -> tuple[str, str]:
         parts += ["--retention", str(b["retention"])]
     if b.get("pair_uuids"):
         parts += ["--pair-uuids", b["pair_uuids"]]
+    if b.get("target"):
+        parts += ["--target", b["target"]]   # Phase 03 FP8C：artifact 路径（boot029 --target）
     # --cold 只在缓存组不存在时生效（同 arm 后续 boot 暖启复用，认证形制）
     if b.get("cold") and not os.path.isdir(f"{SBX}/cache-{cache_key}"):
         parts += ["--cold"]

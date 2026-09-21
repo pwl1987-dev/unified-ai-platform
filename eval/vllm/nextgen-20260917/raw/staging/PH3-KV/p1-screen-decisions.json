@@ -1,0 +1,28 @@
+{
+ "purpose": "Phase 03 P1 KV Screen 决策（四路资格裁定 + NATIVE 238K 补缺口数据）",
+ "decided_utc": "2026-09-22",
+ "fp8_route_verdict": {
+  "kv_route": ["FP8_E4M3_STATIC_SCALE_1_0", "FP8_E4M3_CALIBRATED"],
+  "experiment_status": "UNSUPPORTED",
+  "classification_reason": "SERVER_CRASH（boot 级，EngineCore init）",
+  "evidence": [
+   "F8E4L32 boot rc=11：flashinfer 0.6.18 fp8_e4m3 prefill 内核 JIT ninja rc=1（cuda_toolkit.h:41 CCCL×cu13 nvcc #error）→ /data/sandbox/nextgen-20260917/log-p02-f8e4l32-b01/server.txt",
+   "F8E4X128 boot rc=11：同根因 → log-p02-f8e4x128-b01/server.txt",
+   "F8E4TRITON 诊断臂（VLLM_ATTENTION_BACKEND=TRITON_ATTN env）boot rc=11：崩溃点仍为 flashinfer/jit/cpp_ext.py 同一 fp8_e4m3 prefill ninja 编译（后端 env 不改变该路径）→ log-p02-f8e4triton-b01/server.txt"
+  ],
+  "root_cause_family": "与 0.28 栈 FP8 UNSUPPORTED 同族（Phase 01 DECISIONS 2026-09-18 P1 附带裁定顺延路径证实）——flashinfer 自带 CCCL 头与其所用 nvcc 不兼容，fp8-KV prefill 内核 JIT 编译必死；config 层通过（Using fp8_e4m3…/resolved kv_cache_dtype=torch.float8_e4m3fn）",
+  "fp8c_implication": "FP8C artifact 构建取消：calibrated scales 不改变内核编译路径，同一阻断 → FP8C_KV_ONLY 阻断在 serving 层（非校准层）；隔离构建环境（fp8c-build 容器）保留待上游修复后 Phase 04+ 重开",
+  "gate_c_implication": "0.29 主栈 KV 选型减为 NATIVE_BF16；daily tier 由 NATIVE 承担（C4/C8@128K 维持 CAPACITY_LIMIT 端点）；KVARN 0.28 为 CROSS_RUNTIME_REFERENCE",
+  "upstream_debt": "flashinfer ≥0.6.19 或 CCCL 修复后重开 FP8E4/FP8C（probe→boot→KV-only 校准链已就绪：build_fp8c_artifact.py/verify_fp8c_artifact.py/校准语料 71b08a93…）"
+ },
+ "native_238k_screen": {
+  "verdict": "PASS（Screen 级；正式认证由 certify-238plus 链执行中）",
+  "needle_s99": {"needles_hit": "5/5", "PASS": true, "ttft_s": 116.429, "vram_peak_mib": 22950},
+  "cells": "V29-T2-PH3-NAT238K-C1-L238K ×3 rc=0（R01 冷 TTFT 见 metrics；R02/03 暖前缀快态）",
+  "decode_note": "238K 上下文 decode ~10.6 tok/s（注意力开销符合预期）",
+  "evidence": "raw/staging/V29-T2-PH3-NAT238K-* + PH3-KV/kv-duel-screen.log + NAT238K-B01-ND-S99"
+ },
+ "incident_log": [
+  "NAT238K 首跑因双链事故 boot 失败（人为重复发射；铁律 5 处置记录在 p0b-decisions.json chain_incidents）——已 --only 重跑补偿通过"
+ ]
+}
