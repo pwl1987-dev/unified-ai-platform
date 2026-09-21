@@ -1,0 +1,37 @@
+{
+ "record": "P32K 修正协议认证 A/B 终判（WARMUP 弃置 + 3 轮交替 back-to-back）",
+ "protocol": "WARMUP boot（弃置，慢态 56.6 实证协议有效）→ [B0R,N3072]×3 交替，boot 间不 idle，每 boot P32K-NS-C1×3 + D565-F512-C1×1",
+ "results": {
+  "b0r": {
+   "boot_meds": [
+    69.9,
+    69.8,
+    69.9
+   ],
+   "spread_pct": 0.14,
+   "verdict": "CERTIFIED"
+  },
+  "n3072": {
+   "boot_meds": [
+    67.6,
+    67.6,
+    68.5
+   ],
+   "spread_pct": 1.33,
+   "verdict": "CERTIFIED"
+  },
+  "n3072_vs_b0r_p32k_decode_pct": -3.29,
+  "d565_control": "两臂同窗紧贴（182.1-182.4；R3 尾窗双臂同步回落 176.6/177.3 = 时间漂移共模，配对比较不受影响）"
+ },
+ "verdict": {
+  "nbt3072_p32k": "认证级回退 -3.29%（>3% 噪声线反向）→ composite_L2 除名",
+  "screen_falsification": "batch1 +17.2% @P32K 信号完全证伪：其分母 PAIR34（12:28 单 boot）属慢平台态（57.4 vs 热态 69.9），窗口伪影",
+  "nbt3072_p4k": "+10.7% 短提示轴认证维持（昨夜 3-boot spread 3.2-3.4%）——短提示工作负载独立候选，Phase 03 素材；L2 主轴（P32K+D565）判 OUT"
+ },
+ "lineage_final": {
+  "composite_L2": "B0 配方（forward-addition 集合清空：DTP2 认证回退 / K5 pos1 地板 / NBT3072 P32K 认证回退）",
+  "composite_X2": "B0 配方 + q4 在途护栏（x220 已证，非 perf 变更）；portable 集合空",
+  "gate_b_implication": "Gate B 回归战役核心命题 = TP2 同栈 vs TP1 同栈（需修正协议下同窗配对重测——TP1CTL 为昨晨慢态窗口数据）"
+ },
+ "methodology_upgrade": "全部历史单 boot 跨窗数字补 ±18% 平台态 caveat；Screen IN 信号 <2× 门槛 provisional；认证协议三要素=cache 钉死+暖机+平台暖 boot 弃置"
+}

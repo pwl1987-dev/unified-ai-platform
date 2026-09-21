@@ -92,3 +92,9 @@ classify 端到端双向验证通过（2026-09-17）。
 - **认证协议修正**：弃置 idle 后首 boot，back-to-back 入证。生产含义：长上下文冷启动慢态 ~18% → Phase 08 热机手册素材。
 - 历史跨窗单 boot 数字（PAIR34/dynk 晚窗等）一律补 ±18% 平台态 caveat；P32K spec-off 结论方向稳健不受影响。
 - p3_p32k_certify.py：WARMUP 弃置 + [B0R,N3072]×3 交替（~08:30 完）→ composite_L2 定案 → P4。
+
+## 2026-09-21 P32K 认证 A/B 终判 ✅ → composite 定案
+- **NBT3072 @P32K 认证回退 −3.29%**（B0R spread 0.14% / N3072 1.33%，WARMUP 弃置协议）——batch1 +17.2% 信号证伪（慢态分母伪影）。
+- **composite_L2 = B0 配方**（forward-addition 集合清空）；composite_X2 = B0 + q4 护栏。P4K +10.7% 短提示轴认证维持→Phase 03 独立候选。
+- Gate B 依赖修正协议下 TP2 vs TP1 同窗配对（TP1CTL 属慢态窗，需重测）。
+- 证据：raw/staging/P03-QUALIFY/p32k-certify-{report,decisions}.json。

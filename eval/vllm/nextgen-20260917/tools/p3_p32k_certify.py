@@ -95,9 +95,9 @@ def main() -> int:
         doc["warmup"] = one_boot("WARMUP", 2048, "B01") or "FAILED"
         json.dump(doc, open(REPORT, "w"), indent=1, ensure_ascii=False)
     for rnd in range(1, 4):
-        if len(doc["rounds"]) >= rnd:
-            continue
         for key, cfg in ARMS.items():
+            if any(x["round"] == rnd and x["arm"] == key for x in doc["rounds"]):
+                continue
             e = one_boot(f"{key}R{rnd}", cfg["nbt"], "B01")
             doc["rounds"].append({"round": rnd, "arm": key, "entry": e})
             json.dump(doc, open(REPORT, "w"), indent=1, ensure_ascii=False)

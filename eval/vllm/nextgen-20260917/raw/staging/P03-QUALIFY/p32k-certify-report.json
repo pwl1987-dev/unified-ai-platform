@@ -1,0 +1,259 @@
+{
+ "warmup": {
+  "boot_ready": true,
+  "log": "/data/sandbox/nextgen-20260917/log-p02-warmup-b01",
+  "pgid": 549887,
+  "capacity": {
+   "kv_tokens": 287923
+  },
+  "cells": {
+   "p32k": {
+    "rc": 0,
+    "exp_prefix": "V29-T2-CERT-WARMUP-NBT2048-L36K-C1-L032K",
+    "cell": {
+     "fixture": "p32k",
+     "mode": "ns",
+     "concurrency": 1,
+     "max_tokens": 256,
+     "reps": 3
+    }
+   },
+   "d565": {
+    "rc": 0,
+    "exp_prefix": "V29-T2-CERT-WARMUP-NBT2048-L36K-C1-L0565",
+    "cell": {
+     "fixture": "d565",
+     "mode": "f512",
+     "concurrency": 1,
+     "max_tokens": 512,
+     "reps": 1
+    }
+   }
+  },
+  "done": true
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "arm": "B0R",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-b0rr1-b01",
+    "pgid": 553954,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-B0RR1-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-B0RR1-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 1,
+   "arm": "N3072",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-n3072r1-b01",
+    "pgid": 557659,
+    "capacity": {
+     "kv_tokens": 281538
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-N3072R1-NBT3072-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-N3072R1-NBT3072-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 3,
+   "arm": "B0R",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-b0rr3-b01",
+    "pgid": 561298,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-B0RR3-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-B0RR3-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 3,
+   "arm": "N3072",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-n3072r3-b01",
+    "pgid": 564447,
+    "capacity": {
+     "kv_tokens": 281538
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-N3072R3-NBT3072-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-N3072R3-NBT3072-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 2,
+   "arm": "B0R",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-b0rr2-b01",
+    "pgid": 568885,
+    "capacity": {
+     "kv_tokens": 287923
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-B0RR2-NBT2048-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-B0RR2-NBT2048-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  },
+  {
+   "round": 2,
+   "arm": "N3072",
+   "entry": {
+    "boot_ready": true,
+    "log": "/data/sandbox/nextgen-20260917/log-p02-n3072r2-b01",
+    "pgid": 572411,
+    "capacity": {
+     "kv_tokens": 281538
+    },
+    "cells": {
+     "p32k": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-N3072R2-NBT3072-L36K-C1-L032K",
+      "cell": {
+       "fixture": "p32k",
+       "mode": "ns",
+       "concurrency": 1,
+       "max_tokens": 256,
+       "reps": 3
+      }
+     },
+     "d565": {
+      "rc": 0,
+      "exp_prefix": "V29-T2-CERT-N3072R2-NBT3072-L36K-C1-L0565",
+      "cell": {
+       "fixture": "d565",
+       "mode": "f512",
+       "concurrency": 1,
+       "max_tokens": 512,
+       "reps": 1
+      }
+     }
+    },
+    "done": true
+   }
+  }
+ ]
+}
