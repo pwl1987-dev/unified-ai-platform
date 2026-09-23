@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 03（KV 四路对决 → 三档 Profile + Gate C，v1.1 执行合同）— **完成（P0A→P4 全链，Gate C 三档 PASS）**
-- **Last Completed**: Phase 02 全相位（2026-09-21）——**Gate B Overall PASS（B-L2 ∧ B-X2）**；composite_L2=B0 配方 / composite_X2=B0+q4 护栏；SLO 定标曲线全档 + ceiling 245K/262K seed99 双 PASS（262,144 模型硬上限；**Erratum EP03-A2：正式 SLO 状态仍 SLO_UNDECIDED**）；详见 reports/phase-02-tp2.md（§11 勘误）
-- **Current Task**: —（Phase 03 已收口；Next=Phase 04 权重量化计划评审）
-- **Next Task**: P1 KV 四路对决（NATIVE/FP8E4/FP8C/KVARN-0.28 参考）→ P2 三档 Profile → P3 Gate C → P4 收口；TP1-C4 补测=机会式（GPU2 空闲才补）
+- **Phase**: 04（权重量化与分层混合 → Q-Profile Pareto + Gate D，v1.0 执行合同）— **执行中（P0A 契约冻结）**
+- **Last Completed**: Phase 03 全相位（2026-09-22）——**Gate C 三档 PASS**（short/daily/extreme）；0.29 主栈 KV=NATIVE_BF16；238K/245K PRODUCTION_SAFE + 262K HARD_CEILING（27 格全 5/5）；FP8-KV UNSUPPORTED 三 boot 取证；详见 reports/phase-03-kv.md
+- **Current Task**: P0A 冻结（Q0 forensic/teacher 血缘 VERIFIED/能力探针/三分数据/gates-phase04）
+- **Next Task**: P0B GPU 探针（官方 FP8→Q4 资格/W8A16 构建/NVFP4 判读/teacher 采集）→ P1 敏感度图+Q1/Q2 → P2 矩阵 Screen → P3 Pareto+Qualify → P4 Gate D 收口；TP1-C4 补测=机会式（GPU2 空闲才补）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 

@@ -1,0 +1,17 @@
+[
+ {
+  "tensor": "model.language_model.layers.11.self_attn.q_proj",
+  "cosine_f64": 0.994384,
+  "rel_frob": 0.106062
+ },
+ {
+  "tensor": "model.language_model.layers.0.linear_attn.in_proj_qkv",
+  "cosine_f64": 0.994894,
+  "rel_frob": 0.101094
+ },
+ {
+  "tensor": "model.language_model.layers.0.mlp.down_proj",
+  "cosine_f64": 0.994005,
+  "rel_frob": 0.10944
+ }
+]

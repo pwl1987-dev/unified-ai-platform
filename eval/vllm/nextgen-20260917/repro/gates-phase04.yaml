@@ -1,0 +1,141 @@
+# gates-phase04.yaml — Phase 04 全门槛冻结（v1.0，P0A 冻结，禁止看结果后修改）
+# 依据：用户 2026-09-22 十三节执行合同 + MASTER §10（行 489-554）+ §17 Gate D（行 835-837）
+#       + Phase 03 交接（KV=NATIVE_BF16 定案）
+# 判定口径：质量 1pp 预警/2pp 硬线；先 hard eligibility 后六轴 epsilon-Pareto；禁综合总分/禁 bit 排名
+version: 1
+frozen_utc: "2026-09-22"
+measurement_contract_sha: 80e7d15
+runner_safety_baseline: 899eb5a
+manifest_schema: {version: "1.4", sha256: 3f934273ad2821de9df1897e80729fea36dddc91c5afa4d568a3bd95ae91c619}
+runtime_baseline:
+  primary_029: 继承 runtime029_phase02_baseline（tree 4632d624…，只读；变更=ENV_DRIFT 暂停级）
+  kv_frozen: NATIVE_BF16（Phase 03 定案；任何 KV 变化=新实验 ID 且非本相位）
+  gpu: {tp2: [3, 4], tp1_opportunistic: 2, forbidden: [0, 1], no_ops: [5, 6, 7], port_8000: 只读}
+
+# ============================================================ 单变量与新实验 ID
+single_variable:
+  primary: 权重量化/分层量化方式
+  new_experiment_id_triggers: [parent_weights, quant_recipe, module_precision_map,
+    calibration_corpus_or_order_or_seed, quant_tool_or_version, vllm_or_runtime,
+    topology, kv_dtype, dflash_spec_config, fixture, concurrency_or_load, power_limit]
+  rule: "禁止把多项变化合并后与 Q0 直接比较"
+
+# ============================================================ Same-base 资格（Pareto 准入）
+same_base_rules:
+  pareto_base: "coding-v1.1 血缘（teacher=/data/compose/qwen27b/train/merged-bf16，VERIFIED_LINEAGE）"
+  Q4_OFFICIAL: "CROSS_BASE_REFERENCE / PROBE_ONLY（/data/models/Qwen3.8-27B-FP8）——只验证加载/kernel/SM89/兼容/smoke；不进 Gate D Pareto"
+  Q4_CODING_V1_1: "仅当官方探针存活后构建；same-base verification（schema 1.4 quant_provenance 全字段+模块 SHA 核对）过 → PARETO_ELIGIBLE"
+  variants_on_disk: "conservative-GDNbf16/head4 族/lean262k/nomtp = 零成本 interpolation/reference（recipe 缺失）——不占 Pareto 名额"
+  teacher_usage: "敏感度 teacher 只用 merged-bf16；底座 Qwen3.8-27B-BF16=merge base（cross-base 标签）"
+
+# ============================================================ 候选矩阵（资格探针前置）
+candidates:
+  Q0: {form: "现役 W4g128+int8 头/embed（forensic 在案）", eligibility: FROZEN_BASELINE}
+  W8A16_SAME_BASE: {form: "int8 g128 sym W8A16（oneshot，calib=quant_calib_sensitivity_dev 64 样本，max_seq 1024——TRAIN-NOTES 层0 OOM 教训）", eligibility: TO_BUILD}
+  Q4_OFFICIAL: {form: 官方 FP8（quant_method=fp8 dynamic e4m3）, eligibility: PROBE_ONLY}
+  Q4_CODING_V1_1: {form: compressed-tensors W8A8-FP8（SM89 min_capability=89 合格源码级）, eligibility: CONDITIONAL_ON_PROBE}
+  Q1: {form: "MLP W4 + attn/GDN G64 + 首尾层 W8（按敏感度实例化）", eligibility: CONDITIONAL_ON_SENSITIVITY}
+  Q2: {form: "MLP W4 + attn W8/FP8 + GDN G64 + head FP8/BF16", eligibility: CONDITIONAL_ON_SENSITIVITY}
+  Q3: {form: W4A8-FP8, eligibility: UNSUPPORTED_BY_ARCH}      # min_capability=90（hopper）
+  Q5: {form: NVFP4/MXFP4, eligibility: EMULATION_SMOKE_ONLY}   # Ada 无 FP4 硬件，仅正确性 smoke
+  W3_W2: {rule: "一级候选全部完成后才可投入；本相位默认不测"}
+
+# ============================================================ 质量门
+quality_gates:
+  reference: "same-base reference（Q0=现役；W8A16=准上界）"
+  screen_warning_pp: 1.0        # Screen 阶段任核心轴 >1pp → 预警（可继续但记录）
+  qualify_hard_fail_pp: 2.0     # Qualify 阶段任核心质量轴 >2pp → 硬败（MASTER 行 550/258）
+  core_axes_zero_regress: [code_axes(humaneval), tool_json_structural, verbatim, needle]
+  bfcl: MEASUREMENT_NOT_AVAILABLE     # 轴不可用如实标注；不自动 PASS
+  tool_json_micro_suite:
+    file: tools/ph4_tooljson_micro.py（20 条确定性判据，selftest PASS 在案）
+    role: safety gate（结构破坏=否决级；通过≠BFCL）
+    verdicts: [STRUCTURAL_SAFE, PARTIAL_REVIEW, STRUCTURAL_FAIL]
+  screen_quality_dev: "fixtures/data-roles/screen_quality_dev.json（needle s99@32K/128K + verbatim[0:50] + HE[0:40]+GSM8K[0:80]）"
+  final_quality_holdout:
+    sealed: true                 # P3 shortlist 后才首次打开；禁用于 recipe/层选/调参
+    contents: "fixtures/data-roles/final_quality_holdout.json（needle s2/s5 多档 + verbatim[50:100] + HE[40:]+GSM8K[80:]+IFEval+XFC 全量）"
+
+# ============================================================ 立即淘汰（MASTER §10.5 照抄）
+immediate_reject:
+  - 无法稳定加载或静默回退到非预期 kernel
+  - 任一核心质量轴退步 >2pp
+  - 产生复读、乱码、工具 JSON 破坏
+  - 相同显存档下同时比 Q0 更慢且质量不更好
+  - FP4 仅模拟开销、无质量或容量收益
+  - W3/W2 未过质量 smoke（且本相位默认后置）
+
+# ============================================================ Pareto 契约（Gate D）
+pareto_contract:
+  no_weighted_total: true
+  no_bit_axis_ranking: true
+  hard_eligibility_first: [稳定加载+kernel 符预期, 质量门过(≤2pp/零结构退步), §10.5 未触发]
+  six_axes: [quality, C1_throughput, C4_C8_throughput, prefill_ttft, vram, energy_J_per_token]
+  epsilon_bands:                    # 看结果前冻结；落带=equivalent（禁 0.x% 微差假 dominance）
+    quality_pp: 1.0                 # 质量轴用 pp gate（与质量门一致）
+    throughput_pct: 3.0             # 依据：认证形制 back-to-back spread 0.14%、3% 噪声线（Phase 00-03 惯例）
+    prefill_ttft_pct: 3.0
+    vram_band: "max(200 MiB, 2%)"   # 依据：NVML MiB 级采样粒度
+    energy_pct: 5.0                 # 依据：功耗积分含采样/窗位误差（保守带）
+    startup_pct: 10.0
+  output_profile_count: 2-3         # 保留不同生产角色覆盖价值（吞吐/VRAM、交互质量/延迟、长上下文质量/容量）
+  routing_note: "允许分 workload 路由不同 Q-Profile，但必须说明边界（Gate D 报告）"
+
+# ============================================================ 能效协议（METRICS-SCHEMA §5 实现）
+energy_protocol:
+  official_metric: J_per_output_token
+  also_report: [tok_per_J, mean_power_W, peak_power_W, throttle_reasons]
+  window_split: {boot_model_load: "独立采样窗（boot 期 NVML 采样）", serving_steady: "请求窗梯形积分", rule: 禁混算}
+  power_window_gate: "power_limit_w 分桶（250/450 cron 窗）——比较仅限同桶；混窗 run=FLAG 不入 Pareto"
+  reporter: tools/ph4_energy_report.py（selftest PASS：恒 100W×10s×100tok → ~1050J/10.5 J-per-tok）
+  nvidia_ips_note: "P0B/P2 各臂 boot 期并行启动 NVML 采样器落盘（boot 窗能量分列依据）"
+
+# ============================================================ 敏感度方法冻结（§10.3A）
+sensitivity_method:
+  teacher: /data/compose/qwen27b/train/merged-bf16（VERIFIED_LINEAGE——三重证据链）
+  dev_data: quant_calibration_sensitivity_dev（64 样本 71b08a93…）
+  local_metrics: "闭式：MSE/cos（含交叉项精确式）/Hessian 加权误差 tr(ΔWGΔWᵀ)/rel_frob——collector selftest 精确通过（rel 0.0000）"
+  layer_type_separation: "16 full-attn vs 48 GDN 强制分列（dry-run STRUCTURE_OK 在案）"
+  family_nll_delta: "NLL/perplexity 增量=family 级全前向（逐层 NLL 不可行——成本声明，非降级）"
+  restoration: "模块族先恢复 → 胜出族内细到层（两轮）；只按 calibration/sensitivity dev + screen quality dev 决策"
+
+# ============================================================ 量化构建契约
+build_contract:
+  env: fp8c-build 容器（Docker python:3.12-slim+uv；llmcompressor 0.12.1a/compressed-tensors 0.18.0/torch 2.13.0+cu13）
+  isolation: [绝不写 vllm29-env/vllm28-env, 模型源只读, artifact 新目录 immutable]
+  provenance: schema 1.4 quant_provenance 全字段必填（parent_weight_sha/artifact_sha_manifest/tokenizer_sha/config_sha/quant_recipe_sha/quant_tool_lock_sha/calibration_manifest_sha/calibration_seed/calibration_order_sha/module_precision_map/actual_kernel_backend）
+  w8a16_recipe_frozen: {scheme: "int8 g128 sym group（pack-quantized，Marlin 服务路径同 Q0 家族）", observer: minmax, calib: 三分 dev 64 样本, max_seq_len: 1024, seed: 20260921, order: corpus 文件序（order_sha 落盘）}
+  q1_q2_recipe_rule: "分层 = llmcompressor config_groups/targets/ignore（探针实证支持）；每 artifact recipe/precision map 全量落盘"
+
+# ============================================================ Phase 03 Debt disposition（合同 §五）
+phase03_debt_disposition:
+  TP1_C4: {disposition: OPPORTUNISTIC, note: "GPU2 空闲即补（修正协议 TP1 D565-C4 3-boot）"}
+  FP8_KV_unlock: {disposition: DEFERRED_CONDITIONAL, note: "上游 flashinfer/CCCL 修复前不进复合臂；解锁后 Phase 05+ 复评 X128-C4/X220-C2"}
+  calibration_isolation: {disposition: DO_NOW_CLOSED, note: "已升级三分法（fixtures/data-roles/* + checker PASS）"}
+  K5_direction_aware_floor: {disposition: CLOSED_AS_RULE_ADOPTED, note: "规则采纳记录；不烧 GPU（Phase 03 纸面裁决已终）"}
+  strong_eviction_churn: {disposition: DEFERRED, to: Phase06, note: "与权重结论无关（KV 压力形态）"}
+  tenant_isolation_probe: {disposition: DEFERRED_BY_PHASE04_CONTRACT, to: Phase06, note: "随真实 Agent 横评"}
+  graph_replay_metrics: {disposition: CONDITIONAL, note: "本相位 CG 相关臂需要时启用 --cudagraph-metrics；默认 Q0 同款 CG 配置不强制"}
+  MS8_C8: {disposition: TRANSFERRED, to: Phase05_topology, note: "吞吐档归拓扑赛（正式转移记录）"}
+  slo_238plus_endpoints: {disposition: DEFERRED, note: "非 Gate D 必需；生产需要时按 Profile 卡扩展"}
+
+# ============================================================ 矩阵形制（P2）
+matrix:
+  concurrencies: [1, 2, 4, 8]
+  fixtures: [P4K, P32K, P128K]      # P220K 仅容量允许时
+  micro: D565
+  capacity_rule: "确定性不可行 cell 标 CAPACITY_LIMIT 正式态不强跑"
+  per_arm_collect: [artifact_size, per_gpu_vram, startup_time, ttft_prefill, decode_aggregate,
+                    J_per_token, tok_per_J, mean_peak_W, throttle, dflash_acceptance,
+                    needle_screen, nan_inf_scan, scale_saturation, abnormal_layers,
+                    cross_boot_drift, code_zh_tool_ood_smoke]
+  screen_promotion: "Screen 信号 <2× 资格线 → provisional（Phase 03 方法论继承）"
+  qualify_form: {boots: 3, repeats: 3, protocol: "认证形制 v2（cache 钉死+暖机+W0 弃置）"}
+
+# ============================================================ 暂停条件（合同 §十三）
+pause_conditions:
+  - Authority/冻结合同冲突
+  - exact same-base BF16 parent 无法证明（已解除：VERIFIED_LINEAGE）
+  - 须改冻结 Gate 才能继续
+  - GPU/生产/未知进程资源冲突且授权卡位无法规避
+  - 同一技术问题两轮合理修复不收敛

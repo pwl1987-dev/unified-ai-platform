@@ -1,0 +1,16 @@
+{
+ "purpose": "Phase 04 P0A 完成门核对单（合同 §六）",
+ "checked_utc": "2026-09-22",
+ "gates_phase04_frozen": true,
+ "schema_selftest": "manifest.schema.json 1.4 JSON 合法（sha 3f934273…）",
+ "three_way_overlap": "fixtures/data-roles/overlap-check.json verdict=PASS",
+ "q0_identity": "repro/quant-phase04/q0-forensic.json（21 文件 SHA+dtype map+script 链+recipe 缺口如实）",
+ "teacher_lineage": "VERIFIED_LINEAGE（merge_meta+结构+权重级 cosine 0.994-0.995 三模块族）",
+ "energy_reporter_synthetic": "PASS（1050J/10.5 J-per-tok 预期带内）",
+ "sensitivity_collector": "selftest PASS（闭式精确）+ dry-run STRUCTURE_OK（16/48 分列）",
+ "tooljson_micro_suite": "selftest PASS（判据器正反例）",
+ "capability_probe_report": "repro/capabilities/vllm029-phase04-quant-probes.json",
+ "debt_disposition": "gates-phase04.yaml phase03_debt_disposition 9 项（DO_NOW/OPPORTUNISTIC/DEFERRED/CLOSED/TRANSFERRED/CONDITIONAL）",
+ "status_drift_fixed": "STATUS.md Next Task 已更新为 Phase 04 链",
+ "manifest_v5": "phase04 块（variant_registry 10 项+teacher+三分数据+能效协议）"
+}

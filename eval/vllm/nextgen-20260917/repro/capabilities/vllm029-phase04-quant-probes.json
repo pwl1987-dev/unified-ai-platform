@@ -1,0 +1,36 @@
+{
+ "purpose": "Phase 04 P0A.4 能力探针（源码级；vllm tree 4632d624… post-patch；llmcompressor 0.12.1a/compressed-tensors 0.18.0 容器实测）",
+ "probed_utc": "2026-09-22",
+ "sm89_capability_matrix": {
+  "source": "vllm/model_executor/layers/quantization/compressed_tensors/schemes/*.get_min_capability",
+  "W8A8_FP8(Q4)": {"min_capability": 89, "note": "lovelace and up——SM89(4090) 合格", "verdict": "ELIGIBLE_BY_SOURCE"},
+  "W4A8_FP8(Q3 主形态)": {"min_capability": 90, "note": "hopper only——SM89 架构性排除", "verdict": "UNSUPPORTED_BY_ARCH"},
+  "W4A8_INT(Q3 变体)": {"min_capability": 1, "note": "通用门槛；次要候选（Q3 主形态已死后按需复访）", "verdict": "ELIGIBLE_SECONDARY"},
+  "W4A4_NVFP4(Q5)": {"min_capability": 75, "note": "Ada 无 FP4 硬件 → 软件路径（init_nvfp4_linear_kernel）确定 emulation；按 MASTER 定位 research/smoke-only", "verdict": "EMULATION_SMOKED_ONLY"},
+  "W4A4_MXFP4(Q5b)": {"min_capability": 80, "note": "同上软件路径", "verdict": "EMULATION_SMOKE_ONLY"},
+  "WNa16(Q0 家族/W8A16-int)": {"min_capability": 75, "note": "Turing+（Q0 现役 Marlin 路径；W8A16 g128 同路径可建）", "verdict": "ELIGIBLE"},
+  "W8A16_FP8(权重 fp8/激活 bf16)": {"min_capability": 75, "note": "中间选项（仅权重量化 float8）——备选记录，不进一级矩阵", "verdict": "ELIGIBLE_OPTIONAL"}
+ },
+ "w8a8_fp8_kernel_path": {
+  "scheme_file": "compressed_tensors_w8a8_fp8.py",
+  "apply": "init_fp8_linear_kernel → choose_scaled_mm_linear_kernel（kernels/linear/scaled_mm + cute_dsl，dispatch 顺序选择，boot 日志打印实选）",
+  "flashinfer_dependency_in_scheme": 0,
+  "expectation": "与 FP8-KV 的 flashinfer JIT CCCL 墙无关（权重 GEMM 走 in-tree scaled_mm 族）——boot 探针定案",
+  "block_structure_note": "block 策略走 triton_scaled_mm（compressed_tensors/triton_scaled_mm.py in-tree）；channel/tensor 策略走 fp8_utils 标准路径"
+ },
+ "llmcompressor_mixed_capability": {
+  "QuantizationModifier fields": ["config_groups", "targets", "ignore", "scheme", "kv_cache_scheme", "weight_observer", "input_observer", "output_observer", "observer", "..."],
+  "verdict": "MIXED_GROUPS_SUPPORTED——config_groups 字段原生支持分组 scheme + targets/ignore 分层；Q1/Q2 分层构建结构可达",
+  "w8a16_oneshot": "QuantizationArgs(num_bits=8, type='int', group_size=128, strategy='group', symmetric=True) 无 activation scheme → W8A16 pack-quantized（同 Q0 家族格式，Marlin 服务）"
+ },
+ "calibration_assets_reuse": {
+  "phase03_corpus": "fixtures/calibration/phase03-corpus（64 样本 sha 71b08a93…）+ overlap checker——直接复用为 quant_calibration_sensitivity_dev 基底",
+  "note": "敏感度图开发集=同语料（与评测集隔离已证）；如需扩样须重过三分 overlap checker"
+ },
+ "probe_branches_for_P0B": {
+  "A_q4_official": "boot 官方 Qwen3.8-27B-FP8（quant_method=fp8 dynamic e4m3——非 compressed-tensors 家族，走 vLLM fp8 原生路径）最小 boot + kernel 实选日志 = Q4 资格",
+  "B_w8a16": "llmcompressor oneshot W8A16 g128 sym（calib=三分 dev 语料）→ 同 Q0 服务路径",
+  "C_nvfp4": "无需 boot 大矩阵——源码已证 emulation；Q5 仅 correctness smoke（如测）",
+  "note_q4_format_caveat": "官方 FP8 是 fp8 quant_method（dynamic activation scheme）；coding-v1.1 版若建将用 compressed-tensors W8A8（static/dynamic 按 P0B 实测定）——两格式 kernel 路径都需 boot 日志证据"
+ }
+}

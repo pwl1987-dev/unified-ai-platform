@@ -1,6 +1,6 @@
 # nextgen-20260917 战役冻结清单（Phase 00 起生效）
 # 本文件是机器可读的战役级事实冻结。修改须走正式修订（MASTER-TEST-PLAN §18）。
-version: 4
+version: 5
 frozen_at_utc: "2026-09-17T00:00:00Z"   # 以 commit #1 实际时间为准，见 git log
 plan: MASTER-TEST-PLAN.md@v1.2
 repo_baseline: f2d1054
@@ -243,3 +243,48 @@ phase03:
     position_margin_note: "262K 档 chat 模板实测 +52 → position 余量仅 7 token（MODEL_POSITION_BOUNDARY 硬证据；只可 HARD_CEILING_CAPABILITY_PASS）"
   staging_prefix: "raw/staging/PH3-*（区别 Phase 02 内部 P03-QUALIFY/P04-SLO 目录）"
   gate_c: "short/daily/extreme 分档 verdict；单 route UNSUPPORTED 不拖垮全局；KVARN 只作 reference 保留至 Phase 08"
+
+# ---------------------------------------------------------------------------
+# Phase 04（权重量化与分层混合 → Q-Profile Pareto + Gate D；v1.0 执行合同 2026-09-22 批准）。
+# 正式修订：version 4 -> 5。KV 全程冻结 NATIVE_BF16；主变量=权重量化方式（十类变化任一=新实验 ID）。
+phase04:
+  plan_version: v1.0
+  measurement_contract_sha: 80e7d15c6e18247615f5425d2e5ece9cffdfe3d5   # 继承
+  runner_safety_baseline: 899eb5a3ad59b6e548ff7bd507085061f8732089     # 继承下限
+  kv_frozen: NATIVE_BF16                 # Phase 03 定案；FP8-KV=上游条件债不进复合臂
+  q0_baseline:
+    dir: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128
+    true_form: "W4g128 sym 主体 + lm_head INT8 就地 requant + embed INT8 就地 requant + ignore 207（vision 110/GDN in_proj 96/lm_head 1）"
+    forensic: eval/vllm/nextgen-20260917/repro/quant-phase04/q0-forensic.json
+    recipe_gap: "AutoRound 原始 recipe 不在盘（TRAIN-NOTES 文字记录在案）；不补造"
+  teacher_lineage:
+    verdict: VERIFIED_LINEAGE
+    teacher: /data/compose/qwen27b/train/merged-bf16        # 精确 pre-quant parent（52G/12 shards）
+    merge_meta: {merged_from: checkpoint-4840, base: /data/models/Qwen3.8-27B-BF16}
+    evidence: "tokenizer 三件 SHA 全等 + config 非量化字段全等 + 权重级 spot 抽查 cosine 0.994-0.995（三模块族 W4 签名）+ TRAIN-NOTES 2026-09-02/09-06 链"
+    note: "52G 底座 Qwen3.8-27B-BF16=merge base（粗辈）；sensitivity teacher 用 merged-bf16"
+  variant_registry:
+    Q0: {path: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128, role: frozen_baseline, base: coding-v1.1}
+    Q4_OFFICIAL: {path: /data/models/Qwen3.8-27B-FP8, role: CROSS_BASE_REFERENCE/PROBE_ONLY, base: qwen3.8-27B-base}
+    BF16_BASE: {path: /data/models/Qwen3.8-27B-BF16, role: cross_base_slow_quality_reference + merge base, base: qwen3.8-27B-base}
+    BF16_TEACHER: {path: /data/compose/qwen27b/train/merged-bf16, role: sensitivity_teacher(VERIFIED), base: coding-v1.1}
+    VAR_CONSERVATIVE: {path: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-conservative-GDNbf16, role: interpolation_reference, recipe_missing: true}
+    VAR_HEAD4_G64V3: {path: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-head4-g64-v3, role: interpolation_reference, recipe_missing: true}
+    VAR_LEAN262K: {path: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-lean262k, role: interpolation_reference, dirty: "config 曾共用 inode 事故（TRAIN-NOTES 2026-09-06）"}
+    VAR_NOMTP: {path: /data/models/Qwen3.8-27B-coding-v1.1-W4A16-nomtp, role: interpolation_reference, dirty: 同上}
+    W8A16_CAND: {role: to_build_same_base, toolchain: fp8c-build 容器}
+    Q4_CODING: {role: to_build_same_base_only_if_official_probe_alive}
+  data_three_way:
+    quant_calibration_sensitivity_dev: fixtures/data-roles/quant-calib-sens-dev（复用 phase03 corpus 64 样本 + 敏感度开发扩展）
+    screen_quality_dev: fixtures/data-roles/screen-quality-dev
+    final_quality_holdout: fixtures/data-roles/final-quality-holdout（P3 才首次打开）
+    overlap_rule: "样本内容/ID/hash 三层零交叉；checker PASS 才可继续"
+  build_env:
+    container: fp8c-build（Docker python:3.12-slim + uv venv；llmcompressor 0.12.1a/compressed-tensors 0.18.0/torch 2.13.0+cu13）
+    isolation: "绝不写 vllm29-env/vllm28-env；模型源只读；artifact 新目录 immutable"
+  energy_protocol:
+    official_metric: J/output-token
+    also_report: [tok_per_J, mean_power_W, peak_power_W, throttle_reasons]
+    split: "boot/model-load 能耗与 serving 稳态分列禁混算（METRICS-SCHEMA §5 梯形积分）"
+    power_window: "250W 恒定窗内测量（ops gpu-power.sh cron 零触碰，仅读取核对）"
+  staging_prefix: "raw/staging/PH4-* 与 repro/quant-phase04/"

@@ -1,0 +1,31 @@
+{
+ "role_name": "screen_quality_dev",
+ "frozen_utc": "2026-09-22",
+ "role": "B：P1/P2 短质量筛选（可淘汰候选；禁开 holdout）",
+ "contents": {
+  "needle": {
+   "seeds": [
+    99
+   ],
+   "tiers": [
+    "p32k",
+    "p128k"
+   ],
+   "fixture_family": "Phase 01-03 既有 needle fixture 族（s99 阳性对照协议）",
+   "registry_hashes": {
+    "needle-p238k-s99-ph3": "75853da7f50f5c8ce4c7afd95c7a2ac5111877342b7a82134b15c3dcc104ac7f",
+    "needle-p245k-s99-ph3": "c5c4f7de34f710b29e496ffbee15531ca86779263cfc150d2266b6b7168b4076",
+    "needle-p262k-s99-ph3": "9f478c1a8737f233b0c7683b6d4e5d94be20a3728940658f2a0901843368ea92"
+   }
+  },
+  "verbatim": {
+   "source": "tools/verbatim_check.py 冻结 100 条",
+   "screen_slice": "items[0:50]"
+  },
+  "rulers": {
+   "humaneval": "index[0:40]",
+   "gsm8k": "index[0:80]",
+   "invoked_via": "run_baseline.py --max 前缀切片"
+  }
+ }
+}

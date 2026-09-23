@@ -1,0 +1,32 @@
+{
+ "role_name": "final_quality_holdout",
+ "frozen_utc": "2026-09-22",
+ "role": "C：P3 Qualify 才允许首次打开；禁用于 recipe/层选/调参",
+ "sealed": true,
+ "contents": {
+  "needle": {
+   "seeds": [
+    2,
+    5
+   ],
+   "tiers": [
+    "p128k",
+    "p220k",
+    "p238k",
+    "p245k"
+   ],
+   "positive_control": "s99 仅作阳性对照标记（非判别集）"
+  },
+  "verbatim": {
+   "holdout_slice": "items[50:100]（与 screen [0:50) 不相交）"
+  },
+  "rulers": {
+   "humaneval": "index[40:]（与 screen [0:40) 不相交）",
+   "gsm8k": "index[80:]（与 screen [0:80) 不相交）",
+   "ifeval": "全量（screen 不用）",
+   "xfc": "全量（screen 不用）",
+   "harness_note": "P3 前为 run_baseline.py 加 --skip 偏移并自测"
+  },
+  "bfcl": "MEASUREMENT_NOT_AVAILABLE（Phase 01 起轴不可用，不自动 PASS）"
+ }
+}

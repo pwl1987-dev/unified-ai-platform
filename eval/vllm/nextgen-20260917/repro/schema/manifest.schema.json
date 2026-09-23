@@ -1,147 +1,469 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "nextgen experiment manifest (manifest.json)",
-  "manifest_schema_version": "1.3",
+  "manifest_schema_version": "1.4",
   "type": "object",
-  "required": ["experiment_id", "status", "evidence_class", "created_utc",
-               "harness_git_sha", "host_snapshot_sha256", "env_lock_sha256",
-               "gpu", "server", "fixture", "recipe", "timing"],
+  "required": [
+    "experiment_id",
+    "status",
+    "evidence_class",
+    "created_utc",
+    "harness_git_sha",
+    "host_snapshot_sha256",
+    "env_lock_sha256",
+    "gpu",
+    "server",
+    "fixture",
+    "recipe",
+    "timing"
+  ],
   "properties": {
-    "experiment_id": {"type": "string"},
-    "status": {"enum": ["VALID_PASS", "VALID_FAIL", "INVALID", "UNSUPPORTED", "ABORTED", "REJECTED"]},
-    "evidence_class": {"enum": ["staging", "valid", "invalid", "unsupported"]},
-    "classification_reason": {"enum": ["PERF_GATE_FAIL", "OOM", "QUALITY_FAIL", "SERVER_CRASH",
-                                        "HARNESS_ERROR", "ENV_DRIFT", "SCHEMA_FAIL", "INTERRUPTED",
-                                        "CAPACITY_LIMIT", "NOT_RUN_UPSTREAM_CAPACITY", null]},
-    "candidate_decision": {"enum": ["PASS", "REJECTED", "DEFERRED_TO_PHASE03", null]},
-    "screen_decision": {"enum": ["IN", "OUT", "UNSUPPORTED", null],
-                        "description": "Phase 02 增补：9 向 Screen 级裁决（scalar/policy 两类 Gate 判定结果）。null=Phase 00/01 旧证据或非 Screen 语义"},
-    "evidence_quality": {"enum": ["COMPLETE", "PARTIAL", "MEASUREMENT_NOT_AVAILABLE", null],
-                         "description": "Phase 02 增补：证据完备度与实验六态正交（观测缺失≠失败，如 graph-replay 逐 dispatch 计量不可得时实验仍 VALID_PASS + PARTIAL）"},
-    "observation_class": {"enum": ["CEILING_OBSERVATION", null],
-                          "description": "Phase 02 增补：ceiling 晋级链产物只作观察记录不构成认证（245K/262K 档强制标注）"},
-    "created_utc": {"type": "string"},
-    "harness_git_sha": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
-    "harness_files_sha256": {"type": "object"},
-    "host_snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "env_lock_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "experiment_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "VALID_PASS",
+        "VALID_FAIL",
+        "INVALID",
+        "UNSUPPORTED",
+        "ABORTED",
+        "REJECTED"
+      ]
+    },
+    "evidence_class": {
+      "enum": [
+        "staging",
+        "valid",
+        "invalid",
+        "unsupported"
+      ]
+    },
+    "classification_reason": {
+      "enum": [
+        "PERF_GATE_FAIL",
+        "OOM",
+        "QUALITY_FAIL",
+        "SERVER_CRASH",
+        "HARNESS_ERROR",
+        "ENV_DRIFT",
+        "SCHEMA_FAIL",
+        "INTERRUPTED",
+        "CAPACITY_LIMIT",
+        "NOT_RUN_UPSTREAM_CAPACITY",
+        null
+      ]
+    },
+    "candidate_decision": {
+      "enum": [
+        "PASS",
+        "REJECTED",
+        "DEFERRED_TO_PHASE03",
+        null
+      ]
+    },
+    "screen_decision": {
+      "enum": [
+        "IN",
+        "OUT",
+        "UNSUPPORTED",
+        null
+      ],
+      "description": "Phase 02 增补：9 向 Screen 级裁决（scalar/policy 两类 Gate 判定结果）。null=Phase 00/01 旧证据或非 Screen 语义"
+    },
+    "evidence_quality": {
+      "enum": [
+        "COMPLETE",
+        "PARTIAL",
+        "MEASUREMENT_NOT_AVAILABLE",
+        null
+      ],
+      "description": "Phase 02 增补：证据完备度与实验六态正交（观测缺失≠失败，如 graph-replay 逐 dispatch 计量不可得时实验仍 VALID_PASS + PARTIAL）"
+    },
+    "observation_class": {
+      "enum": [
+        "CEILING_OBSERVATION",
+        null
+      ],
+      "description": "Phase 02 增补：ceiling 晋级链产物只作观察记录不构成认证（245K/262K 档强制标注）"
+    },
+    "created_utc": {
+      "type": "string"
+    },
+    "harness_git_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$"
+    },
+    "harness_files_sha256": {
+      "type": "object"
+    },
+    "host_snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "env_lock_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
     "gpu": {
       "type": "object",
-      "required": ["cards"],
+      "required": [
+        "cards"
+      ],
       "properties": {
         "cards": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["logical_index", "uuid", "pci_bdf"],
+            "required": [
+              "logical_index",
+              "uuid",
+              "pci_bdf"
+            ],
             "properties": {
-              "logical_index": {"type": "integer"},
-              "uuid": {"type": "string"},
-              "pci_bdf": {"type": "string"},
-              "role": {"type": "string"}
+              "logical_index": {
+                "type": "integer"
+              },
+              "uuid": {
+                "type": "string"
+              },
+              "pci_bdf": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
             }
           }
         },
-        "cuda_visible_devices": {"type": "string"},
-        "power_limit_w": {"type": "number"},
-        "initial_temp_c": {"type": "array", "items": {"type": "number"}},
-        "idle_vram_mib_per_card": {"type": "array", "items": {"type": "number"}}
+        "cuda_visible_devices": {
+          "type": "string"
+        },
+        "power_limit_w": {
+          "type": "number"
+        },
+        "initial_temp_c": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "idle_vram_mib_per_card": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
       }
     },
     "server": {
       "type": "object",
-      "required": ["port", "pid", "pgid", "tp", "max_num_seqs", "launch_cmd_file"],
+      "required": [
+        "port",
+        "pid",
+        "pgid",
+        "tp",
+        "max_num_seqs",
+        "launch_cmd_file"
+      ],
       "properties": {
-        "port": {"type": "integer"},
-        "pid": {"type": ["integer", "null"]},
-        "pgid": {"type": ["integer", "null"]},
-        "tp": {"type": "integer"},
-        "max_num_seqs": {"type": "integer"},
-        "launch_cmd_file": {"type": "string"},
-        "server_log_file": {"type": "string"},
-        "cache_root": {"type": "string"},
-        "model_sha256_manifest": {"type": "string"}
+        "port": {
+          "type": "integer"
+        },
+        "pid": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pgid": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "tp": {
+          "type": "integer"
+        },
+        "max_num_seqs": {
+          "type": "integer"
+        },
+        "launch_cmd_file": {
+          "type": "string"
+        },
+        "server_log_file": {
+          "type": "string"
+        },
+        "cache_root": {
+          "type": "string"
+        },
+        "model_sha256_manifest": {
+          "type": "string"
+        }
       }
     },
     "fixture": {
       "type": "object",
-      "required": ["name", "sha256"],
+      "required": [
+        "name",
+        "sha256"
+      ],
       "properties": {
-        "name": {"type": "string"},
-        "sha256": {"type": "string"},
-        "actual_input_tokens": {"type": ["integer", "null"]},
-        "requested_output_tokens": {"type": ["integer", "null"]}
+        "name": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "actual_input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "requested_output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
       }
     },
     "recipe": {
       "type": "object",
       "properties": {
-        "runtime": {"type": "string"},
-        "kv_profile": {"type": "string"},
-        "quant": {"type": "string"},
-        "spec": {"type": "string"},
-        "nbt": {"type": "integer"},
-        "cudagraph": {"type": "string"}
+        "runtime": {
+          "type": "string"
+        },
+        "kv_profile": {
+          "type": "string"
+        },
+        "quant": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "string"
+        },
+        "nbt": {
+          "type": "integer"
+        },
+        "cudagraph": {
+          "type": "string"
+        }
       }
     },
     "timing": {
       "type": "object",
-      "required": ["start_utc", "end_utc"],
+      "required": [
+        "start_utc",
+        "end_utc"
+      ],
       "properties": {
-        "start_utc": {"type": "string"},
-        "end_utc": {"type": "string"},
-        "duration_s": {"type": "number"}
+        "start_utc": {
+          "type": "string"
+        },
+        "end_utc": {
+          "type": "string"
+        },
+        "duration_s": {
+          "type": "number"
+        }
       }
     },
     "clock_sync": {
       "type": "object",
       "properties": {
-        "status": {"type": "string"},
-        "offset_ms": {"type": ["number", "null"]}
+        "status": {
+          "type": "string"
+        },
+        "offset_ms": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
       }
     },
-    "cpu_governor": {"type": "string"},
-    "files": {"type": "object"},
-    "kv_route": {"enum": ["NATIVE_BF16", "FP8_E4M3_STATIC_SCALE_1_0", "FP8_E4M3_CALIBRATED",
-                          "KVARN_K4V2_G128", null],
-                 "description": "Phase 03 增补（schema 1.3 additive）：KV cache 路线实名。FP8E4=static scale 1.0 与 FP8C=calibrated 分离命名，禁止混算"},
-    "route_eligibility": {"enum": ["ELIGIBLE", "DIAGNOSTIC_ONLY", "CROSS_RUNTIME_REFERENCE",
-                                   "UNSUPPORTED", null],
-                          "description": "Phase 03 增补：路线资格。FP8E4 恒为 DIAGNOSTIC_ONLY（不进生产 winner）；KVARN 0.28 恒为 CROSS_RUNTIME_REFERENCE（禁止跨版本 winner 加速比/tie-break/质量 FAIL 判定）"},
-    "capability_label": {"enum": ["PRODUCTION_SAFE", "BOUNDARY_PROFILE",
-                                  "HARD_CEILING_CAPABILITY_PASS", "UNSUPPORTED", null],
-                         "description": "Phase 03 增补：238K/245K/262K 等极限档标签。HARD_CEILING_CAPABILITY_PASS ≠ 默认生产工作点（须 model_position_margin 足够才可 PRODUCTION_SAFE）"},
+    "cpu_governor": {
+      "type": "string"
+    },
+    "files": {
+      "type": "object"
+    },
+    "kv_route": {
+      "enum": [
+        "NATIVE_BF16",
+        "FP8_E4M3_STATIC_SCALE_1_0",
+        "FP8_E4M3_CALIBRATED",
+        "KVARN_K4V2_G128",
+        null
+      ],
+      "description": "Phase 03 增补（schema 1.3 additive）：KV cache 路线实名。FP8E4=static scale 1.0 与 FP8C=calibrated 分离命名，禁止混算"
+    },
+    "route_eligibility": {
+      "enum": [
+        "ELIGIBLE",
+        "DIAGNOSTIC_ONLY",
+        "CROSS_RUNTIME_REFERENCE",
+        "UNSUPPORTED",
+        null
+      ],
+      "description": "Phase 03 增补：路线资格。FP8E4 恒为 DIAGNOSTIC_ONLY（不进生产 winner）；KVARN 0.28 恒为 CROSS_RUNTIME_REFERENCE（禁止跨版本 winner 加速比/tie-break/质量 FAIL 判定）"
+    },
+    "capability_label": {
+      "enum": [
+        "PRODUCTION_SAFE",
+        "BOUNDARY_PROFILE",
+        "HARD_CEILING_CAPABILITY_PASS",
+        "UNSUPPORTED",
+        null
+      ],
+      "description": "Phase 03 增补：238K/245K/262K 等极限档标签。HARD_CEILING_CAPABILITY_PASS ≠ 默认生产工作点（须 model_position_margin 足够才可 PRODUCTION_SAFE）"
+    },
     "cross_runtime_reference": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "description": "Phase 03 增补：跨版本参考臂登记（KVARN 0.28）",
       "properties": {
-        "reference_runtime": {"type": "string"},
-        "frozen_recipe": {"type": "string"},
-        "out_of_domain_marks": {"type": "array", "items": {"type": "string"},
-                                "description": "如 262K 标'不在 frozen 0.28 recipe 能力域'，非质量 FAIL"}
+        "reference_runtime": {
+          "type": "string"
+        },
+        "frozen_recipe": {
+          "type": "string"
+        },
+        "out_of_domain_marks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "如 262K 标'不在 frozen 0.28 recipe 能力域'，非质量 FAIL"
+        }
       }
     },
     "calibration_provenance": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "description": "Phase 03 增补：FP8C artifact lineage（KV-only 单变量证明齐全才可 Gate C 候选）",
       "properties": {
-        "parent_model_sha256": {"type": "string"},
-        "model_artifact_sha256": {"type": ["string", "object"],
-                                  "description": "artifact 文件清单聚合 SHA 或逐文件 manifest 路径"},
-        "calibration_dataset_sha256": {"type": "string"},
-        "calibration_recipe_sha256": {"type": "string"},
-        "calibration_toolchain": {"type": "object",
-                                  "description": "llm-compressor/compressed-tensors 等版本实名"},
-        "tokenizer_sha256": {"type": "string"},
-        "strategy": {"enum": ["per-tensor", "per-head", null]},
-        "sample_count": {"type": "integer"},
-        "max_seq_len": {"type": "integer"},
-        "seed": {"type": "integer"},
+        "parent_model_sha256": {
+          "type": "string"
+        },
+        "model_artifact_sha256": {
+          "type": [
+            "string",
+            "object"
+          ],
+          "description": "artifact 文件清单聚合 SHA 或逐文件 manifest 路径"
+        },
+        "calibration_dataset_sha256": {
+          "type": "string"
+        },
+        "calibration_recipe_sha256": {
+          "type": "string"
+        },
+        "calibration_toolchain": {
+          "type": "object",
+          "description": "llm-compressor/compressed-tensors 等版本实名"
+        },
+        "tokenizer_sha256": {
+          "type": "string"
+        },
+        "strategy": {
+          "enum": [
+            "per-tensor",
+            "per-head",
+            null
+          ]
+        },
+        "sample_count": {
+          "type": "integer"
+        },
+        "max_seq_len": {
+          "type": "integer"
+        },
+        "seed": {
+          "type": "integer"
+        },
         "single_variable_verification": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "description": "artifact_single_variable_verification 结果：tokenizer/template 不变、W4A16 config 不变、非 KV tensor 未重量化、无新增 W8A8/FP8 activation/weight 量化、resolved dtype/scales 与声明一致；任一不成立 → FP8C_KV_ONLY=UNSUPPORTED"
         }
       }
+    },
+    "quant_provenance": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Phase 04 增补（schema 1.4 additive）：量化 artifact 血缘（全字段必填才 PARETO_ELIGIBLE）",
+      "properties": {
+        "parent_weight_sha256": {
+          "type": "string"
+        },
+        "artifact_sha_manifest": {
+          "type": [
+            "string",
+            "object"
+          ],
+          "description": "逐文件 SHA 清单或其聚合 SHA+路径"
+        },
+        "tokenizer_sha256": {
+          "type": "string"
+        },
+        "config_sha256": {
+          "type": "string"
+        },
+        "quant_recipe_sha256": {
+          "type": "string"
+        },
+        "quant_tool_lock_sha256": {
+          "type": "string",
+          "description": "构建环境 lock（fp8c-build venv 关键包版本冻结哈希）"
+        },
+        "calibration_manifest_sha256": {
+          "type": "string"
+        },
+        "calibration_seed": {
+          "type": "integer"
+        },
+        "calibration_order_sha256": {
+          "type": "string",
+          "description": "校准样本顺序确定性哈希（禁 shuffle 未记录）"
+        },
+        "module_precision_map": {
+          "type": "object",
+          "description": "模块族→精度位宽实名表"
+        },
+        "actual_kernel_backend": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "boot 日志实证 kernel（如 MarlinLinearKernel/triton-scaled-mm/cutlass）"
+        }
+      }
+    },
+    "weight_profile": {
+      "enum": [
+        "Q0",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "W8A16_SAME_BASE",
+        "VARIANT_REFERENCE",
+        "TEACHER_BF16",
+        null
+      ],
+      "description": "Phase 04 增补：权重档实名（Pareto 资格见 gates-phase04 same-base 规则）"
     }
   }
 }
