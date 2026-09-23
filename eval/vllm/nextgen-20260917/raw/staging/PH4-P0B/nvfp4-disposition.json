@@ -1,0 +1,16 @@
+{
+ "purpose": "Phase 04 P0B.C — Q5 NVFP4/MXFP4 判读归档",
+ "decided_utc": "2026-09-23",
+ "verdict": "EMULATION_SMOKE_ONLY_NOT_BUILT",
+ "reasoning": [
+  "SM89(Ada) 无 FP4 tensor core——源码级 min_capability=75/80 表明软件路径（init_nvfp4_linear_kernel/mxfp4 模块），MASTER §10.2 行 513 预设'非原生研究档'",
+  "在盘无任何 NVFP4/MXFP4 checkpoint（/data/models 全量清点）",
+  "按 gates-phase04 Q5 定位+合同'不浪费 GPU 跑全矩阵/研究档不投构建预算'：不构建 artifact、不进性能矩阵",
+  "如未来需要 correctness smoke：llmcompressor nvfp4 recipe 构建链路已具备（fp8c-build 容器）"
+ ],
+ "candidate_status": {
+  "Q5_NVFP4": "NOT_BUILT_EMULATION",
+  "Q5_MXFP4": "NOT_BUILT_EMULATION"
+ },
+ "evidence": "repro/capabilities/vllm029-phase04-quant-probes.json sm89_capability_matrix"
+}

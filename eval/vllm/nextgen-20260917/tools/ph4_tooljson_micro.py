@@ -172,7 +172,8 @@ def run(api: str, out: str, model: str) -> int:
     results = []
     for it in SUITE:
         body = json.dumps({"model": model, "messages": [{"role": "user", "content": it["prompt"]}],
-                           "max_tokens": 200, "temperature": 0, "stream": False}).encode()
+                           "max_tokens": 200, "temperature": 0, "stream": False,
+                           "chat_template_kwargs": {"enable_thinking": False}}).encode()
         req = urllib.request.Request(api + "/chat/completions", data=body,
                                      headers={"Content-Type": "application/json"})
         t0 = time.monotonic()
@@ -187,14 +188,14 @@ def run(api: str, out: str, model: str) -> int:
                         "text_head": text[:80], "latency_s": round(time.monotonic() - t0, 2)})
         print(f"[{it['id']}] {'PASS' if passed else 'FAIL ' + why}")
     n_pass = sum(r["passed"] for r in results)
-    verdict = {"STRUCTURAL_SAFE" if n_pass == len(SUITE)
-               else "STRUCTURAL_FAIL" if n_pass < len(SUITE) - 2 else "PARTIAL_REVIEW"}
+    verdict = ("STRUCTURAL_SAFE" if n_pass == len(SUITE)
+               else "STRUCTURAL_FAIL" if n_pass < len(SUITE) - 2 else "PARTIAL_REVIEW")
     rep = {"suite": "tool-json-micro-v1", "n_pass": n_pass, "n_total": len(SUITE),
-           "verdict": verdict[0], "role": "safety gate（不冒充 BFCL）",
+           "verdict": verdict, "role": "safety gate（不冒充 BFCL）",
            "results": results}
     json.dump(rep, open(out, "w"), indent=1, ensure_ascii=False)
-    print(json.dumps({"verdict": verdict[0], "n_pass": n_pass}))
-    return 0 if verdict[0] == "STRUCTURAL_SAFE" else 1
+    print(json.dumps({"verdict": verdict, "n_pass": n_pass}))
+    return 0 if verdict == "STRUCTURAL_SAFE" else 1
 
 
 def main() -> int:

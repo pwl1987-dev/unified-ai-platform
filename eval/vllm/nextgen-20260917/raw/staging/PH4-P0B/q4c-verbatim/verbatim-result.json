@@ -1,0 +1,16 @@
+{
+ "experiment_id": "PH4-Q4OFF-VB",
+ "wall_s": 21.774,
+ "first_line_ok": true,
+ "last_line_ok": true,
+ "line_count": 100,
+ "expected_count": 100,
+ "order_ok": true,
+ "numbering_ok": true,
+ "loop_ok": true,
+ "exact_lines_ok": 100,
+ "mismatch_examples": [],
+ "loop_repeats": 0,
+ "PASS": true,
+ "answer_head": "```\n001|安莎社|2020-09-05|第1号公报称局势稳定，指标7点，环比升7%。\n002|安莎社|2022-09-11|第2号公报称局势稳定，指标14点，环比升3%。\n003|埃菲社|2026-09-01|第3号公报称局势稳定，指"
+}

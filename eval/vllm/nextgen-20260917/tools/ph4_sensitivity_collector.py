@@ -149,12 +149,19 @@ def collect(model_dir: str, corpus: str, out_csv: str, out_json: str,
             max_samples: int, max_tokens: int) -> int:
     """真采集：transformers 前向 + hook 累积 G + 逐模块闭式度量（容器内运行）。"""
     import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer
-
+    from transformers import AutoTokenizer
+    max_mem = {0: "20GiB", 1: "20GiB", "cpu": "80GiB"}   # 留激活余量（OOM 教训：auto 铺满双卡）
+    try:
+        from transformers import AutoModelForCausalLM as _AM
+        model = _AM.from_pretrained(model_dir, torch_dtype=torch.bfloat16,
+                                    device_map="auto", trust_remote_code=True,
+                                    low_cpu_mem_usage=True, max_memory=max_mem)
+    except Exception:  # noqa: BLE001 —— VL ForConditionalGeneration 架构 fallback
+        from transformers import AutoModelForImageTextToText as _AM2
+        model = _AM2.from_pretrained(model_dir, torch_dtype=torch.bfloat16,
+                                     device_map="auto", trust_remote_code=True,
+                                     low_cpu_mem_usage=True, max_memory=max_mem)
     tok = AutoTokenizer.from_pretrained(model_dir)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_dir, torch_dtype=torch.bfloat16, device_map="auto",
-        trust_remote_code=True, low_cpu_mem_usage=True)
     cfg = json.load(open(os.path.join(model_dir, "config.json")))
     tc = cfg.get("text_config", cfg)
     n_layers = tc["num_hidden_layers"]
@@ -198,11 +205,21 @@ def collect(model_dir: str, corpus: str, out_csv: str, out_json: str,
         h.remove()
 
     rows = []
+    # meta 权重（CPU offload 占位）→ 从 teacher checkpoint 按名直取（命名空间一致）
+    tidx = json.load(open(os.path.join(model_dir, "model.safetensors.index.json")))["weight_map"]
+    from safetensors import safe_open
+    shard_cache: dict = {}
     for name, e in sorted(acc.items()):
         if e["G"] is None or e["n"] == 0:
             continue
         mod = dict(model.named_modules())[name]
         w = mod.weight
+        if w.is_meta:
+            key = f"{name}.weight"
+            shard = os.path.join(model_dir, tidx[key])
+            if shard not in shard_cache:
+                shard_cache[shard] = safe_open(shard, framework="pt")
+            w = shard_cache[shard].get_tensor(key)
         mets = module_metrics(w, e["G"], e["n"])
         fam = family_of(name, e["layer"], e.get("is_full_attn", False))
         row = {"module": name, "layer": e["layer"],

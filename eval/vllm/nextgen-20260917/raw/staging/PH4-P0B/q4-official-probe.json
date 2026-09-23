@@ -1,0 +1,50 @@
+{
+ "probe": "Q4-OFFICIAL",
+ "target": "/data/models/Qwen3.8-27B-FP8",
+ "boot_rc": 0,
+ "boot_wall_s": 225.7,
+ "boot_energy": {
+  "total_energy_j": 29679.0,
+  "per_gpu": {
+   "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae": {
+    "energy_j": 14584.5,
+    "mean_w": 64.54,
+    "peak_w": 196.0
+   },
+   "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e": {
+    "energy_j": 15094.5,
+    "mean_w": 66.8,
+    "peak_w": 196.81
+   }
+  },
+  "power_limit_buckets": [
+   450.0
+  ],
+  "mixed_power_window": false,
+  "throttle_counts": {
+   "0x0000000000000001": 193
+  }
+ },
+ "boot_nvml_samples": 904,
+ "kernel_evidence": [
+  "Using MarlinLinearKernel for CompressedTensorsWNA16"
+ ],
+ "quant_config_line": [
+  "(EngineCore pid=3044443) INFO 09-23 21:06:20 [core.py:123] Initializing a V1 LLM engine (v0.29.0) with config: model='/data/models/Qwen3.8-27B-FP8', speculative_config=SpeculativeConfig(method='dflash', model='/data/sandbox/vllm-cu130-qual-20260915/draft-recal-readable-20260915', num_spec_tokens=7), tokenizer='/data/models/Qwen3.8-27B-FP8', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=36864, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=fp8, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=bfloat16, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=qwen3.8-27b, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+rms_norm', '+silu_and_mul', '+quant_fp8', 'none', '+quant_fp8'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_compute_ple_ngram_ids', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 8, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=True, enable_cutedsl_warmup=True, enable_jit_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='auto', linear_backend='auto')"
+ ],
+ "d565_smoke": {
+  "ok": true,
+  "wall_s": 4.5,
+  "out_tokens": 512,
+  "text_head": "We need answer user's request. User repeated same sentence many times. They ask:"
+ },
+ "verbatim": {
+  "rc": 0,
+  "tail": "{\"PASS\": true, \"exact_lines_ok\": 100, \"line_count\": 100}"
+ },
+ "micro_suite": {
+  "rc": 1,
+  "tail": "ting value: line 1 column 1 (char 0)\n[tj18] FAIL pattern mismatch\n[tj19] FAIL JSON decode: Expecting value: line 1 column 1 (char 0)\n[tj20] FAIL JSON decode: Expecting value: line 1 column 1 (char 0)\n"
+ },
+ "verdict": "PROBE_PARTIAL_REVIEW"
+}

@@ -137,3 +137,12 @@ classify 端到端双向验证通过（2026-09-17）。
 - 事故与修复：freeze fail-open（EP03-A1）/双链重复发射/僵尸 server/churn 三处自伤 bug（sample 行数、counter_total 参序、model 名 404）——全部即时落盘、铁律 5 处置、补偿重跑；探针自检制度固化（负载前单请求 probe）。
 - SLO_UNDECIDED 维持（EP03-A2 口径）；TP1-C4 顺延（GPU2 外占 15h+）。
 - Phase 04 Debt 9 项移交（报告 §9）。
+
+## 2026-09-23 Phase 04 P0B 探针全过 + 双 artifact 落地 ✅
+- **Q4-OFFICIAL 探针 ALIVE**（CROSS_BASE/PROBE_ONLY）：官方 Qwen3.8-27B-FP8 boot 成功（weights 15.29GiB/卡），**kernel 实选 = MarlinLinearKernel for CompressedTensorsWNA16**（weight-side dequant 路径 + `+quant_fp8` 激活融合）；D565 ok、verbatim 100/100、micro 19/20（唯一 miss tj05=底座指令语义，非结构破坏）——与 FP8-KV 的 flashinfer JIT 墙无关证实（权重 GEMM 另路）。
+- **Q4-CODING-V1.1 构建落地**（aggregate `f1787fa9…`）：compressed-tensors W8A8-FP8 dynamic（weights fp8-e4m3 channel sym + input per-token dynamic），ignore=linear_attn 全家+lm_head；boot smoke ALIVE（同 Marlin WNA16 路径、verbatim 100/100、micro 18/20 tj06/tj12 指令边缘）——**PARETO_ELIGIBLE 候选**。
+- **W8A16 same-base 构建落地**（aggregate `ae72e630…`，两轮废弃迭代后）：int8 g128 sym（同 Q0 家族路径），精度图=Linear W8/lm_head+embed+GDN in_proj bf16（准上界方向）；boot smoke ALIVE（Marlin WNA16、verbatim 100/100、micro 18/20）——**PARETO_ELIGIBLE 候选**。废弃迭代留档：v1（in_proj 被量化污染准上界）、v2（lm_head 绑定权重 packed 不可加载——serving 补丁依赖教训）。
+- **NVFP4/MXFP4 = NOT_BUILT_EMULATION**（SM89 无 FP4 硬件源码定案+在盘无 checkpoint+研究档不投预算——nvfp4-disposition.json）。
+- **Boot 能量分账落地**：官方 FP8 29.7kJ/W8A16 28.1kJ/Q4C 30.5kJ（均 450W cron 窗——能效比较分桶纪律实证）。
+- 构建 API 五轮形态发现（scheme→config_groups→processor→dataset 对象→max_memory）全留痕；容器补 gcc（GDN triton JIT 依赖）。
+- teacher 敏感度采集执行中（P0B.D：offload 双卡 20GiB+CPU，GDN 参考实现慢速正确）。
