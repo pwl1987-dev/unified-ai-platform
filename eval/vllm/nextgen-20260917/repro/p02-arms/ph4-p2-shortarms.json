@@ -1,0 +1,23 @@
+{
+ "plan": "Phase 04 P2 修复批 B：W8A16/Q4C 短形制臂（36864/ms4——131072 形式实测容量墙：W8A16 载入 17.4GiB/卡 OOM、Q4C 'max model len 118784'；128K 档按 CAPACITY_LIMIT 记录，短/中档在此臂补齐吞吐/质量/能效轴）",
+ "arms": [
+  {"key": "W8SHORT", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a", "target": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a16-g128", "weight_profile": "W8A16_SAME_BASE"},
+   "cells": [
+     {"exp_prefix": "V29-T2-PH4-W8S-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-W8S-C1-L004K", "fixture": "p4k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-W8S-C4-L004K", "fixture": "p4k", "mode": "ns", "concurrency": 4, "max_tokens": 256, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-W8S-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-W8S-C4-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 4, "max_tokens": 256, "reps": 3}
+   ],
+   "probes": {"verbatim": true, "needle": {"prompt_tokens": 32000, "seeds": [99], "max_tokens": 64}}},
+  {"key": "Q4CSHORT", "boot": {"tp": 2, "ms": 4, "spec": 1, "kv_dtype": "bfloat16", "model_len": 36864, "nbt": 2048, "cold": true, "patch": "a", "target": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic", "weight_profile": "Q4_CODING_V1_1"},
+   "cells": [
+     {"exp_prefix": "V29-T2-PH4-Q4S-C1-L0565", "fixture": "d565", "mode": "f512", "concurrency": 1, "max_tokens": 512, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-Q4S-C1-L004K", "fixture": "p4k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-Q4S-C4-L004K", "fixture": "p4k", "mode": "ns", "concurrency": 4, "max_tokens": 256, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-Q4S-C1-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 1, "max_tokens": 256, "reps": 3},
+     {"exp_prefix": "V29-T2-PH4-Q4S-C4-L032K", "fixture": "p32k", "mode": "ns", "concurrency": 4, "max_tokens": 256, "reps": 3}
+   ],
+   "probes": {"verbatim": true, "needle": {"prompt_tokens": 32000, "seeds": [99], "max_tokens": 64}}}
+ ]
+}

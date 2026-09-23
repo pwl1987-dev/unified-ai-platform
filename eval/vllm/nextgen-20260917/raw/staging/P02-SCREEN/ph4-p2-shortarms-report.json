@@ -1,0 +1,163 @@
+{
+ "arms_file": "repro/p02-arms/ph4-p2-shortarms.json",
+ "arms": {
+  "W8SHORT-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-w8short-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-w8short setsid bash boot029_nextgen.sh p02-w8short-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a16-g128 --cold",
+   "pid": 3182595,
+   "pgid": 3182578,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 83861
+   },
+   "cells": {
+    "V29-T2-PH4-W8S-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-W8S-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-W8S-C1-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-W8S-C1-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-W8S-C4-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-W8S-C4-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-W8S-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-W8S-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-W8S-C4-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-W8S-C4-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/W8SHORT-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/W8SHORT-B01-ND32000-S99"
+    }
+   },
+   "done": true
+  },
+  "Q4CSHORT-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q4cshort-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q4cshort setsid bash boot029_nextgen.sh p02-q4cshort-b01 19702 2 4 --kv-dtype bfloat16 --model-len 36864 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic --cold",
+   "pid": 3190438,
+   "pgid": 3190421,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 92946
+   },
+   "cells": {
+    "V29-T2-PH4-Q4S-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q4S-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q4S-C1-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q4S-C1-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q4S-C4-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q4S-C4-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q4S-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q4S-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q4S-C4-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q4S-C4-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q4CSHORT-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q4CSHORT-B01-ND32000-S99"
+    }
+   },
+   "done": true
+  }
+ }
+}

@@ -205,37 +205,50 @@ def collect(model_dir: str, corpus: str, out_csv: str, out_json: str,
         h.remove()
 
     rows = []
-    # meta 权重（CPU offload 占位）→ 从 teacher checkpoint 按名直取（命名空间一致）
+    skipped = []
+    # meta 权重（CPU offload 占位）→ checkpoint 按名直取；命名空间双形态回退
+    # （活模型 model.layers.* vs checkpoint model.language_model.layers.*——v4 教训）
     tidx = json.load(open(os.path.join(model_dir, "model.safetensors.index.json")))["weight_map"]
     from safetensors import safe_open
     shard_cache: dict = {}
     for name, e in sorted(acc.items()):
         if e["G"] is None or e["n"] == 0:
             continue
-        mod = dict(model.named_modules())[name]
-        w = mod.weight
-        if w.is_meta:
-            key = f"{name}.weight"
-            shard = os.path.join(model_dir, tidx[key])
-            if shard not in shard_cache:
-                shard_cache[shard] = safe_open(shard, framework="pt")
-            w = shard_cache[shard].get_tensor(key)
-        mets = module_metrics(w, e["G"], e["n"])
-        fam = family_of(name, e["layer"], e.get("is_full_attn", False))
-        row = {"module": name, "layer": e["layer"],
-               "layer_type": "full_attn" if e.get("is_full_attn") else "gdn",
-               "family": fam, "n_tokens": e["n"], **{k: v for sch, mm in mets.items()
-                                                     for k, v in ((f"{sch}.mse", mm["mse_out_est"]),
-                                                                  (f"{sch}.cos", mm["cos_out_est"]),
-                                                                  (f"{sch}.hess", mm["hessian_weighted_err"]),
-                                                                  (f"{sch}.rel_frob", mm["rel_frob"]))}}
-        rows.append(row)
+        try:
+            mod = dict(model.named_modules())[name]
+            w = mod.weight
+            if w.is_meta:
+                cands = [f"{name}.weight"]
+                if name.startswith("model.layers."):
+                    cands.append("model.language_model." + name[len("model."):].replace(".layers.", ".layers.") + ".weight")
+                    cands.append(f"model.language_model.{name.split('.', 1)[1]}.weight")
+                key = next((k for k in cands if k in tidx), None)
+                if key is None:
+                    skipped.append({"module": name, "reason": "key_not_found"})
+                    continue
+                shard = os.path.join(model_dir, tidx[key])
+                if shard not in shard_cache:
+                    shard_cache[shard] = safe_open(shard, framework="pt")
+                w = shard_cache[shard].get_tensor(key)
+            mets = module_metrics(w, e["G"], e["n"])
+            fam = family_of(name, e["layer"], e.get("is_full_attn", False))
+            row = {"module": name, "layer": e["layer"],
+                   "layer_type": "full_attn" if e.get("is_full_attn") else "gdn",
+                   "family": fam, "n_tokens": e["n"], **{k: v for sch, mm in mets.items()
+                                                         for k, v in ((f"{sch}.mse", mm["mse_out_est"]),
+                                                                      (f"{sch}.cos", mm["cos_out_est"]),
+                                                                      (f"{sch}.hess", mm["hessian_weighted_err"]),
+                                                                      (f"{sch}.rel_frob", mm["rel_frob"]))}}
+            rows.append(row)
+        except Exception as ex:  # noqa: BLE001 —— 逐模块防御：末端失败不毁全局
+            skipped.append({"module": name, "reason": repr(ex)[:120]})
     keys = list(rows[0].keys()) if rows else []
     with open(out_csv, "w") as f:
         f.write(",".join(keys) + "\n")
         for r in rows:
             f.write(",".join(str(r.get(k)) for k in keys) + "\n")
-    json.dump({"model": model_dir, "corpus": corpus, "rows": rows},
+    json.dump({"model": model_dir, "corpus": corpus, "rows": rows,
+               "skipped": skipped},
               open(out_json, "w"), ensure_ascii=False, indent=1)
     print(f"[sensitivity] {len(rows)} modules -> {out_csv}")
     return 0

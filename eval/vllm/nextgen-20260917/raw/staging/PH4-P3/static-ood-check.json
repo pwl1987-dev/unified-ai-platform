@@ -1,0 +1,62 @@
+{
+ "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a16-g128": {
+  "dir": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a16-g128",
+  "dtype_tensor_counts": {
+   "BF16": 851,
+   "I32": 256,
+   "I64": 256
+  },
+  "n_scale_tensors": 256,
+  "scale_anomaly_tensors": [],
+  "nan_inf_tensors": [],
+  "verdict": "CLEAN"
+ },
+ "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic": {
+  "dir": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic",
+  "dtype_tensor_counts": {
+   "BF16": 851,
+   "F8_E4M3": 256
+  },
+  "n_scale_tensors": 256,
+  "scale_anomaly_tensors": [],
+  "nan_inf_tensors": [],
+  "verdict": "CLEAN"
+ },
+ "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-q1-mixed": {
+  "dir": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-q1-mixed",
+  "dtype_tensor_counts": {
+   "BF16": 851,
+   "I32": 256,
+   "I64": 256
+  },
+  "n_scale_tensors": 256,
+  "scale_anomaly_tensors": [],
+  "nan_inf_tensors": [],
+  "verdict": "CLEAN"
+ },
+ "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-q2-mixed": {
+  "dir": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-q2-mixed",
+  "dtype_tensor_counts": {
+   "BF16": 851,
+   "I32": 256,
+   "I64": 256
+  },
+  "n_scale_tensors": 256,
+  "scale_anomaly_tensors": [],
+  "nan_inf_tensors": [],
+  "verdict": "CLEAN"
+ },
+ "Q0": {
+  "dir": "/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128",
+  "dtype_tensor_counts": {
+   "BF16": 783,
+   "I32": 402,
+   "F16": 401,
+   "I64": 402
+  },
+  "n_scale_tensors": 402,
+  "scale_anomaly_tensors": [],
+  "nan_inf_tensors": [],
+  "verdict": "CLEAN"
+ }
+}

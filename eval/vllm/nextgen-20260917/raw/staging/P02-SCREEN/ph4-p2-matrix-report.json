@@ -1,0 +1,322 @@
+{
+ "arms_file": "repro/p02-arms/ph4-p2-matrix.json",
+ "arms": {
+  "Q0BASE-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q0base-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q0base setsid bash boot029_nextgen.sh p02-q0base-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --cold",
+   "pid": 3132512,
+   "pgid": 3132494,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 373068
+   },
+   "cells": {
+    "V29-T2-PH4-Q0-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q0-C1-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0-C1-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q0-C4-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0-C4-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q0-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q0-C4-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0-C4-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q0-C1-L128K-B01": {
+     "rc": 30,
+     "exp_prefix": "V29-T2-PH4-Q0-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    },
+    "V29-T2-PH4-Q0-C2-L128K-B01": {
+     "rc": 30,
+     "exp_prefix": "V29-T2-PH4-Q0-C2-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q0BASE-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 2,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q0BASE-B01-ND128000-S99"
+    }
+   },
+   "done": false
+  },
+  "W8A16-B01": {
+   "done": false,
+   "boot_ready": false,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-w8a16-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-w8a16 setsid bash boot029_nextgen.sh p02-w8a16-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a16-g128 --cold"
+  },
+  "Q4C-B01": {
+   "done": false,
+   "boot_ready": false,
+   "boot_rc": 11,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q4c-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q4c setsid bash boot029_nextgen.sh p02-q4c-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic --cold"
+  },
+  "Q1M-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q1m-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q1m setsid bash boot029_nextgen.sh p02-q1m-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-q1-mixed --cold",
+   "pid": 3146497,
+   "pgid": 3146480,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 217547
+   },
+   "cells": {
+    "V29-T2-PH4-Q1M-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1M-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q1M-C1-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1M-C1-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q1M-C4-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1M-C4-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q1M-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1M-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q1M-C4-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1M-C4-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q1M-C1-L128K-B01": {
+     "rc": 30,
+     "exp_prefix": "V29-T2-PH4-Q1M-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    },
+    "V29-T2-PH4-Q1M-C2-L128K-B01": {
+     "rc": 30,
+     "exp_prefix": "V29-T2-PH4-Q1M-C2-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q1M-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q1M-B01-ND128000-S99"
+    }
+   },
+   "done": false
+  },
+  "Q2M-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q2m-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q2m setsid bash boot029_nextgen.sh p02-q2m-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-q2-mixed --cold",
+   "pid": 3154669,
+   "pgid": 3154652,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 217547
+   },
+   "cells": {
+    "V29-T2-PH4-Q2M-C1-L0565-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2M-C1-L0565",
+     "cell": {
+      "fixture": "d565",
+      "mode": "f512",
+      "concurrency": 1,
+      "max_tokens": 512,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q2M-C1-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2M-C1-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q2M-C4-L004K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2M-C4-L004K",
+     "cell": {
+      "fixture": "p4k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q2M-C1-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2M-C1-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q2M-C4-L032K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2M-C4-L032K",
+     "cell": {
+      "fixture": "p32k",
+      "mode": "ns",
+      "concurrency": 4,
+      "max_tokens": 256,
+      "reps": 3
+     }
+    },
+    "V29-T2-PH4-Q2M-C1-L128K-B01": {
+     "rc": 30,
+     "exp_prefix": "V29-T2-PH4-Q2M-C1-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    },
+    "V29-T2-PH4-Q2M-C2-L128K-B01": {
+     "rc": 30,
+     "exp_prefix": "V29-T2-PH4-Q2M-C2-L128K",
+     "cell": {
+      "fixture": "p128k",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "probes": {
+    "verbatim": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q2M-B01-VERBATIM"
+    },
+    "needle-seed99": {
+     "rc": 0,
+     "out": "/data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/raw/staging/Q2M-B01-ND128000-S99"
+    }
+   },
+   "done": false
+  }
+ }
+}

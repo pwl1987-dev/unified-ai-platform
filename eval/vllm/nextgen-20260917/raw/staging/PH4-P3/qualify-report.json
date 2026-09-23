@@ -1,0 +1,11 @@
+{
+ "stages": {
+  "warmup": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q0-w0-w0",
+    "pgid": 3199180
+   },
+   "note": "W0 平台暖机弃置"
+  }
+ }
+}

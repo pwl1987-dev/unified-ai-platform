@@ -346,7 +346,9 @@ def run_one(api: str, args, prompt: str, idx: int, barrier: threading.Barrier,
 FIXTURE_TARGETS = {"d565": 512, "p4k": 4096, "p32k": 32768,
                    "p128k": 131072, "p220k": 220000, "p238k": 238000,
                    # Phase 03：238K+ 正式认证档；p262k=261888（装配+模板+输出 ≤262144，Phase 02 取证）
-                   "p245k": 245000, "p262k": 261888}
+                   "p245k": 245000, "p262k": 261888,
+                   # Phase 04：p128kt=130900（131072 形制专用——p128k=131072 装配+52 模板+64 输出=131188>131072 全 400，PH4-P2 实证勘误；p128k 冻结不改）
+                   "p128kt": 130900}
 
 
 def main() -> int:

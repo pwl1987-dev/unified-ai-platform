@@ -1,0 +1,72 @@
+{
+ "experiment_id": "V29-T2-PH4-Q2M-C1-L128K-NS-B01-R02",
+ "status": "VALID_PASS",
+ "evidence_class": "staging",
+ "classification_reason": null,
+ "created_utc": "2026-09-23T18:08:49Z",
+ "harness_git_sha": "19623c8b95a1fe48b6139cba2a8fdc5ebc4fc94a",
+ "harness_files_sha256": {
+  "bench_nextgen.py": "f1849a062e6778770ff7bf40d655c422736327906c2dcfd261c0f96c9af774a6",
+  "sseparser.py": "bf82c5298588a5a5db8aee79d6fe5c77b08df9a3e2ab6b514384d705b251f2fc",
+  "nvml_bind.py": "0d0f49fef5d17efac061ff5a681dde96eb4811b09ea6a6fbd25f92fbdbd4ee1c"
+ },
+ "host_snapshot_sha256": "6a08a3748937c2ff5df6eb1958b0ea1b06976e6642bfe60dc930f81e6181af39",
+ "env_lock_sha256": "e76f5dd199b4b39e0c440ba1797e9cab8775adb2389273d776e337b3acb90e9b",
+ "gpu": {
+  "cards": [
+   {
+    "logical_index": 3,
+    "uuid": "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae",
+    "pci_bdf": "00000000:11:00.0",
+    "role": "tp_rank_0",
+    "power_limit_w": 450.0
+   },
+   {
+    "logical_index": 4,
+    "uuid": "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e",
+    "pci_bdf": "00000000:16:00.0",
+    "role": "tp_rank_1",
+    "power_limit_w": 450.0
+   }
+  ],
+  "power_limit_w": 450.0,
+  "initial_temp_c": [
+   30
+  ]
+ },
+ "server": {
+  "port": 19702,
+  "pid": 3154669,
+  "pgid": 3154652,
+  "tp": 2,
+  "max_num_seqs": 8,
+  "launch_cmd_file": "launch-cmd.txt",
+  "cache_root": "/data/sandbox/nextgen-20260917/cache-p02-q2m-b01"
+ },
+ "fixture": {
+  "name": "p128k",
+  "sha256": "efa7359bb4df3077c651d50af8415e6259b367f15795fee271cdb8a81e67207a",
+  "requested_output_tokens": 128,
+  "actual_input_tokens": null
+ },
+ "recipe": {
+  "runtime": "vllm-0.28.0",
+  "kv_profile": "kvarn_k4v2_g128",
+  "quant": "W4A16-autoround-g128",
+  "spec": "dflash2-k7",
+  "nbt": 2048,
+  "cudagraph": "cg8-custom-ops"
+ },
+ "timing": {
+  "start_utc": "1970-01-19T05:27:24Z",
+  "end_utc": "1970-01-19T05:27:24Z",
+  "duration_s": 0.202
+ },
+ "files": {
+  "raw_events": "raw-events.jsonl",
+  "metrics": "metrics.json",
+  "sampler_metrics": "sampler-metrics.jsonl",
+  "nvml": "nvml-samples.jsonl"
+ },
+ "client_version": "bench_nextgen-1"
+}

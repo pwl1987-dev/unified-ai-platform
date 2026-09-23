@@ -1,0 +1,115 @@
+{
+ "arms_file": "repro/p02-arms/ph4-p2-fix128.json",
+ "arms": {
+  "Q0BASE-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q0base-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q0base setsid bash boot029_nextgen.sh p02-q0base-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128",
+   "pid": 3166598,
+   "pgid": 3166582,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 386424
+   },
+   "cells": {
+    "V29-T2-PH4-Q0T-C1-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0T-C1-L128K",
+     "cell": {
+      "fixture": "p128kt",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    },
+    "V29-T2-PH4-Q0T-C2-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q0T-C2-L128K",
+     "cell": {
+      "fixture": "p128kt",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "done": true
+  },
+  "Q1M-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q1m-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q1m setsid bash boot029_nextgen.sh p02-q1m-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-q1-mixed",
+   "pid": 3171845,
+   "pgid": 3171829,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 218906,
+    "mrv2": true
+   },
+   "cells": {
+    "V29-T2-PH4-Q1T-C1-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1T-C1-L128K",
+     "cell": {
+      "fixture": "p128kt",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    },
+    "V29-T2-PH4-Q1T-C2-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q1T-C2-L128K",
+     "cell": {
+      "fixture": "p128kt",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "done": true
+  },
+  "Q2M-B01": {
+   "boot_ready": true,
+   "log": "/data/sandbox/nextgen-20260917/log-p02-q2m-b01",
+   "boot_cmd": "cd /data/repos/qwen3.8-27b-8x4090-stack/eval/vllm/nextgen-20260917/tools &&  VLLM_CACHE_ROOT=/data/sandbox/nextgen-20260917/cache-p02-q2m setsid bash boot029_nextgen.sh p02-q2m-b01 19702 2 8 --kv-dtype bfloat16 --model-len 131072 --spec 1 --patch a --nbt 2048 --cg-cap 8 --k 7 --match-unit 128 --target /data/sandbox/nextgen-20260917/quant-artifacts/ph4-q2-mixed",
+   "pid": 3177228,
+   "pgid": 3177212,
+   "boot_tag": "B01",
+   "capacity": {
+    "kv_tokens": 218906,
+    "mrv2": true
+   },
+   "cells": {
+    "V29-T2-PH4-Q2T-C1-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2T-C1-L128K",
+     "cell": {
+      "fixture": "p128kt",
+      "mode": "ns",
+      "concurrency": 1,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    },
+    "V29-T2-PH4-Q2T-C2-L128K-B01": {
+     "rc": 0,
+     "exp_prefix": "V29-T2-PH4-Q2T-C2-L128K",
+     "cell": {
+      "fixture": "p128kt",
+      "mode": "ns",
+      "concurrency": 2,
+      "max_tokens": 128,
+      "reps": 2
+     }
+    }
+   },
+   "done": true
+  }
+ }
+}

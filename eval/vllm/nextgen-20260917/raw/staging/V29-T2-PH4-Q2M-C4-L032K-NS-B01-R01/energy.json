@@ -1,0 +1,24 @@
+{
+ "total_energy_j": 27172.0,
+ "per_gpu": {
+  "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae": {
+   "energy_j": 13523.4,
+   "mean_w": 281.7,
+   "peak_w": 312.39
+  },
+  "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e": {
+   "energy_j": 13648.6,
+   "mean_w": 284.31,
+   "peak_w": 313.83
+  }
+ },
+ "power_limit_buckets": [
+  450.0
+ ],
+ "mixed_power_window": false,
+ "throttle_counts": {},
+ "output_tokens": 1024,
+ "J_per_output_token": 26.535,
+ "tok_per_J": 0.0377,
+ "window": "serving_run"
+}
