@@ -297,7 +297,12 @@ phase05:
   kv: NATIVE_BF16（全程冻结）；runtime029 只读继承（tree 4632d624…）
   router: ph5_router.py v1.0（自建 sticky-session LB；runtime029 无 vllm.router 实证 2026-09-25）
   launcher: tools/ph5_boot.sh（boot029_nextgen.sh Phase05 扩展：显式 --uuids + TP4 + 扩授权集）
-  gpu_authorization: P0B 待登记（live inventory 后写入本节；GPU0/1 与 :8000 永久零触碰）
+  gpu_authorization:
+    inventory_utc: "2026-09-25（P0B 巡检）"
+    authorized_free: {GPU3: "5fa853cd-219a…", GPU4: "aab40825-81bd…", GPU6: "30776c79-cd65…"}
+    external_occupied: {GPU2: "rpg-bakeoff-llama-humanlike-q4-128k 容器（外部任务 up 3d20h，零触碰）", GPU5: "宿主会话 vLLM（外围 embed/rerank，零触碰）", GPU7: "docker vLLM（外围，零触碰）"}
+    production: {GPU0: "/app/llama-server 生产", GPU1: "/app/llama-server 生产", ":8000": "qwen27b-lb 只读 health=200"}
+    four_card_status: "空闲 3/4——四卡臂暂缺 1 卡；按合同先完成全部非 GPU 工作+3 卡内 preflight，周期复查 GPU2/5/7；全非 GPU 完成仍缺卡才报硬阻塞"
   ports: {router: 19710, backends: "19711-19714", avoid: "[8000, 19622-19625, 19637, 19649]"}
   energy: 整机（4 授权 GPU + CPU RAPL 可读时；boot/serving 分账；J/output-token 官方）
   debt_in: {MS8-C8: DO_NOW, TP1-C4: "DO_NOW(T1 direct 参照)", FP8-KV: DEFERRED_CONDITIONAL, tenant_churn: Phase06}

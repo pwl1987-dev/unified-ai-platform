@@ -258,9 +258,12 @@ def run_one(api: str, args, prompt: str, idx: int, barrier: threading.Barrier,
     ntok, usage, finish = 0, None, None
     parser = SSEParser()
     try:
+        _hdrs = {"Content-Type": "application/json"}
+        if args.session_id:
+            _hdrs["X-Session-Id"] = args.session_id
         req = urllib.request.Request(
             api + "/chat/completions", data=json.dumps(body).encode(),
-            headers={"Content-Type": "application/json"})
+            headers=_hdrs)
         resp = urllib.request.urlopen(req, timeout=args.timeout_s)
         t_hdr = mono()
         m["first_header"] = t_hdr / 1e9
@@ -361,6 +364,8 @@ def main() -> int:
     ap.add_argument("--concurrency", type=int, default=1)
     ap.add_argument("--max-tokens", type=int, required=True)
     ap.add_argument("--seed", type=int, default=4242)
+    ap.add_argument("--session-id", default=None,
+                    help="Phase 05 多会话：注入 X-Session-Id 头（ph5_router sticky 绑定；默认不注入=行为不变）")
     ap.add_argument("--timeout-s", type=int, default=900)
     ap.add_argument("--salt-namespace", default="formal", choices=["warmup", "formal"])
     ap.add_argument("--no-nvml", action="store_true",
