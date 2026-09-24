@@ -5,12 +5,29 @@
  ],
  "cells": {
   "d565_c1_decode": {
-   "T1F": 134.286,
-   "T2F": 169.216
+   "T1F": 143.581,
+   "T2F": 182.374
   },
   "d565_c1_ttft": {
    "T1F": 0.2538,
    "T2F": 0.2238
+  },
+  "p32k_c1_decode": {
+   "T1F": 53.349,
+   "T2F": 69.987
+  },
+  "p32k_c1_ttft": {
+   "T1F": 0.3842,
+   "T2F": 0.3234
+  },
+  "p4k_c4_agg": {
+   "T1F": 78.032
+  },
+  "p128k_c1_decode": {
+   "T2F": 20.111
+  },
+  "p128k_c1_ttft": {
+   "T2F": 0.8419
   }
  },
  "provenance": {
@@ -19,10 +36,33 @@
    "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R02",
    "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R03"
   ],
+  "T1F:p32k_c1_decode:direct": [
+   "V29-PH5-T1F-TP1-C1-L032K-NS-NS-B01-R01",
+   "V29-PH5-T1F-TP1-C1-L032K-NS-NS-B01-R02",
+   "V29-PH5-T1F-TP1-C1-L032K-NS-NS-B01-R03"
+  ],
+  "T1F:p4k_c4_agg:direct": [
+   "V29-PH5-T1F-TP1-C4-L004K-NS-NS-B01-R01",
+   "V29-PH5-T1F-TP1-C4-L004K-NS-NS-B01-R02",
+   "V29-PH5-T1F-TP1-C4-L004K-NS-NS-B01-R03"
+  ],
   "T2F:d565_c1_decode:direct": [
    "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R01",
    "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R02",
    "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R03"
+  ],
+  "T2F:p32k_c1_decode:direct": [
+   "V29-PH5-T2F-TP2-C1-L032K-NS-NS-B01-R01",
+   "V29-PH5-T2F-TP2-C1-L032K-NS-NS-B01-R02",
+   "V29-PH5-T2F-TP2-C1-L032K-NS-NS-B01-R03"
+  ],
+  "T2F:p128k_c1_decode:direct": [
+   "V29-PH5-T2F-TP2-C1-L128KT-MT128-NS-B01-R01",
+   "V29-PH5-T2F-TP2-C1-L128KT-MT128-NS-B01-R02",
+   "V29-PH5-T2F-TP2-C1-L128KT-MT128-NS-B01-R03",
+   "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R01",
+   "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R02",
+   "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R03"
   ]
  },
  "note": "CAPACITY_LIMIT/UNSUPPORTED 由 boot/容量快照侧另行并入（gate_e 支配判定）"

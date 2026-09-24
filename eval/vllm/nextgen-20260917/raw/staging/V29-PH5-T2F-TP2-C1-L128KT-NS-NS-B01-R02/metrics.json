@@ -1,0 +1,62 @@
+{
+ "experiment_id": "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R02",
+ "schema_version": "nextgen-metrics-1",
+ "client_version": "bench_nextgen-1",
+ "mode": "natural-stop",
+ "fixture_name": "p128kt",
+ "fixture_sha256": "844c1768eeb48bbe736fd894f3b0b4527f035fa3c1a0b0d7e2e42ed37dd14ec9",
+ "concurrency": 1,
+ "max_tokens": 256,
+ "requested_output_tokens": 256,
+ "requests_total": 1,
+ "requests_ok": 0,
+ "http_errors": 1,
+ "count_mismatch_samples": 0,
+ "early_stop_samples": 0,
+ "sampler_stats": {
+  "metrics_endpoint": {
+   "requested_interval_ms": 100,
+   "actual_interval_ms_min": 52.0,
+   "actual_interval_ms_median": 76.0,
+   "actual_interval_ms_max": 100.0,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 100.0,
+   "sampler_exit_code": 0,
+   "samples_collected": 3,
+   "errors": []
+  },
+  "nvml": {
+   "requested_interval_ms": 500,
+   "actual_interval_ms_min": 0.0,
+   "actual_interval_ms_median": 0.0,
+   "actual_interval_ms_max": 0.0,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 0.0,
+   "sampler_exit_code": 0,
+   "samples_collected": 2,
+   "errors": []
+  }
+ },
+ "per_request": [
+  {
+   "request_index": 0,
+   "ok": false,
+   "ttfb_s": null,
+   "ttft_s": null,
+   "e2e_latency_s": null,
+   "output_tokens": null,
+   "e2e_output_tok_s": null,
+   "client_observed_decode_tok_s": null,
+   "tpot_s": null,
+   "null_reason": null,
+   "early_stop": false,
+   "stop_reason": null
+  }
+ ],
+ "percentiles": {},
+ "aggregate": {
+  "batch_wall_s": 0.224,
+  "sum_output_tokens": 0,
+  "max_running_observed": 0
+ }
+}

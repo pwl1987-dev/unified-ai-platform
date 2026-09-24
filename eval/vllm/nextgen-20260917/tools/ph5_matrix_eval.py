@@ -43,8 +43,8 @@ def med_from_metrics(dirs: list[str]) -> dict:
         vals["n_ok"] += m.get("requests_ok") or 0
         vals["http_err"] += m.get("http_errors") or 0
         pr = [r for r in (m.get("per_request") or []) if r.get("ok")]
-        dec = [r.get("client_decode_tok_s") or r.get("decode_tok_s") for r in pr
-               if r.get("client_decode_tok_s") or r.get("decode_tok_s")]
+        dec = [r.get("client_observed_decode_tok_s") for r in pr
+               if r.get("client_observed_decode_tok_s")]
         if dec:
             vals["decode"].append(statistics.median(dec))
         agg = (m.get("aggregate") or {}).get("aggregate_output_tok_s")
@@ -88,11 +88,18 @@ def main() -> int:
                 r = med_from_metrics(dirs)
                 if r.get("n_dirs"):
                     key = axis if track == "direct" else axis + "_router"
-                    cells.setdefault(key, {})[topo] = (r.get("decode") or r.get("agg"))
-                    if track == "direct" and "ttft" in r:
-                        cells.setdefault(axis.replace("decode", "ttft"), {})[topo] = r["ttft"]
-                    if track == "direct" and "goodput_rps" in r and "C8" in pat or "C16" in pat:
-                        cells.setdefault(axis, {})[topo] = r.get("goodput_rps", r.get("decode"))
+                    # 轴语义：*_decode 轴=per-request client decode 中位；goodput 轴=ok/s；
+                    # 其余聚合轴=aggregate_output_tok_s 中位
+                    if axis.endswith("_decode"):
+                        val = r.get("decode")
+                    elif axis.endswith("_goodput"):
+                        val = r.get("goodput_rps")
+                    else:
+                        val = r.get("agg")
+                    if val is not None:
+                        cells.setdefault(key, {})[topo] = val
+                    if track == "direct" and "ttft" in r and axis.endswith("_decode"):
+                        cells.setdefault(axis[:-len("_decode")] + "_ttft", {})[topo] = r["ttft"]
                     prov[f"{topo}:{axis}:{track}"] = [os.path.relpath(d, ST) for d in dirs][:12]
     # 场景类 cell-summary（multi/sticky/failover/mixed）
     for f in glob.glob(os.path.join(ST, "PH5-P1", "*cell-summary.json")) + \
