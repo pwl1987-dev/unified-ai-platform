@@ -1,0 +1,55 @@
+{
+ "experiment_id": "P3H-Q0-B01-S2",
+ "prompt_tokens_target": 128000,
+ "actual_prompt_tokens": 128141,
+ "seed": 2,
+ "fixture_sha256": "265c8b46e3b580b57d4f7bb347d458f46aff71f5843191d5afe580eec7916fe3",
+ "needle_position_fractions": [
+  0.1,
+  0.3,
+  0.5,
+  0.7,
+  0.9
+ ],
+ "ttft_s": 49.438,
+ "wall_s": 51.031,
+ "completion_tokens": 39,
+ "needles_hit": "5/5",
+ "per_needle": {
+  "990298": true,
+  "159298": true,
+  "196033": true,
+  "188994": true,
+  "478596": true
+ },
+ "PASS": true,
+ "answer": "```\n188994,478596,990298,159298,196033\n```",
+ "cache_salt": "formal-needle-P3H-Q0-B01-S2",
+ "kv_usage_peak": null,
+ "vram_peak_mib": 23160,
+ "preempt_observed": false,
+ "sampler_stats": {
+  "metrics_endpoint": {
+   "requested_interval_ms": 100,
+   "actual_interval_ms_min": 73.6,
+   "actual_interval_ms_median": 100.1,
+   "actual_interval_ms_max": 107.3,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 107.3,
+   "sampler_exit_code": 0,
+   "samples_collected": 510,
+   "errors": []
+  },
+  "nvml": {
+   "requested_interval_ms": 500,
+   "actual_interval_ms_min": 0.0,
+   "actual_interval_ms_median": 0.0,
+   "actual_interval_ms_max": 510.3,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 510.3,
+   "sampler_exit_code": 0,
+   "samples_collected": 206,
+   "errors": []
+  }
+ }
+}

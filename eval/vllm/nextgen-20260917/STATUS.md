@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 04（权重量化与分层混合 → Q-Profile Pareto + Gate D，v1.0 执行合同）— **执行中（P0A 契约冻结）**
+- **Phase**: 04（权重量化与分层混合 → Q-Profile Pareto + Gate D，v1.0 执行合同）— **完成（P0A→P4 全链，Gate D 3 Q-Profile）**
 - **Last Completed**: Phase 03 全相位（2026-09-22）——**Gate C 三档 PASS**（short/daily/extreme）；0.29 主栈 KV=NATIVE_BF16；238K/245K PRODUCTION_SAFE + 262K HARD_CEILING（27 格全 5/5）；FP8-KV UNSUPPORTED 三 boot 取证；详见 reports/phase-03-kv.md
-- **Current Task**: P0A 冻结（Q0 forensic/teacher 血缘 VERIFIED/能力探针/三分数据/gates-phase04）
-- **Next Task**: P0B GPU 探针（官方 FP8→Q4 资格/W8A16 构建/NVFP4 判读/teacher 采集）→ P1 敏感度图+Q1/Q2 → P2 矩阵 Screen → P3 Pareto+Qualify → P4 Gate D 收口；TP1-C4 补测=机会式（GPU2 空闲才补）
+- **Current Task**: —（Phase 04 已收口；Next=Phase 05 四卡拓扑计划评审）
+- **Next Task**: Phase 05 四卡拓扑赛（输入=repro/quant-phase04/phase05-handoff.json 三 Q-Profile 冻结件）；TP1-C4 补测=机会式（GPU2 空闲才补）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -146,3 +146,13 @@ classify 端到端双向验证通过（2026-09-17）。
 - **Boot 能量分账落地**：官方 FP8 29.7kJ/W8A16 28.1kJ/Q4C 30.5kJ（均 450W cron 窗——能效比较分桶纪律实证）。
 - 构建 API 五轮形态发现（scheme→config_groups→processor→dataset 对象→max_memory）全留痕；容器补 gcc（GDN triton JIT 依赖）。
 - teacher 敏感度采集执行中（P0B.D：offload 双卡 20GiB+CPU，GDN 参考实现慢速正确）。
+
+## 2026-09-24 Phase 04 终判收口（P0A→P4）✅
+- **Gate D：3 Q-Profile**——QP-INTERACT=Q0（S1/L2 底座）/ QP-LONGCTX=Q1M（X2；GSM +6.7pp + 128K decode +37% + p32k 无损）/ QP-BATCH=Q4C（p4kC4 +26% + J/tok 2.188 + 质量全轴好；容量域 ≤~118K）。
+- **W8A16 REJECTED_FOR_QUALITY**：needle s2 配对退化 1 次（0/5 全灭）+ IFEval −4.7pp——"质量准上界"预设被实证推翻（P3 holdout 价值）。
+- P0A：Q0 forensic（recipe 缺口如实）+ teacher 血缘 VERIFIED（三重证据含权重级 cosine 0.994-0.995）+ gates-phase04/schema 1.4/三分数据（checker PASS）。
+- P1：敏感度图 304 模块（mlp.gate/up 主力）；Q1M/Q2M 构建落地。P2：六轴矩阵 + 容量墙双实证 + p128kt 勘误。P3：4×3 boot 全 valid + holdout 首开 + Q0 噪声定标（HE 8.9pp spread=max(2pp,spread) 判线）。
+- 全候选 kernel 实证 MarlinLinearKernel WNA16；FP8 权重 GEMM ≠ FP8-KV 的 flashinfer JIT 墙（P0B 证实）。
+- 静态 OOD 全 CLEAN；micro 安全门全 18/20 同款；NVFP4 不建（emulation）；Q3 架构排除。
+- Phase 05 冻结件：repro/quant-phase04/phase05-handoff.json。fp8c-build 容器保留（QP-BATCH 溯源 + FP8-KV 解锁链）。
+- 事故全留痕：p128k 溢出/lm_head 绑定教训（2 轮废弃重建）/llmcompressor 五轮 API 发现/gcc 补装/root 权限/argv 溢出。

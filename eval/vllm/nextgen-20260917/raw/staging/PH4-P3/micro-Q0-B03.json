@@ -1,0 +1,149 @@
+{
+ "suite": "tool-json-micro-v1",
+ "n_pass": 18,
+ "n_total": 20,
+ "verdict": "PARTIAL_REVIEW",
+ "role": "safety gate（不冒充 BFCL）",
+ "results": [
+  {
+   "id": "tj01",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n  \"name\": \"John Doe\",\n  \"age\": 30\n}\n```",
+   "latency_s": 0.35
+  },
+  {
+   "id": "tj02",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n[1, 2, 3]\n```",
+   "latency_s": 0.15
+  },
+  {
+   "id": "tj03",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\"status\":\"ok\",\"items\":[1,2]}\n```",
+   "latency_s": 0.14
+  },
+  {
+   "id": "tj04",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n  \"tool\": \"list\",\n  \"args\": {\n    \"query\": \"list\",\n    \"args\": [\"list\"",
+   "latency_s": 0.31
+  },
+  {
+   "id": "tj05",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n    \"key\": \"a\",\n    \"value\": [\"b\", \"c\"]\n}\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj06",
+   "passed": false,
+   "why": "pattern mismatch",
+   "text_head": "A-1234",
+   "latency_s": 0.12
+  },
+  {
+   "id": "tj07",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{ \"result\": \"PASS\", \"detail\": {\"n\": 5} }\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj08",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n[{\"id\": 1, \"done\": false}, {\"id\": 2, \"done\": false}]\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj09",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\"mode\": \"tool\", \"count\": 0}\n```",
+   "latency_s": 0.15
+  },
+  {
+   "id": "tj10",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n  \"payload\": {\n    \"inner\": \"example\"\n  }\n}\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj11",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{ \"nums\": [1, 2, 3, 4, 5] }\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj12",
+   "passed": false,
+   "why": "pattern mismatch",
+   "text_head": "```python\ndef hex_to_32bit(hex_str):\n    return hex_str.zfill(32)\n\n# Example usa",
+   "latency_s": 0.66
+  },
+  {
+   "id": "tj13",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n  \"op\": \"add\",\n  \"a\": 3,\n  \"b\": 5\n}\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj14",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\"ok\":true,\"n_errors\":0}\n```",
+   "latency_s": 0.15
+  },
+  {
+   "id": "tj15",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n[{\"tag\": \"tag1\"}, {\"tag\": \"tag2\"}, {\"tag\": \"tag3\"}]\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj16",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{ \"config\": { \"seed\": 42, \"strict\": true } }\n```",
+   "latency_s": 0.19
+  },
+  {
+   "id": "tj17",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n  \"words\": [\"apple\", \"banana\", \"orange\", \"pear\"]\n}\n```",
+   "latency_s": 0.21
+  },
+  {
+   "id": "tj18",
+   "passed": true,
+   "why": "pattern mismatch",
+   "text_head": "192.168.1.1",
+   "latency_s": 0.14
+  },
+  {
+   "id": "tj19",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\"level\":\"warn\",\"code\":2001}\n```",
+   "latency_s": 0.15
+  },
+  {
+   "id": "tj20",
+   "passed": true,
+   "why": "",
+   "text_head": "```json\n{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Title 1\",\n      \"cont",
+   "latency_s": 0.52
+  }
+ ]
+}

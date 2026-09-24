@@ -1,0 +1,61 @@
+{
+ "purpose": "Phase 05 冻结件（Gate D 产出——仅凭本文件+仓库可回答拓扑赛所需的全部模型/KV/profile 事实）",
+ "frozen_utc": "2026-09-24",
+ "gate_d_verdict": "raw/staging/PH4-P4/gate-d-verdict.json",
+ "runtime": {
+   "stack": "0.29 frozen（tree 4632d624…，runtime029_phase02_baseline 只读）",
+   "kv": "NATIVE_BF16（Phase 03 定案，全程冻结）",
+   "spec": "DFlash2 k7 + draft=Qwen3.8-27B-DFlash2-W4A16-recal",
+   "gpu": "TP2=GPU3+4 主（本相位全程）；GPU2=TP1 机会式（外占未触发）"
+ },
+ "q_profiles": {
+   "QP-INTERACT": {
+     "weight_profile": "Q0（现役）",
+     "artifact": "/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128",
+     "artifact_forensic": "repro/quant-phase04/q0-forensic.json（21 文件 SHA）",
+     "form": "W4g128 sym 主体 + lm_head INT8 就地 + embed INT8 就地 + ignore 207",
+     "role": "交互/全档基线（短 prompt 唯一王者 d565=182.6；全档可服务含 128K）",
+     "mapping": ["S1", "L2"],
+     "quality_holdout_median": {"he": 55.6, "gsm": 20.4, "ifeval": 40.0, "xfc": 74.0}
+   },
+   "QP-LONGCTX": {
+     "weight_profile": "Q1_MIXED",
+     "artifact": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-q1-mixed",
+     "aggregate_sha256_head": "6fa23c76…（全 manifest 见 ph4-q1-mixed-provenance.json）",
+     "provenance": "ph4-q1-mixed-provenance.json（schema 1.4 全 11 字段）",
+     "form": "19×W8g128 首尾层 + 60×W4g128 + 135×W4g64（mlp.gate/up + attn.q 敏感族）+ lm_head/embed/GDN in_proj/visual=bf16",
+     "parent": "/data/compose/qwen27b/train/merged-bf16（VERIFIED_LINEAGE）",
+     "role": "128K 长上下文档（p32kC1=Q0 无损 69.9 + 128K decode +37% 25.4 + 容量保持）+ GSM +6.7pp bonus",
+     "mapping": ["X2"],
+     "quality_holdout_median": {"he": 52.4, "gsm": 27.1, "ifeval": 40.7, "xfc": 73.0}
+   },
+   "QP-BATCH": {
+     "weight_profile": "Q4_CODING_V1_1（W8A8-FP8 dynamic）",
+     "artifact": "/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic",
+     "aggregate_sha256_head": "f1787fa9…（全 manifest 见 ph4-w8a8fp8-dynamic-provenance.json）",
+     "provenance": "ph4-w8a8fp8-dynamic-provenance.json",
+     "form": "Linear=fp8-e4m3 channel sym（input per-token dynamic）+ lm_head/embed/GDN in_proj/visual=bf16",
+     "role": "C4+ 并发吞吐/能效档（p4kC4 203.6=+26%；J/tok 2.188）",
+     "capacity_limit": "128K=CAPACITY_LIMIT（vLLM 实测 max_model_len 118784；服务域 ≤~118K）",
+     "mapping": ["S1-高并发路由（≤32K 容量域）"],
+     "quality_holdout_median": {"he": 58.1, "gsm": 23.8, "ifeval": 41.3, "xfc": 75.5}
+   }
+ },
+ "references_and_unsupported": {
+   "W8A16": "REJECTED_FOR_QUALITY（needle s2 配对退化 1 次 0/5 全灭形态 + IFEval −4.7pp；原'质量准上界'预设被实证推翻）——artifact 留档 ph4-w8a16-g128（aggregate ae72e630…）",
+   "Q2M": "OUT（与 Q1M 生产角色同档；P32K 主轴 Q1M=Q0 无损胜出）——留档 ph4-q2-mixed（aafc4a3b…）",
+   "Q3/W4A8-FP8": "UNSUPPORTED_BY_ARCH（SM89≠hopper，min_capability=90）",
+   "Q5/NVFP4-MXFP4": "NOT_BUILT_EMULATION（Ada 无 FP4 硬件；nvfp4-disposition.json）",
+   "Q4-OFFICIAL": "CROSS_BASE/PROBE_ONLY（kernel 路径取证载体，不进选型）",
+   "BF16_TEACHER": "/data/compose/qwen27b/train/merged-bf16（VERIFIED；敏感度图用，非 serving）"
+ },
+ "routing_boundaries": "QP-INTERACT=短 prompt 交互（d565/P4K C1-2 路由）；QP-LONGCTX=≥32K 长上下文（128K 档 +37%，X2 档）；QP-BATCH=C4+ 批处理（+26%，服务域 ≤~118K 容量墙）",
+ "phase05_requirements": "所有拓扑统一：总 GPU 数、功耗墙（250W 冻结）、模型与 KV profile（本文件）、runtime 配方（runtime029 只读）",
+ "debt_transfers": {
+   "TP1-C4": "OPPORTUNISTIC 未触发（GPU2 全程外占）→ 继续顺延",
+   "FP8-KV": "DEFERRED_CONDITIONAL（上游解锁后 X128-C4/X220-C2 复评可与 QP-BATCH 叠加——fp8c-build 容器保留）",
+   "tenant_isolation/strong_churn": "Phase06", "MS8-C8": "Phase05",
+   "graph-replay": "CONDITIONAL 未启用（量化臂 CG 配置同 Q0，无 CG 相关新证据需求）",
+   "K5_rule": "CLOSED_AS_ADOPTED", "slo_238plus": "DEFERRED"
+ }
+}

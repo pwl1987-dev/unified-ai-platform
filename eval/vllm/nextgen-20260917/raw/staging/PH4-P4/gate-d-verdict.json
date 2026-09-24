@@ -1,0 +1,485 @@
+{
+ "gate_d": {
+  "question": "同一真实 serving 栈下质量/交互/并发/prefill/显存/能效共同成立的 2-3 个可部署 Q-Profile",
+  "hard_eligibility": {
+   "Q0": true,
+   "Q1M": true,
+   "Q4C": true,
+   "W8": false
+  },
+  "quality_deltas_vs_q0_pp": {
+   "Q1M": {
+    "he_holdout": -3.23,
+    "gsm_holdout": 6.66,
+    "ifeval_holdout": 0.67,
+    "xfc": -1.0,
+    "he_screen": 5.0,
+    "gsm_screen": 7.5
+   },
+   "Q4C": {
+    "he_holdout": 2.41,
+    "gsm_holdout": 3.33,
+    "ifeval_holdout": 1.33,
+    "xfc": 1.5,
+    "he_screen": 10.0,
+    "gsm_screen": -1.25
+   },
+   "W8": {
+    "he_holdout": 0.8,
+    "gsm_holdout": 3.33,
+    "ifeval_holdout": -4.67,
+    "xfc": 1.0,
+    "he_screen": 10.0,
+    "gsm_screen": 0.0
+   }
+  },
+  "pareto_axes": {
+   "d565_c1": {
+    "Q0": 182.614,
+    "W8": 112.297,
+    "Q4C": 98.401,
+    "Q1M": 114.418,
+    "Q2M": 125.964
+   },
+   "p4k_c4": {
+    "Q0": 161.903,
+    "W8": 174.959,
+    "Q4C": 203.602,
+    "Q1M": 159.537,
+    "Q2M": 166.112
+   },
+   "p32k_c1": {
+    "Q0": 69.939,
+    "W8": 51.229,
+    "Q4C": 47.815,
+    "Q1M": 69.884,
+    "Q2M": 58.621
+   },
+   "p128k_c1": {
+    "Q0": 18.511,
+    "W8": null,
+    "Q4C": null,
+    "Q1M": 25.4,
+    "Q2M": 26.644
+   },
+   "energy_p4k_c4": {
+    "Q0": 2.268,
+    "W8": 2.393,
+    "Q4C": 2.188,
+    "Q1M": 2.585,
+    "Q2M": 2.446
+   },
+   "vram_capacity": {
+    "Q0": "OK(128K 可服务)",
+    "W8": "128K=CAPACITY_LIMIT(boot OOM 17.4GiB/卡)",
+    "Q4C": "128K=CAPACITY_LIMIT(max_model_len 118784)",
+    "Q1M": "OK(128K 可服务)",
+    "Q2M": "OK(128K 可服务)"
+   }
+  },
+  "epsilon_bands": {
+   "throughput/prefill": "3%",
+   "energy": "5%",
+   "quality": "1pp 带",
+   "vram": "max(200MiB,2%)=容量墙为硬差异"
+  },
+  "profiles": [
+   {
+    "id": "QP-INTERACT",
+    "weight_profile": "Q0（现役 W4A16+int8 头/embed）",
+    "role": "交互/全档基线（S1/L2 底座）",
+    "basis": "d565=182.6 唯一王者（全部候选 ≥31% 差距）；全档可服务（128K ✓）",
+    "mapping": [
+     "S1",
+     "L2"
+    ]
+   },
+   {
+    "id": "QP-LONGCTX",
+    "weight_profile": "Q1M（W4g128 主体+敏感族 g64+首尾 W8）",
+    "role": "128K 长上下文（X2 档吞吐候选）",
+    "basis": "p32kC1=69.9（=Q0 带内）+128K decode 25.4（+37%>3% 带）+容量保持",
+    "mapping": [
+     "X2"
+    ],
+    "quality_gate": "hard 门结果见 deltas"
+   },
+   {
+    "id": "QP-BATCH",
+    "weight_profile": "Q4C（W8A8-FP8 dynamic）",
+    "role": "C4+ 并发吞吐/能效档",
+    "basis": "p4kC4=203.6（+26%）+J/tok 2.188（−4%>5%? 记录：4.3% 在能效 5% 带内→与 Q0 能效等价）+128K 容量墙（max_model_len 118784）",
+    "mapping": [
+     "S1-高并发路由"
+    ],
+    "capacity_limit": "128K=CAPACITY_LIMIT"
+   }
+  ],
+  "excluded": {
+   "W8": "被 Q4C 在吞吐/能效轴支配；保留为 same-base 质量参照（不占名额）",
+   "Q2M": "与 Q1M 生产角色同档（P32K 主轴 Q1M=Q0 无损 vs Q2M −16%）；d565 +10% 不足以独立成档",
+   "Q3/W4A8-FP8": "UNSUPPORTED_BY_ARCH（SM89 非 hopper）",
+   "Q5/NVFP4": "NOT_BUILT_EMULATION"
+  },
+  "routing_boundaries": "QP-INTERACT=短 prompt 交互（d565/P4K C1-2）；QP-LONGCTX=≥32K 长上下文（128K 档 +37%）；QP-BATCH=C4+ 批处理（+26%，≤32K 容量域）"
+ },
+ "quality_detail": {
+  "Q0": {
+   "valid_boots": 3,
+   "holdout_axes": {
+    "he_holdout": {
+     "values": [
+      57.26,
+      55.65,
+      48.39
+     ],
+     "median": 55.65,
+     "spread_pp": 8.87
+    },
+    "gsm_holdout": {
+     "values": [
+      20.42,
+      21.25,
+      20.0
+     ],
+     "median": 20.42,
+     "spread_pp": 1.25
+    },
+    "ifeval_holdout": {
+     "values": [
+      40.0,
+      46.0,
+      40.0
+     ],
+     "median": 40.0,
+     "spread_pp": 6.0
+    },
+    "xfc": {
+     "values": [
+      74.0,
+      74.0,
+      74.5
+     ],
+     "median": 74.0,
+     "spread_pp": 0.5
+    },
+    "he_screen": {
+     "values": [
+      62.5,
+      57.5,
+      60.0
+     ],
+     "median": 60.0,
+     "spread_pp": 5.0
+    },
+    "gsm_screen": {
+     "values": [
+      25.0,
+      22.5,
+      21.25
+     ],
+     "median": 22.5,
+     "spread_pp": 3.75
+    }
+   },
+   "needle_holdout_raw": {
+    "s2": [
+     true,
+     false,
+     true
+    ],
+    "s5": [
+     true,
+     true,
+     true
+    ]
+   },
+   "needle_paired_vs_q0": {
+    "s2": {
+     "pairs": 3,
+     "q0_pass": 2,
+     "candidate_regressions_vs_q0": 0
+    },
+    "s5": {
+     "pairs": 3,
+     "q0_pass": 3,
+     "candidate_regressions_vs_q0": 0
+    }
+   },
+   "micro": [
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW"
+   ]
+  },
+  "Q1M": {
+   "valid_boots": 3,
+   "holdout_axes": {
+    "he_holdout": {
+     "values": [
+      56.45,
+      49.19,
+      52.42
+     ],
+     "median": 52.42,
+     "spread_pp": 7.26
+    },
+    "gsm_holdout": {
+     "values": [
+      32.08,
+      26.67,
+      27.08
+     ],
+     "median": 27.08,
+     "spread_pp": 5.41
+    },
+    "ifeval_holdout": {
+     "values": [
+      40.67,
+      36.0,
+      43.33
+     ],
+     "median": 40.67,
+     "spread_pp": 7.33
+    },
+    "xfc": {
+     "values": [
+      73.5,
+      73.0,
+      73.0
+     ],
+     "median": 73.0,
+     "spread_pp": 0.5
+    },
+    "he_screen": {
+     "values": [
+      65.0,
+      62.5,
+      70.0
+     ],
+     "median": 65.0,
+     "spread_pp": 7.5
+    },
+    "gsm_screen": {
+     "values": [
+      30.0,
+      33.75,
+      21.25
+     ],
+     "median": 30.0,
+     "spread_pp": 12.5
+    }
+   },
+   "needle_holdout_raw": {
+    "s2": [
+     true,
+     true,
+     true
+    ],
+    "s5": [
+     true,
+     true,
+     true
+    ]
+   },
+   "needle_paired_vs_q0": {
+    "s2": {
+     "pairs": 3,
+     "q0_pass": 2,
+     "candidate_regressions_vs_q0": 0
+    },
+    "s5": {
+     "pairs": 3,
+     "q0_pass": 3,
+     "candidate_regressions_vs_q0": 0
+    }
+   },
+   "micro": [
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW",
+    "STRUCTURAL_FAIL"
+   ]
+  },
+  "Q4C": {
+   "valid_boots": 3,
+   "holdout_axes": {
+    "he_holdout": {
+     "values": [
+      58.06,
+      53.23,
+      60.48
+     ],
+     "median": 58.06,
+     "spread_pp": 7.25
+    },
+    "gsm_holdout": {
+     "values": [
+      23.75,
+      25.83,
+      23.75
+     ],
+     "median": 23.75,
+     "spread_pp": 2.08
+    },
+    "ifeval_holdout": {
+     "values": [
+      42.67,
+      41.33,
+      41.33
+     ],
+     "median": 41.33,
+     "spread_pp": 1.34
+    },
+    "xfc": {
+     "values": [
+      75.5,
+      75.0,
+      75.5
+     ],
+     "median": 75.5,
+     "spread_pp": 0.5
+    },
+    "he_screen": {
+     "values": [
+      75.0,
+      67.5,
+      70.0
+     ],
+     "median": 70.0,
+     "spread_pp": 7.5
+    },
+    "gsm_screen": {
+     "values": [
+      20.0,
+      21.25,
+      22.5
+     ],
+     "median": 21.25,
+     "spread_pp": 2.5
+    }
+   },
+   "needle_holdout_raw": {
+    "s2": [
+     true,
+     true,
+     true
+    ],
+    "s5": [
+     true,
+     true,
+     true
+    ]
+   },
+   "needle_paired_vs_q0": {
+    "s2": {
+     "pairs": 3,
+     "q0_pass": 2,
+     "candidate_regressions_vs_q0": 0
+    },
+    "s5": {
+     "pairs": 3,
+     "q0_pass": 3,
+     "candidate_regressions_vs_q0": 0
+    }
+   },
+   "micro": [
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW"
+   ]
+  },
+  "W8": {
+   "valid_boots": 3,
+   "holdout_axes": {
+    "he_holdout": {
+     "values": [
+      56.45,
+      56.45,
+      53.23
+     ],
+     "median": 56.45,
+     "spread_pp": 3.22
+    },
+    "gsm_holdout": {
+     "values": [
+      22.92,
+      24.17,
+      23.75
+     ],
+     "median": 23.75,
+     "spread_pp": 1.25
+    },
+    "ifeval_holdout": {
+     "values": [
+      35.33,
+      44.67,
+      35.33
+     ],
+     "median": 35.33,
+     "spread_pp": 9.34
+    },
+    "xfc": {
+     "values": [
+      75.5,
+      74.5,
+      75.0
+     ],
+     "median": 75.0,
+     "spread_pp": 1.0
+    },
+    "he_screen": {
+     "values": [
+      70.0,
+      72.5,
+      67.5
+     ],
+     "median": 70.0,
+     "spread_pp": 5.0
+    },
+    "gsm_screen": {
+     "values": [
+      22.5,
+      22.5,
+      18.75
+     ],
+     "median": 22.5,
+     "spread_pp": 3.75
+    }
+   },
+   "needle_holdout_raw": {
+    "s2": [
+     true,
+     false,
+     false
+    ],
+    "s5": [
+     true,
+     true,
+     true
+    ]
+   },
+   "needle_paired_vs_q0": {
+    "s2": {
+     "pairs": 3,
+     "q0_pass": 2,
+     "candidate_regressions_vs_q0": 1
+    },
+    "s5": {
+     "pairs": 3,
+     "q0_pass": 3,
+     "candidate_regressions_vs_q0": 0
+    }
+   },
+   "micro": [
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW",
+    "PARTIAL_REVIEW"
+   ]
+  }
+ },
+ "inputs": [
+  "PH4-P3/qualify-report.json",
+  "PH4-P2/ph4-matrix-summary.json",
+  "PH4-P3/static-ood-check.json"
+ ]
+}

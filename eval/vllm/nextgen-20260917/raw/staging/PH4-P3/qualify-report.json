@@ -6,6 +6,654 @@
     "pgid": 3199180
    },
    "note": "W0 平台暖机弃置"
+  },
+  "Q0_B1": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q0-b01-b01",
+    "pgid": 3202836
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[03:41:04] axis: humaneval\n  humaneval 20/40 pass=11\n  humaneval 40/40 pass=25\n  -> {\"pass_at_1\": 0.625, \"passed\": 25, \"total\": 40, \"seconds\": 88.1}\n\nSaved: /data/eval-rulers/Q0-B01.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[03:42:33] axis: gsm8k\n  gsm8k 25/80 pass=5\n  gsm8k 50/80 pass=16\n  gsm8k 75/80 pass=19\n  -> {\"accuracy\": 0.25, \"passed\": 20, \"total\": 80, \"seconds\": 93.8}\n\nSaved: /data/eval-rulers/Q0-B01.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[03:44:07] axis: humaneval\n  humaneval 20/124 pass=12\n  humaneval 40/124 pass=26\n  humaneval 60/124 pass=37\n  humaneval 80/124 pass=48\n  humaneval 100/124 pass=57\n  humaneval 120/124 pass=71\n  -> {\"pass_at_1\": 0.5725806451612904, \"passed\": 71, \"total\": 124, \"seconds\": 285.0}\n\nSaved: /data/eval-rulers/Q0-B01-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[03:48:52] axis: gsm8k\n  gsm8k 25/240 pass=6\n  gsm8k 50/240 pass=12\n  gsm8k 75/240 pass=16\n  gsm8k 100/240 pass=21\n  gsm8k 125/240 pass=29\n  gsm8k 150/240 pass=32\n  gsm8k 175/240 pass=39\n  gsm8k 200/240 pass=41\n  gsm8k 225/240 pass=47\n  -> {\"accuracy\": 0.20416666666666666, \"passed\": 49, \"total\": 240, \"seconds\": 287.7}\n\nSaved: /data/eval-rulers/Q0-B01-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[03:53:40] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.4, \"passed\": 60, \"judged\": 150, \"skipped\": 0, \"seconds\": 515.7}\n\nSaved: /data/eval-rulers/Q0-B01-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[04:02:16] axis: xfc\n  -> {\"accuracy\": 0.74, \"passed\": 148, \"total\": 200, \"seconds\": 54.7}\n\nSaved: /data/eval-rulers/Q0-B01-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 49.438
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 49.403
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist",
+   "needle_tier": 128000
+  },
+  "Q0_B2": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q0-b02-b02",
+    "pgid": 3213570
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[04:09:15] axis: humaneval\n  humaneval 20/40 pass=10\n  humaneval 40/40 pass=23\n  -> {\"pass_at_1\": 0.575, \"passed\": 23, \"total\": 40, \"seconds\": 91.6}\n\nSaved: /data/eval-rulers/Q0-B02.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[04:10:47] axis: gsm8k\n  gsm8k 25/80 pass=5\n  gsm8k 50/80 pass=13\n  gsm8k 75/80 pass=18\n  -> {\"accuracy\": 0.225, \"passed\": 18, \"total\": 80, \"seconds\": 96.4}\n\nSaved: /data/eval-rulers/Q0-B02.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[04:12:24] axis: humaneval\n  humaneval 20/124 pass=13\n  humaneval 40/124 pass=25\n  humaneval 60/124 pass=33\n  humaneval 80/124 pass=44\n  humaneval 100/124 pass=57\n  humaneval 120/124 pass=68\n  -> {\"pass_at_1\": 0.5564516129032258, \"passed\": 69, \"total\": 124, \"seconds\": 286.7}\n\nSaved: /data/eval-rulers/Q0-B02-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[04:17:11] axis: gsm8k\n  gsm8k 25/240 pass=5\n  gsm8k 50/240 pass=12\n  gsm8k 75/240 pass=17\n  gsm8k 100/240 pass=23\n  gsm8k 125/240 pass=30\n  gsm8k 150/240 pass=33\n  gsm8k 175/240 pass=40\n  gsm8k 200/240 pass=44\n  gsm8k 225/240 pass=47\n  -> {\"accuracy\": 0.2125, \"passed\": 51, \"total\": 240, \"seconds\": 282.4}\n\nSaved: /data/eval-rulers/Q0-B02-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[04:21:53] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.46, \"passed\": 69, \"judged\": 150, \"skipped\": 0, \"seconds\": 609.8}\n\nSaved: /data/eval-rulers/Q0-B02-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[04:32:03] axis: xfc\n  -> {\"accuracy\": 0.74, \"passed\": 148, \"total\": 200, \"seconds\": 55.8}\n\nSaved: /data/eval-rulers/Q0-B02-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 2,
+     "PASS": false,
+     "needles_hit": "2/5",
+     "ttft_s": 49.383
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 49.396
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist",
+   "needle_tier": 128000
+  },
+  "Q0_B3": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q0-b03-b03",
+    "pgid": 3223557
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[04:39:03] axis: humaneval\n  humaneval 20/40 pass=10\n  humaneval 40/40 pass=24\n  -> {\"pass_at_1\": 0.6, \"passed\": 24, \"total\": 40, \"seconds\": 96.8}\n\nSaved: /data/eval-rulers/Q0-B03.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[04:40:40] axis: gsm8k\n  gsm8k 25/80 pass=5\n  gsm8k 50/80 pass=14\n  gsm8k 75/80 pass=17\n  -> {\"accuracy\": 0.2125, \"passed\": 17, \"total\": 80, \"seconds\": 93.7}\n\nSaved: /data/eval-rulers/Q0-B03.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[04:42:14] axis: humaneval\n  humaneval 20/124 pass=12\n  humaneval 40/124 pass=21\n  humaneval 60/124 pass=30\n  humaneval 80/124 pass=36\n  humaneval 100/124 pass=46\n  humaneval 120/124 pass=59\n  -> {\"pass_at_1\": 0.4838709677419355, \"passed\": 60, \"total\": 124, \"seconds\": 297.0}\n\nSaved: /data/eval-rulers/Q0-B03-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[04:47:11] axis: gsm8k\n  gsm8k 25/240 pass=4\n  gsm8k 50/240 pass=10\n  gsm8k 75/240 pass=15\n  gsm8k 100/240 pass=21\n  gsm8k 125/240 pass=27\n  gsm8k 150/240 pass=30\n  gsm8k 175/240 pass=37\n  gsm8k 200/240 pass=40\n  gsm8k 225/240 pass=45\n  -> {\"accuracy\": 0.2, \"passed\": 48, \"total\": 240, \"seconds\": 267.4}\n\nSaved: /data/eval-rulers/Q0-B03-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[04:51:38] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.4, \"passed\": 60, \"judged\": 150, \"skipped\": 0, \"seconds\": 558.0}\n\nSaved: /data/eval-rulers/Q0-B03-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[05:00:57] axis: xfc\n  -> {\"accuracy\": 0.745, \"passed\": 149, \"total\": 200, \"seconds\": 56.5}\n\nSaved: /data/eval-rulers/Q0-B03-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 49.37
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 49.368
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist",
+   "needle_tier": 128000
+  },
+  "Q1M_B1": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q1m-b01-b01",
+    "pgid": 3233446
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[05:07:43] axis: humaneval\n  humaneval 20/40 pass=13\n  humaneval 40/40 pass=26\n  -> {\"pass_at_1\": 0.65, \"passed\": 26, \"total\": 40, \"seconds\": 93.8}\n\nSaved: /data/eval-rulers/Q1M-B01.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[05:09:17] axis: gsm8k\n  gsm8k 25/80 pass=9\n  gsm8k 50/80 pass=17\n  gsm8k 75/80 pass=24\n  -> {\"accuracy\": 0.3, \"passed\": 24, \"total\": 80, \"seconds\": 113.4}\n\nSaved: /data/eval-rulers/Q1M-B01.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[05:11:10] axis: humaneval\n  humaneval 20/124 pass=14\n  humaneval 40/124 pass=23\n  humaneval 60/124 pass=35\n  humaneval 80/124 pass=46\n  humaneval 100/124 pass=57\n  humaneval 120/124 pass=68\n  -> {\"pass_at_1\": 0.5645161290322581, \"passed\": 70, \"total\": 124, \"seconds\": 309.4}\n\nSaved: /data/eval-rulers/Q1M-B01-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[05:16:20] axis: gsm8k\n  gsm8k 25/240 pass=8\n  gsm8k 50/240 pass=17\n  gsm8k 75/240 pass=24\n  gsm8k 100/240 pass=35\n  gsm8k 125/240 pass=46\n  gsm8k 150/240 pass=54\n  gsm8k 175/240 pass=66\n  gsm8k 200/240 pass=71\n  gsm8k 225/240 pass=75\n  -> {\"accuracy\": 0.32083333333333336, \"passed\": 77, \"total\": 240, \"seconds\": 314.4}\n\nSaved: /data/eval-rulers/Q1M-B01-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[05:21:35] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.4066666666666667, \"passed\": 61, \"judged\": 150, \"skipped\": 0, \"seconds\": 625.7}\n\nSaved: /data/eval-rulers/Q1M-B01-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[05:32:01] axis: xfc\n  -> {\"accuracy\": 0.735, \"passed\": 147, \"total\": 200, \"seconds\": 75.5}\n\nSaved: /data/eval-rulers/Q1M-B01-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 50.264
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 50.212
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist",
+   "needle_tier": 128000
+  },
+  "Q1M_B2": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q1m-b02-b02",
+    "pgid": 3243946
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[05:39:09] axis: humaneval\n  humaneval 20/40 pass=12\n  humaneval 40/40 pass=25\n  -> {\"pass_at_1\": 0.625, \"passed\": 25, \"total\": 40, \"seconds\": 100.1}\n\nSaved: /data/eval-rulers/Q1M-B02.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[05:40:50] axis: gsm8k\n  gsm8k 25/80 pass=8\n  gsm8k 50/80 pass=19\n  gsm8k 75/80 pass=26\n  -> {\"accuracy\": 0.3375, \"passed\": 27, \"total\": 80, \"seconds\": 103.3}\n\nSaved: /data/eval-rulers/Q1M-B02.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[05:42:33] axis: humaneval\n  humaneval 20/124 pass=14\n  humaneval 40/124 pass=21\n  humaneval 60/124 pass=33\n  humaneval 80/124 pass=40\n  humaneval 100/124 pass=50\n  humaneval 120/124 pass=59\n  -> {\"pass_at_1\": 0.49193548387096775, \"passed\": 61, \"total\": 124, \"seconds\": 308.7}\n\nSaved: /data/eval-rulers/Q1M-B02-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[05:47:42] axis: gsm8k\n  gsm8k 25/240 pass=5\n  gsm8k 50/240 pass=13\n  gsm8k 75/240 pass=18\n  gsm8k 100/240 pass=25\n  gsm8k 125/240 pass=32\n  gsm8k 150/240 pass=39\n  gsm8k 175/240 pass=47\n  gsm8k 200/240 pass=53\n  gsm8k 225/240 pass=60\n  -> {\"accuracy\": 0.26666666666666666, \"passed\": 64, \"total\": 240, \"seconds\": 293.1}\n\nSaved: /data/eval-rulers/Q1M-B02-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[05:52:35] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.36, \"passed\": 54, \"judged\": 150, \"skipped\": 0, \"seconds\": 671.0}\n\nSaved: /data/eval-rulers/Q1M-B02-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[06:03:47] axis: xfc\n  -> {\"accuracy\": 0.73, \"passed\": 146, \"total\": 200, \"seconds\": 70.7}\n\nSaved: /data/eval-rulers/Q1M-B02-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 50.39
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 50.331
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist",
+   "needle_tier": 128000
+  },
+  "Q1M_B3": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q1m-b03-b03",
+    "pgid": 3254617
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[06:10:50] axis: humaneval\n  humaneval 20/40 pass=14\n  humaneval 40/40 pass=28\n  -> {\"pass_at_1\": 0.7, \"passed\": 28, \"total\": 40, \"seconds\": 96.2}\n\nSaved: /data/eval-rulers/Q1M-B03.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[06:12:27] axis: gsm8k\n  gsm8k 25/80 pass=4\n  gsm8k 50/80 pass=13\n  gsm8k 75/80 pass=17\n  -> {\"accuracy\": 0.2125, \"passed\": 17, \"total\": 80, \"seconds\": 110.8}\n\nSaved: /data/eval-rulers/Q1M-B03.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[06:14:18] axis: humaneval\n  humaneval 20/124 pass=14\n  humaneval 40/124 pass=25\n  humaneval 60/124 pass=35\n  humaneval 80/124 pass=42\n  humaneval 100/124 pass=54\n  humaneval 120/124 pass=64\n  -> {\"pass_at_1\": 0.5241935483870968, \"passed\": 65, \"total\": 124, \"seconds\": 315.1}\n\nSaved: /data/eval-rulers/Q1M-B03-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[06:19:33] axis: gsm8k\n  gsm8k 25/240 pass=7\n  gsm8k 50/240 pass=14\n  gsm8k 75/240 pass=19\n  gsm8k 100/240 pass=28\n  gsm8k 125/240 pass=35\n  gsm8k 150/240 pass=42\n  gsm8k 175/240 pass=51\n  gsm8k 200/240 pass=56\n  gsm8k 225/240 pass=62\n  -> {\"accuracy\": 0.2708333333333333, \"passed\": 65, \"total\": 240, \"seconds\": 304.1}\n\nSaved: /data/eval-rulers/Q1M-B03-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[06:24:37] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.43333333333333335, \"passed\": 65, \"judged\": 150, \"skipped\": 0, \"seconds\": 636.9}\n\nSaved: /data/eval-rulers/Q1M-B03-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[06:35:14] axis: xfc\n  -> {\"accuracy\": 0.73, \"passed\": 146, \"total\": 200, \"seconds\": 66.3}\n\nSaved: /data/eval-rulers/Q1M-B03-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 50.31
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 50.276
+    }
+   },
+   "micro": {
+    "n_pass": 17,
+    "n_total": 20,
+    "verdict": "STRUCTURAL_FAIL"
+   },
+   "valid": true,
+   "role": "pareto_shortlist",
+   "needle_tier": 128000
+  },
+  "Q4C_B1": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q4c-b01-b01",
+    "pgid": 3265684
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[06:42:35] axis: humaneval\n  humaneval 20/40 pass=16\n  humaneval 40/40 pass=30\n  -> {\"pass_at_1\": 0.75, \"passed\": 30, \"total\": 40, \"seconds\": 143.1}\n\nSaved: /data/eval-rulers/Q4C-B01.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[06:44:58] axis: gsm8k\n  gsm8k 25/80 pass=4\n  gsm8k 50/80 pass=12\n  gsm8k 75/80 pass=16\n  -> {\"accuracy\": 0.2, \"passed\": 16, \"total\": 80, \"seconds\": 147.0}\n\nSaved: /data/eval-rulers/Q4C-B01.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[06:47:25] axis: humaneval\n  humaneval 20/124 pass=13\n  humaneval 40/124 pass=23\n  humaneval 60/124 pass=33\n  humaneval 80/124 pass=45\n  humaneval 100/124 pass=56\n  humaneval 120/124 pass=70\n  -> {\"pass_at_1\": 0.5806451612903226, \"passed\": 72, \"total\": 124, \"seconds\": 507.1}\n\nSaved: /data/eval-rulers/Q4C-B01-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[06:55:52] axis: gsm8k\n  gsm8k 25/240 pass=6\n  gsm8k 50/240 pass=9\n  gsm8k 75/240 pass=12\n  gsm8k 100/240 pass=18\n  gsm8k 125/240 pass=23\n  gsm8k 150/240 pass=31\n  gsm8k 175/240 pass=38\n  gsm8k 200/240 pass=47\n  gsm8k 225/240 pass=52\n  -> {\"accuracy\": 0.2375, \"passed\": 57, \"total\": 240, \"seconds\": 474.8}\n\nSaved: /data/eval-rulers/Q4C-B01-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[07:03:47] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.4266666666666667, \"passed\": 64, \"judged\": 150, \"skipped\": 0, \"seconds\": 1346.5}\n\nSaved: /data/eval-rulers/Q4C-B01-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[07:26:14] axis: xfc\n  -> {\"accuracy\": 0.755, \"passed\": 151, \"total\": 200, \"seconds\": 76.7}\n\nSaved: /data/eval-rulers/Q4C-B01-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 8.308
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 8.293
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist（128K 容量降级@32K）",
+   "needle_tier": 32000
+  },
+  "Q4C_B2": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q4c-b02-b02",
+    "pgid": 3279752
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[07:32:24] axis: humaneval\n  humaneval 20/40 pass=14\n  humaneval 40/40 pass=27\n  -> {\"pass_at_1\": 0.675, \"passed\": 27, \"total\": 40, \"seconds\": 153.8}\n\nSaved: /data/eval-rulers/Q4C-B02.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[07:34:58] axis: gsm8k\n  gsm8k 25/80 pass=5\n  gsm8k 50/80 pass=13\n  gsm8k 75/80 pass=17\n  -> {\"accuracy\": 0.2125, \"passed\": 17, \"total\": 80, \"seconds\": 162.9}\n\nSaved: /data/eval-rulers/Q4C-B02.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[07:37:41] axis: humaneval\n  humaneval 20/124 pass=12\n  humaneval 40/124 pass=23\n  humaneval 60/124 pass=37\n  humaneval 80/124 pass=44\n  humaneval 100/124 pass=55\n  humaneval 120/124 pass=65\n  -> {\"pass_at_1\": 0.532258064516129, \"passed\": 66, \"total\": 124, \"seconds\": 516.7}\n\nSaved: /data/eval-rulers/Q4C-B02-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[07:46:18] axis: gsm8k\n  gsm8k 25/240 pass=6\n  gsm8k 50/240 pass=12\n  gsm8k 75/240 pass=18\n  gsm8k 100/240 pass=21\n  gsm8k 125/240 pass=25\n  gsm8k 150/240 pass=32\n  gsm8k 175/240 pass=39\n  gsm8k 200/240 pass=48\n  gsm8k 225/240 pass=58\n  -> {\"accuracy\": 0.25833333333333336, \"passed\": 62, \"total\": 240, \"seconds\": 489.8}\n\nSaved: /data/eval-rulers/Q4C-B02-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[07:54:28] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.41333333333333333, \"passed\": 62, \"judged\": 150, \"skipped\": 0, \"seconds\": 1482.7}\n\nSaved: /data/eval-rulers/Q4C-B02-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[08:19:11] axis: xfc\n  -> {\"accuracy\": 0.75, \"passed\": 150, \"total\": 200, \"seconds\": 82.6}\n\nSaved: /data/eval-rulers/Q4C-B02-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 8.669
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 8.647
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist（128K 容量降级@32K）",
+   "needle_tier": 32000
+  },
+  "Q4C_B3": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-q4c-b03-b03",
+    "pgid": 3294718
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[08:25:22] axis: humaneval\n  humaneval 20/40 pass=15\n  humaneval 40/40 pass=28\n  -> {\"pass_at_1\": 0.7, \"passed\": 28, \"total\": 40, \"seconds\": 138.0}\n\nSaved: /data/eval-rulers/Q4C-B03.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[08:27:41] axis: gsm8k\n  gsm8k 25/80 pass=4\n  gsm8k 50/80 pass=13\n  gsm8k 75/80 pass=18\n  -> {\"accuracy\": 0.225, \"passed\": 18, \"total\": 80, \"seconds\": 163.0}\n\nSaved: /data/eval-rulers/Q4C-B03.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[08:30:24] axis: humaneval\n  humaneval 20/124 pass=14\n  humaneval 40/124 pass=27\n  humaneval 60/124 pass=39\n  humaneval 80/124 pass=47\n  humaneval 100/124 pass=59\n  humaneval 120/124 pass=72\n  -> {\"pass_at_1\": 0.6048387096774194, \"passed\": 75, \"total\": 124, \"seconds\": 520.2}\n\nSaved: /data/eval-rulers/Q4C-B03-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[08:39:04] axis: gsm8k\n  gsm8k 25/240 pass=1\n  gsm8k 50/240 pass=7\n  gsm8k 75/240 pass=13\n  gsm8k 100/240 pass=19\n  gsm8k 125/240 pass=25\n  gsm8k 150/240 pass=32\n  gsm8k 175/240 pass=38\n  gsm8k 200/240 pass=46\n  gsm8k 225/240 pass=53\n  -> {\"accuracy\": 0.2375, \"passed\": 57, \"total\": 240, \"seconds\": 446.9}\n\nSaved: /data/eval-rulers/Q4C-B03-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[08:46:31] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.41333333333333333, \"passed\": 62, \"judged\": 150, \"skipped\": 0, \"seconds\": 1238.5}\n\nSaved: /data/eval-rulers/Q4C-B03-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[09:07:10] axis: xfc\n  -> {\"accuracy\": 0.755, \"passed\": 151, \"total\": 200, \"seconds\": 81.1}\n\nSaved: /data/eval-rulers/Q4C-B03-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 8.699
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 8.665
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "pareto_shortlist（128K 容量降级@32K）",
+   "needle_tier": 32000
+  },
+  "W8_B1": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-w8-b01-b01",
+    "pgid": 3308609
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[09:13:00] axis: humaneval\n  humaneval 20/40 pass=14\n  humaneval 40/40 pass=28\n  -> {\"pass_at_1\": 0.7, \"passed\": 28, \"total\": 40, \"seconds\": 161.4}\n\nSaved: /data/eval-rulers/W8-B01.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[09:15:42] axis: gsm8k\n  gsm8k 25/80 pass=7\n  gsm8k 50/80 pass=15\n  gsm8k 75/80 pass=18\n  -> {\"accuracy\": 0.225, \"passed\": 18, \"total\": 80, \"seconds\": 185.4}\n\nSaved: /data/eval-rulers/W8-B01.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[09:18:48] axis: humaneval\n  humaneval 20/124 pass=11\n  humaneval 40/124 pass=21\n  humaneval 60/124 pass=33\n  humaneval 80/124 pass=41\n  humaneval 100/124 pass=54\n  humaneval 120/124 pass=68\n  -> {\"pass_at_1\": 0.5645161290322581, \"passed\": 70, \"total\": 124, \"seconds\": 646.2}\n\nSaved: /data/eval-rulers/W8-B01-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[09:29:34] axis: gsm8k\n  gsm8k 25/240 pass=7\n  gsm8k 50/240 pass=16\n  gsm8k 75/240 pass=19\n  gsm8k 100/240 pass=23\n  gsm8k 125/240 pass=27\n  gsm8k 150/240 pass=30\n  gsm8k 175/240 pass=39\n  gsm8k 200/240 pass=46\n  gsm8k 225/240 pass=52\n  -> {\"accuracy\": 0.22916666666666666, \"passed\": 55, \"total\": 240, \"seconds\": 545.0}\n\nSaved: /data/eval-rulers/W8-B01-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[09:38:39] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.35333333333333333, \"passed\": 53, \"judged\": 150, \"skipped\": 0, \"seconds\": 1783.5}\n\nSaved: /data/eval-rulers/W8-B01-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[10:08:23] axis: xfc\n  -> {\"accuracy\": 0.755, \"passed\": 151, \"total\": 200, \"seconds\": 95.4}\n\nSaved: /data/eval-rulers/W8-B01-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 10.789
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 10.753
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "quality_reference（不占名额）",
+   "needle_tier": 32000
+  },
+  "W8_B2": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-w8-b02-b02",
+    "pgid": 3325260
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[10:14:31] axis: humaneval\n  humaneval 20/40 pass=15\n  humaneval 40/40 pass=29\n  -> {\"pass_at_1\": 0.725, \"passed\": 29, \"total\": 40, \"seconds\": 168.3}\n\nSaved: /data/eval-rulers/W8-B02.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[10:17:20] axis: gsm8k\n  gsm8k 25/80 pass=9\n  gsm8k 50/80 pass=15\n  gsm8k 75/80 pass=18\n  -> {\"accuracy\": 0.225, \"passed\": 18, \"total\": 80, \"seconds\": 181.6}\n\nSaved: /data/eval-rulers/W8-B02.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[10:20:22] axis: humaneval\n  humaneval 20/124 pass=10\n  humaneval 40/124 pass=21\n  humaneval 60/124 pass=34\n  humaneval 80/124 pass=44\n  humaneval 100/124 pass=56\n  humaneval 120/124 pass=69\n  -> {\"pass_at_1\": 0.5645161290322581, \"passed\": 70, \"total\": 124, \"seconds\": 709.7}\n\nSaved: /data/eval-rulers/W8-B02-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[10:32:11] axis: gsm8k\n  gsm8k 25/240 pass=6\n  gsm8k 50/240 pass=12\n  gsm8k 75/240 pass=17\n  gsm8k 100/240 pass=24\n  gsm8k 125/240 pass=30\n  gsm8k 150/240 pass=33\n  gsm8k 175/240 pass=41\n  gsm8k 200/240 pass=48\n  gsm8k 225/240 pass=55\n  -> {\"accuracy\": 0.24166666666666667, \"passed\": 58, \"total\": 240, \"seconds\": 571.0}\n\nSaved: /data/eval-rulers/W8-B02-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[10:41:43] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.44666666666666666, \"passed\": 67, \"judged\": 150, \"skipped\": 0, \"seconds\": 1473.7}\n\nSaved: /data/eval-rulers/W8-B02-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[11:06:16] axis: xfc\n  -> {\"accuracy\": 0.745, \"passed\": 149, \"total\": 200, \"seconds\": 99.4}\n\nSaved: /data/eval-rulers/W8-B02-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 2,
+     "PASS": false,
+     "needles_hit": "0/5",
+     "ttft_s": 10.817
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 10.792
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "quality_reference（不占名额）",
+   "needle_tier": 32000
+  },
+  "W8_B3": {
+   "info": {
+    "log": "/data/sandbox/nextgen-20260917/log-p02-p3-w8-b03-b03",
+    "pgid": 3341092
+   },
+   "rulers": {
+    "he_screen": {
+     "rc": 0,
+     "stdout_tail": "[11:12:34] axis: humaneval\n  humaneval 20/40 pass=14\n  humaneval 40/40 pass=27\n  -> {\"pass_at_1\": 0.675, \"passed\": 27, \"total\": 40, \"seconds\": 164.3}\n\nSaved: /data/eval-rulers/W8-B03.json\n"
+    },
+    "gsm_screen": {
+     "rc": 0,
+     "stdout_tail": "[11:15:19] axis: gsm8k\n  gsm8k 25/80 pass=5\n  gsm8k 50/80 pass=10\n  gsm8k 75/80 pass=14\n  -> {\"accuracy\": 0.1875, \"passed\": 15, \"total\": 80, \"seconds\": 182.9}\n\nSaved: /data/eval-rulers/W8-B03.json\n"
+    },
+    "he_holdout": {
+     "rc": 0,
+     "stdout_tail": "[11:18:22] axis: humaneval\n  humaneval 20/124 pass=13\n  humaneval 40/124 pass=21\n  humaneval 60/124 pass=34\n  humaneval 80/124 pass=41\n  humaneval 100/124 pass=51\n  humaneval 120/124 pass=64\n  -> {\"pass_at_1\": 0.532258064516129, \"passed\": 66, \"total\": 124, \"seconds\": 633.9}\n\nSaved: /data/eval-rulers/W8-B03-H.json\n"
+    },
+    "gsm_holdout": {
+     "rc": 0,
+     "stdout_tail": "[11:28:56] axis: gsm8k\n  gsm8k 25/240 pass=5\n  gsm8k 50/240 pass=12\n  gsm8k 75/240 pass=15\n  gsm8k 100/240 pass=22\n  gsm8k 125/240 pass=28\n  gsm8k 150/240 pass=33\n  gsm8k 175/240 pass=40\n  gsm8k 200/240 pass=46\n  gsm8k 225/240 pass=53\n  -> {\"accuracy\": 0.2375, \"passed\": 57, \"total\": 240, \"seconds\": 559.4}\n\nSaved: /data/eval-rulers/W8-B03-H.json\n"
+    },
+    "ifeval_holdout": {
+     "rc": 0,
+     "stdout_tail": "[11:38:15] axis: ifeval\n  ifeval 10/150\n  ifeval 20/150\n  ifeval 30/150\n  ifeval 40/150\n  ifeval 50/150\n  ifeval 60/150\n  ifeval 70/150\n  ifeval 80/150\n  ifeval 90/150\n  ifeval 100/150\n  ifeval 110/150\n  ifeval 120/150\n  ifeval 130/150\n  ifeval 140/150\n  ifeval 150/150\n  -> {\"accuracy\": 0.35333333333333333, \"passed\": 53, \"judged\": 150, \"skipped\": 0, \"seconds\": 1723.3}\n\nSaved: /data/eval-rulers/W8-B03-H.json\n"
+    },
+    "xfc": {
+     "rc": 0,
+     "stdout_tail": "[12:06:59] axis: xfc\n  -> {\"accuracy\": 0.75, \"passed\": 150, \"total\": 200, \"seconds\": 94.3}\n\nSaved: /data/eval-rulers/W8-B03-H.json\n"
+    }
+   },
+   "needle_holdout": {
+    "s2": {
+     "rc": 2,
+     "PASS": false,
+     "needles_hit": "0/5",
+     "ttft_s": 10.766
+    },
+    "s5": {
+     "rc": 0,
+     "PASS": true,
+     "needles_hit": "5/5",
+     "ttft_s": 10.737
+    }
+   },
+   "micro": {
+    "n_pass": 18,
+    "n_total": 20,
+    "verdict": "PARTIAL_REVIEW"
+   },
+   "valid": true,
+   "role": "quality_reference（不占名额）",
+   "needle_tier": 32000
   }
  }
 }
