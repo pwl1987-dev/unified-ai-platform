@@ -1,0 +1,146 @@
+# gates-phase05.yaml — Phase 05 四卡拓扑赛 → Gate E 全门槛冻结（v1.0，P0A 冻结，禁止看结果后修改）
+# 依据：MASTER §11（四拓扑/统一负载/路由要求/§11.4 最终判定）+ 用户 2026-09-25 Phase05 执行合同
+#       + Phase04 handoff（PH4-EVIDENCE-REPAIR-01 修复后 2 Q-Profile）+ Phase03 Gate C X2 认证
+# 判定口径：吞吐/prefill 类 ≥3% 出带才算差异；能效 5% 带；落带=equivalent 禁微差假 dominance
+version: 1
+frozen_utc: "2026-09-25"
+measurement_contract_sha: 80e7d15          # Phase 00 commit #1（指标公式/fixture/pairing）继承
+manifest_schema: {version: "1.4", sha256: 3f934273c5fe01c93b36a49db7a472606dd03fbd31836c3b82f6ddb896ed4851}
+runtime_baseline:
+  file: repro/env029/runtime029-phase02-baseline.json
+  vllm_tree_sha256_post_patch: 4632d624c2bd2373a746a978a1022a12633abf4036f956fc3fb82e3d047a75c8
+  rule: "Phase 05 全程只读该环境；任何包/文件变更 = 新实验 ID + ENV_DRIFT"
+kv: NATIVE_BF16                             # Phase 03 定案，全程冻结（--kv-dtype bfloat16 显式）
+input_handoff: repro/quant-phase04/phase05-handoff.json   # 修复后版本（Q1M=reference only）
+
+# ============================================================ 单变量纪律
+single_variable: 四卡拓扑与路由形态为唯一主变量
+experiment_id_rule: "模型 artifact / KV dtype / fixture / 并发形制 / 功耗墙 / router 版本 / 拓扑 / harness / 采样法 / runtime 任一变化 = 新实验 ID；禁止合并变化直比"
+homogeneous_anchor: "P1 拓扑因果比较全部用 Q0（同权重同 artifact 同 SHA）——模型差异零污染；Q-Profile 异构只进 P2 M4-COMPOSED 独立账本"
+
+# ============================================================ 四拓扑（冻结）
+topologies:
+  T1: {form: "4×TP1", backends: "4×[TP1 @ model_len 36864, MS 4, spec k7 draft-tp1]", role: "聚合吞吐候选"}
+  T2: {form: "2×TP2", backends: "2×[TP2 @ model_len 131072, MS 2, spec k7 draft-tp1]", role: "双交互低延迟候选"}
+  T3: {form: "TP2+TP1+TP1", backends: "1×[TP2 @ 131072, MS 2] + 2×[TP1 @ 36864, MS 4]", role: "默认通用生产候选"}
+  T4: {form: "TP4", backends: "1×[TP4 @ model_len 262144, MS 2, spec k7 draft-tp1]", role: "极端单会话/长上下文实验候选（不得预设获胜）"}
+per_backend_recipe_note: "TP1@36864/MS4 与 TP2@131072/MS2 = Phase 02/03 认证形制（b0_l32/b0_x128）逐字继承；TP4@262144 = Phase 03 extreme 认证域扩展（262K=HARD_CEILING 7-token margin 在 TP2；TP4 容量快照实证为准）"
+contingency_arms:            # 命名预留，触发才建账
+  T1L: "TP1@131072 MS1 boot 探针（P0B 容量判定）alive 才建的 4×TP1 长上下文变体；OOM/容量不足 → TP1 全部长上下文 cell 一次性标 CAPACITY_LIMIT"
+  T4N: "T4 spec 不兼容 boot 失败时的 spec-off 变体（偏差显式记账，不与 spec-on 臂混算）"
+  M4-COMPOSED: "P2 异构 Q-Profile 路由实验（Q0+Q4C 混合部署）——与拓扑赛分账，禁止把模型变化与拓扑变化合成一个加速比"
+
+# ============================================================ 统一因子（全部拓扑恒定）
+unification:
+  total_gpus: 4                             # 每拓扑恰 4 张授权非生产 GPU
+  power_limit_w: 250                        # 冻结功耗墙（ops cron 零触碰仅读取核对）
+  model_artifact: "Q0 = /data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128（P1 anchor；P2 M4 臂除外）"
+  drafter: /data/sandbox/vllm-cu130-qual-20260915/draft-recal-readable-20260915
+  tokenizer: 同 artifact 自带（跨拓扑一致性由 artifact SHA 保证）
+  router: "ph5_router.py v1.0（runtime029 无 vllm.router 实证 → 自建 asyncio sticky-session LB；版本=git SHA 锁定，全部拓扑同一版本）"
+  client: bench_nextgen.py（单类 cell）+ ph5_workload.py（多会话/混合/prefix-sticky 场景）
+  cpu_numa: "同 taskset cpuset + numactl 策略横跨全部拓扑（server/router/client/tokenizer 同机同核段；cpuset/numactl 落盘）"
+  sampling: MANIFEST sampling_protocol 继承（温度/seed/stop 与 Phase 02-04 同形）
+  measurement_paths: "direct-to-backend 与 through-router 双轨都必须测；router/API 开销独立报告，禁止归因给模型或 GPU"
+  energy_scope: 整机（见 energy 协议）
+
+# ============================================================ Router 契约（ph5_router.py v1.0）
+router_contract:
+  behavior: "sticky-session（X-Session-Id 哈希绑定 backend；backend 满载时新会话走 least-inflight）"
+  logging: [route_reason, backend_choice, inflight_per_backend, queue_len_per_backend, session_map_size, sticky_hit, prefix_hit_passthrough]
+  endpoints: [/healthz, /metrics, /backends]
+  failover: "backend 健康探测 1s；故障即摘除+存量会话重绑定；恢复自动回池"
+  overhead_quantification: "同 backend 同请求类 C1 direct vs through-router 配对差 = router_overhead_ms（每拓扑独立报告）"
+  quality_rules: "不允许同一会话随机分发后用低 prefix hit 责怪推理引擎；每会话延迟与系统 aggregate 两个维度都报告"
+
+# ============================================================ P1 Screen（Screen-first，不直接跑全矩阵）
+screen_p1:
+  protocol: {boots: 1, reps_per_boot: 3, anchor: Q0}
+  cells:
+    single_agent: [D565-C1, P32K-C1, P128K-C1, P220K-C1(容量允许)]
+    dual_agent: ["2×P32K", "2×P128K"]
+    four_agent: ["4×P32K"]
+    batch: [D565-C4, D565-C8, D565-C16, P4K-C4, P4K-C8, P4K-C16]
+    mixed: ["1×P128K + 3×D565"]
+    prefix_sticky: [同会话连续多轮, 新会话并行, cache/sticky hit 率, failover 代价(停 1 自有 backend 测恢复)]
+  debt_cells:
+    MS8-C8: "D565-C8 单 backend MS8 direct（Phase 02 Debt #8 envelope 点正式复访）"
+    TP1-C4: "P4K-C4 TP1 direct（= T1 direct 参照 cell，顺带清偿 Phase 02 Debt）"
+  per_cell_metrics: [ttft_p50_p95, tpot, decode_tok_s, aggregate_tok_s, goodput_rps,
+                     per_session_p50_p95, fairness_jain, queue_wait, preemptions, http_errors,
+                     vram_mib_per_gpu, cpu_util, ram_used, page_cache, dflash2_acceptance,
+                     J_per_output_token, tok_per_J, mean_peak_power_W, throttle_reasons, router_overhead_ms]
+  capacity_rule: "配置确定性不可行 cell（如 TP1@36864 遇 P128K）标 CAPACITY_LIMIT 不烧 GPU；boot 期容量快照为准，禁止为失败日志反复 OOM"
+  tp4_early_stop: "T4 先只跑 C1/长上下文 cell；相对 T2 无稳定显著收益（≥3% 且跨 rep 方向一致 ≥2 主轴）→ 立即 OUT，不跑批处理/混合矩阵（理论 KV pool 大≠赢）"
+  screen_decision: {IN: "该 workload class 有生产角色价值且未被支配", OUT: "被支配或触发 early-stop"}
+
+# ============================================================ P2 Q-Profile role validation（按修复后 handoff）
+role_validation_p2:
+  profiles: "QP-INTERACT=Q0（短交互 + ≥32K 长上下文 X2 认证基线）；QP-BATCH=Q4C（C4+ 批处理，≤~118K 容量域）；Q1M=reference only 不进生产拓扑裁决"
+  method: "T3 拓扑内 Q4C-TP1 backend 替换 A/B（Q0-TP1 vs Q4C-TP1 同 cell 同形制）；质量证据=Phase 04 Gate D 已 3-boot 认证 + 每 boot ccdet canary/verbatim/micro 冒烟；不重开 holdout"
+  m4_composed: "真实混合部署=M4-COMPOSED 独立实验（不同 backend 承接 short/long/batch）；与 homogeneous topology race 分账记账"
+
+# ============================================================ P3 Qualify
+qualify_p3:
+  shortlist: "Screen 后只提升 2-3 个有生产角色价值的拓扑；普通负结果直接淘汰不等待"
+  protocol: {boots: 3, reps_per_boot: 3, noise_sensitive_axes: "按认证形制（VLLM_CACHE_ROOT 钉死+暖机+固定 fixture/seed）加 repeats"}
+  coverage: [single_agent, dual_agent, four_agent, batch, mixed, prefix_sticky, direct_vs_router, full_energy, fairness, tail_latency, capacity, stability, semantic_canary]
+  negative_rule: "明显输家不烧 GPU 凑完整矩阵"
+
+# ============================================================ Gate E（机器判定四冠军，禁只报 aggregate）
+gate_e:
+  champions:
+    throughput_champion: {cells: [D565-C8, D565-C16, P4K-C8, P4K-C16], primary: goodput_rps@C16, tiebreak: [goodput_rps@C8, J_per_output_token]}
+    single_agent_champion: {cells: [D565-C1, P32K-C1, P128K-C1], primary: "C1 decode tok/s 跨 fixture 胜场（≥2/3 且 ≥3% 带）", tiebreak: [ttft_p50, J_per_output_token]}
+    dual_agent_champion: {cells: ["2×P32K", "2×P128K"], primary: per_session_decode_p50, tiebreak: [per_session_p95_spread, fairness_jain, aggregate_tok_s]}
+    mixed_production_champion: {cells: ["1×P128K+3×D565"], primary: "短请求 P95 TTFT 保护（≤ direct 单职责基线 ×1.05）∧ 长请求完成率=100%", tiebreak: [aggregate_tok_s, J_per_output_token]}
+  rules:
+    - "落 3% 带 = EQUIVALENT（可共称/按 tiebreak），禁 0.x% 微差假冠军"
+    - "不得强行寻找包打天下的总冠军；四冠军分别回答"
+    - "M4 = TP2+TP1+TP1 只有在真实 mixed workload 胜出才冻结为 M4；TP4 只有真实任务受益才保留"
+    - "CAPACITY_LIMIT/UNSUPPORTED/OOM 证明 = 正式实验结论（cell 级记录），非阻塞"
+  outputs: [reports/phase-05-topology.md, gate-e machine verdict JSON, topology matrix raw evidence,
+            rejected/unsupported/capacity-limit/invalid 清单, direct/router overhead, 整机能效, remaining debt, Phase06 handoff]
+
+# ============================================================ 能量协议（整机）
+energy_protocol:
+  official_metric: J/output-token
+  scope: "整机 = 4 授权 GPU NVML 之和 + CPU RAPL package（可读时；不可读如实 MEASUREMENT_NOT_AVAILABLE 不伪造）+ RAM 功耗不可得则记录 util；非授权 GPU（生产/外占）功率只作环境上下文只读记录，不入分子"
+  also_report: [tok_per_J, mean_power_W, peak_power_W, throttle_reasons, per_gpu_breakdown]
+  split: "boot/model-load 与 serving 稳态分列禁混算（METRICS-SCHEMA §5 梯形积分，1Hz 采样）"
+  power_window: 250W 恒定窗（cron 零触碰，仅读取核对）
+
+# ============================================================ GPU/资源纪律
+gpu_authorization:
+  permanent_zero_touch: [GPU0, GPU1, ":8000 生产(lb/mon)", "GPU5-7 外围服务(:19623/19624/19625)所在卡除非 P0B 巡检证明确属空闲且 MANIFEST 登记"]
+  live_inventory_first: "P0B 先读 GPU UUID/BDF/NUMA/进程/容器/端口实况 → MANIFEST phase05.gpu_authorization 登记 4 卡授权集；不杀未知进程不占生产卡"
+  four_gpu_rule: "四拓扑每臂恰用授权 4 卡；四卡暂不可得时先推进 gates/router/fixture/runner/report/静态检查+不冲突 preflight，周期性复查资源"
+  launcher: "tools/ph5_boot.sh（boot029_nextgen.sh 的 Phase05 扩展：显式 --uuids + Phase05 授权集 + TP4；serve 参数/env/补丁校验逐字继承）"
+  isolation: "每 backend 独立 port + 独立 VLLM_CACHE_ROOT + 每实验独立 staging；只清理本实验登记的 PGID/PID/container（铁律 5 防自杀）"
+  ports: {router: 19710, backends: [19711, 19712, 19713, 19714], legacy_reserved: [19701, 19702], avoid: [8000, 19622, 19623, 19624, 19625, 19637, 19649]}
+
+# ============================================================ 状态层（继承 + Phase05 增补）
+status_layering:
+  inherited: "六态 + screen_decision + evidence_quality + observation_class（Phase 02 定义全部沿用）"
+  additions:
+    cell_status: [VALID_PASS, VALID_FAIL, INVALID, UNSUPPORTED, CAPACITY_LIMIT, MEASUREMENT_NOT_AVAILABLE]
+    topology_decision: [IN, OUT, EARLY_STOP_OUT, REFERENCE_ONLY]
+
+# ============================================================ Debt 处置（Phase04 handoff 移交项）
+debt_disposition:
+  MS8-C8: {disposition: DO_NOW, cell: "P1 debt_cells.MS8-C8"}
+  TP1-C4: {disposition: DO_NOW, cell: "P1 debt_cells.TP1-C4（=T1 direct 参照）"}
+  FP8-KV: {disposition: DEFERRED_CONDITIONAL, note: "上游解锁前不进任何拓扑臂"}
+  tenant_isolation_strong_churn: {disposition: DEFERRED, to: Phase06}
+  graph_replay: {disposition: CONDITIONAL, note: "无 CG 新证据需求则不启用"}
+  K5_rule: CLOSED_AS_ADOPTED
+  slo_238plus: {disposition: DEFERRED}
+
+# ============================================================ 暂停条件（仅真实硬阻塞，普通失败自修自试不停工）
+pause_conditions:
+  - "必须改变 Authority/frozen contract 才能继续"
+  - "必须修改驱动/内核/生产服务/高风险宿主状态"
+  - "未知/生产进程占据 Gate E 必需资源且所有授权组合无法规避（先做完全部非 GPU 工作）"
+  - "必需模型/证据/凭据/数据真实缺失且无法从本地/GitHub 恢复"
+  - "原始证据损坏到无法形成可信结论"
+auto_repair: "shell/python syntax/路径/权限/容器/port/stale 自有进程/API 参数/fixture 装配/argv/parser/schema/cache/boot timeout/invalid max_model_len/实验配置 OOM/metrics 缺字段/router 配置/自有 runner 崩溃 → 自动 root-cause+修复+自测+最小 cell 重跑，原始失败证据全保留"
