@@ -63,8 +63,9 @@ def main() -> int:
     # ---- 1) 质量门 + 稳定性 ----
     qual = {}
     for cand in ("Q0", "Q1M", "Q4C", "W8"):
-        boots = [qr["stages"][k] for k in (f"{cand}_B{n}" for n in (1, 2, 3))
-                 if k in qr["stages"] and qr["stages"][k].get("valid")]
+        boot_keys = [k for k in (f"{cand}_B{n}" for n in (1, 2, 3))
+                     if k in qr["stages"] and qr["stages"][k].get("valid")]
+        boots = [qr["stages"][k] for k in boot_keys]
         ok_boots = len(boots)
         per_boot_q = [quality_of(b) for b in boots]
         hold = {}
@@ -94,8 +95,9 @@ def main() -> int:
             regressions = sum(1 for q, c in pairs if q and not c)
             needle_paired[s] = {"pairs": len(pairs), "q0_pass": sum(1 for q, c in pairs if q),
                                 "candidate_regressions_vs_q0": regressions}
-        micro_v = [ (b.get("micro") or {}).get("verdict") for b in boots ]
-        qual[cand] = {"valid_boots": ok_boots,
+        micro_v = [(b.get("micro") or {}).get("verdict") for b in boots]
+        qual[cand] = {"valid_boots": len(boots),
+                      "boot_keys": boot_keys,
                       "holdout_axes": hold,
                       "needle_holdout_raw": {s: v for s, v in needles.items()},
                       "needle_paired_vs_q0": needle_paired,
@@ -116,22 +118,27 @@ def main() -> int:
     noise_floor = {axis: max(HARD_PP, e["spread_pp"])
                    for axis, e in qual["Q0"]["holdout_axes"].items()}
     hard = {}
+    structural_fail_boots = {}
     for c in ("Q0", "Q1M", "Q4C", "W8"):
         needle_ok = all(v["candidate_regressions_vs_q0"] == 0
                         for v in qual[c]["needle_paired_vs_q0"].values())
         axes_ok = all(v >= -noise_floor.get(axis, HARD_PP)
                       for axis, v in deltas.get(c, {}).items()
                       if axis != "he_screen" and axis != "gsm_screen")
-        hard[c] = qual[c]["valid_boots"] == 3 and needle_ok and axes_ok
+        # PH4-EVIDENCE-REPAIR-01：tool_json_structural ∈ 冻结 gates
+        # core_axes_zero_regress（"结构破坏=否决级"）——任一有效 boot micro=
+        # STRUCTURAL_FAIL 即 hard reject；PARTIAL_REVIEW/STRUCTURAL_SAFE 过；
+        # 观测缺失（None）≠失败（evidence_quality 与六态正交）
+        structural_fail_boots[c] = [k for k, v in zip(qual[c]["boot_keys"], qual[c]["micro"])
+                                    if v == "STRUCTURAL_FAIL"]
+        micro_ok = not structural_fail_boots[c]
+        hard[c] = qual[c]["valid_boots"] == 3 and needle_ok and axes_ok and micro_ok
     # Q0 自身：boot 有效 + s5 全过 + s2 闪烁为已知签名（记录不判败）
 
     # ---- 2) epsilon-Pareto（六轴，来自 P2 矩阵） ----
     def med(arm, key):
         return (mx[arm].get(key) or {}).get("median")
 
-    def eq_or_better(c, r, eps=EPS_THR, higher=True):
-        """c 相对 r：等价或更好（在 eps 带内）"""
-        cv, rv = med(c, key=""), None  # placeholder
     pareto = {
         "axes": {
             "d565_c1": {a: med(a, "d565_c1_decode") for a in mx},
@@ -145,36 +152,81 @@ def main() -> int:
                     "vram": "max(200MiB,2%)=容量墙为硬差异"},
     }
 
-    # ---- 3) Q-Profile 定案（性能六轴 + 质量门合成；质量差 >1pp 带会在此裁决） ----
-    profiles = [
-        {"id": "QP-INTERACT", "weight_profile": "Q0（现役 W4A16+int8 头/embed）",
-         "role": "交互/全档基线（S1/L2 底座）",
-         "basis": "d565=182.6 唯一王者（全部候选 ≥31% 差距）；全档可服务（128K ✓）",
-         "mapping": ["S1", "L2"]},
-        {"id": "QP-LONGCTX", "weight_profile": "Q1M（W4g128 主体+敏感族 g64+首尾 W8）",
-         "role": "128K 长上下文（X2 档吞吐候选）",
-         "basis": "p32kC1=69.9（=Q0 带内）+128K decode 25.4（+37%>3% 带）+容量保持",
-         "mapping": ["X2"], "quality_gate": "hard 门结果见 deltas"},
-        {"id": "QP-BATCH", "weight_profile": "Q4C（W8A8-FP8 dynamic）",
-         "role": "C4+ 并发吞吐/能效档",
-         "basis": "p4kC4=203.6（+26%）+J/tok 2.188（−4%>5%? 记录：4.3% 在能效 5% 带内→与 Q0 能效等价）+128K 容量墙（max_model_len 118784）",
-         "mapping": ["S1-高并发路由"], "capacity_limit": "128K=CAPACITY_LIMIT"},
-    ]
+    # ---- 3) Q-Profile 定案（性能六轴 + 质量门合成；按 hard eligibility 动态生成） ----
+    profiles = []
+    if hard["Q0"]:
+        q1m_alive = hard["Q1M"]
+        profiles.append({
+            "id": "QP-INTERACT", "weight_profile": "Q0（现役 W4A16+int8 头/embed）",
+            "role": ("交互/全档基线（S1/L2 底座）"
+                     + ("" if q1m_alive else " + 认证长上下文基线（X2——Q1M 候选被结构门否决后回退）")),
+            "basis": "d565=182.6 唯一王者（全部候选 ≥31% 差距）；全档可服务（128K ✓）"
+                     + ("" if q1m_alive else "；X2=Phase 03 Gate C daily 定案基线（p32kC1=69.9，128K decode 18.5）"),
+            "mapping": ["S1", "L2"] + ([] if q1m_alive else ["X2"]),
+        })
+    if hard["Q1M"]:
+        profiles.append({
+            "id": "QP-LONGCTX", "weight_profile": "Q1M（W4g128 主体+敏感族 g64+首尾 W8）",
+            "role": "128K 长上下文（X2 档吞吐候选）",
+            "basis": "p32kC1=69.9（=Q0 带内）+128K decode 25.4（+37%>3% 带）+容量保持",
+            "mapping": ["X2"], "quality_gate": "hard 门结果见 deltas",
+        })
+    if hard["Q4C"]:
+        profiles.append({
+            "id": "QP-BATCH", "weight_profile": "Q4C（W8A8-FP8 dynamic）",
+            "role": "C4+ 并发吞吐/能效档",
+            "basis": "p4kC4=203.6（+26%）+J/tok 2.188（记录：4.3% 在能效 5% 带内→与 Q0 能效等价）+128K 容量墙（max_model_len 118784）",
+            "mapping": ["S1-高并发路由"], "capacity_limit": "128K=CAPACITY_LIMIT",
+        })
+    excluded = {}
+    if not hard["W8"]:
+        excluded["W8"] = "REJECTED_FOR_QUALITY（needle s2 配对退化 1 次 0/5 全灭形态 + IFEval −4.7pp）；被 Q4C 吞吐/能效支配；保留 same-base 质量参照（不占名额）"
+    if not hard["Q1M"]:
+        sf = "、".join(structural_fail_boots["Q1M"]) or "（无结构失败 boot）"
+        excluded["Q1M"] = (f"REJECTED_FOR_STRUCTURAL_REGRESSION（PH4-EVIDENCE-REPAIR-01，2026-09-25）——"
+                           f"有效 boot {sf} micro tool-json 安全门 STRUCTURAL_FAIL：B03 tj13 要求 JSON "
+                           "却输出 Python 代码；同 boot Q0 tj13 通过、Q1M B01/B02 通过（boot 级结构不稳定）。"
+                           "冻结 gates core_axes_zero_regress: tool_json_structural=结构破坏否决级；"
+                           "原判定器遗漏此门，本 verdict 为修复后重算（原版归档 gate-d-verdict-pre-repair01.json）。"
+                           "性能事实（p32k=Q0 无损、128K decode +37%、GSM +6.7pp）保留记录但 reference only，不进生产拓扑裁决")
+    if not hard["Q4C"]:
+        excluded["Q4C"] = "REJECTED（质量门未过——见 deltas）"
+    excluded.update({
+        "Q2M": "与 Q1M 生产角色同档（P32K 主轴 Q1M=Q0 无损 vs Q2M −16%）；d565 +10% 不足以独立成档",
+        "Q3/W4A8-FP8": "UNSUPPORTED_BY_ARCH（SM89 非 hopper）",
+        "Q5/NVFP4": "NOT_BUILT_EMULATION",
+    })
+    routing = ["QP-INTERACT=短 prompt 交互（d565/P4K C1-2）"]
+    if hard["Q1M"]:
+        routing.append("QP-LONGCTX=≥32K 长上下文（128K 档 +37%）")
+    else:
+        routing.append("≥32K 长上下文=Q0 认证基线（X2；Q1M 吞吐候选 REJECTED_FOR_STRUCTURAL_REGRESSION）")
+    if hard["Q4C"]:
+        routing.append("QP-BATCH=C4+ 批处理（+26%，≤32K 容量域）")
+    routing_boundaries = "；".join(routing)
     verdict = {
+        "repair": {
+            "id": "PH4-EVIDENCE-REPAIR-01",
+            "date": "2026-09-25",
+            "change": "hard eligibility 补挂冻结 gates core_axes_zero_regress 的 tool_json_structural 门"
+                      "（原实现仅用 boot validity/质量轴/needle，micro verdict 只采集未裁决）",
+            "evidence": "raw/staging/PH4-P3/micro-Q1M-B03.json（17/20 STRUCTURAL_FAIL，tj13）",
+            "prior_verdict_archived": "raw/staging/PH4-P4/gate-d-verdict-pre-repair01.json",
+        },
         "gate_d": {
             "question": "同一真实 serving 栈下质量/交互/并发/prefill/显存/能效共同成立的 2-3 个可部署 Q-Profile",
             "hard_eligibility": hard,
+            "hard_reject_reason": {c: ("STRUCTURAL_REGRESSION:" + "、".join(structural_fail_boots[c])
+                                       if structural_fail_boots[c] else
+                                       ("QUALITY_GATE" if not hard[c] else "—"))
+                                   for c in ("Q0", "Q1M", "Q4C", "W8")},
+            "structural_fail_boots": structural_fail_boots,
             "quality_deltas_vs_q0_pp": deltas,
             "pareto_axes": pareto["axes"],
             "epsilon_bands": pareto["epsilon"],
             "profiles": profiles,
-            "excluded": {
-                "W8": "被 Q4C 在吞吐/能效轴支配；保留为 same-base 质量参照（不占名额）",
-                "Q2M": "与 Q1M 生产角色同档（P32K 主轴 Q1M=Q0 无损 vs Q2M −16%）；d565 +10% 不足以独立成档",
-                "Q3/W4A8-FP8": "UNSUPPORTED_BY_ARCH（SM89 非 hopper）",
-                "Q5/NVFP4": "NOT_BUILT_EMULATION",
-            },
-            "routing_boundaries": "QP-INTERACT=短 prompt 交互（d565/P4K C1-2）；QP-LONGCTX=≥32K 长上下文（128K 档 +37%）；QP-BATCH=C4+ 批处理（+26%，≤32K 容量域）",
+            "excluded": excluded,
+            "routing_boundaries": routing_boundaries,
         },
         "quality_detail": qual,
         "inputs": ["PH4-P3/qualify-report.json", "PH4-P2/ph4-matrix-summary.json",

@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 04（权重量化与分层混合 → Q-Profile Pareto + Gate D，v1.0 执行合同）— **完成（P0A→P4 全链，Gate D 3 Q-Profile）**
-- **Last Completed**: Phase 03 全相位（2026-09-22）——**Gate C 三档 PASS**（short/daily/extreme）；0.29 主栈 KV=NATIVE_BF16；238K/245K PRODUCTION_SAFE + 262K HARD_CEILING（27 格全 5/5）；FP8-KV UNSUPPORTED 三 boot 取证；详见 reports/phase-03-kv.md
-- **Current Task**: —（Phase 04 已收口；Next=Phase 05 四卡拓扑计划评审）
-- **Next Task**: Phase 05 四卡拓扑赛（输入=repro/quant-phase04/phase05-handoff.json 三 Q-Profile 冻结件）；TP1-C4 补测=机会式（GPU2 空闲才补）
+- **Phase**: 04（权重量化与分层混合 → Q-Profile Pareto + Gate D，v1.0 执行合同）— **完成（P0A→P4 全链；Gate D 定案经 PH4-EVIDENCE-REPAIR-01 修正 = 2 Q-Profile）**
+- **Last Completed**: Phase 04 全相位（2026-09-22→09-25，含 evidence repair）——Gate D **2 Q-Profile**：QP-INTERACT=Q0（S1/L2 + **X2 认证基线**）∧ QP-BATCH=Q4C；**Q1M=REJECTED_FOR_STRUCTURAL_REGRESSION**（B03 micro tj13 结构破坏）；详见 reports/phase-04-quant.md §9 勘误
+- **Current Task**: Phase 05 四卡拓扑赛（EXECUTING——P0A 契约冻结中）
+- **Next Task**: Gate E 四冠军（Throughput/Single-Agent/Dual-Agent/Mixed-Production）；输入=repro/quant-phase04/phase05-handoff.json（修复后 2 Profile）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -156,3 +156,9 @@ classify 端到端双向验证通过（2026-09-17）。
 - 静态 OOD 全 CLEAN；micro 安全门全 18/20 同款；NVFP4 不建（emulation）；Q3 架构排除。
 - Phase 05 冻结件：repro/quant-phase04/phase05-handoff.json。fp8c-build 容器保留（QP-BATCH 溯源 + FP8-KV 解锁链）。
 - 事故全留痕：p128k 溢出/lm_head 绑定教训（2 轮废弃重建）/llmcompressor 五轮 API 发现/gcc 补装/root 权限/argv 溢出。
+
+## 2026-09-25 PH4-EVIDENCE-REPAIR-01（Gate D 判定器遗漏修正）✅
+- **缺陷**：`tools/ph4_gated_eval.py` 旧版 hard eligibility 未挂 `tool_json_structural` 门（frozen gates core_axes_zero_regress 明文含之、micro_suite"结构破坏=否决级"）——micro verdict 只采集不裁决。
+- **原始证据**：`raw/staging/PH4-P3/micro-Q1M-B03.json` = **17/20 STRUCTURAL_FAIL**（tj13 要求 JSON、Q1M-B03 输出 Python 代码；同 boot Q0 tj13 通过、Q1M-B01/B02 通过=boot 级结构不稳定）。12 份 micro 中唯一结构失败。
+- **重判**：Q1M hard=true→**REJECTED_FOR_STRUCTURAL_REGRESSION**；Q0/Q4C 不变；deltas/pareto_axes/quality_detail 与原版逐位一致（仅增量裁决字段）。原 verdict 归档 `gate-d-verdict-pre-repair01.json`；**frozen gates 未动**；B03 保留 valid 原判（无 harness 违约证据，不量 INVALID、不重跑覆盖）。
+- **波及修正**：reports/phase-04-quant.md（§0/§4/§5/§6/§7/§8 + 新增 §9 勘误）、STATUS、DECISIONS、phase05-handoff.json（QP-LONGCTX 撤销→X2 回退 Q0 认证基线，Q1M 转 reference only）。

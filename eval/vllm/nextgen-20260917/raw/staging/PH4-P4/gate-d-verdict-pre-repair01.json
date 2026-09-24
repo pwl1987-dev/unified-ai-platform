@@ -1,32 +1,11 @@
 {
- "repair": {
-  "id": "PH4-EVIDENCE-REPAIR-01",
-  "date": "2026-09-25",
-  "change": "hard eligibility 补挂冻结 gates core_axes_zero_regress 的 tool_json_structural 门（原实现仅用 boot validity/质量轴/needle，micro verdict 只采集未裁决）",
-  "evidence": "raw/staging/PH4-P3/micro-Q1M-B03.json（17/20 STRUCTURAL_FAIL，tj13）",
-  "prior_verdict_archived": "raw/staging/PH4-P4/gate-d-verdict-pre-repair01.json"
- },
  "gate_d": {
   "question": "同一真实 serving 栈下质量/交互/并发/prefill/显存/能效共同成立的 2-3 个可部署 Q-Profile",
   "hard_eligibility": {
    "Q0": true,
-   "Q1M": false,
+   "Q1M": true,
    "Q4C": true,
    "W8": false
-  },
-  "hard_reject_reason": {
-   "Q0": "—",
-   "Q1M": "STRUCTURAL_REGRESSION:Q1M_B3",
-   "Q4C": "—",
-   "W8": "QUALITY_GATE"
-  },
-  "structural_fail_boots": {
-   "Q0": [],
-   "Q1M": [
-    "Q1M_B3"
-   ],
-   "Q4C": [],
-   "W8": []
   },
   "quality_deltas_vs_q0_pp": {
    "Q1M": {
@@ -108,19 +87,28 @@
    {
     "id": "QP-INTERACT",
     "weight_profile": "Q0（现役 W4A16+int8 头/embed）",
-    "role": "交互/全档基线（S1/L2 底座） + 认证长上下文基线（X2——Q1M 候选被结构门否决后回退）",
-    "basis": "d565=182.6 唯一王者（全部候选 ≥31% 差距）；全档可服务（128K ✓）；X2=Phase 03 Gate C daily 定案基线（p32kC1=69.9，128K decode 18.5）",
+    "role": "交互/全档基线（S1/L2 底座）",
+    "basis": "d565=182.6 唯一王者（全部候选 ≥31% 差距）；全档可服务（128K ✓）",
     "mapping": [
      "S1",
-     "L2",
-     "X2"
+     "L2"
     ]
+   },
+   {
+    "id": "QP-LONGCTX",
+    "weight_profile": "Q1M（W4g128 主体+敏感族 g64+首尾 W8）",
+    "role": "128K 长上下文（X2 档吞吐候选）",
+    "basis": "p32kC1=69.9（=Q0 带内）+128K decode 25.4（+37%>3% 带）+容量保持",
+    "mapping": [
+     "X2"
+    ],
+    "quality_gate": "hard 门结果见 deltas"
    },
    {
     "id": "QP-BATCH",
     "weight_profile": "Q4C（W8A8-FP8 dynamic）",
     "role": "C4+ 并发吞吐/能效档",
-    "basis": "p4kC4=203.6（+26%）+J/tok 2.188（记录：4.3% 在能效 5% 带内→与 Q0 能效等价）+128K 容量墙（max_model_len 118784）",
+    "basis": "p4kC4=203.6（+26%）+J/tok 2.188（−4%>5%? 记录：4.3% 在能效 5% 带内→与 Q0 能效等价）+128K 容量墙（max_model_len 118784）",
     "mapping": [
      "S1-高并发路由"
     ],
@@ -128,22 +116,16 @@
    }
   ],
   "excluded": {
-   "W8": "REJECTED_FOR_QUALITY（needle s2 配对退化 1 次 0/5 全灭形态 + IFEval −4.7pp）；被 Q4C 吞吐/能效支配；保留 same-base 质量参照（不占名额）",
-   "Q1M": "REJECTED_FOR_STRUCTURAL_REGRESSION（PH4-EVIDENCE-REPAIR-01，2026-09-25）——有效 boot Q1M_B3 micro tool-json 安全门 STRUCTURAL_FAIL：B03 tj13 要求 JSON 却输出 Python 代码；同 boot Q0 tj13 通过、Q1M B01/B02 通过（boot 级结构不稳定）。冻结 gates core_axes_zero_regress: tool_json_structural=结构破坏否决级；原判定器遗漏此门，本 verdict 为修复后重算（原版归档 gate-d-verdict-pre-repair01.json）。性能事实（p32k=Q0 无损、128K decode +37%、GSM +6.7pp）保留记录但 reference only，不进生产拓扑裁决",
+   "W8": "被 Q4C 在吞吐/能效轴支配；保留为 same-base 质量参照（不占名额）",
    "Q2M": "与 Q1M 生产角色同档（P32K 主轴 Q1M=Q0 无损 vs Q2M −16%）；d565 +10% 不足以独立成档",
    "Q3/W4A8-FP8": "UNSUPPORTED_BY_ARCH（SM89 非 hopper）",
    "Q5/NVFP4": "NOT_BUILT_EMULATION"
   },
-  "routing_boundaries": "QP-INTERACT=短 prompt 交互（d565/P4K C1-2）；≥32K 长上下文=Q0 认证基线（X2；Q1M 吞吐候选 REJECTED_FOR_STRUCTURAL_REGRESSION）；QP-BATCH=C4+ 批处理（+26%，≤32K 容量域）"
+  "routing_boundaries": "QP-INTERACT=短 prompt 交互（d565/P4K C1-2）；QP-LONGCTX=≥32K 长上下文（128K 档 +37%）；QP-BATCH=C4+ 批处理（+26%，≤32K 容量域）"
  },
  "quality_detail": {
   "Q0": {
    "valid_boots": 3,
-   "boot_keys": [
-    "Q0_B1",
-    "Q0_B2",
-    "Q0_B3"
-   ],
    "holdout_axes": {
     "he_holdout": {
      "values": [
@@ -232,11 +214,6 @@
   },
   "Q1M": {
    "valid_boots": 3,
-   "boot_keys": [
-    "Q1M_B1",
-    "Q1M_B2",
-    "Q1M_B3"
-   ],
    "holdout_axes": {
     "he_holdout": {
      "values": [
@@ -325,11 +302,6 @@
   },
   "Q4C": {
    "valid_boots": 3,
-   "boot_keys": [
-    "Q4C_B1",
-    "Q4C_B2",
-    "Q4C_B3"
-   ],
    "holdout_axes": {
     "he_holdout": {
      "values": [
@@ -418,11 +390,6 @@
   },
   "W8": {
    "valid_boots": 3,
-   "boot_keys": [
-    "W8_B1",
-    "W8_B2",
-    "W8_B3"
-   ],
    "holdout_axes": {
     "he_holdout": {
      "values": [

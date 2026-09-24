@@ -9,13 +9,13 @@
 
 | 项 | 结果 |
 |---|---|
-| **Gate D** | **3 Q-Profile 定案**：QP-INTERACT(Q0→S1/L2) ∧ QP-LONGCTX(Q1M→X2) ∧ QP-BATCH(Q4C→高并发路由)；hard eligibility Q0/Q1M/Q4C 全过 |
+| **Gate D** | **2 Q-Profile 定案**（PH4-EVIDENCE-REPAIR-01 修复判定器后重判）：QP-INTERACT(Q0→S1/L2/**X2 认证基线**) ∧ QP-BATCH(Q4C→高并发路由)；**Q1M=REJECTED_FOR_STRUCTURAL_REGRESSION**（B03 tj13 结构破坏，见 §9 勘误） |
 | **W8A16** | **REJECTED_FOR_QUALITY**（needle s2 配对退化 1 次 0/5 全灭 + IFEval −4.7pp）——"质量准上界"预设被实证推翻；被 Q4C 支配双重出局 |
 | **Q4C（W8A8-FP8 dynamic）** | 质量全轴持平或微升（HE +2.4/GSM +3.3/IFEval +1.3/XFC +1.5，needle 零退化）+ p4kC4 **+26%** + J/tok 2.188 最优；128K=CAPACITY_LIMIT（实测 max_model_len 118784） |
-| **Q1M（敏感度分层）** | GSM holdout **+6.7pp**（三 boot 全高）+ 128K decode **+37%** + p32kC1=Q0 无损；HE −3.2pp 在 Q0 自身 8.9pp 噪声带内 |
+| **Q1M（敏感度分层）** | 性能事实保留记录但 **REJECTED_FOR_STRUCTURAL_REGRESSION**（B03 micro tj13 要求 JSON 输出 Python=结构破坏否决级；同 boot Q0 通过）——GSM +6.7pp/128K +37%/p32k 无损均为 reference only，不进生产裁决 |
 | 敏感度图 | 304 模块；mlp.gate/up=W4 敏感主力（60%+ 误差贡献）；g64 恢复直接兑现 GSM 轴 |
 | kernel 实证 | 全候选 MarlinLinearKernel WNA16 路径；FP8 权重 GEMM ≠ FP8-KV 的 flashinfer JIT 墙 |
-| Phase 05 冻结件 | repro/quant-phase04/phase05-handoff.json（三 Profile artifact+SHA+精度图+路由边界） |
+| Phase 05 冻结件 | repro/quant-phase04/phase05-handoff.json（**修复后 2 Profile** artifact+SHA+精度图+路由边界；Q1M 转入 reference） |
 
 ## §1 P0A 契约冻结
 
@@ -59,7 +59,7 @@
 - **容量墙双实证**：W8A16 131072 形式 boot OOM（载入 17.4GiB/卡）；Q4C `max_model_len 118784`（KV 4.52>4.15GiB）——VRAM 换精度的 Pareto 硬数据
 - **勘误**：p128k=131072 装配溢出（+52 模板+64 输出>131072 全 400）→ 新 fixture p128kt=130900（离线验证 131041≤131072）；p128k 冻结不改历史
 - Q0 d565=182.6 与 Phase 02 认证 182.4 交叉验证一致；Q0 p32kC1=69.9 与 P0B spec-on 认证 69.84 一致
-- **shortlist**：Q0（交互/全档）+ Q1M（128K 长上下文）+ Q4C（C4 吞吐/能效）；W8 被支配留作质量参照；Q2M 角色同档出局（P32K 主轴 Q1M 无损胜出）
+- **shortlist**（P2 期判定，后经 P3 结构门修正见 §9）：Q0（交互/全档）+ Q1M（128K 长上下文）+ Q4C（C4 吞吐/能效）；W8 被支配留作质量参照；Q2M 角色同档出局（P32K 主轴 Q1M 无损胜出）——**Q1M 后被 B03 结构失败否决，X2 回退 Q0**
 - 静态 OOD 全 CLEAN（4 artifact+Q0：零 NaN/Inf、零 scale 异常、dtype 结构与精度图一致）
 
 ## §5 P3 Qualify + holdout 首开（4 server × 3 boot 全 valid）
@@ -71,23 +71,23 @@
 | 候选 | HE-h | GSM-h | IFEval | XFC | needle s2/s5 | 判定 |
 |---|---|---|---|---|---|---|
 | Q0 | 55.6 | 20.4 | 40.0 | 74.0 | 闪烁/全过 | 基线 |
-| Q1M | 52.4 (−3.2, 噪声带内) | **27.1 (+6.7)** | 40.7 | 73.0 (−1.0) | 全 5/5/全 5/5 | **PASS** |
+| Q1M | 52.4 (−3.2, 噪声带内) | **27.1 (+6.7)** | 40.7 | 73.0 (−1.0) | 全 5/5/全 5/5 | 质量轴过；**micro 结构门败北（B03 17/20 STRUCTURAL_FAIL）→ REJECTED** |
 | Q4C | **58.1 (+2.4)** | 23.8 (+3.3) | 41.3 | **75.5 (+1.5)** | 全 5/5/全 5/5 | **PASS** |
 | W8 | 56.5 | 23.8 | **35.3 (−4.7)** | 75.0 | **[5/5,0/5,0/5]**/全过 | **FAIL**（配对退化 1 次） |
 
 - W8 的 s2 0/5 全灭形态（非 Q0 的 2/5 闪烁形态）+ IFEval −4.7pp = int8 g128 的真实质量警报
-- micro 20 题安全门四候选全部 18/20 同款（tj06/tj12 同源血缘指令边缘——非结构破坏）
+- micro 20 题安全门：11/12 份 18/20 同款（tj06/tj12 同源血缘指令边缘）；**Q1M-B03=17/20 STRUCTURAL_FAIL**（tj13 要求 JSON 输出 Python 代码——同 boot Q0 与 Q1M-B01/B02 均通过，boot 级结构不稳定，否决级）
 
-## §6 Gate D（raw/staging/PH4-P4/gate-d-verdict.json，机器判定）
+## §6 Gate D（raw/staging/PH4-P4/gate-d-verdict.json，机器判定；**PH4-EVIDENCE-REPAIR-01 修复后重算**）
 
-- **hard eligibility**：Q0 ✓ / Q1M ✓ / Q4C ✓ / W8 ✗（needle s2 配对退化 1 次——Q0 同 boot 过而 W8 0/5 全灭；配对判读规则严格执行）
-- **epsilon-Pareto 六轴**（吞吐/prefill 3%、能效 5%、质量 1pp 带、VRAM=容量墙硬差异）：Q4C 能效 2.188 vs Q0 2.268（−3.5% 在 5% 带内=等价）；Q1M p32k 0.1% 带内等价、128K +37% 出带真实优势
-- **三 Q-Profile**（无综合总分、无 bit 排名）：
-  - QP-INTERACT = Q0（S1/L2 底座）
-  - QP-LONGCTX = Q1M（X2；GSM bonus + 128K +37%）
+- **hard eligibility**：Q0 ✓ / Q4C ✓ / **Q1M ✗（STRUCTURAL_REGRESSION:Q1M_B3）** / W8 ✗（needle s2 配对退化 1 次——Q0 同 boot 过而 W8 0/5 全灭；配对判读规则严格执行）
+- 结构门依据：冻结 gates `core_axes_zero_regress: [code_axes, tool_json_structural, verbatim, needle]` + micro_suite `结构破坏=否决级`；原判定器只挂了 boot validity/质量轴/needle（遗漏 micro 门），修复见 §9
+- **epsilon-Pareto 六轴**（吞吐/prefill 3%、能效 5%、质量 1pp 带、VRAM=容量墙硬差异）：Q4C 能效 2.188 vs Q0 2.268（−3.5% 在 5% 带内=等价）；Q1M p32k 0.1% 带内等价、128K +37% 出带——**性能事实保留但资格已失（reference only）**
+- **2 Q-Profile**（无综合总分、无 bit 排名）：
+  - QP-INTERACT = Q0（S1/L2 底座 **+ X2 认证长上下文基线**——Phase 03 Gate C daily 定案回退位；p32kC1=69.9、128K decode 18.5）
   - QP-BATCH = Q4C（高并发路由；容量域 ≤~118K）
-- **排除**：W8（质量警报+被支配）/Q2M（角色同档出局）/Q3（架构排除）/Q5（emulation 不建）
-- **路由边界**：短 prompt 交互→QP-INTERACT；≥32K 长上下文→QP-LONGCTX；C4+ 批处理→QP-BATCH
+- **排除**：**Q1M（结构门否决）**/W8（质量警报+被支配）/Q2M（角色同档出局）/Q3（架构排除）/Q5（emulation 不建）
+- **路由边界**：短 prompt 交互→QP-INTERACT；≥32K 长上下文→**Q0 认证基线（X2）**；C4+ 批处理→QP-BATCH
 
 ## §7 六态归档（schema 1.4）+ Debt
 
@@ -97,7 +97,7 @@
 | Q4-OFFICIAL 探针 | VALID_PASS | — | PROBE_ONLY（cross-base） | COMPLETE |
 | W8A16 构建+矩阵+qualify | VALID_PASS | W8A16 | **REJECTED_FOR_QUALITY** | COMPLETE |
 | Q4C 构建+矩阵+qualify | VALID_PASS | Q4 | **PASS（QP-BATCH）** | COMPLETE |
-| Q1M 构建+矩阵+qualify | VALID_PASS | Q1 | **PASS（QP-LONGCTX）** | COMPLETE |
+| Q1M 构建+矩阵+qualify | VALID_PASS | Q1 | **REJECTED_FOR_STRUCTURAL_REGRESSION**（B03 micro tj13；性能事实 reference） | COMPLETE |
 | Q2M 构建+矩阵（screen 级） | VALID_PASS | Q2 | REJECTED（角色同档出局） | COMPLETE |
 | Q3/W4A8-FP8 | UNSUPPORTED | Q3 | —（min_cap=90 架构） | COMPLETE |
 | Q5/NVFP4-MXFP4 | NOT_RUN | Q5 | —（emulation 不建） | COMPLETE |
@@ -108,8 +108,18 @@
 
 ## §8 收口
 
-- **Phase 05 冻结件**：repro/quant-phase04/phase05-handoff.json（三 Profile artifact+SHA+精度图+路由边界+KV=NATIVE_BF16+runtime 配方；仅凭仓库可答全部拓扑赛输入）
-- 事故与修复全留痕：p128k 装配溢出（p128kt 勘误）、lm_head 绑定权重 packed 教训（v2 废弃）、llmcompresson 五轮 API 形态发现、容器 gcc/权限、argv 溢出改 shell 循环
+- **Phase 05 冻结件**：repro/quant-phase04/phase05-handoff.json（**修复后 2 Profile**+Q1M reference 位 artifact+SHA+精度图+路由边界+KV=NATIVE_BF16+runtime 配方；仅凭仓库可答全部拓扑赛输入）
+- 事故与修复全留痕：p128k 装配溢出（p128kt 勘误）、lm_head 绑定权重 packed 教训（v2 废弃）、llmcompresson 五轮 API 形态发现、容器 gcc/权限、argv 溢出改 shell 循环、**Gate D 判定器 micro 门遗漏（§9 勘误）**
 - Q1M 敏感度驱动设计的方法论资产：layer-sensitivity.csv + ph4_design_mixed 提案器 + ph4_sensitivity_collector（闭式精确自测）——Phase 06+ 可复用
 - fp8c-build 容器保留（QP-BATCH artifact 溯源 + FP8-KV 解锁链路依赖）
 - 生产切换：铁律 9——本相位结论=候选 profile，Phase 08 窗口拍板
+
+## §9 勘误 — PH4-EVIDENCE-REPAIR-01（2026-09-25，Gate D 判定器遗漏）
+
+**事实**：`raw/staging/PH4-P3/micro-Q1M-B03.json` = 17/20，verdict=STRUCTURAL_FAIL——tj13 要求 JSON 输出，Q1M-B03 输出 Python 代码（`def add(a,b)...`）；同 boot Q0-B03 的 tj13 正常通过，Q1M-B01/B02 亦通过。12 份 micro 证据中唯一结构失败。
+
+**缺陷**：`tools/ph4_gated_eval.py` 旧版在 hard eligibility 计算中只使用 boot validity + 质量轴 + needle 配对退化，micro verdict 仅采集进 quality_detail 从未参与裁决——与冻结 gates-phase04.yaml `core_axes_zero_regress` 含 `tool_json_structural`（"结构破坏=否决级"）不一致，导致原 verdict `Q1M=true` 与原始证据矛盾。
+
+**修复**：判定器补挂 micro 结构门（任一有效 boot STRUCTURAL_FAIL → hard reject；PARTIAL_REVIEW/STRUCTURAL_SAFE 过；观测缺失≠失败）；原 verdict 归档 `gate-d-verdict-pre-repair01.json`；重算后 Q1M=REJECTED_FOR_STRUCTURAL_REGRESSION（Q1M_B3），Q0/Q4C 判定不变，deltas/pareto_axes/quality_detail 与原版逐位一致（仅增量 boot_keys/裁决字段）。本报告 §0/§5/§6/§7/§8、STATUS、DECISIONS、phase05-handoff.json 同步修正；**frozen gates 未改动**。
+
+**纪律执行**：Q1M-B03 保留原判（valid boot，非 INVALID——无 harness 违约证据；同 harness 11/12 份同构通过）；不为保 profile 重跑覆盖；如未来重qualify 须新实验 ID + 全新证据链（本相位未触发）。X2 长上下文角色回退 Q0 认证基线（Phase 03 Gate C daily 定案），Phase 05 拓扑赛按修复后 handoff 执行。
