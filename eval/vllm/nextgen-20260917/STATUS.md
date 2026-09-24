@@ -162,3 +162,8 @@ classify 端到端双向验证通过（2026-09-17）。
 - **原始证据**：`raw/staging/PH4-P3/micro-Q1M-B03.json` = **17/20 STRUCTURAL_FAIL**（tj13 要求 JSON、Q1M-B03 输出 Python 代码；同 boot Q0 tj13 通过、Q1M-B01/B02 通过=boot 级结构不稳定）。12 份 micro 中唯一结构失败。
 - **重判**：Q1M hard=true→**REJECTED_FOR_STRUCTURAL_REGRESSION**；Q0/Q4C 不变；deltas/pareto_axes/quality_detail 与原版逐位一致（仅增量裁决字段）。原 verdict 归档 `gate-d-verdict-pre-repair01.json`；**frozen gates 未动**；B03 保留 valid 原判（无 harness 违约证据，不量 INVALID、不重跑覆盖）。
 - **波及修正**：reports/phase-04-quant.md（§0/§4/§5/§6/§7/§8 + 新增 §9 勘误）、STATUS、DECISIONS、phase05-handoff.json（QP-LONGCTX 撤销→X2 回退 Q0 认证基线，Q1M 转 reference only）。
+
+## 2026-09-25 Phase 05 P0B 进行中（工具链就绪 + boot smoke 在途）
+- **GPU 授权实况（P0B 巡检）**：空闲=GPU3/4/6（3/4 卡）；GPU2=rpg-bakeoff-llama-humanlike 容器（外部任务 up 3d20h 零触碰）；GPU5=宿主 vLLM（外围）、GPU7=docker vLLM（外围）；GPU0/1=生产；:8000 只读 health=200。**四卡臂暂缺 1 卡**——按合同先推全部非 GPU 工作+3 卡 preflight，周期复查。
+- **工具链（全部自测过）**：ph5_boot.sh（授权 Gate GPU3/4/6+TP4）/ph5_router.py v1.0（SELFTEST_PASS：sticky 5/5、least-inflight、failover rebind、route-reason 三类）/ph5_workload.py（multi/sticky/failover）/ph5_energy_node（SELFTEST_PASS；RAPL 不可读=MEASUREMENT_NOT_AVAILABLE 如实）/ph5_gate_e.py（SELFTEST_PASS 四冠军+EQUIVALENT 带+tiebreak）/bench --session-id。
+- boot smoke：TP2@131072(GPU3+4 :19711) + TP1@36864(GPU6 :19713) 冷编译中。
