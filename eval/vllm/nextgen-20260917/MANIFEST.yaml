@@ -288,3 +288,17 @@ phase04:
     split: "boot/model-load 能耗与 serving 稳态分列禁混算（METRICS-SCHEMA §5 梯形积分）"
     power_window: "250W 恒定窗内测量（ops gpu-power.sh cron 零触碰，仅读取核对）"
   staging_prefix: "raw/staging/PH4-* 与 repro/quant-phase04/"
+
+# ---------------------------------------------------------------------------
+phase05:
+  contract: repro/gates-phase05.yaml（v1.0 冻结 sha edf06709…；Gate E 四冠军机器判定）
+  input_handoff: repro/quant-phase04/phase05-handoff.json（PH4-EVIDENCE-REPAIR-01 修复后：QP-INTERACT=Q0 含 X2 认证基线 / QP-BATCH=Q4C / Q1M=reference only）
+  single_variable: 四卡拓扑与路由形态（T1=4×TP1 / T2=2×TP2 / T3=TP2+TP1+TP1 / T4=TP4；每臂恰 4 授权卡）
+  kv: NATIVE_BF16（全程冻结）；runtime029 只读继承（tree 4632d624…）
+  router: ph5_router.py v1.0（自建 sticky-session LB；runtime029 无 vllm.router 实证 2026-09-25）
+  launcher: tools/ph5_boot.sh（boot029_nextgen.sh Phase05 扩展：显式 --uuids + TP4 + 扩授权集）
+  gpu_authorization: P0B 待登记（live inventory 后写入本节；GPU0/1 与 :8000 永久零触碰）
+  ports: {router: 19710, backends: "19711-19714", avoid: "[8000, 19622-19625, 19637, 19649]"}
+  energy: 整机（4 授权 GPU + CPU RAPL 可读时；boot/serving 分账；J/output-token 官方）
+  debt_in: {MS8-C8: DO_NOW, TP1-C4: "DO_NOW(T1 direct 参照)", FP8-KV: DEFERRED_CONDITIONAL, tenant_churn: Phase06}
+  staging_prefix: "raw/staging/PH5-* 与 repro/topology-phase05/"
