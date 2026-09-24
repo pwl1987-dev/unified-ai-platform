@@ -1,0 +1,29 @@
+{
+ "topologies": [
+  "T1F",
+  "T2F"
+ ],
+ "cells": {
+  "d565_c1_decode": {
+   "T1F": 134.286,
+   "T2F": 169.216
+  },
+  "d565_c1_ttft": {
+   "T1F": 0.2538,
+   "T2F": 0.2238
+  }
+ },
+ "provenance": {
+  "T1F:d565_c1_decode:direct": [
+   "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R01",
+   "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R02",
+   "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R03"
+  ],
+  "T2F:d565_c1_decode:direct": [
+   "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R01",
+   "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R02",
+   "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R03"
+  ]
+ },
+ "note": "CAPACITY_LIMIT/UNSUPPORTED 由 boot/容量快照侧另行并入（gate_e 支配判定）"
+}
