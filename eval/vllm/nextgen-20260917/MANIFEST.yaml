@@ -307,3 +307,12 @@ phase05:
   energy: 整机（4 授权 GPU + CPU RAPL 可读时；boot/serving 分账；J/output-token 官方）
   debt_in: {MS8-C8: DO_NOW, TP1-C4: "DO_NOW(T1 direct 参照)", FP8-KV: DEFERRED_CONDITIONAL, tenant_churn: Phase06}
   staging_prefix: "raw/staging/PH5-* 与 repro/topology-phase05/"
+  gate_e_outcome:
+    completed_utc: "2026-09-25T16:41+08:00"
+    throughput_champion: "T1=4×TP1（d565-C16 1.995 rps）"
+    single_agent_champion: "T4=TP4（三轴 203.5/72.4/19.6；P220K 独占）"
+    dual_agent_champion: "T2=2×TP2（17.09 +12.1%，screen 级标注）"
+    mixed_production_champion: "T3=TP2+TP1+TP1（守门唯一通过 0.27s）"
+    M4_frozen: "M4 = TP2 + TP1 + TP1"
+    p3: "T1/T3/T4×3 boots 全 rc=0；verbatim 9/9；跨 boot 漂移 ≤1.4%"
+    handoff: repro/topology-phase05/phase06-handoff.json
