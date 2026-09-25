@@ -16,7 +16,7 @@
 | 文档 | 定位 |
 |---|---|
 | [design/00-FUNCTIONAL-ARCHITECTURE.md](design/00-FUNCTIONAL-ARCHITECTURE.md) | 模型/框架/厂商无关的 AI Compute & Model Engineering Platform 总体功能设计：统一网关、模型/数据/实验、GPU 调度、Agent 自动化、研究复现与成果转化 |
-| [design/01-TECHNOLOGY-STACK.md](design/01-TECHNOLOGY-STACK.md) | 技术栈冻结候选：React/TypeScript 前端、Go Control Plane、Python AI/ML Worker、PostgreSQL/S3/NATS 与 Adapter-first 边界 |
+| [design/01-TECHNOLOGY-STACK.md](design/01-TECHNOLOGY-STACK.md) | 技术栈已冻结 v1.0：React/TypeScript 前端、Go Control Plane、Python AI/ML Worker、VM/Container 层、PostgreSQL/S3/NATS 与 Adapter-first 边界 |
 | [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md) | 权重解剖、量化配方、MTP 实测、三引擎横评与 SGLang 决策 |
 | [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md) | vLLM 生产线实验日志、DFlash2、KV、显存与 P0 归因 |
 | [VLLM-OPTIMIZATION-PLAN-ARCHIVE.md](VLLM-OPTIMIZATION-PLAN-ARCHIVE.md) | 早期规划存档，不替代当前测试总纲 |
