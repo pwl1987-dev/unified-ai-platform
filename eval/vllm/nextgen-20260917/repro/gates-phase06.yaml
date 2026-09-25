@@ -1,0 +1,154 @@
+# gates-phase06.yaml — Phase 06 真实 Agent 公平横评 → Gate F 全门槛冻结（v1.0，P0 冻结，禁止看结果后修改）
+# 依据：MASTER §12（Agent 公平横评/拉平条件/统计方法）+ phase06-handoff.json（Gate E 四冠军+M4 冻结）
+#       + 用户 2026-09-25 Phase06 执行指令（三项优先验证：角色化路由/租户隔离/T2 3-boot）
+# 判定口径：吞吐/延迟类 ≥3% 出带才算差异；守门类（completion/failure window）为硬门不受 3% 带
+version: 1
+frozen_utc: "2026-09-25"
+measurement_contract_sha: 80e7d15          # Phase 00 commit #1（指标公式/fixture/pairing）继承
+manifest_schema: {version: "1.4", sha256: 3f934273c5fe01c93b36a49db7a472606dd03fbd31836c3b82f6ddb896ed4851}
+runtime_baseline:
+  file: repro/env029/runtime029-phase02-baseline.json
+  vllm_tree_sha256_post_patch: 4632d624c2bd2373a746a978a1022a12633abf4036f956fc3fb82e3d047a75c8
+  rule: "Phase 06 全程只读该环境；任何包/文件变更 = 新实验 ID + ENV_DRIFT"
+kv: NATIVE_BF16                             # Phase 03 定案，全程冻结
+input_handoff: repro/topology-phase05/phase06-handoff.json
+
+# ============================================================ 继承事实（不重开）
+inherited_frozen:
+  champions: {throughput: T1, single_agent: T4, dual_agent: T2, mixed_production: T3}
+  M4: "TP2@131072 MS2 + TP1@36864 MS4 + TP1@36864 MS4（=T3 形制）"
+  router_baseline: "ph5_router.py v1.1（SELFTEST_PASS 六断言；本 Phase 冻结只读，作为 A/B 的 A 臂语义基准）"
+  q_profiles: "QP-INTERACT=Q0（/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128）；QP-BATCH=Q4C（/data/sandbox/nextgen-20260917/quant-artifacts/ph4-w8a8fp8-dynamic，≤~118K 容量域）"
+  fixtures: "d565/p4k/p32k/p128kt/p220k（Phase 00 冻结语料；不新造语料）"
+  starvation_reference: "PH5 mixed-T2 short P95 TTFT 50.44s（同构饿死基线）与 mixed-T3 0.27s（守门通过参照）"
+
+# ============================================================ 单变量纪律
+single_variable: "P1 主变量=路由策略（role-blind vs role-tagged，同一 router 代码两策略位）；P2 主场景=租户隔离/churn/强驱逐；P3 主变量=boot（T2 dual 跨 boot 资格）"
+experiment_id_rule: "模型 artifact / KV dtype / fixture / 并发形制 / 功耗墙 / router 版本 / 拓扑 / harness / 采样法 / runtime 任一变化 = 新实验 ID；禁止合并变化直比"
+scope_note: "MTP §12 的 Agent 产品层横评（Pi/Claude Code 等多 Agent 客户端）不在本窗口执行（本机无第二 Agent 产品实例可拉平驱动）；本 Phase 交付=Agent 形态负载下的 infra 公平性（路由/隔离/资格）+ 机器化合同与 Gate F，Agent 产品层横评移交 Phase 06b/07 前置"
+
+# ============================================================ Agent workload 定义（机器冻结）
+agent_workloads:
+  AG-SHORT:
+    persona: "交互式编码 Agent（短上下文多轮）"
+    fixture: d565
+    turns_per_session: 6
+    max_tokens: 512
+    mode: fixed-output
+    inter_turn_gap_s: 1.0
+    role_tag: short
+  AG-LONG:
+    persona: "仓库分析 Agent（长上下文，上下文逐轮增长）"
+    fixture: p32k                    # p128kt 变体用于隔离场景
+    turns_per_session: 3
+    max_tokens: 256
+    mode: natural-stop
+    inter_turn_gap_s: 2.0
+    role_tag: long
+    variant_p128kt: {fixture: p128kt, max_tokens: 128}
+  AG-BATCH:
+    persona: "文档批处理 Agent（并发突发）"
+    fixture: p4k
+    concurrency: 4
+    bursts: 2                        # 每波 4 并发请求，波间隔 5s
+    max_tokens: 256
+    mode: natural-stop
+    role_tag: batch
+session_policy:
+  binding: "X-Session-Id 会话粘滞（继承 router 契约）；会话内上下文逐轮累积（历史+新轮）"
+  context_budget: "会话上下文=首轮 fixture + 累积助手输出；不跨会话复用 cache（salt namespace formal）"
+  role_tag_transport: "HTTP 头 X-Role ∈ {short,long,batch}；A 臂（blind）同样发送该头但 router 忽略（协议拉平：两臂网络路径与头完全一致）"
+tool_availability: "模型侧无注入工具（全部臂一致）；比较层=infra 路由/隔离公平性"
+termination_condition: "fixed-output=请求级 mt 生成完；natural-stop=模型自然停止或 mt 上限；场景级=全部 persona 波次完成或场景墙钟上限"
+timeout_s: {per_request: 900, persona_turn: 300, scenario_wall: 1800}
+retry_budget: "正式 cell 内 0 重试；失败如实分类计数。harness bug 修复后仅重跑受影响最小 cell，原失败证据保留"
+reproducibility:
+  seed: 4242
+  temperature: 0
+  salt_namespace: [formal, warmup]   # 继承 Phase 00 双命名空间
+  cache_root_rule: "VLLM_CACHE_ROOT 钉死 per tag（继承 PH5 cache-* 热缓存）；warmup 用独立 salt"
+concurrency_mix:
+  F1_MIX: "2×AG-SHORT 流 + 1×AG-LONG(p32k) + 1×AG-BATCH(C4×2 波) 同时启动；总在途 ≤ 8"
+  F2_ISOLATION: "2×AG-LONG(p128kt 连续 hogging) + 3×AG-SHORT 常驻 + churn 波（每 20s 1 新 short 会话 ×3 轮 ×6 波）"
+  F3_DUAL: "2×P32K / 2×P128KT（PH5 dual cell 逐字复用 ph5_workload multi）"
+
+# ============================================================ 路由策略 A/B（P1 主变量）
+routing_ab:
+  A_BLIND:
+    router: ph6_router.py（v1.1 parity 模式）
+    semantics: "sticky + least-inflight + 长度守卫 + failover（与 ph5_router v1.1 决策逐位一致；selftest 断言 parity）"
+    role_header: "收到但忽略"
+  B_ROLE:
+    router: ph6_router.py（--role-pools）
+    semantics: "role→backend 类池：short→TP1 池，batch→TP1 池（池内 least-inflight），long→TP2；长度守卫仍强制（role 不得覆盖容量）；无 X-Role/X-Role 未知→回退 v1.1 语义"
+    same_boot_rule: "A/B 同一 M4 boot 内先后执行（backends 不动），router 进程重启换策略；boot 引起的环境差=0"
+  placement_audit: "route log 全量审计：role placement accuracy（short→TP1*、long→TP2、batch→TP1*）=100% 才算 B_ROLE 有效执行"
+q_profile_ledger:
+  primary: "F1/F2 全 Q0（M4-Q0 单 artifact，模型差零污染）"
+  composed_arm: "ARM-C M4-COMPOSED（batch→Q4C backend）独立账本（Phase05 M4-COMPOSED 预留名正式建账）；不入 F1/F2 verdict；仅在 F1/F2 收口后时间允许时执行"
+topology_arms:
+  M4: {backends: "t3tp2@19711 GPU3+4 len131072 MS2 + t3p1a@19712 GPU2 len36864 MS4 + t3p1b@19713 GPU6 len36864 MS4", use: "F1/F2"}
+  T2: {backends: "t2a@19711 GPU3+4 + t2b@19712 GPU2+6，均 len131072 MS2", use: "F3"}
+  T1_control: {backends: "4×TP1@36864 MS4", use: "F3 漂移对照（仅 dual_2xp32k）"}
+
+# ============================================================ 证据 schema（机器冻结）
+evidence_schema:
+  per_scenario: "cell-summary.json：{scenario, policy, boot_tag, wall_s, per_role:{short/long/batch:{requests, ok, completion_rate, ttft_p50/p95/max, tpot_med, sum_output_tokens}}, per_session:{sid:{goodput_rps, requests, ok}}, fairness_jain_goodput, aggregate_tok_s, failure_window_s, evict:{...}}"
+  per_request_events: "events.jsonl 逐请求 {ts, sid, role, turn, ttft_s, tpot_s, out_tokens, ok, error_class}"
+  route_log: "router JSONL（v2.0 增 role 字段）"
+  f3_cells: "run_arm/ph5_workload 五件套（与 PH5-P3 逐字同形制）"
+  validation: "ph6_gate_f.py --validate-schema 对全部正式 cell-summary 校验（缺字段=INVALID 不进 verdict）"
+fairness_metrics: [jain_per_session_goodput, per_role_p95_ttft, per_role_completion_rate,
+                   queue_wait_proxy_inflight_at_route, dispatch_ms, failure_window_s,
+                   eviction_release_latency_s, starvation_margin_vs_bound]
+failure_classification: [ROUTER_4XX, ROUTER_502, HTTP_5XX, TIMEOUT, CAPACITY_LIMIT, PREEMPTED, EVICTED, OUTPUT_EMPTY]
+
+# ============================================================ Gate F（机器判定，看结果前冻结）
+gate_f:
+  F1_role_routing:
+    traffic: F1_MIX
+    axes:
+      short_p95_ttft: {primary: true, band: 0.03, better: lower}
+      long_completion_rate: {hard: "==1.0"}
+      batch_goodput_regression: {band: 0.03, better: higher}
+      fairness_jain_regression: {band: 0.03, better: higher}
+    verdicts:
+      ROLE_REQUIRED: "B 的 short_p95_ttft 低于 A 出 3% 带 ∧ 其余轴无出带回退 ∧ placement_audit=100%"
+      BLIND_SUFFICIENT: "全部轴落 3% 带（EQUIVALENT）——更简单 router 胜出，M4 生产不带角色层"
+      ROLE_REJECTED: "B 任一轴出带回退（short 更差 或 long/batch/fairness 出带恶化）"
+  F2_tenant_isolation:
+    traffic: F2_ISOLATION（M4，B_ROLE 策略；A_BLIND 同场景对照跑但不设硬门，量化差）
+    hard_gates:
+      short_p95_ttft_bound_s: 5.0        # 冻结上界：PH5 T3 mixed 0.27s 直轨参照 × 宽裕系数；T2 饿死基线 50.4s 须作对照量化报告
+      short_completion_rate: "==1.0"
+      long_completion_rate: "==1.0（PREEMPTED/EVICTED 单列不计入失败）"
+      jain_short_goodput_min: 0.90
+      failure_window_s: 0                # short TTFT>bound 的最长连续窗
+    churn_gates: {all_waves_complete: true, session_map_no_leak: true}
+    evict_gates:
+      evicted_client_gets_error: true    # 被逐会话收到明确 4XX/5XX，不得挂起
+      release_latency_max_s: 15          # evict 时刻→TP2 可服务下一长请求
+      router_survives: true, inflight_returns_zero: true
+    verdicts: [ISOLATION_PASS, ISOLATION_FAIL(量化 failure window + 对照 T2 基线)]
+  F3_t2_3boot:
+    protocol: "T2 B01/B02/B03 ×3 reps dual_2xp32k + dual_2xp128kt（ph5_p1_run --only 逐字同形制）+ T1 B04 漂移对照（dual_2xp32k）"
+    drift_control: "T1-B04 dual_p32k_sess_decode 相对 T1 PH5-P3 3-boot 中位数 |Δ|≤3% → 跨时段可比成立；否则升级：T1 补 B05/B06 同日全矩阵"
+    confirm_rule: "T2 3-boot 中位数 ≥ T1 3-boot 中位数 ×1.03 ∧ 逐 boot 方向一致 3/3 → CONFIRMED_DUAL_CHAMPION（+3-boot 资格补足）"
+    equivalent_rule: "落 3% 带 → DUAL_CO_CHAMPION（screen 级 +12.1% 未跨 boot 复现，如实降级）"
+    overturn_rule: "任一 boot 方向反转且 3-boot 中位数落后出带 → OVERTURNED（重大反证回写 DECISIONS）"
+  rules:
+    - "守门类（completion/failure window/evict 硬门）不受 3% 带豁免"
+    - "CAPACITY_LIMIT/UNSUPPORTED = 正式 cell 结论非阻塞"
+    - "本 Phase 不改四冠军与 M4 冻结；F1/F2/F3 结论只回答 production-worthiness 层问题"
+  outputs: [reports/phase-06-agent.md, gate-f machine verdict JSON, raw evidence,
+            rejected/invalid 清单, Phase07 handoff]
+
+# ============================================================ 能量/GPU/暂停条件（继承 PH5）
+energy_protocol: "继承 gates-phase05 energy_protocol（整机 4 授权 GPU + CPU RAPL；boot/serving 分账；J/output-token）"
+gpu_authorization:
+  authorized: [GPU2, GPU3, GPU4, GPU6]
+  zero_touch: [GPU0, GPU1, ":8000 生产", "GPU5/7 外围"]
+  launcher: "tools/ph5_boot.sh（冻结母本；--uuids 显式）"
+  ports: {router: 19710, backends: [19711, 19712, 19713, 19714], avoid: [8000, 19622, 19623, 19624, 19625, 19637, 19649]}
+  cleanup: "只杀本实验登记 PGID（ph5_boot server.pid/pgidf 核验 vllm 才杀）"
+pause_conditions: "同 gates-phase05 pause_conditions + auto_repair（普通失败自修自试不停工）"

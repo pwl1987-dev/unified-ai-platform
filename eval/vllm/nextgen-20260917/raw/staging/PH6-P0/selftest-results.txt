@@ -1,0 +1,11 @@
+{"event": "ROUTER_UP", "port": 19980, "version": "ph6-router/2.0", "mode": "BLIND_PARITY", "role_pools": null, "route_log": "/tmp/ph6-router-selftest-6vta6ze9/routes.jsonl"}
+{"event": "ROUTER_UP", "port": 19986, "version": "ph6-router/2.0", "mode": "ROLE", "role_pools": {"short": ["g1"], "long": ["g2"], "batch": ["g1"]}, "route_log": "/tmp/ph6-router-selftest-6vta6ze9/routes-role.jsonl"}
+{"event": "ROUTER_UP", "port": 19988, "version": "ph6-router/2.0", "mode": "BLIND_PARITY", "role_pools": null, "route_log": "/tmp/ph6-router-selftest-6vta6ze9/routes-evict.jsonl"}
+{"selftest": "SELFTEST_PASS", "parity": "['b1', 'b1', 'b1', 'b1', 'b1', 'b1'] == ['b1', 'b1', 'b1', 'b1', 'b1', 'b1']", "role": "short->g1 long->g2 sticky-ok len-guard-400 no-role->fallback", "evict": "in-flight 409 / bystander 200 / grace 409 / inflight 0"}
+{"event": "ROUTER_UP", "port": 19970, "version": "ph6-router/2.0", "mode": "ROLE", "role_pools": {"short": ["p1a", "p1b"], "long": ["tp2"], "batch": ["p1a", "p1b"]}, "route_log": "/tmp/ph6-wl-selftest-knbh0y_e/routes.jsonl"}
+{"scenario": "mix", "policy": "role", "wall_s": 10.3, "failure_window_s": 0.0}
+per_role: {"short": {"ok": 12, "req": 12, "p95": 0.3071}, "long": {"ok": 3, "req": 3, "p95": 0.3358}, "batch": {"ok": 8, "req": 8, "p95": 0.306}}
+{"scenario": "isolation", "policy": "role", "wall_s": 8.0, "failure_window_s": 0.0}
+per_role: {"short": {"ok": 24, "req": 24, "p95": 0.0263}, "long": {"ok": 24, "req": 28, "p95": 0.055}, "batch": {"ok": 0, "req": 0, "p95": null}}
+{"selftest": "SELFTEST_PASS", "mix": "3 roles ok + placement 100% + jain/failure-window 字段", "isolation": "evict 409→EVICTED 事件 + probe ok + inflight 归零"}
+{"selftest": "SELFTEST_PASS", "f1_paths": "REQUIRED/SUFFICIENT/REJECTED×3", "f2_paths": "PASS/FAIL(p95)/FAIL(release)", "f3_paths": "CONFIRMED/CO/DRIFT"}
