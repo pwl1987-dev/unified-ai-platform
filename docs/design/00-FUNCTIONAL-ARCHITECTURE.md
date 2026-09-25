@@ -3074,3 +3074,403 @@ Plugin / Adapter
 
 从本节开始，功能层面进入 **Freeze Candidate**；下一阶段转入模块 Contract 拆分与 UI / UX / Human-AI Interaction 设计。
 
+---
+
+# 35. Retrieval & Index Plane
+
+知识库、RAG、Agent Memory、Research Wiki、Code Wiki 和多模态检索不能只依赖单一向量数据库。平台新增横向 **Retrieval & Index Plane**，统一管理“如何索引、如何召回、如何融合、如何重排、如何评测”。
+
+## 35.1 核心职责
+
+```text
+Raw / Parsed / Wiki / Graph / Dataset
+                ↓
+          Index Builder
+                ↓
+ ┌──────────────┼──────────────┐
+ ▼              ▼              ▼
+Dense Index   Sparse Index   Lexical Index
+ ▼              ▼              ▼
+Vector ANN    SPLADE/BGE-M3    BM25
+ └──────────────┼──────────────┘
+                ↓
+          Hybrid Retrieval
+                ↓
+        Multi-stage Retrieval
+                ↓
+             Reranker
+                ↓
+       Evidence / Citation Layer
+                ↓
+        RAG / Agent / Search
+```
+
+## 35.2 Retrieval 不等于 Vector Search
+
+平台至少支持：
+
+- Dense Vector Retrieval；
+- Sparse Vector Retrieval；
+- BM25 / Lexical Search；
+- Metadata / Structured Filter；
+- Hybrid Search；
+- Multi-vector / Multi-modal Retrieval；
+- Late Interaction；
+- Reranking；
+- Graph Retrieval；
+- Temporal / Freshness-aware Retrieval；
+- Citation-aware Retrieval。
+
+因此 Knowledge Plane 不绑定单一“向量库”。
+
+## 35.3 Vector / Search Backend 通过 Adapter 接入
+
+统一 `RetrievalBackendAdapter` / `VectorIndexAdapter`，首批候选可包括：
+
+```text
+pgvector
+Qdrant
+Milvus
+Weaviate
+Vespa
+LanceDB
+OpenSearch / Elasticsearch
+FAISS
+sqlite-vec / embedded engines
+Future Backend
+```
+
+选择哪一个后端必须由真实 Benchmark 决定，而不是在总纲中永久押注某个产品。
+
+评测至少包含：
+
+- Recall@K；
+- Precision@K；
+- MRR；
+- NDCG；
+- Hit Rate；
+- P50 / P95 / P99；
+- QPS；
+- Index Build Time；
+- RAM / VRAM / Storage；
+- Filter Performance；
+- Update Latency；
+- Multi-tenancy；
+- Operational Complexity；
+- Cost。
+
+## 35.4 Hybrid Retrieval 为默认能力方向
+
+对于知识库和 RAG，默认能力应优先支持：
+
+```text
+Dense Semantic
++
+Sparse / BM25 Exact Match
++
+Metadata Filter
++
+Fusion
++
+Reranker
+```
+
+而不是“只做 embedding 相似度”。
+
+Fusion 可通过 Adapter 支持：
+
+- RRF；
+- Weighted RRF；
+- Score Fusion；
+- Learned Fusion；
+- Future Fusion Strategy。
+
+## 35.5 Multi-stage / Late Interaction
+
+平台预留：
+
+```text
+Stage 1  cheap retrieval
+Stage 2  refine / rerank
+Stage 3  evidence validation
+```
+
+例如：
+
+```text
+BM25 + Dense
+   ↓
+Top 100
+   ↓
+ColBERT / Multi-vector / Cross Encoder
+   ↓
+Top 20
+   ↓
+Citation / Source / Freshness Gate
+   ↓
+Top 8 Evidence
+```
+
+Retriever 和 Reranker 都必须是可替换 Capability。
+
+## 35.6 Embedding Model Registry
+
+Embedding 不能只是一个配置字符串。
+
+需要记录：
+
+- model_id；
+- revision；
+- dimensions；
+- modality；
+- language；
+- normalization；
+- tokenizer；
+- max_length；
+- license；
+- benchmark；
+- cost；
+- hardware profile；
+- compatible index type。
+
+更换 Embedding 模型通常意味着 Index Version 变化，不能静默覆盖旧向量。
+
+## 35.7 Index Lifecycle
+
+Index 也是一级派生资产：
+
+```text
+BUILDING
+→ VALIDATING
+→ READY
+→ ACTIVE
+→ REBUILDING
+→ STALE
+→ SUPERSEDED
+→ RETIRED
+```
+
+每个 Index 必须引用：
+
+```text
+source_snapshot
+embedding_model_revision
+chunking_recipe
+index_backend
+index_parameters
+build_time
+quality_evidence
+```
+
+禁止“换 embedding 后沿用旧 index”这类不可追溯操作。
+
+## 35.8 Query Planner
+
+Retrieval Query Planner 根据查询类型自动选择：
+
+```text
+Exact keyword
+→ BM25 / Sparse
+
+Semantic
+→ Dense
+
+Mixed
+→ Hybrid
+
+Multi-modal
+→ Multi-vector
+
+Entity / Relation
+→ Graph
+
+Time-sensitive
+→ Freshness-aware
+
+High-precision
+→ Hybrid + Reranker
+```
+
+Agent 可以提出查询计划，但最终执行由固定 Retrieval Contract 完成。
+
+## 35.9 Retrieval Evaluation
+
+每个知识库都应该拥有自己的 Retrieval Gold Set，而不是只评最终 LLM 回答。
+
+至少拆分：
+
+```text
+Retrieval Quality
+Rerank Quality
+Context Quality
+Answer Quality
+Citation Quality
+```
+
+这样才能判断问题究竟来自：
+
+- 没召回；
+- 排错了；
+- Chunk 不好；
+- Embedding 不好；
+- Reranker 不好；
+- LLM 推理错误。
+
+## 35.10 Knowledge Plane 与 Retrieval Plane 的关系
+
+```text
+Knowledge Plane
+负责：
+“知道什么、知识来自哪里、是否可信、是否过期”
+
+Retrieval & Index Plane
+负责：
+“如何最快、最准地把正确证据找出来”
+```
+
+两者必须分离。
+
+---
+
+# 36. Decision Model / Fast Decision Capability
+
+除生成式 LLM 外，平台预留一类面向软件自动化的 **Decision Model Capability**。
+
+它不是传统文本生成，而是：
+
+```text
+State
++ Typed Question / Choice / Score
+        ↓
+Decision Model
+        ↓
+Typed Decision
++ Probability / Confidence
+```
+
+## 36.1 典型用途
+
+适合：
+
+- Router；
+- Admission Decision；
+- Agent next-step selection；
+- Retry / Stop；
+- Risk Scoring；
+- Guardrail；
+- Classification；
+- Candidate Ranking；
+- Human-escalation decision；
+- Tool selection；
+- Judge / Verification 辅助。
+
+## 36.2 与 LLM 的关系
+
+Decision Model 不替代 LLM。
+
+建议：
+
+```text
+LLM
+负责：
+生成、推理、解释、代码、长文本
+
+Decision Model
+负责：
+低延迟、结构化、概率化决策
+```
+
+未来同一 Workflow 可以组合：
+
+```text
+Fast Decision Model
+→ 判断是否需要昂贵推理
+
+if high confidence:
+    deterministic path
+else:
+    call reasoning LLM
+```
+
+从而降低延迟与成本。
+
+## 36.3 Jev 作为当前新技术候选
+
+当前可将 TypeSafe AI 的 **Jev** 作为 Decision Model 类的一个 Candidate Provider，而不是写死成平台依赖。
+
+通过：
+
+```text
+DecisionModelAdapter
+├── JevProviderAdapter
+├── LocalClassifierAdapter
+├── LocalSmallModelAdapter
+└── FutureDecisionModel
+```
+
+进入 Technology Radar / Reproduction / Benchmark / Gate。
+
+重点评测：
+
+- calibration；
+- accuracy；
+- confidence reliability；
+- latency；
+- cost；
+- consistency；
+- failure mode；
+- privacy；
+- provider availability。
+
+平台不采信厂商宣传值作为 Gate 依据，必须在自己的任务集上复测。
+
+## 36.4 与 Agent Control Plane 的结合
+
+Agent 每一步不一定都调用大型推理模型。
+
+可形成：
+
+```text
+Observe
+  ↓
+Fast Decision
+  ├─ obvious → deterministic action
+  ├─ uncertain → reasoning LLM
+  └─ risky → Human Gate
+```
+
+这将成为 Agent 自动化的一个新的成本 / 延迟优化层。
+
+---
+
+# 37. Knowledge Retrieval 技术演进原则
+
+Knowledge / Retrieval 领域变化很快，因此总纲冻结的是能力，不冻结具体产品。
+
+未来出现新的：
+
+- Vector Engine；
+- Sparse Engine；
+- Search Engine；
+- Graph Engine；
+- Embedding Model；
+- Reranker；
+- Late Interaction；
+- Neural Index；
+- Learned Retriever；
+- Agent Memory Engine；
+
+都遵循：
+
+```text
+Discover
+→ Reproduce / Benchmark
+→ Adapter
+→ Candidate
+→ Gate
+→ Active
+```
+
+而不是修改 Knowledge Plane 或 Retrieval Plane 的核心 Authority。
+
+
