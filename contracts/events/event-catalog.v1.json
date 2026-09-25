@@ -1,0 +1,473 @@
+{
+  "catalog_version": "1.0",
+  "envelope_schema": "contracts/events/event-envelope.schema.json",
+  "delivery_semantics": "at-least-once",
+  "events": [
+    {
+      "event_type": "resource.observation.updated",
+      "family": "Resource",
+      "subject_kinds": [
+        "Resource",
+        "Node",
+        "GPU",
+        "VM",
+        "Environment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "observation",
+        "observed_at"
+      ],
+      "attention_candidate": false,
+      "evidence_required": false
+    },
+    {
+      "event_type": "resource.health.changed",
+      "family": "Resource",
+      "subject_kinds": [
+        "Resource",
+        "Node",
+        "GPU",
+        "VM",
+        "Environment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "from_health",
+        "to_health",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "run.created",
+      "family": "Run",
+      "subject_kinds": [
+        "TrainingRun",
+        "EvaluationRun"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "run_ref",
+        "run_kind",
+        "spec_revision"
+      ],
+      "attention_candidate": false,
+      "evidence_required": false
+    },
+    {
+      "event_type": "run.status.changed",
+      "family": "Run",
+      "subject_kinds": [
+        "TrainingRun",
+        "EvaluationRun"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "run_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code",
+        "observed_at"
+      ],
+      "attention_candidate": true,
+      "evidence_required": false
+    },
+    {
+      "event_type": "run.checkpoint.created",
+      "family": "Run",
+      "subject_kinds": [
+        "TrainingRun"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "run_ref",
+        "checkpoint_ref",
+        "verified"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "run.retry.exhausted",
+      "family": "Run",
+      "subject_kinds": [
+        "TrainingRun",
+        "EvaluationRun"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "run_ref",
+        "attempts",
+        "last_error_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.candidate.created",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "candidate_revision",
+        "capability_ref"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.promotion.requested",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "candidate_revision",
+        "target_environment",
+        "gate_result_ref",
+        "lkg_ref"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.promotion.blocked",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "block_reason",
+        "gate_result_ref"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.rollout.started",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "candidate_revision",
+        "target_environment",
+        "rollout_strategy",
+        "gate_result_ref",
+        "approval_ref",
+        "lkg_ref"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.rollout.completed",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "production_revision",
+        "result"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.rollback.started",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "from_revision",
+        "target_lkg_ref",
+        "reason"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.recovered_to_lkg",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "deployment_ref",
+        "lkg_ref",
+        "post_check"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "model.revision.created",
+      "family": "Model",
+      "subject_kinds": [
+        "ModelAsset"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "model_ref",
+        "business_revision",
+        "artifact_ref"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "model.validation.completed",
+      "family": "Model",
+      "subject_kinds": [
+        "ModelAsset"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "model_ref",
+        "business_revision",
+        "result",
+        "gate_result_ref"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "dataset.revision.created",
+      "family": "Dataset",
+      "subject_kinds": [
+        "DatasetAsset"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "dataset_ref",
+        "business_revision",
+        "content_hash"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "dataset.classification.changed",
+      "family": "Dataset",
+      "subject_kinds": [
+        "DatasetAsset"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "dataset_ref",
+        "from_classification",
+        "to_classification",
+        "approval_ref"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "security.risk.detected",
+      "family": "Security",
+      "subject_kinds": [
+        "Policy",
+        "UpstreamDependency",
+        "Artifact",
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "risk_code",
+        "severity",
+        "affected_object_refs"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "dependency.risk.changed",
+      "family": "Dependency",
+      "subject_kinds": [
+        "UpstreamDependency"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "dependency_ref",
+        "from_risk",
+        "to_risk",
+        "reason",
+        "affected_object_refs"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "approval.requested",
+      "family": "Approval",
+      "subject_kinds": [
+        "Approval"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "approval_ref",
+        "action",
+        "responsibility_level",
+        "required_role"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "approval.decided",
+      "family": "Approval",
+      "subject_kinds": [
+        "Approval"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "approval_ref",
+        "decision",
+        "decided_by",
+        "decided_at",
+        "reason",
+        "affected_action_ref"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "approval.expired",
+      "family": "Approval",
+      "subject_kinds": [
+        "Approval"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "approval_ref",
+        "expired_at",
+        "affected_action_ref"
+      ],
+      "attention_candidate": true,
+      "evidence_required": false
+    },
+    {
+      "event_type": "audit.action.executed",
+      "family": "Audit",
+      "subject_kinds": [
+        "Project",
+        "Principal"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "action",
+        "object_ref",
+        "environment",
+        "responsibility_level",
+        "result"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "agent.plan.created",
+      "family": "Agent",
+      "subject_kinds": [
+        "Agent",
+        "Workflow"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "agent_ref",
+        "goal",
+        "plan_revision",
+        "effective_principal_ref"
+      ],
+      "attention_candidate": false,
+      "evidence_required": false
+    },
+    {
+      "event_type": "agent.action.proposed",
+      "family": "Agent",
+      "subject_kinds": [
+        "Agent",
+        "Workflow"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "agent_ref",
+        "action",
+        "responsibility_level",
+        "affected_object_refs"
+      ],
+      "attention_candidate": true,
+      "evidence_required": false
+    },
+    {
+      "event_type": "agent.action.executed",
+      "family": "Agent",
+      "subject_kinds": [
+        "Agent",
+        "Workflow"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "agent_ref",
+        "effective_principal_ref",
+        "action",
+        "responsibility_level",
+        "request_ref",
+        "result"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    },
+    {
+      "event_type": "incident.opened",
+      "family": "Incident",
+      "subject_kinds": [
+        "Deployment",
+        "Capability"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "incident_ref",
+        "affected_object_refs",
+        "severity",
+        "symptoms"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "incident.recovery.completed",
+      "family": "Incident",
+      "subject_kinds": [
+        "Deployment",
+        "Capability"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "incident_ref",
+        "affected_deployment_ref",
+        "recovered_lkg_ref",
+        "operation_ref",
+        "post_check"
+      ],
+      "attention_candidate": false,
+      "evidence_required": true
+    }
+  ]
+}

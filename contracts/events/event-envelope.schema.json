@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/events/event-envelope.schema.json",
+  "title": "Unified AI Platform Domain Event Envelope",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "schema_version",
+    "payload_version",
+    "producer",
+    "occurred_at",
+    "subject",
+    "project_ref",
+    "actor",
+    "correlation_id",
+    "idempotency_key",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^event_[A-Za-z0-9_-]+$"
+    },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)+$"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "payload_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "producer": {
+      "type": "string",
+      "enum": [
+        "control-hub",
+        "scheduler",
+        "workflow-controller",
+        "resource-controller",
+        "agent-controller",
+        "adapter-controller",
+        "governance-controller"
+      ]
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "subject": {
+      "$ref": "#/$defs/subjectRef"
+    },
+    "project_ref": {
+      "$ref": "#/$defs/projectRef"
+    },
+    "actor": {
+      "$ref": "#/$defs/principalRef"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "causation_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 255
+    },
+    "trace_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 255
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 255
+    },
+    "resource_version": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "business_revision": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 255
+    },
+    "operation_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 128
+    },
+    "workflow_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 128
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 128
+      },
+      "uniqueItems": true
+    },
+    "policy_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 128
+      },
+      "uniqueItems": true
+    },
+    "external_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/externalRef"
+      }
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "subjectRef": {
+      "type": "object",
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    },
+    "projectRef": {
+      "type": "object",
+      "required": [
+        "project_id"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^project_[A-Za-z0-9_-]+$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "principalRef": {
+      "type": "object",
+      "required": [
+        "principal_id"
+      ],
+      "properties": {
+        "principal_id": {
+          "type": "string",
+          "pattern": "^principal_[A-Za-z0-9_-]+$"
+        },
+        "agent_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    },
+    "externalRef": {
+      "type": "object",
+      "required": [
+        "system",
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

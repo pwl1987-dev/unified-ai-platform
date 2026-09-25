@@ -33,6 +33,9 @@
 | [design/10-DOMAIN-MODEL.md](design/10-DOMAIN-MODEL.md) | WP-P1-01 + P1-D05 amendment：27 个核心对象 + Project/Principal 基础对象、Stable ID、spec/status、ownership、lineage 与 Evidence |
 | [design/11-API-BOUNDARY.md](design/11-API-BOUNDARY.md) | WP-P1-02：Northbound API Boundary；/v1 AI Data Plane、/api/v1 Control/Governance Plane、async/error/evidence/approval/gate/mutation contract |
 | [design/12-DECISION-REGISTER.md](design/12-DECISION-REGISTER.md) | P1-D01~D06 正式 Decision Register |
+| [design/13-EVENT-CONTRACT.md](design/13-EVENT-CONTRACT.md) | WP-P1-03：Domain Event Envelope、事件族、at-least-once/idempotency、outbox/replay 与 Agent/Audit/Incident 事件 |
+| [../contracts/events/event-envelope.schema.json](../contracts/events/event-envelope.schema.json) | WP-P1-03 machine-readable Event Envelope JSON Schema |
+| [../contracts/events/event-catalog.v1.json](../contracts/events/event-catalog.v1.json) | WP-P1-03 machine-readable Event Catalog |
 | [../contracts/openapi/unified-ai-platform.v1.json](../contracts/openapi/unified-ai-platform.v1.json) | OpenAPI 3.1 machine-readable baseline；用于 TypeScript/Go/Python client generation |
 | [../contracts/schemas/domain-envelope.schema.json](../contracts/schemas/domain-envelope.schema.json) | WP-P1-01 机器可读 common Domain Envelope JSON Schema baseline |
 | [ux/01-ROLES.md](ux/01-ROLES.md) | WP-P2-01：九类 User Roles 与 AI Operator 权限继承边界 |
@@ -61,13 +64,13 @@ Completed first-pass packages
   P0-02 Dependency Register
   P1-01 Core Domain Model
   P1-02 Northbound API Contract
+  P1-03 Event Contract
   P2-01 User Roles
   P2-02 Human-AI Responsibility
   P2-03 Golden Journeys
   P2-04 Information Architecture
         ↓
 Next Contract / UX layer
-  P1-03 Event Contract
   P1-04 State Machines
   P1-05 Adapter Contract
 
