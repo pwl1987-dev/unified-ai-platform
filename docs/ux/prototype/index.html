@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unified AI Platform · Hi-fi Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="brand-mark">UA</div>
+        <div>
+          <strong>Unified AI</strong>
+          <span>Control Hub</span>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-screen="home"><span class="nav-icon">⌂</span><span>Home</span></button>
+        <button class="nav-item" data-screen="hub"><span class="nav-icon">◇</span><span>AI Hub</span></button>
+        <button class="nav-item" data-screen="build"><span class="nav-icon">＋</span><span>Build</span></button>
+        <button class="nav-item" data-screen="deployment"><span class="nav-icon">▷</span><span>Run</span></button>
+        <button class="nav-item" data-screen="experiment"><span class="nav-icon">↗</span><span>Improve</span></button>
+        <button class="nav-item" data-screen="knowledge"><span class="nav-icon">▤</span><span>Knowledge</span></button>
+        <button class="nav-item" data-screen="compute"><span class="nav-icon">▦</span><span>Compute</span></button>
+        <button class="nav-item" data-screen="govern"><span class="nav-icon">✓</span><span>Govern</span></button>
+      </nav>
+      <div class="sidebar-foot">
+        <span class="prototype-badge">DESIGN PROTOTYPE</span>
+        <small>Non-product · No backend</small>
+      </div>
+    </aside>
+
+    <div class="workbench">
+      <header class="topbar">
+        <div class="scope-group">
+          <button class="scope-button"><span>Project</span><strong>Platform Foundation</strong><span>⌄</span></button>
+          <button class="env-button"><span class="dot"></span>PRODUCTION <span>⌄</span></button>
+        </div>
+        <div class="utility-group">
+          <button class="search-button" data-action="search"><span>⌕</span><span>Search capabilities, runs, evidence…</span><kbd>⌘ K</kbd></button>
+          <button class="utility-button attention-launch" data-screen="approval"><span>!</span><b>3</b><span>Attention</span></button>
+          <button class="utility-button" id="operator-launch"><span>✦</span><span>AI Operator</span></button>
+          <button class="utility-button" id="theme-toggle" aria-label="Toggle color theme"><span id="theme-icon">◐</span></button>
+          <div class="avatar" title="Acting as principal_admin">PA</div>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="screen active" id="screen-home" data-title="Home">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">Platform overview</div>
+              <h1>Home</h1>
+              <p>当前 Project 的生产健康、待处理事项与长任务状态。</p>
+            </div>
+            <div class="head-meta"><span>Last observed</span><strong>07:26:42</strong></div>
+          </div>
+
+          <div class="attention-strip">
+            <div class="section-head">
+              <div><h2>Needs Your Attention</h2><span>只显示需要人工决策或干预的事项</span></div>
+              <button class="text-button" data-screen="approval">Open inbox →</button>
+            </div>
+            <div class="attention-grid">
+              <article class="attention-card danger">
+                <div class="attention-top"><span class="status-dot"></span><strong>Promotion blocked</strong><span class="tag danger">GATE FAIL</span></div>
+                <h3>deployment_coding_v7</h3>
+                <p>p95 latency 超过 Production Gate 11.8%，Candidate 保持 READY。</p>
+                <div class="card-meta"><span>R1 · AI may propose</span><span>Evidence 8</span></div>
+              </article>
+              <article class="attention-card warning">
+                <div class="attention-top"><span class="status-dot"></span><strong>Approval required</strong><span class="tag warning">R2</span></div>
+                <h3>Promote vision-v4</h3>
+                <p>Gate 已通过，等待 Human Approver。LKG: deployment_vision_v3。</p>
+                <div class="card-meta"><span>Expires in 3h</span><span>Evidence 12</span></div>
+              </article>
+              <article class="attention-card info">
+                <div class="attention-top"><span class="status-dot"></span><strong>License risk</strong><span class="tag info">MIGRATE</span></div>
+                <h3>dependency_runtime_x</h3>
+                <p>上游许可发生变化，3 个 Deployment 被标记为受影响。</p>
+                <div class="card-meta"><span>Security review</span><span>Replacement 1</span></div>
+              </article>
+            </div>
+          </div>
+
+          <div class="kpi-grid">
+            <article class="kpi"><span>Production capabilities</span><strong>12</strong><small>11 healthy · 1 degraded</small></article>
+            <article class="kpi"><span>Active operations</span><strong>7</strong><small>4 running · 2 queued · 1 blocked</small></article>
+            <article class="kpi"><span>GPU pressure</span><strong>82%</strong><small>6 / 8 allocated · queue 4</small></article>
+            <article class="kpi"><span>Pending approvals</span><strong>4</strong><small>1 expires today</small></article>
+          </div>
+
+          <div class="two-col">
+            <section class="panel">
+              <div class="section-head"><div><h2>Production health</h2><span>Capability-first · Domain status</span></div><button class="text-button" data-screen="hub">View AI Hub →</button></div>
+              <table class="data-table">
+                <thead><tr><th>Capability</th><th>Status</th><th>Production</th><th>Evidence</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>coding</strong><small>capability_01H…C9</small></td><td><span class="tag success">HEALTHY</span></td><td>rev 6 <span class="tag lkg">LKG</span></td><td>Gate PASS · 14 refs</td></tr>
+                  <tr><td><strong>vision</strong><small>capability_01H…V2</small></td><td><span class="tag warning">DEGRADED</span></td><td>rev 3 <span class="tag lkg">LKG</span></td><td>2 alerts</td></tr>
+                  <tr><td><strong>embedding</strong><small>capability_01H…E4</small></td><td><span class="tag success">HEALTHY</span></td><td>rev 8</td><td>Gate PASS · 7 refs</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section class="panel">
+              <div class="section-head"><div><h2>Active operations</h2><span>Long-running workflow references</span></div></div>
+              <div class="operation-list">
+                <div class="operation-row"><span class="op-icon running">↻</span><div><strong>Training · code-specialist-r9</strong><small>trainingrun_01J… · GPU 4</small></div><div class="progress"><span style="width:72%"></span></div><b>72%</b></div>
+                <div class="operation-row"><span class="op-icon queued">·</span><div><strong>Evaluation · vision-v4</strong><small>evaluationrun_01J…</small></div><div class="progress"><span style="width:18%"></span></div><b>18%</b></div>
+                <div class="operation-row"><span class="op-icon blocked">!</span><div><strong>Backend replacement</strong><small>operation_01J… · approval required</small></div><span class="tag warning">BLOCKED</span><b>—</b></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-hub" data-title="AI Hub">
+          <div class="page-head">
+            <div><div class="eyebrow">Capability-first catalog</div><h1>AI Hub</h1><p>业务绑定 Capability；模型、Runtime、Provider 只是可替换实现。</p></div>
+            <button class="primary-button">＋ Add candidate</button>
+          </div>
+          <div class="split-view">
+            <section class="panel">
+              <div class="tab-row"><button class="tab active">Capabilities</button><button class="tab">Models</button><button class="tab">Providers</button></div>
+              <div class="filter-row"><input aria-label="Search capabilities" value=""/><button>Modality ▾</button><button>Status ▾</button><button>Environment ▾</button></div>
+              <table class="data-table clickable">
+                <thead><tr><th>Capability</th><th>Status</th><th>Production</th><th>Candidate</th><th>Evidence</th></tr></thead>
+                <tbody>
+                  <tr class="selected"><td><strong>coding</strong><small>Text · Tool use</small></td><td><span class="tag success">HEALTHY</span></td><td>dep_prod_6 <span class="tag lkg">LKG</span></td><td>dep_can_7</td><td>Gate PASS</td></tr>
+                  <tr><td><strong>vision</strong><small>Image · Text</small></td><td><span class="tag warning">DEGRADED</span></td><td>dep_prod_3</td><td>dep_can_4</td><td>2 alerts</td></tr>
+                  <tr><td><strong>meeting-assistant</strong><small>Audio · Text</small></td><td><span class="tag info">CANDIDATE</span></td><td>—</td><td>dep_can_2</td><td>Review</td></tr>
+                  <tr><td><strong>embedding</strong><small>Text</small></td><td><span class="tag success">HEALTHY</span></td><td>dep_prod_8</td><td>—</td><td>Gate PASS</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <aside class="detail-panel">
+              <div class="detail-top">
+                <div><div class="eyebrow">ModelAsset</div><h2>Qwen Code Specialist</h2><code>modelasset_01J9…Q2</code></div>
+                <span class="tag info">READY</span>
+              </div>
+              <div class="detail-grid">
+                <div><span>Business revision</span><strong>rev 7</strong></div>
+                <div><span>resource_version</span><strong>14</strong></div>
+                <div><span>Owner</span><strong>AI Engineering</strong></div>
+                <div><span>Scope</span><strong>Platform Foundation</strong></div>
+              </div>
+              <div class="spec-status">
+                <div><span class="micro-title">DECLARED · SPEC</span><p>Source pinned by digest<br>Capabilities: coding, reasoning<br>Quantization: W4A16</p></div>
+                <div><span class="micro-title">OBSERVED · STATUS</span><p>Validation complete<br>2 implementations healthy<br>Observed 07:25</p></div>
+              </div>
+              <div class="mini-section"><h3>Evaluation</h3><div class="metric-row"><span>Quality</span><strong>0.912</strong><span class="tag success">PASS</span></div><div class="metric-row"><span>p95 latency</span><strong>442 ms</strong><span class="tag success">PASS</span></div></div>
+              <div class="mini-section"><h3>Implementations</h3><div class="impl-row"><span>Production · dep_prod_6</span><span class="tag success">PRODUCTION</span><span class="tag lkg">LKG</span></div><div class="impl-row"><span>Candidate · dep_can_7</span><span class="tag info">CANDIDATE</span></div></div>
+              <div class="external-box"><span class="micro-title">IMPLEMENTATION / EXTERNAL REF</span><p>ServingAdapter · runtime_ref=sglang-prod-06</p><small>Not Domain Authority</small></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-deployment" data-title="Deployment">
+          <div class="page-head">
+            <div><div class="eyebrow">Run · Deployment</div><h1>deployment_coding_v7</h1><p>Candidate Promotion 需要 Gate、Human Approval 与可验证 LKG。</p></div>
+            <span class="tag info big">CANDIDATE</span>
+          </div>
+          <div class="detail-layout">
+            <div class="content-stack">
+              <section class="panel">
+                <div class="domain-header">
+                  <div><code>deployment_01J9…D7</code><h2>coding · rev 7</h2></div>
+                  <div class="domain-meta"><span>Environment <strong>PRODUCTION</strong></span><span>rv <strong>21</strong></span></div>
+                </div>
+                <div class="spec-status">
+                  <div><span class="micro-title">DECLARED · SPEC</span><p>Desired replicas 4<br>Rollout progressive<br>Target capability coding</p></div>
+                  <div><span class="micro-title">OBSERVED · STATUS</span><p>Ready 4/4<br>Health GREEN<br>Observed 07:24:18</p></div>
+                </div>
+              </section>
+
+              <section class="panel">
+                <div class="section-head"><div><h2>Revision comparison</h2><span>Candidate / Production / Last Known Good</span></div></div>
+                <div class="revision-grid">
+                  <article class="revision-card candidate"><span class="tag info">CANDIDATE</span><h3>rev 7</h3><p>Quality +3.2%<br>p95 +1.7%<br>Power -6.1%</p></article>
+                  <article class="revision-card production"><span class="tag success">PRODUCTION</span><h3>rev 6</h3><p>Current traffic 100%<br>SLA healthy<br>Error 0.14%</p></article>
+                  <article class="revision-card lkg-card"><div><span class="tag lkg">LKG</span><span class="tag success">PRODUCTION</span></div><h3>rev 6</h3><p>Verified 2026-09-25<br>Recovery drill PASS<br>Evidence 18</p></article>
+                </div>
+              </section>
+
+              <section class="panel">
+                <div class="section-head"><div><h2>Rollout plan</h2><span>10% → 50% → 100%</span></div><span class="tag neutral">NOT STARTED</span></div>
+                <div class="rollout-track"><span class="rollout-node active">10%</span><span class="line"></span><span class="rollout-node">50%</span><span class="line"></span><span class="rollout-node">100%</span></div>
+              </section>
+            </div>
+
+            <aside class="context-rail">
+              <section class="context-card"><span class="micro-title">STATE</span><div class="rail-state"><span class="tag info">READY</span><strong>Promotion candidate</strong></div></section>
+              <section class="context-card"><span class="micro-title">EVIDENCE</span><h3>14 references</h3><p>Quality · Safety · Runtime · Cost · Recovery</p><button class="text-button">Open evidence</button></section>
+              <section class="context-card"><span class="micro-title">GATE</span><div class="gate-pass">✓ PASS</div><p>Production Gate rev 12</p></section>
+              <section class="context-card emphasis"><span class="micro-title">APPROVAL</span><span class="responsibility r2">R2 · HUMAN APPROVAL REQUIRED</span><p>AI recommendation: promote via 10% canary.</p><button class="primary-button" data-screen="approval">Request approval</button></section>
+              <section class="context-card"><span class="micro-title">ROLLBACK / LKG</span><h3>rev 6</h3><p>Verified · recovery drill PASS</p></section>
+              <section class="context-card external"><span class="micro-title">IMPLEMENTATION</span><p>ServingAdapter<br>SGLang external ref</p><small>Not authority</small></section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-experiment" data-title="Experiment">
+          <div class="page-head">
+            <div><div class="eyebrow">Improve · Evidence first</div><h1>Experiment / Benchmark</h1><p>比较 Baseline 与 Candidate，不使用单一“冠军”评分。</p></div>
+            <button class="secondary-button">✦ Ask AI analyze</button>
+          </div>
+          <div class="panel">
+            <div class="experiment-head"><div><span class="tag success">COMPLETE</span><span class="tag success">REPRODUCIBLE</span><span class="tag warning">GATE PARTIAL</span></div><code>experiment_01J9…E8</code></div>
+            <h2>Hypothesis · W4A16 can reduce power without degrading quality</h2>
+            <div class="metric-bars">
+              <div class="bar-row"><span>Quality</span><div class="bar baseline" style="--w:78%"></div><strong>0.884</strong><div class="bar candidate" style="--w:84%"></div><strong>0.912</strong><span class="tag success">PASS</span></div>
+              <div class="bar-row"><span>p95 latency</span><div class="bar baseline" style="--w:62%"></div><strong>420 ms</strong><div class="bar candidate" style="--w:70%"></div><strong>470 ms</strong><span class="tag danger">FAIL</span></div>
+              <div class="bar-row"><span>Power</span><div class="bar baseline" style="--w:82%"></div><strong>2.1 kW</strong><div class="bar candidate" style="--w:70%"></div><strong>1.9 kW</strong><span class="tag success">PASS</span></div>
+            </div>
+          </div>
+          <div class="two-col">
+            <section class="panel"><div class="section-head"><div><h2>Evidence timeline</h2><span>Failed checks remain visible</span></div></div><div class="timeline"><div><b>07:02</b><span>Environment resolved</span><em>evidence_env_9</em></div><div><b>07:08</b><span>Evaluation completed</span><em>evidence_eval_3</em></div><div class="failed"><b>07:12</b><span>Latency Gate FAIL</span><em>gate_result_12</em></div><div><b>07:14</b><span>AI analysis proposed next run</span><em>R1 proposal</em></div></div></section>
+            <section class="panel"><div class="section-head"><div><h2>AI analysis</h2><span>Advisory · not executed</span></div><span class="responsibility r1">R1</span></div><p class="analysis-copy">质量与功耗改善成立，但 p95 latency 超过冻结阈值。建议保持 Candidate，不晋级；下一实验只调整 prefill/concurrency，保持评测集和 Gate 不变。</p><button class="secondary-button">Create next experiment proposal</button></section>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-compute" data-title="Compute">
+          <div class="page-head">
+            <div><div class="eyebrow">Compute · Resource read model</div><h1>GPU Fleet</h1><p>资源健康、分配和 workload；telemetry 是 observation，不是 Domain Authority。</p></div>
+            <button class="secondary-button">✦ Ask AI capacity plan</button>
+          </div>
+          <div class="kpi-grid">
+            <article class="kpi"><span>Healthy</span><strong>7 / 8</strong><small>1 warning</small></article>
+            <article class="kpi"><span>Allocated</span><strong>6</strong><small>4 production · 2 batch</small></article>
+            <article class="kpi"><span>Queue</span><strong>4</strong><small>training debt 2.3h</small></article>
+            <article class="kpi"><span>Power</span><strong>2.74 kW</strong><small>Observed 07:25</small></article>
+          </div>
+          <section class="panel">
+            <table class="data-table">
+              <thead><tr><th>GPU</th><th>Health</th><th>VRAM</th><th>Util</th><th>Power</th><th>Workload</th><th>Allocation</th><th>Observed</th></tr></thead>
+              <tbody>
+                <tr><td><strong>gpu_01J…01</strong><small>node_a · slot 0</small></td><td><span class="tag success">OK</span></td><td>21 / 24 GB</td><td>92%</td><td>348 W</td><td>deployment_coding</td><td>Production</td><td>4s ago</td></tr>
+                <tr><td><strong>gpu_01J…02</strong><small>node_a · slot 1</small></td><td><span class="tag success">OK</span></td><td>19 / 24 GB</td><td>81%</td><td>321 W</td><td>trainingrun_r9</td><td>Batch</td><td>5s ago</td></tr>
+                <tr><td><strong>gpu_01J…07</strong><small>node_a · slot 6</small></td><td><span class="tag warning">WARN</span></td><td>2 / 24 GB</td><td>10%</td><td>87 W</td><td>—</td><td>Drain pending</td><td>19s ago</td></tr>
+                <tr><td><strong>gpu_01J…08</strong><small>node_a · slot 7</small></td><td><span class="tag success">OK</span></td><td>0 / 24 GB</td><td>1%</td><td>52 W</td><td>—</td><td>Available</td><td>3s ago</td></tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-govern" data-title="Govern">
+          <div class="page-head">
+            <div><div class="eyebrow">Govern · Policy / Gate / Dependency</div><h1>Governance</h1><p>谁能做什么、为什么被允许或阻止、风险如何迁移。</p></div>
+          </div>
+          <div class="tab-row"><button class="tab active">Overview</button><button class="tab" data-screen="approval">Approvals</button><button class="tab">Policies</button><button class="tab">Gates</button><button class="tab">Dependencies</button><button class="tab">Adapters</button><button class="tab">Access</button><button class="tab">Audit</button></div>
+          <div class="kpi-grid">
+            <article class="kpi"><span>Critical risks</span><strong>2</strong><small>1 license · 1 conformance</small></article>
+            <article class="kpi"><span>Pending approvals</span><strong>4</strong><small>1 expires today</small></article>
+            <article class="kpi"><span>Policy drift</span><strong>0</strong><small>All observed</small></article>
+            <article class="kpi"><span>Production adapters</span><strong>9</strong><small>9 × C3 eligible</small></article>
+          </div>
+          <section class="panel">
+            <div class="section-head"><div><h2>Critical risks</h2><span>Unknown is never displayed as healthy</span></div></div>
+            <table class="data-table">
+              <thead><tr><th>Object</th><th>Risk</th><th>Affected</th><th>Evidence</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td><strong>dependency_runtime_x</strong><small>upstreamdependency_01J…</small></td><td><span class="tag danger">LICENSE_CHANGED</span></td><td>3 deployments</td><td>license hash + diff</td><td><button class="text-button">Review migration →</button></td></tr>
+                <tr><td><strong>adapter_serving_b</strong><small>adapter_01J…</small></td><td><span class="tag danger">C2 FAIL</span></td><td>candidate only</td><td>conformance 18/19</td><td><button class="text-button">Open evidence →</button></td></tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-approval" data-title="Approval Inbox">
+          <div class="page-head">
+            <div><div class="eyebrow">Govern · Human final decision</div><h1>Approval Inbox</h1><p>AI 可以准备 Decision Packet，但最终 Approval 必须由授权 Human Principal 决定。</p></div>
+            <span class="responsibility r3">R3 · HUMAN ONLY</span>
+          </div>
+          <div class="approval-layout">
+            <section class="approval-list panel">
+              <button class="approval-list-item active"><span class="tag warning">PENDING</span><strong>Promote vision-v4</strong><small>Production · expires in 3h</small></button>
+              <button class="approval-list-item"><span class="tag warning">PENDING</span><strong>Replace serving backend</strong><small>Production · C3 passed</small></button>
+              <button class="approval-list-item"><span class="tag info">CHANGES</span><strong>Data export</strong><small>Missing purpose evidence</small></button>
+            </section>
+            <section class="decision-packet panel">
+              <div class="decision-head"><div><span class="micro-title">DECISION PACKET</span><h2>Promote vision-v4 → Production</h2></div><span class="tag warning">PENDING</span></div>
+              <div class="decision-grid">
+                <div><span>Requested by</span><strong>principal_ai_engineer</strong></div>
+                <div><span>Acting via</span><strong>agent_release_02</strong></div>
+                <div><span>Project</span><strong>Platform Foundation</strong></div>
+                <div><span>Environment</span><strong>PRODUCTION</strong></div>
+                <div><span>Responsibility</span><strong>R2 action / R3 decision</strong></div>
+                <div><span>resource_version</span><strong>17</strong></div>
+              </div>
+              <div class="decision-section"><span class="micro-title">GATE</span><div class="gate-pass">✓ PASS · Production Gate rev 12</div></div>
+              <div class="decision-section"><span class="micro-title">EVIDENCE</span><div class="evidence-chips"><span>Quality</span><span>Safety</span><span>Runtime</span><span>Cost</span><span>Recovery</span><span>+7</span></div></div>
+              <div class="decision-section"><span class="micro-title">SIDE EFFECTS</span><p>10% → 50% → 100% traffic shift · +2 GPU reservation · estimated 8 min rollout.</p></div>
+              <div class="decision-section"><span class="micro-title">ROLLBACK / LKG</span><p><strong>deployment_vision_v3 · rev 3</strong> · verified recovery drill PASS.</p></div>
+              <div class="ai-advisory"><span>✦ AI recommendation · Advisory only</span><p>建议批准；quality +4.1%，p95 持平，LKG 可用。建议在 50% 阶段停留 3 分钟观察错误率。</p></div>
+              <label class="reason-field"><span>Human decision reason</span><textarea placeholder="Required for Approve / Reject"></textarea></label>
+              <div class="decision-actions"><button class="danger-button">Reject</button><button class="primary-button">Approve</button></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-operator" data-title="AI Operator">
+          <div class="operator-layout">
+            <section class="operator-main">
+              <div class="page-head compact">
+                <div><div class="eyebrow">AI Operator · Authority inherited</div><h1>Release candidate safely</h1><p>Goal: promote candidate_x if safe; otherwise stop and preserve LKG.</p></div>
+              </div>
+              <div class="operator-context">
+                <div><span>Acting as</span><strong>principal_ai_engineer</strong></div>
+                <div><span>Project</span><strong>Platform Foundation</strong></div>
+                <div><span>Environment</span><strong>PRODUCTION</strong></div>
+                <div><span>Policy</span><strong>release-policy-r17</strong></div>
+              </div>
+              <div class="plan-list">
+                <div class="plan-step done"><span>✓</span><div><b>R0 · Read candidate / production / LKG</b><small>Executed 07:18:03 · request_8C · evidence 3</small></div></div>
+                <div class="plan-step done"><span>✓</span><div><b>R0 · Collect Gate + Evidence</b><small>Executed 07:18:09 · gate_result_12 PASS</small></div></div>
+                <div class="plan-step proposed"><span>✦</span><div><b>R1 · Proposal: promote candidate_x</b><small>Suggested · not executed</small></div></div>
+                <div class="plan-step waiting"><span>!</span><div><b>R2 · Human approval required</b><small>Waiting Approval · approval_01J…A7</small></div></div>
+                <div class="plan-step future"><span>5</span><div><b>R2 · Approved rollout</b><small>10% → 50% → 100% · not started</small></div></div>
+                <div class="plan-step future"><span>6</span><div><b>R0 · Post-condition verification</b><small>Health · SLA · Evidence · LKG retained</small></div></div>
+              </div>
+            </section>
+            <aside class="operator-side">
+              <div class="operator-card"><span class="micro-title">PROPOSED ACTION</span><h3>Progressive Production rollout</h3><p>candidate rev 7 → coding capability</p></div>
+              <div class="operator-card"><span class="micro-title">SIDE EFFECTS</span><p>Traffic shift<br>+2 GPU reservation<br>Possible connection drain</p></div>
+              <div class="operator-card"><span class="micro-title">EVIDENCE DESTINATION</span><p>evidence_set_release_27</p></div>
+              <div class="operator-card"><span class="micro-title">GATE</span><div class="gate-pass">✓ PASS</div></div>
+              <div class="operator-card emphasis"><span class="micro-title">APPROVAL</span><span class="responsibility r2">R2 REQUIRED</span><button class="primary-button" data-screen="approval">Open Decision Packet</button></div>
+              <div class="operator-card"><span class="micro-title">ROLLBACK / LKG</span><p>deployment_coding_v6 · verified</p></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-build" data-title="Build">
+          <div class="placeholder-screen"><span class="eyebrow">Prototype scope</span><h1>Build</h1><p>P2-07 第一轮视觉原型不展开完整 Build 页面。正式任务流已由 Dataset Detail / Training Run Low-fi 与 P1 Contract 覆盖。</p><button class="secondary-button" data-screen="experiment">Open representative Improve screen</button></div>
+        </section>
+
+        <section class="screen" id="screen-knowledge" data-title="Knowledge">
+          <div class="placeholder-screen"><span class="eyebrow">Prototype scope</span><h1>Knowledge</h1><p>P2-07 第一轮不重复绘制全部 12 个 Low-fi 页面；Knowledge 的视觉语义沿用 AI Hub、Dataset、Experiment 与 Evidence components。</p><button class="secondary-button" data-screen="hub">Open representative AI Hub screen</button></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
