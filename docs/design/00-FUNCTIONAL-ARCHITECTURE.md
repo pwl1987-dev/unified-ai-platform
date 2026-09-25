@@ -1938,3 +1938,420 @@ Agent
 ---
 
 **本文件作为后续模块拆分、API Contract、Scheduler Contract、Data/Model Lifecycle 以及 UI/UX 设计的上位功能设计输入。**
+
+---
+
+# 34. 功能审计补遗（2026-09-25）
+
+本节用于对照前期完整讨论，显式补齐此前在总纲中仅“隐含覆盖”或未单独列出的功能点。以下内容与前文具有同等设计约束力。
+
+## 34.1 Data Plane 与 Control Plane 明确分离
+
+统一 Gateway 对外至少区分：
+
+### Data Plane
+
+面向业务调用：
+
+```text
+/v1/responses
+/v1/chat/completions
+/v1/embeddings
+/v1/audio/transcriptions
+/v1/audio/speech
+/v1/images/...
+/v1/videos/...
+/v1/rerank
+```
+
+优先兼容主流 OpenAI-style API Contract；业务调用方只依赖统一 Gateway，不依赖内部模型端口。
+
+### Control Plane
+
+面向平台 Web、Agent 与运维：
+
+```text
+/api/admin/nodes
+/api/admin/gpus
+/api/admin/models
+/api/admin/runtimes
+/api/admin/jobs
+/api/admin/scheduler
+/api/admin/experiments
+/api/admin/providers
+/api/admin/datasets
+```
+
+Data Plane 与 Control Plane 的认证、权限、Rate Limit、审计和暴露范围必须分离。
+
+## 34.2 Provider 凭据、使用策略与统一评测
+
+外部 Provider 不能只保存一个 API Key。
+
+Provider Registry 还必须记录：
+
+- Provider / Region / Base URL；
+- Secret Reference；
+- Credential Lifecycle / Rotation；
+- Health；
+- Capability；
+- Model Catalog；
+- Usage Plan / 套餐限制；
+- License / Terms / Allowed Use；
+- Cost；
+- Data Classification Eligibility；
+- Benchmark / Quality / Latency Evidence。
+
+API Key、Token 等不以明文散落在配置文件中；通过 Secret Store / Secret Broker 引用，按 Workload Identity 最小授权。
+
+外部模型与本地模型一样进入 Benchmark / Gate，可按：
+
+```text
+Quality
+Latency
+Cost
+Availability
+Privacy
+GPU Pressure
+```
+
+参与 Router 决策。
+
+## 34.3 Container / Virtualization 后端候选
+
+平台 Contract 不绑定具体实现，但首批候选明确记录为：
+
+```text
+ContainerRuntimeAdapter
+├── containerd      ← 平台默认候选
+├── Podman          ← rootless / 开发与实验候选
+└── Docker          ← 兼容模式
+```
+
+```text
+VirtualizationAdapter
+├── libvirt/KVM/QEMU ← 默认底座
+├── Incus            ← 可选后端
+├── Proxmox           ← 可选后端
+└── Future
+```
+
+RTX4090 第一阶段不以 vGPU / MIG 为基础假设；Driver 隔离主要依靠 VM + Whole-GPU Passthrough，CUDA userspace 与 Runtime 隔离主要依靠 Container。
+
+## 34.4 Cache Plane 与 KV Cache 生命周期
+
+Cache 是可调度资源，不只是 Runtime 内部细节。
+
+平台预留：
+
+```text
+CacheAdapter
+├── Runtime Native Cache
+├── Multi-tier Cache
+└── Future Cache Backend
+```
+
+Cache Tier 至少允许：
+
+```text
+GPU VRAM
+CPU RAM
+NVMe
+Remote / Shared Cache
+```
+
+KV Cache 的复用必须至少校验：
+
+- model_id；
+- model_revision；
+- tokenizer_hash；
+- runtime_version；
+- cache_schema / compatibility。
+
+无法证明兼容时默认不复用。
+
+Scheduler 可将 Cache Affinity、Prefix Reuse、Loaded Model Affinity 纳入 Placement Score。
+
+## 34.5 网络隔离与 Secret 隔离
+
+Deployment Unit 默认采用最小网络权限。
+
+逻辑网络域至少包括：
+
+```text
+gateway-net
+runtime-net
+training-net
+storage-net
+management-net
+quarantine-net
+```
+
+默认原则：
+
+> East-West traffic = DENY，按 Contract 显式开放。
+
+未知模型 / Quarantine 环境默认：
+
+- 无生产 Secret；
+- 无管理网访问；
+- 无生产数据库访问；
+- 外网按采集/复现 Contract 最小开放。
+
+Secret 使用 Workload Identity + Secret Broker / 短时凭据优先，不允许所有模型共享统一 `.env`。
+
+## 34.6 GPU 主动控制能力模型
+
+硬件纳管不仅包含 telemetry，也预留主动控制。
+
+每项能力必须 Capability Probe，不假定所有 GPU 均支持：
+
+```text
+power.read
+power.limit
+clock.read
+clock.lock
+fan.read
+fan.control
+temperature.read
+pstate.read
+```
+
+特别是消费级 GPU 的主动风扇控制不得视为通用能力。
+
+Power Limit / Clock Profile 可进入 Experiment：
+
+```text
+Performance
+Balanced
+Efficiency
+```
+
+通过 Benchmark 自动寻找 TPS / Quality / Energy 的 Pareto 点。
+
+## 34.7 Service Class 与 Priority 分离
+
+Priority 表示“谁先”，Service Class 表示“怎样服务”。
+
+建议至少支持：
+
+```text
+REALTIME
+INTERACTIVE
+STANDARD
+BATCH
+OPPORTUNISTIC
+```
+
+Service Class 可影响：
+
+- Queue Policy；
+- Cold Start Policy；
+- min_hot / warm_pool；
+- SLA；
+- Preemption；
+- Scale-to-Zero；
+- Deadline；
+- Cloud Burst。
+
+它与 P0～P4 Priority 独立组合。
+
+## 34.8 Shadow / Canary / Progressive Promotion
+
+Candidate 不能从 Benchmark 直接跳到 100% Production。
+
+至少支持：
+
+```text
+Offline Benchmark
+→ Shadow
+→ Canary
+→ Progressive Traffic
+→ Production
+```
+
+Shadow 模式：
+
+- 复制真实请求到 Candidate；
+- Candidate 结果不返回用户；
+- 自动比较质量、延迟、错误、资源、工具调用等指标。
+
+Canary 可按策略推进：
+
+```text
+1% → 5% → 20% → 50% → 100%
+```
+
+任一 Gate 失败可自动 Rollback。
+
+## 34.9 Scheduler Replay / Historical Simulation
+
+新的 Scheduler Strategy 不直接进入生产。
+
+平台保存历史 Job / Request / Resource Timeline，并支持：
+
+```text
+Historical Workload
+→ Replay
+→ Candidate Scheduler
+→ Compare
+```
+
+比较至少包含：
+
+- GPU utilization；
+- average waiting；
+- P95/P99；
+- energy；
+- preemption count；
+- starvation；
+- deadline miss；
+- fragmentation。
+
+同时支持 Workload Consolidation / GPU Defragmentation：在不违反 SLA 和 Gate 的前提下迁移或重启可迁移工作负载，释放完整 GPU / VRAM Capacity。
+
+## 34.10 数据与视觉开源能力候选池
+
+以下均作为 Adapter / Worker 候选，不作为 Authority：
+
+### 数据处理
+
+- Data-Juicer；
+- NeMo Curator；
+- 未来同类项目。
+
+### 人工标注 / Human-in-the-loop
+
+- Label Studio；
+- CVAT；
+- Doccano；
+- Future Annotation Backend。
+
+### 数据质量
+
+- Cleanlab；
+- Rule Engine；
+- Local Model Judge。
+
+### Vision Auto Annotation
+
+- Detector Adapter（YOLO / MMDetection / Future）；
+- Open-vocabulary detector；
+- SAM / SAM2 类 Segmenter；
+- Tracker；
+- Grounded Detection + Segmentation 组合；
+- VLM Auto Labeler。
+
+### 文档解析
+
+- Docling；
+- Apache Tika；
+- OCR Backend。
+
+### 采集
+
+- Scrapy；
+- Crawl4AI；
+- API / RSS / DB / File Import Adapter。
+
+第三方工具可以替换、并存或 Ensemble；Canonical Dataset / Annotation Schema / Registry / Lineage 始终由平台掌握。
+
+## 34.11 Research Source Adapter 候选
+
+Technology Radar / Research Agent 可通过 Adapter 接入：
+
+- arXiv；
+- Semantic Scholar；
+- OpenReview；
+- Crossref / DOI metadata；
+- GitHub；
+- Hugging Face；
+- 官方项目与模型站点；
+- Future Research Source。
+
+每个外部研究资产必须保存版本、来源、抓取时间、代码 Commit / Release、License 和 Citation Metadata。
+
+## 34.12 Agent 角色逻辑隔离
+
+Agent Control Plane 至少逻辑区分：
+
+```text
+Planner
+Researcher
+Executor/Coordinator
+Judge/Evaluator
+Optimizer
+```
+
+不得由同一个逻辑角色同时完成：
+
+> 提方案 → 改规则 → 考试 → 批准自己上线。
+
+最终 Gate 仍由 Frozen Contract + Deterministic Evidence 决定。
+
+## 34.13 Production Data Retention / Privacy
+
+生产反馈用于持续优化，但原始业务内容不得默认无限期保存。
+
+必须定义：
+
+- raw request retention；
+- response retention；
+- prompt / output redaction；
+- PII / secret detection；
+- telemetry-only mode；
+- no-content-logging mode；
+- dataset promotion approval。
+
+从 Production Feedback 进入 Dataset 的任何数据必须重新经过 Source/Data Policy 与 Dataset Gate，不能自动把用户请求直接变成训练集。
+
+## 34.14 Plugin Configuration Schema
+
+Plugin Manifest 除 Capability 外，预留版本化 `config_schema`。
+
+后续 UI 可以根据 Schema 动态生成 Runtime / Training / Provider 的高级参数页，避免每增加一个框架就修改核心前端。
+
+UI 仍属于下一阶段设计，本节只冻结功能 Contract。
+
+## 34.15 成果申报材料包与提交边界
+
+Innovation & IP Workspace 除 Draft 外，还应能够形成：
+
+```text
+Software Copyright Filing Package
+Patent Filing Package
+Reproducibility / Evidence Package
+Official-format Export Adapter
+```
+
+包括后续官方格式/XML/表单导出的适配能力。
+
+但最终：
+
+- 权利人；
+- 作者/发明人；
+- 法律声明；
+- 保护范围；
+- 正式提交；
+- 数字签名；
+
+必须由授权人员确认执行，平台不得自主完成不可逆法律行为。
+
+## 34.16 本轮功能审计结论
+
+经本轮逐项对照，前述主架构与本节补遗共同覆盖此前功能设计讨论的一级和关键二级能力。
+
+后续若出现新的框架、模型、训练方法、数据工具、调度算法或研究工具，原则上应通过：
+
+```text
+Plugin / Adapter
++ Capability
++ Contract
++ Registry
++ Gate
+```
+
+扩展，而不新增第二套 Authority 或推翻核心领域模型。
+
+从本节开始，功能层面进入 **Freeze Candidate**；下一阶段转入模块 Contract 拆分与 UI / UX / Human-AI Interaction 设计。
+
