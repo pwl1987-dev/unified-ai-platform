@@ -5830,4 +5830,434 @@ Existing Runtime
 
 这条边界是后续工程实施的重要冻结条件。
 
+---
+
+# 56. Upstream / Dependency Risk Governance
+
+第三方依赖的主要风险不只来自技术变化，还来自许可证、商业策略、组织治理、人员、法律和供应链等人为因素。
+
+平台必须把“上游是否仍值得依赖”作为持续治理对象，而不是一次性选型结论。
+
+## 56.1 基本原则
+
+> **Every external dependency must have an exit path.**
+
+每一个关键外部依赖至少满足：
+
+```text
+Pinned Version
++ License Snapshot
++ Internal Mirror
++ Adapter Boundary
++ Owned Domain Model
++ Portable Data
++ Contract Tests
++ Replacement Plan
+```
+
+任何不满足上述条件、且会进入 Core Critical Path 的组件，不允许成为不可替代核心依赖。
+
+## 56.2 许可证与商业模式漂移
+
+需要持续监控：
+
+- Open Source → Source Available；
+- Permissive → Copyleft；
+- Free Commercial Use → Commercial License；
+- Community Feature → Enterprise-only；
+- Dual License Policy Change；
+- SaaS-only Feature；
+- Redistribution Restriction；
+- Managed-service Restriction；
+- Trademark / Branding Restriction；
+- New CLA / Contributor Terms。
+
+历史上已经出现过类似变化：HashiCorp 在 2023 年将多个产品未来版本从 MPL 2.0 转向 BSL 1.1；Redis 在 2024 年经历从 BSD-3-Clause 到 RSALv2 / SSPLv1 的许可变化，之后 Redis 8 又增加 AGPLv3 选项。citeturn983177search8turn983177search5
+
+对于已经按 Apache-2.0 获取的具体版本，Apache-2.0 本身明确授予 perpetual、worldwide、no-charge、royalty-free、irrevocable 的版权许可，因此上游未来改许可，并不会把那个已发布 Apache-2.0 版本“自动变成新许可证”；但新版本、补丁和后续功能可能不再沿用原许可。citeturn983177search0
+
+所以平台必须保存：
+
+```text
+source_revision
+release_date
+license_text_hash
+notice_snapshot
+dependency_lock
+artifact_hash
+```
+
+## 56.3 公司 / 组织层风险
+
+需要关注：
+
+- 公司被收购；
+- 项目出售给另一家公司；
+- 核心维护团队重组；
+- 商业目标改变；
+- VC / 收入压力导致 open-core 加速；
+- 项目进入维护模式；
+- 组织解散；
+- 基金会治理变化；
+- 社区版与企业版边界扩大。
+
+这些变化不一定当天导致故障，但会显著改变未来维护和许可风险。
+
+## 56.4 Key-person / Maintainer Risk
+
+开源项目可能高度依赖少数维护者。
+
+需要跟踪：
+
+- Bus Factor；
+- Core Maintainer 数量；
+- Release Approver 数量；
+- Commit Concentration；
+- Maintainer Inactivity；
+- 未处理 PR / Issue 增长；
+- Release Cadence；
+- Security Response Time。
+
+如果一个关键依赖长期只由 1～2 人实际维护，应提高风险等级并提前准备替代路线。
+
+## 56.5 Governance Capture / Community Fragmentation
+
+需要防止：
+
+- 项目治理被单一商业主体完全控制；
+- Community Edition 持续缩水；
+- 上游出现重大 Fork；
+- 原项目与社区 Fork 分裂；
+- 插件生态迁移到另一分支；
+- API / SDK 社区实际停止跟随官方版本。
+
+出现 Fork 时，平台应比较：
+
+```text
+Upstream A
+vs
+Community Fork B
+```
+
+而不是天然继续跟随原厂。
+
+## 56.6 Technical Rewrite / API Break Risk
+
+上游可能：
+
+- 大版本推倒重写；
+- 删除旧 API；
+- 更换数据库；
+- 更换插件协议；
+- 改变存储格式；
+- 重写权限体系；
+- 重构部署模型；
+- 强依赖 Kubernetes / SaaS。
+
+任何升级都必须作为 Candidate：
+
+```text
+New Upstream Version
+→ License Diff
+→ SBOM Diff
+→ API Contract Test
+→ Data Migration Test
+→ Security Test
+→ Shadow
+→ Gate
+→ Promote / Reject
+```
+
+生产禁止自动跟随 `latest`。
+
+## 56.7 Repository / Artifact Availability Risk
+
+需要防止：
+
+- GitHub 仓库删除；
+- Release 删除；
+- Tag 重写；
+- Force Push；
+- Container Image 被删；
+- PyPI / npm 包撤回；
+- Model Hub 权重撤回；
+- Dataset 下架；
+- CDN / 下载地址失效。
+
+关键依赖必须保留：
+
+```text
+Internal Git Mirror
+Internal OCI Mirror
+Internal Package Mirror
+Internal Model / Dataset Mirror
+Content Hash
+```
+
+做到“上游消失，当前生产版本仍可构建和恢复”。
+
+## 56.8 Supply-chain / Account Compromise
+
+人为风险还包括维护者账号或发布链被攻击：
+
+- Maintainer Account Takeover；
+- Malicious Release；
+- Dependency Confusion；
+- Typosquatting；
+- Compromised Package；
+- Build Pipeline Compromise；
+- Signing-key Compromise；
+- Malicious Contributor。
+
+因此新版本不能因为“来自官方仓库”就自动进入生产。
+
+必须：
+
+```text
+Source Verification
+→ Signature / Provenance
+→ SBOM
+→ Malware / Secret Scan
+→ Dependency Diff
+→ Quarantine
+→ Reproduction
+→ Gate
+```
+
+## 56.9 Model / Dataset Rights Risk
+
+模型和数据比普通软件更复杂。
+
+需要持续监控：
+
+- Model License Change；
+- Weight Takedown；
+- Dataset License Change；
+- Training-data Dispute；
+- Copyright Claim；
+- Privacy / PII Complaint；
+- Commercial-use Restriction；
+- Geographic Restriction；
+- Derivative-model Restriction；
+- Redistribution Restriction。
+
+平台必须能够执行：
+
+```text
+License Revoked / Policy Changed
+→ Identify Affected Assets
+→ Lineage Impact Analysis
+→ Stop New Deployment
+→ Quarantine
+→ Replacement / Retrain Plan
+```
+
+必要时追踪：
+
+```text
+Dataset
+→ Training Run
+→ Derived Model
+→ Quantized Model
+→ Deployment
+```
+
+完成影响传播。
+
+## 56.10 Cloud / Provider Business Risk
+
+即使 API 技术稳定，也可能发生：
+
+- Price Increase；
+- Free Tier Removal；
+- Quota Reduction；
+- Region Removal；
+- Model Deprecation；
+- API Sunset；
+- Account Policy Change；
+- Payment Requirement；
+- ToS Change；
+- Data-retention Policy Change；
+- Provider Exit from Market。
+
+因此外部 Provider 只作为可替换 Capacity / Capability Source。
+
+业务永远调用我们的 Gateway，不允许直接把业务代码绑定到单一 Provider。
+
+## 56.11 Security Support / EOL Risk
+
+上游可能：
+
+- 停止安全补丁；
+- 结束 LTS；
+- 停止某个 Python / CUDA / OS 版本；
+- 不再修复 CVE；
+- 新安全补丁只进入商业版。
+
+Environment Registry 必须记录：
+
+```text
+supported_until
+security_support
+eol_date
+replacement_candidate
+```
+
+达到 EOL 前提前触发迁移实验。
+
+## 56.12 Trademark / Branding Risk
+
+软件代码可用，不代表品牌可以自由使用。
+
+UI、产品名称和对外宣传不得依赖第三方 Trademark 作为自己的品牌。
+
+因此我们自己的：
+
+- 产品名称；
+- Logo；
+- UI；
+- Domain；
+- API Namespace；
+
+必须独立。
+
+第三方名称仅作为“Backend / Integration / Adapter”展示。
+
+## 56.13 Upstream Risk Registry
+
+每个关键依赖建立持续风险记录：
+
+```yaml
+upstream:
+  name: ...
+  revision: ...
+  license: ...
+  license_hash: ...
+
+ownership:
+  organization: ...
+  foundation_backed: ...
+  bus_factor: ...
+
+health:
+  last_release: ...
+  release_cadence: ...
+  active_maintainers: ...
+  security_response: ...
+
+risk:
+  license_drift: ...
+  commercial_shift: ...
+  abandonment: ...
+  api_break: ...
+  supply_chain: ...
+  provider_lockin: ...
+
+exit:
+  replacement: ...
+  internal_mirror: ...
+  export_ready: ...
+  migration_tested: ...
+```
+
+## 56.14 风险触发动作
+
+建议风险状态：
+
+```text
+GREEN
+YELLOW
+ORANGE
+RED
+```
+
+含义：
+
+```text
+GREEN
+正常跟踪
+
+YELLOW
+出现治理 / 许可 / 维护趋势变化，停止无条件升级
+
+ORANGE
+启动替代方案验证，冻结重大新依赖
+
+RED
+停止升级 / 停止新部署，执行 Fork / Replace / Migrate
+```
+
+## 56.15 Upstream Independence Gate
+
+任何关键第三方组件进入平台前，必须回答：
+
+```text
+如果它明天：
+- 改许可证
+- 被收购
+- 停更
+- 关闭仓库
+- 删除镜像
+- 涨价
+- API 废弃
+- 推倒重写
+- 把功能移到 Enterprise
+
+我们能否继续运行当前版本？
+能否重新构建？
+能否导出数据？
+能否在合理成本内替换？
+```
+
+四项中任何关键答案为“不能”，则不能进入 Core Critical Path。
+
+---
+
+# 57. Dependency Sovereignty Principle
+
+平台对第三方依赖的最终原则：
+
+> **Use upstream capability, never surrender platform sovereignty.**
+
+可以复用上游：
+
+- 代码；
+- Runtime；
+- Model Hub；
+- Training Framework；
+- Serving Engine；
+- Gateway；
+- Search / Vector Engine；
+- Workflow / Message Backend。
+
+但必须始终自己掌握：
+
+```text
+Northbound Contract
+Domain Model
+Asset Metadata
+Critical Data
+Authority
+Policy
+Gate
+Security
+Lineage
+Identity
+Human Approval
+Exit Path
+```
+
+这样，即使任何上游因人为或商业原因发生根本变化，影响范围也应被限制在：
+
+```text
+Adapter
++ Migration
+```
+
+而不是：
+
+```text
+Whole Platform Rewrite
+```
+
 
