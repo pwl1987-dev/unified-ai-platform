@@ -1,0 +1,42 @@
+{"session": "sticky-1", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 576.634, "upstream_status": 200, "ts": 1790292705.5203}
+{"session": "sticky-1", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 877.66, "upstream_status": 200, "ts": 1790292706.5993}
+{"session": "sticky-1", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 620.695, "upstream_status": 200, "ts": 1790292707.4212}
+{"session": "sticky-1", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 562.736, "upstream_status": 200, "ts": 1790292708.1849}
+{"session": "sticky-2", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 499.078, "upstream_status": 200, "ts": 1790292708.885}
+{"session": "sticky-2", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 829.928, "upstream_status": 200, "ts": 1790292709.9159}
+{"session": "sticky-2", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 596.79, "upstream_status": 200, "ts": 1790292710.7136}
+{"session": "sticky-2", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 562.419, "upstream_status": 200, "ts": 1790292711.477}
+{"session": "fresh-1", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 543.999, "upstream_status": 200, "ts": 1790292712.222}
+{"session": "fresh-2", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 544.009, "upstream_status": 200, "ts": 1790292712.7667}
+{"session": "fresh-3", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 540.034, "upstream_status": 200, "ts": 1790292713.3074}
+{"session": "ovh-1", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 2.888, "upstream_status": 200, "ts": 1790292732.964}
+{"session": "ovh-2", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "dispatch_ms": 2.867, "upstream_status": 200, "ts": 1790292734.2203}
+{"backend": "tp1", "event": "BACKEND_DOWN", "ts": 1790293343.0956}
+{"backend": "tp1", "event": "BACKEND_RECOVERED", "ts": 1790293555.4735}
+{"backend": "tp1", "event": "BACKEND_DOWN", "ts": 1790293620.6015}
+{"backend": "tp1", "event": "BACKEND_RECOVERED", "ts": 1790294194.6068}
+{"session": "dualA", "backend": "tp2", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28244, "dispatch_ms": 47.055, "upstream_status": 200, "ts": 1790294261.1854}
+{"session": "dualB", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28244, "dispatch_ms": 80.134, "upstream_status": 200, "ts": 1790294261.2155}
+{"session": "s2", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 4.635, "upstream_status": 200, "ts": 1790294286.719}
+{"session": "s3", "backend": "tp2", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.609, "upstream_status": 200, "ts": 1790294286.721}
+{"session": "s1", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1064, "dispatch_ms": 3.406, "upstream_status": 200, "ts": 1790294286.7258}
+{"session": "long", "backend": "tp2", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.386, "upstream_status": 200, "ts": 1790294286.9173}
+{"session": "fo-0", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.753, "upstream_status": 200, "ts": 1790294359.2319}
+{"session": "fo-1", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.284, "upstream_status": 200, "ts": 1790294360.5189}
+{"session": "fo-2", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 2.857, "upstream_status": 200, "ts": 1790294361.7778}
+{"session": "fo-3", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 2.909, "upstream_status": 200, "ts": 1790294363.039}
+{"session": "fo-4", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 2.769, "upstream_status": 200, "ts": 1790294364.2923}
+{"session": "fo-5", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.993, "upstream_status": 200, "ts": 1790294365.5552}
+{"session": "fo-6", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.392, "upstream_status": 200, "ts": 1790294366.805}
+{"session": "fo-7", "backend": "tp1", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.207, "upstream_status": 200, "ts": 1790294368.068}
+{"session": "fo-0", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.358, "upstream_status": 200, "ts": 1790294379.3225}
+{"session": "fo-1", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.908, "upstream_status": 200, "ts": 1790294380.6055}
+{"session": "fo-2", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.076, "upstream_status": 200, "ts": 1790294381.8679}
+{"session": "fo-3", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "error": "ClientConnectorError(ConnectionKey(host='127.0.0.1', port=19713, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None, server_hostname=None), ConnectionRefusedError(111, \"Conne", "ts": 1790294383.134}
+{"session": "fo-4", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "error": "ClientConnectorError(ConnectionKey(host='127.0.0.1', port=19713, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None, server_hostname=None), ConnectionRefusedError(111, \"Conne", "ts": 1790294383.7486}
+{"session": "fo-5", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "error": "ClientConnectorError(ConnectionKey(host='127.0.0.1', port=19713, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None, server_hostname=None), ConnectionRefusedError(111, \"Conne", "ts": 1790294384.3059}
+{"session": "fo-6", "backend": "tp1", "reason": "STICKY_HIT", "path": "/v1/chat/completions", "error": "ClientConnectorError(ConnectionKey(host='127.0.0.1', port=19713, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None, server_hostname=None), ConnectionRefusedError(111, \"Conne", "ts": 1790294384.8199}
+{"backend": "tp1", "event": "BACKEND_DOWN", "ts": 1790294385.3185}
+{"session": "fo-7", "backend": "tp2", "reason": "FAILOVER_REBIND", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 3.694, "upstream_status": 200, "ts": 1790294385.3438}
+{"session": "fo-8", "backend": "tp2", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 2.956, "upstream_status": 200, "ts": 1790294386.4626}
+{"session": "fo-9", "backend": "tp2", "reason": "STICKY_NEW", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 680, "dispatch_ms": 2.737, "upstream_status": 200, "ts": 1790294387.5624}

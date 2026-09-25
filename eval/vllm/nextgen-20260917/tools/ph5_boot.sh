@@ -44,7 +44,7 @@ TARGET=/data/models/Qwen3.8-27B-coding-v1.1-W4A16-AutoRound/merged-bf16-w4g128
 DRAFT=/data/sandbox/vllm-cu130-qual-20260915/draft-recal-readable-20260915
 
 # ---- Phase05 授权卡集 Gate（2026-09-25 巡检实况；GPU0/1 生产、GPU2 rpg-bakeoff、GPU5/7 外围 —— 零触碰）----
-AUTHORIZED_UUIDS="GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e GPU-30776c79-cd65-60d6-4b56-69c9b6979449"
+AUTHORIZED_UUIDS="GPU-41a1986d-e745-9e40-c520-09490081fd44 GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e GPU-30776c79-cd65-60d6-4b56-69c9b6979449"
 IFS=',' read -ra _U <<< "$UUIDS"
 [[ ${#_U[@]} -eq $TP ]] || { echo "--uuids 数量须等于 tp=$TP"; exit 9; }
 for u in "${_U[@]}"; do

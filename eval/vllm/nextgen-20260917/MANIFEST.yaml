@@ -299,10 +299,10 @@ phase05:
   launcher: tools/ph5_boot.sh（boot029_nextgen.sh Phase05 扩展：显式 --uuids + TP4 + 扩授权集）
   gpu_authorization:
     inventory_utc: "2026-09-25（P0B 巡检）"
-    authorized_free: {GPU3: "5fa853cd-219a…", GPU4: "aab40825-81bd…", GPU6: "30776c79-cd65…"}
-    external_occupied: {GPU2: "rpg-bakeoff-llama-humanlike-q4-128k 容器（外部任务 up 3d20h，零触碰）", GPU5: "宿主会话 vLLM（外围 embed/rerank，零触碰）", GPU7: "docker vLLM（外围，零触碰）"}
+    authorized_free: {GPU2: "41a1986d-e745…（2026-09-25 08:0x rpg-bakeoff 退出后释放，并入授权集）", GPU3: "5fa853cd-219a…", GPU4: "aab40825-81bd…", GPU6: "30776c79-cd65…"}
+    external_occupied: {GPU5: "宿主会话 vLLM（外围 embed/rerank，零触碰）", GPU7: "docker vLLM（外围，零触碰）"}
     production: {GPU0: "/app/llama-server 生产", GPU1: "/app/llama-server 生产", ":8000": "qwen27b-lb 只读 health=200"}
-    four_card_status: "空闲 3/4——四卡臂暂缺 1 卡；按合同先完成全部非 GPU 工作+3 卡内 preflight，周期复查 GPU2/5/7；全非 GPU 完成仍缺卡才报硬阻塞"
+    four_card_status: "2026-09-25 08:0x 四卡齐备（GPU2/3/4/6）——正式 T1-T4 矩阵开跑；拓扑-卡位映射：T2=对(3,4)+(2,6)、T3=TP2(3,4)+TP1(2)+TP1(6)、T1=TP1×(2,3,4,6)、T4=TP4(2,3,4,6)"
   ports: {router: 19710, backends: "19711-19714", avoid: "[8000, 19622-19625, 19637, 19649]"}
   energy: 整机（4 授权 GPU + CPU RAPL 可读时；boot/serving 分账；J/output-token 官方）
   debt_in: {MS8-C8: DO_NOW, TP1-C4: "DO_NOW(T1 direct 参照)", FP8-KV: DEFERRED_CONDITIONAL, tenant_churn: Phase06}
