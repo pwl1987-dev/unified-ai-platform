@@ -1,0 +1,135 @@
+{
+ "scenario": "mix",
+ "policy": "role",
+ "api": "http://127.0.0.1:19710/v1",
+ "wall_s": 19.8,
+ "per_role": {
+  "short": {
+   "requests": 12,
+   "ok": 12,
+   "completion_rate": 1.0,
+   "ttft_p50": 0.3299,
+   "ttft_p95": 0.968,
+   "ttft_max": 0.968,
+   "tpot_med": 0.038849999999999996,
+   "sum_output_tokens": 358,
+   "wall_med": 0.36819999999999997,
+   "errors": {}
+  },
+  "long": {
+   "requests": 3,
+   "ok": 3,
+   "completion_rate": 1.0,
+   "ttft_p50": 0.34,
+   "ttft_p95": 0.9181,
+   "ttft_max": 0.9181,
+   "tpot_med": 0.0404,
+   "sum_output_tokens": 94,
+   "wall_med": 0.3804,
+   "errors": {}
+  },
+  "batch": {
+   "requests": 8,
+   "ok": 8,
+   "completion_rate": 1.0,
+   "ttft_p50": 0.8064,
+   "ttft_p95": 0.9658,
+   "ttft_max": 0.9658,
+   "tpot_med": 0.047950000000000007,
+   "sum_output_tokens": 710,
+   "wall_med": 4.82355,
+   "errors": {}
+  }
+ },
+ "per_session": {
+  "batch-b1-2": {
+   "requests": 1,
+   "tok": 90,
+   "wall": 4.8075,
+   "role": "batch",
+   "goodput_tok_s": 18.7207
+  },
+  "batch-b1-3": {
+   "requests": 1,
+   "tok": 87,
+   "wall": 4.9011,
+   "role": "batch",
+   "goodput_tok_s": 17.7511
+  },
+  "batch-b1-0": {
+   "requests": 1,
+   "tok": 93,
+   "wall": 4.9435,
+   "role": "batch",
+   "goodput_tok_s": 18.8126
+  },
+  "batch-b1-1": {
+   "requests": 1,
+   "tok": 88,
+   "wall": 4.9894,
+   "role": "batch",
+   "goodput_tok_s": 17.6374
+  },
+  "long-1": {
+   "requests": 3,
+   "tok": 94,
+   "wall": 5.8898,
+   "role": "long",
+   "goodput_tok_s": 15.9598
+  },
+  "short-1": {
+   "requests": 6,
+   "tok": 180,
+   "wall": 8.4854,
+   "role": "short",
+   "goodput_tok_s": 21.2129
+  },
+  "short-2": {
+   "requests": 6,
+   "tok": 178,
+   "wall": 8.498099999999999,
+   "role": "short",
+   "goodput_tok_s": 20.9459
+  },
+  "batch-b2-3": {
+   "requests": 1,
+   "tok": 86,
+   "wall": 4.7156,
+   "role": "batch",
+   "goodput_tok_s": 18.2373
+  },
+  "batch-b2-0": {
+   "requests": 1,
+   "tok": 91,
+   "wall": 4.8146,
+   "role": "batch",
+   "goodput_tok_s": 18.9008
+  },
+  "batch-b2-2": {
+   "requests": 1,
+   "tok": 87,
+   "wall": 4.8233,
+   "role": "batch",
+   "goodput_tok_s": 18.0374
+  },
+  "batch-b2-1": {
+   "requests": 1,
+   "tok": 88,
+   "wall": 4.8238,
+   "role": "batch",
+   "goodput_tok_s": 18.2429
+  }
+ },
+ "fairness_jain_goodput": 0.9943,
+ "aggregate_tok_s": 116.119,
+ "short_ttft_bound_s": 5.0,
+ "failure_window_s": 0.0,
+ "context_policy": {
+  "AG-SHORT": "history-accumulated",
+  "AG-LONG-p32k": "history-accumulated",
+  "AG-LONG-p128kt-hog": "stable-prefix-per-turn (doc stream, single-turn assembly <=131072)",
+  "AG-BATCH": "single-turn per task"
+ },
+ "seed": 4242,
+ "temperature": 0
+}

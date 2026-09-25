@@ -150,9 +150,12 @@ def judge_f2(iso: dict, iso_blind: dict | None) -> dict:
             (lng["ok"] + lng["errors"].get("EVICTED", 0)) / lng["requests"] == 1.0),
         "jain_short_ge_min": (iso["fairness_jain_goodput"] or 0) >= F2_JAIN_MIN,
         "failure_window_zero": iso["failure_window_s"] == 0,
-        "churn_all_complete": all(v["requests"] == v["ok"]
+        "churn_all_complete": all(v.get("requests") == v.get("ok")
+                                  and (v.get("ok") or 0) > 0
                                   for k, v in iso["per_session"].items()
-                                  if k.startswith("churn-")),
+                                  if k.startswith("churn-"))
+                                  and any(k.startswith("churn-")
+                                          for k in iso["per_session"]),
         "session_map_no_leak": all(v == 0 for v in (iso.get("backends_inflight_after") or {}).values()),
     }
     ev = iso.get("evict") or {}
@@ -250,21 +253,29 @@ def main() -> int:
                          ensure_ascii=False, indent=1))
         return 0 if not bad else 1
     if args.emit:
+        # 实际布局：mix/isolation 场景统一落 PH6-P1（ph6_p1_run 单目录）；P3 快照在 PH6-P3
         f1a = _load(os.path.join(ST, "PH6-P1", "mix-blind-r2", "cell-summary.json"))
         f1b = _load(os.path.join(ST, "PH6-P1", "mix-role-r2", "cell-summary.json"))
         placement = placement_audit(os.path.join(ST, "PH6-P1", "routes-role.jsonl"))
-        f2 = judge_f2(_load(os.path.join(ST, "PH6-P2", "isolation-role", "cell-summary.json")),
-                      _load(os.path.join(ST, "PH6-P2", "isolation-blind", "cell-summary.json")))
-        t2_boots = {b: sorted(glob.glob(os.path.join(
-            ST, "PH6-P3", f"dual-T2-{b}-R*", "cell-summary.json")))
-            for b in ("B01", "B02", "B03")}
-        t1_ctrl = sorted(glob.glob(os.path.join(
-            ST, "PH6-P3", "dual-T1-B04-R*", "cell-summary.json")))
+        f2 = judge_f2(_load(os.path.join(ST, "PH6-P1", "isolation-role-r2", "cell-summary.json")),
+                      _load(os.path.join(ST, "PH6-P1", "isolation-blind-r2", "cell-summary.json")))
+        # F3 取数：每 boot 只取 R1（冷前缀=PH5 每 boot 单次执行同形制；R2/R3 为
+        # 同 prompt 前缀缓存热化观测，单独报告不入 verdict——形制勘误见 PH6-P3 说明）
+        t2_boots = {b: [os.path.join(ST, "PH6-P3", f"dual-T2-{b}-R1", "cell-summary.json")]
+                    for b in ("B01", "B02", "B03")}
+        t1_ctrl = [os.path.join(ST, "PH6-P3", "dual-T1-B04-R1", "cell-summary.json")]
+        f3 = judge_f3(t2_boots, t1_ctrl)
+        # 辅助：warm reps（前缀缓存稳态）——供报告，不入判定
+        for b in ("B01", "B02", "B03"):
+            warm = sorted(glob.glob(os.path.join(ST, "PH6-P3", f"dual-T2-{b}-R[23]",
+                                                 "cell-summary.json")))
+            vals = [dual_sess_decode(_load(p)) for p in warm]
+            f3.setdefault("aux_prefix_warm_reps", {})[b] = vals
         verdict = {
             "gate_f": {
                 "F1_role_routing": judge_f1(f1a, f1b, placement),
                 "F2_tenant_isolation": f2,
-                "F3_t2_3boot": judge_f3(t2_boots, t1_ctrl),
+                "F3_t2_3boot": f3,
             },
             "epsilon_band": EPS,
             "inputs": ["raw/staging/PH6-P1", "raw/staging/PH6-P2", "raw/staging/PH6-P3"],

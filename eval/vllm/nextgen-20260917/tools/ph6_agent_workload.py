@@ -65,7 +65,12 @@ def _chat_stream_sync(api: str, messages: list, sid: str, role: str, max_tokens:
                       ev: Events, timeout: float, turn: int) -> dict:
     """阻塞式单请求（跑在线程池）：真 TTFT（首个 content delta）/完成/输出数/错误分类。"""
     body = {"model": "qwen3.8-27b", "messages": messages, "max_tokens": max_tokens,
-            "temperature": 0, "seed": SEED, "stream": True}
+            "temperature": 0, "seed": SEED, "stream": True,
+            "stream_options": {"include_usage": True},
+            # 战役标准形制（bench_nextgen 同款）：Qwen3.8 思考模板关闭——
+            # ① 与 Phase 02-05 全部认证 cell 同语义；② p128kt 级装配余量依赖它
+            # （思考模板 +~45 tok 会使 130945+128 超 131072 恰 1 token → 引擎 400）
+            "chat_template_kwargs": {"enable_thinking": False}}
     req = urllib.request.Request(
         api + "/chat/completions", data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json", "X-Session-Id": sid, "X-Role": role})
@@ -113,8 +118,9 @@ def _chat_stream_sync(api: str, messages: list, sid: str, role: str, max_tokens:
             errbody = e.read().decode()[:200]
         except Exception:
             pass
-        cls = "EVICTED" if "SESSION_EVICTED" in errbody else \
-            ("ROUTER_4XX" if 400 <= e.code < 500 else "HTTP_5XX")
+        cls = "EVICTED" if "SESSION_EVICTED" in errbody else (
+            "CAPACITY_LIMIT" if "maximum context length" in errbody else
+            ("ROUTER_4XX" if 400 <= e.code < 500 else "HTTP_5XX"))
         rec = dict(sid=sid, role=role, turn=turn, ok=False, error_class=cls,
                    http_status=e.code, err_body=errbody,
                    ttft_s=None, wall_s=round(time.perf_counter() - t0, 4),
@@ -208,7 +214,8 @@ async def run_mix(args) -> int:
     ]
     await asyncio.gather(*tasks)
     ev.emit(scenario="mix", event="END", wall_s=round(time.time() - t0, 1))
-    return summarize(args, t0)
+    summarize(args, t0)
+    return 0
 
 
 async def run_isolation(args) -> int:
@@ -296,12 +303,14 @@ def summarize(args, t0, evict=None) -> dict:
             "errors": {c: sum(1 for e in rs if e.get("error_class") == c)
                        for c in {e.get("error_class") for e in rs if not e["ok"]}},
         }
-    # per-session goodput + Jain
+    # per-session goodput + Jain；另记全量会话成败账（churn 完成性判据需失败可见）
     sess = {}
     for e in reqs:
+        s = sess.setdefault(e["sid"], {"requests": 0, "ok": 0, "tok": 0,
+                                       "wall": 0.0, "role": e["role"]})
+        s["requests"] += 1
         if e["ok"]:
-            s = sess.setdefault(e["sid"], {"requests": 0, "tok": 0, "wall": 0.0, "role": e["role"]})
-            s["requests"] += 1
+            s["ok"] += 1
             s["tok"] += e.get("out_tokens") or 0
             s["wall"] += e.get("wall_s") or 0
     for s in sess.values():
