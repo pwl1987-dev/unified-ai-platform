@@ -530,14 +530,259 @@ LiteLLM OSS / Alternatives
 
 ---
 
-# 10. Deployment Baseline
+# 10. Virtualization & Host Layer
+
+虚拟化必须作为正式一级基础设施层，而不是隐藏在 Deployment 细节里。
+
+## 10.1 默认虚拟化技术
+
+第一阶段默认：
+
+```text
+KVM
++ QEMU
++ libvirt
+```
+
+原因：
+
+- Linux 原生；
+- 成熟稳定；
+- 无强制商业控制面；
+- API / CLI 完整；
+- 适合 Headless Server；
+- 支持 PCIe / GPU Passthrough；
+- 可以通过 Adapter 与其他虚拟化平台并存。
+
+平台不直接绑定 libvirt 对象，而定义：
+
+```text
+VirtualizationAdapter
+├── LibvirtAdapter
+├── VMware / vSphere Adapter
+├── Incus Adapter
+├── Proxmox Adapter
+└── Future Hypervisor Adapter
+```
+
+## 10.2 完整运行层级
+
+平台允许：
+
+```text
+Physical Hardware
+        ↓
+Virtualization
+        ↓
+Guest OS
+        ↓
+OCI Container
+        ↓
+AI Runtime / Worker
+        ↓
+Model / Capability
+```
+
+但这不是强制每个工作负载都经过所有层。
+
+允许两条主要路径：
+
+### Bare-metal Path
+
+```text
+Host Linux
+→ Container
+→ Runtime
+→ Model
+```
+
+适合：
+
+- 已验证生产推理；
+- 极致性能；
+- 稳定 Driver / CUDA；
+- 可信内部 Workload。
+
+### VM-isolated Path
+
+```text
+Host Linux
+→ VM
+→ Guest Linux
+→ Container
+→ Runtime
+→ Workload
+```
+
+适合：
+
+- 未知第三方代码；
+- 不同 Kernel / Driver 要求；
+- CUDA / Driver 冲突；
+- 高风险模型或工具；
+- 强隔离实验；
+- Reproduction；
+- Quarantine。
+
+## 10.3 GPU Virtualization Policy
+
+对于 RTX 4090 等消费级 GPU，默认按：
+
+```text
+Whole-GPU PCI Passthrough
+VFIO / IOMMU
+```
+
+处理 VM GPU 隔离。
+
+不得把 MIG / vGPU 视为通用可用能力。
+
+GPU 分配进入 Resource Contract：
+
+```text
+GPU
+→ Host Ownership
+→ Drain
+→ Detach
+→ VM Assignment
+→ Guest Probe
+→ Workload
+→ Release
+→ Host Reattach / Next Assignment
+```
+
+整个过程必须有：
+
+- Lease；
+- Fencing；
+- Health Check；
+- Rollback；
+- Evidence。
+
+## 10.4 VM Image / Provisioning
+
+VM 作为版本化 Environment Asset 管理。
+
+建议：
+
+```text
+Cloud Image
++ cloud-init
++ Immutable Base Image
++ Runtime Overlay
+```
+
+每个 VM Image 至少记录：
+
+- OS；
+- Kernel；
+- Image Hash；
+- Source；
+- Build Revision；
+- Driver Compatibility；
+- CUDA Compatibility；
+- Security Patch Level；
+- Created At；
+- Parent Image；
+- Environment Profile。
+
+不依赖人工“点出来”的不可复现 VM。
+
+## 10.5 Guest Integration
+
+优先：
+
+- cloud-init；
+- QEMU Guest Agent；
+- SSH / Workload Agent；
+- Metadata / GuestInfo Adapter（特定平台需要时）。
+
+平台通过自己的 VM Contract 管理：
+
+```text
+Create
+Start
+Stop
+Snapshot
+Clone
+Attach GPU
+Detach GPU
+Inspect
+Health
+Destroy
+```
+
+而不是把业务逻辑绑定到某个 Hypervisor API。
+
+## 10.6 VM Classes
+
+延续功能架构的隔离分类：
+
+```text
+STABLE
+CANDIDATE
+EXPERIMENTAL
+QUARANTINE
+```
+
+其中 Quarantine VM 默认：
+
+- Restricted Egress；
+- No Production Secret；
+- Separate Storage Namespace；
+- Restricted Tool Scope；
+- Full Audit。
+
+## 10.7 VM 与 Container 的职责边界
+
+默认判断：
+
+```text
+Kernel / Driver / Trust Boundary 不同
+→ VM
+
+Python / CUDA userspace / Framework 不同
+→ Container
+
+Model / LoRA / Quantization 不同
+→ Deployment Artifact
+
+Hyperparameter 不同
+→ Experiment
+```
+
+避免为了每个模型创建 VM，也避免把需要强隔离的未知代码硬塞进共享 Container。
+
+## 10.8 VM Control Plane
+
+Go Control Plane 增加：
+
+```text
+VM Inventory
+Image Registry
+Placement
+Lifecycle
+GPU Passthrough Coordination
+Guest Health
+Snapshot / Restore Metadata
+Isolation Policy
+```
+
+实际执行通过 Virtualization Adapter 完成。
+
+---
+
+# 11. Deployment Baseline
 
 Stage-1 不引入 Kubernetes 作为前提。
 
 采用：
 
 ```text
+Physical / VM Host
+        ↓
 OCI Container
+        ↓
 Docker Compose / Dev & Bootstrap
 containerd + NVIDIA CDI / Production Candidate
 systemd / Supervisor for Core Control Services where appropriate
@@ -553,7 +798,7 @@ systemd / Supervisor for Core Control Services where appropriate
 
 ---
 
-# 11. Repository Structure Candidate
+# 12. Repository Structure Candidate
 
 建议在当前阶段保持一个主要工程仓，避免过早拆成大量 repo：
 
@@ -599,7 +844,7 @@ docs/
 
 ---
 
-# 12. Version Policy
+# 13. Version Policy
 
 冻结的是技术族和 Contract，不永久冻结 minor 版本。
 
@@ -625,7 +870,7 @@ automatic major upgrade
 
 ---
 
-# 13. 明确不选
+# 14. 明确不选
 
 第一阶段默认不采用：
 
@@ -642,8 +887,8 @@ automatic major upgrade
 
 ---
 
-# 14. 技术栈一句话
+# 15. 技术栈一句话
 
-> **React/TypeScript 做自有 UI，Go 做稳定可替换的 Control Plane，Python 承载 AI/ML 生态；PostgreSQL 保存平台主状态，S3 保存资产，NATS 负责事件与异步，OpenAPI/JSON Schema 负责 Contract，所有第三方项目都留在 Adapter 后面。**
+> **React/TypeScript 做自有 UI，Go 做稳定可替换的 Control Plane，Python 承载 AI/ML 生态；KVM/QEMU/libvirt 提供默认 VM 隔离层，OCI/containerd 提供容器层，PostgreSQL 保存平台主状态，S3 保存资产，NATS 负责事件与异步，OpenAPI/JSON Schema 负责 Contract，所有第三方实现都留在 Adapter 后面。**
 
 这套技术栈与 Functional Architecture 的“Universal Replaceability Principle”一致。
