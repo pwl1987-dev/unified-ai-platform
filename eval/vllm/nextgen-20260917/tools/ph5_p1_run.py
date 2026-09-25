@@ -166,7 +166,7 @@ def main() -> int:
                 return 11
         arm["t_cells_start"] = time.time()   # boot/serving 能量分账界
         # ---- router ----
-        rargs = ["setsid", PY, os.path.join(HERE, "ph5_router.py")]
+        rargs = [PY, os.path.join(HERE, "ph5_router.py")]
         for tag, port, gpus, mlen, ms in spec["backends"]:
             rargs += ["--backend", f"{tag}=http://127.0.0.1:{port}|{mlen}"]
         RLOG = f"{SBX}/ph5-router-routes-{T}.jsonl"
@@ -174,6 +174,15 @@ def main() -> int:
         router = subprocess.Popen(rargs, stdout=open(f"{SBX}/ph5-router-{T}.log", "w"),
                                   stderr=subprocess.STDOUT, start_new_session=True)
         time.sleep(3)
+        if router.poll() is not None:
+            log(f"[ABORT] router 启动失败（rc={router.returncode}，端口被占？见 ph5-router-{T}.log）")
+            arm["boot"] = "ROUTER_FAILED"
+            json.dump(arm, open(f"{SBX}/ph5-{T}-arm-summary.json", "w"), indent=1, ensure_ascii=False)
+            return 12
+        hz = sh(["curl", "-sf", "--max-time", "3", f"http://127.0.0.1:{ROUTER_PORT}/healthz"])
+        if hz.returncode != 0:
+            log("[ABORT] router /healthz 不通")
+            return 12
         RAPI = f"http://127.0.0.1:{ROUTER_PORT}/v1"
         first = spec["backends"][0]
         ftag, fport, fgpus, fmlen, fms = first
@@ -266,8 +275,17 @@ def main() -> int:
         cell("sticky", lambda: workload_cell("sticky", os.path.join(ST, f"sticky-{T}"),
              f"PH5-P1-{T}-STICKY", ["--turns", "4", "--sticky-sessions", "2", "--parallel-new", "3"], rlog=RLOG))
         if len(spec["backends"]) > 1:
-            last = spec["backends"][-1]
-            kpid = int(open(f"{SBX}/log-ph5-{last[0]}/server.pid").read().strip())
+            counts = {}
+            for line in open(RLOG):
+                try:
+                    counts[json.loads(line).get("backend")] = \
+                        counts.get(json.loads(line).get("backend"), 0) + 1
+                except Exception:
+                    pass
+            victim = max(counts, key=counts.get) if counts else spec["backends"][0][0]
+            victim = victim if victim in [b[0] for b in spec["backends"]] else spec["backends"][0][0]
+            kpid = int(open(f"{SBX}/log-ph5-{victim}/server.pid").read().strip())
+            arm["failover_victim"] = victim
             cell("failover", lambda: workload_cell("failover", os.path.join(ST, f"failover-{T}"),
                  f"PH5-P1-{T}-FAILOVER", ["--kill-pid", str(kpid), "--kill-after-s", "3", "--max-runs", "10"], rlog=RLOG))
         else:
