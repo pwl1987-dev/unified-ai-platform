@@ -114,7 +114,7 @@ def workload_cell(scenario, out_dir, exp, extra: list) -> int:
     os.makedirs(out_dir, exist_ok=True)
     cmd = [PY, os.path.join(HERE, "ph5_workload.py"), "--scenario", scenario,
            "--api", f"http://127.0.0.1:{ROUTER_PORT}/v1", "--experiment-id", exp,
-           "--out-dir", out_dir, "--route-log", f"{SBX}/ph5-router-routes.jsonl"] + extra
+           "--out-dir", out_dir, "--route-log", RLOG] + extra
     r = sh(cmd, timeout=3600)
     log(f"[scene] {exp} rc={r.returncode}")
     return r.returncode
@@ -140,8 +140,10 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--topology", choices=list(TOPOS), required=True)
     ap.add_argument("--skip-boot", action="store_true", help="backends 已在线（复用）")
+    ap.add_argument("--only", default="", help="逗号分隔 cell 名子集（补测模式，其余跳过）")
     args = ap.parse_args()
     T = args.topology
+    ONLY = set(x for x in args.only.split(",") if x)
     spec = TOPOS[T]
     arm = {"topology": T, "t_boot_start": time.time(), "cells": {}, "capacity_limit": []}
     auth4 = ",".join(UUID[g] for g in (2, 3, 4, 6))
@@ -167,7 +169,8 @@ def main() -> int:
         rargs = ["setsid", PY, os.path.join(HERE, "ph5_router.py")]
         for tag, port, gpus, mlen, ms in spec["backends"]:
             rargs += ["--backend", f"{tag}=http://127.0.0.1:{port}|{mlen}"]
-        rargs += ["--port", str(ROUTER_PORT), "--route-log", f"{SBX}/ph5-router-routes.jsonl"]
+        RLOG = f"{SBX}/ph5-router-routes-{T}.jsonl"
+        rargs += ["--port", str(ROUTER_PORT), "--route-log", RLOG]
         router = subprocess.Popen(rargs, stdout=open(f"{SBX}/ph5-router-{T}.log", "w"),
                                   stderr=subprocess.STDOUT, start_new_session=True)
         time.sleep(3)
@@ -179,6 +182,9 @@ def main() -> int:
         long_capable = fmlen >= 131072
 
         def cell(name, fn):
+            if ONLY and name not in ONLY:
+                arm["cells"][name] = {"rc": "SKIPPED_FIXUP"}
+                return
             t0 = time.time()
             arm["cells"][name] = {"rc": fn(), "wall_s": round(time.time() - t0, 1)}
 
@@ -242,7 +248,7 @@ def main() -> int:
             arm["capacity_limit"].append("dual_2xp128kt")
         cell("four_4xp32k", lambda: workload_cell("multi", os.path.join(ST, f"four-{T}"),
              f"PH5-P1-{T}-FOUR-P32K",
-             ["--sess"] + sum([[f"f{i}:p32k:256"] for i in range(4)], [])))
+             sum([["--sess", f"f{i}:p32k:256"] for i in range(4)], [])))
         for fx, mt in (("d565", 512), ("p4k", 256)):
             for cc in (4, 8, 16):
                 mk = "f512" if fx == "d565" else "ns"

@@ -1,0 +1,57 @@
+{
+ "experiment_id": "PH5-P1-T2-FAILOVER-fo7",
+ "status": "VALID_PASS",
+ "evidence_class": "staging",
+ "classification_reason": null,
+ "created_utc": "2026-09-25T00:55:52Z",
+ "harness_git_sha": "af2aa9847f6828815a829345c577082eda66eab7",
+ "harness_files_sha256": {
+  "bench_nextgen.py": "c3efa7fef4e71c625398796f7d19b59b2b210065ebdd152ea74935d57d1782e4",
+  "sseparser.py": "bf82c5298588a5a5db8aee79d6fe5c77b08df9a3e2ab6b514384d705b251f2fc",
+  "nvml_bind.py": "0d0f49fef5d17efac061ff5a681dde96eb4811b09ea6a6fbd25f92fbdbd4ee1c"
+ },
+ "host_snapshot_sha256": "6a08a3748937c2ff5df6eb1958b0ea1b06976e6642bfe60dc930f81e6181af39",
+ "env_lock_sha256": "e76f5dd199b4b39e0c440ba1797e9cab8775adb2389273d776e337b3acb90e9b",
+ "gpu": {
+  "cards": [],
+  "power_limit_w": 450.0,
+  "initial_temp_c": [
+   30
+  ]
+ },
+ "server": {
+  "port": null,
+  "pid": null,
+  "pgid": null,
+  "tp": 1,
+  "max_num_seqs": 1,
+  "launch_cmd_file": "launch-cmd.txt",
+  "cache_root": null
+ },
+ "fixture": {
+  "name": "d565",
+  "sha256": "131ca085aced4ec859845cda24ff38aa07f7584eaafa90f7397838ade5b5eea7",
+  "requested_output_tokens": 128,
+  "actual_input_tokens": 565
+ },
+ "recipe": {
+  "runtime": "vllm-0.28.0",
+  "kv_profile": "kvarn_k4v2_g128",
+  "quant": "W4A16-autoround-g128",
+  "spec": "dflash2-k7",
+  "nbt": 2048,
+  "cudagraph": "cg8-custom-ops"
+ },
+ "timing": {
+  "start_utc": "1970-01-20T12:14:26Z",
+  "end_utc": "1970-01-20T12:14:26Z",
+  "duration_s": 0.81
+ },
+ "files": {
+  "raw_events": "raw-events.jsonl",
+  "metrics": "metrics.json",
+  "sampler_metrics": "sampler-metrics.jsonl",
+  "nvml": "nvml-samples.jsonl"
+ },
+ "client_version": "bench_nextgen-1"
+}

@@ -212,7 +212,7 @@ def scenario_failover(args) -> int:
             killed = True
         i += 1
     routes = [json.loads(l) for l in open(args.route_log)] if os.path.exists(args.route_log) else []
-    rebinds = [r["ts"] for r in routes if r.get("reason") == "FAILOVER_REBIND"]
+    rebinds = [r["ts"] for r in routes if r.get("reason") == "FAILOVER_REBIND" and r.get("ts", 0) >= t0 - 1]
     summary = {
         "scenario": "failover", "experiment_id": eid, "kill_pid": args.kill_pid,
         "runs_rc": runs, "failed_runs": sum(1 for rc in runs if rc != 0),
