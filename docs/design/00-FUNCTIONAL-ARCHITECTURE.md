@@ -6260,4 +6260,435 @@ Adapter
 Whole Platform Rewrite
 ```
 
+---
+
+# 58. Bootstrap-to-Sovereignty Strategy
+
+平台长期路线冻结为：
+
+> **先复用成熟开源能力完成全功能闭环，再按战略价值、风险和差异化逐步自主替代。**
+
+这里的“自主替代”不是要求第一版全部自研，也不是等平台全部做完以后才考虑可替换性。
+
+正确方式是：
+
+```text
+Day 1
+先把 Contract / Adapter / Data Ownership / Exit Path 设计好
+        ↓
+Bootstrap 阶段
+大量复用成熟开源
+        ↓
+Capability Complete
+功能面完整、业务可用
+        ↓
+Sovereignty 阶段
+关键能力逐步自主实现
+        ↓
+Long-term
+上游继续作为参考、Benchmark 和技术情报来源
+```
+
+## 58.1 Phase A — Reuse First / 能力铺满
+
+目标：
+
+> 尽快把完整能力链跑通，不为“纯自研”重复造轮子。
+
+优先复用：
+
+- CSGHub；
+- MLflow；
+- BentoML；
+- ModelScope / ms-swift；
+- SGLang / vLLM / llama.cpp；
+- Vector / Search / Graph Backend；
+- NATS / Kafka / Redis Streams；
+- 其他符合 License Gate 的成熟项目。
+
+这一阶段衡量成功的标准不是“我们写了多少代码”，而是：
+
+```text
+Discover
+→ Acquire
+→ Train
+→ Evaluate
+→ Deploy
+→ Serve
+→ Observe
+→ Feedback
+```
+
+是否真正闭环。
+
+## 58.2 Phase B — Contract Hardening / 去耦加固
+
+在大规模自主替代前，必须先把第三方能力全部包在稳定 Contract 后面。
+
+必须完成：
+
+- Owned Domain Model；
+- Adapter Boundary；
+- Northbound API；
+- Contract Tests；
+- Portable Artifact Format；
+- Data Export；
+- Internal Mirror；
+- License Snapshot；
+- Replacement Stub；
+- Migration Test。
+
+只有这一阶段完成，后面的“自主替代”才不会变成全平台重写。
+
+## 58.3 Phase C — Strategic Replacement / 关键能力自主化
+
+不是所有第三方都值得替代。
+
+优先替代以下类型：
+
+### A. Authority 相关
+
+必须长期自己掌握：
+
+- Policy；
+- Gate；
+- Identity；
+- Security；
+- Scheduler Policy；
+- Human Approval；
+- Production Promotion；
+- Lineage；
+- Audit。
+
+### B. 差异化核心
+
+优先自主：
+
+- Business-SLA Scheduler；
+- Capability Router；
+- GPU / VRAM Placement；
+- Agent Control Plane；
+- Technology Radar；
+- Auto Reproduction；
+- Knowledge / Memory；
+- Research / IP；
+- Platform Evolution。
+
+### C. 高风险依赖
+
+若上游出现：
+
+- License Drift；
+- Enterprise Shift；
+- EOL；
+- API Instability；
+- Maintainer Risk；
+- Supply-chain Risk；
+- Provider Lock-in；
+
+则提高自主替代优先级。
+
+### D. 高频/高成本能力
+
+如果第三方成为：
+
+- 性能瓶颈；
+- 费用瓶颈；
+- 运维瓶颈；
+- 延迟瓶颈；
+
+也进入自主化候选。
+
+## 58.4 Phase D — Native Replacement
+
+替代流程统一为：
+
+```text
+Existing Upstream Backend
+        ↓
+Capture Contract + Golden Tests
+        ↓
+Build Native Candidate
+        ↓
+Replay Historical Workload
+        ↓
+Benchmark
+        ↓
+Shadow
+        ↓
+Canary
+        ↓
+Human Gate
+        ↓
+Promote Native
+        ↓
+Upstream Backend becomes fallback/reference
+```
+
+替代完成后：
+
+```text
+Northbound API 不变
+Asset ID 不变
+Domain Model 不变
+User Workflow 不变
+```
+
+只切换 Backend Implementation。
+
+---
+
+# 59. Upstream Watch & Selective Adoption
+
+自主替代后，不代表停止关注上游。
+
+相反，上游继续成为：
+
+- Technology Radar；
+- Feature Reference；
+- Benchmark Reference；
+- Security Intelligence；
+- Compatibility Reference；
+- Design Inspiration。
+
+## 59.1 Upstream Watch
+
+平台持续观察：
+
+- Release；
+- Changelog；
+- PR；
+- Major Feature；
+- API Change；
+- Performance Improvement；
+- Security Fix；
+- New Algorithm；
+- New Runtime Support；
+- New Hardware Support；
+- New Model Type；
+- License Change。
+
+形成：
+
+```text
+Upstream Change Event
+→ Feature Diff
+→ Relevance Analysis
+→ Risk Analysis
+→ Adoption Proposal
+```
+
+## 59.2 不是“上游更新，我们就升级”
+
+上游功能分为四类：
+
+```text
+IGNORE
+WATCH
+ADOPT_VIA_UPGRADE
+REIMPLEMENT_NATIVE
+```
+
+### IGNORE
+
+对我们没有价值。
+
+### WATCH
+
+方向有价值，但尚不成熟。
+
+### ADOPT_VIA_UPGRADE
+
+第三方仍适合作为 Backend，直接通过 Candidate Upgrade 吸收。
+
+### REIMPLEMENT_NATIVE
+
+功能很好，但我们已经拥有自己的实现或不希望再次绑定上游，则参考公开行为、论文、接口或算法思想，在遵守许可证和知识产权边界的前提下实现自己的版本。
+
+## 59.3 Feature Intake
+
+任何值得吸收的新功能走：
+
+```text
+Upstream Feature
+→ Capability Mapping
+→ License / IP Check
+→ Reproduce
+→ Benchmark
+→ Architecture Fit
+→ Build vs Reuse Decision
+→ Candidate
+→ Gate
+→ Adopt
+```
+
+不是：
+
+```text
+看到上游发布
+→ 直接 merge
+```
+
+## 59.4 Upstream Reference Mode
+
+当某项能力已经自主化以后，上游可以转为：
+
+```text
+REFERENCE
+BENCHMARK
+FALLBACK
+COMPATIBILITY TARGET
+```
+
+例如：
+
+```text
+Our Scheduler v3
+vs
+Upstream Scheduler Feature X
+```
+
+可以自动跑同一历史 Workload 比较：
+
+- utilization；
+- latency；
+- fairness；
+- preemption；
+- energy；
+- cost。
+
+如果上游更优：
+
+```text
+Research Agent
+→ 生成改进 Proposal
+→ Native Candidate v4
+→ Test
+→ Gate
+```
+
+形成“外部创新驱动内部进化”。
+
+---
+
+# 60. Autonomous Replacement Controller
+
+平台长期可以增加 **Autonomous Replacement Controller**。
+
+它不直接自动替换生产核心，而是自动完成：
+
+```text
+Dependency Observation
+→ Risk / Cost / Performance Score
+→ Replacement Opportunity
+→ Candidate Design
+→ Build / Integrate
+→ Test
+→ Replay
+→ Benchmark
+→ Shadow
+→ Human Approval
+```
+
+## 60.1 Replacement Trigger
+
+触发条件可包括：
+
+- License Risk ↑；
+- Upstream Health ↓；
+- Cost ↑；
+- Performance Gap ↑；
+- Security Risk ↑；
+- Feature Gap ↑；
+- Strategic Importance ↑；
+- Internal Capability Maturity ↑。
+
+## 60.2 Human Gate
+
+自主替代涉及：
+
+- Production Backend；
+- Core Authority；
+- Data Migration；
+- Security Boundary；
+
+时必须保留 Human Gate。
+
+因此：
+
+> **系统可以自主发现、自主研发、自主验证，但关键替换最终由人批准。**
+
+---
+
+# 61. Build / Buy / Reuse / Replace Decision
+
+每个能力统一做四选一决策：
+
+```text
+REUSE
+EXTEND
+BUILD
+REPLACE
+```
+
+判断维度：
+
+- License；
+- Strategic Value；
+- Switching Cost；
+- Performance；
+- Security；
+- Maintenance；
+- Community Health；
+- API Stability；
+- Data Portability；
+- Operational Cost；
+- Differentiation。
+
+建议决策原则：
+
+```text
+成熟、通用、低战略价值
+→ REUSE
+
+成熟但需要轻度定制
+→ EXTEND / ADAPTER
+
+高战略价值或差异化核心
+→ BUILD
+
+当前依赖风险升高
+→ REPLACE
+```
+
+---
+
+# 62. Long-term Architecture Goal
+
+长期目标不是“消灭第三方依赖”。
+
+更合理的是形成：
+
+```text
+Stable Sovereign Core
+        +
+Replaceable Open-source Backends
+        +
+Native Strategic Capabilities
+        +
+Continuous Upstream Intelligence
+```
+
+最终状态：
+
+- 通用基础设施继续优先复用；
+- 高价值核心能力逐步自主；
+- 所有第三方可替换；
+- 上游创新持续吸收；
+- Northbound Contract 长期稳定；
+- 用户和业务不感知 Backend 更替。
+
+平台的自主化不是“闭门造轮子”，而是：
+
+> **借上游完成起跑，用自己的 Contract 保持独立，再把真正有战略价值的部分逐步变成自有能力，同时持续吸收整个开源生态的创新。**
 
