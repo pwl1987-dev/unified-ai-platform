@@ -376,9 +376,10 @@ docs/design/11-API-BOUNDARY.md
 
 ## WP-P1-05 — Adapter Contract
 
-第一批 Adapter：
+第一批 Adapter（P1-D01 / P1-D02 裁决后）：
 
 ~~~text
+AssetSourceAdapter
 AssetHubAdapter
 ExperimentAdapter
 ServingAdapter
@@ -392,6 +393,14 @@ VirtualizationAdapter
 SecretAdapter
 ObjectStorageAdapter
 IdentityAdapter
+OCIRegistryAdapter
+~~~
+
+规范输出：
+
+~~~text
+docs/design/15-ADAPTER-CONTRACT.md
+contracts/adapters/
 ~~~
 
 ---

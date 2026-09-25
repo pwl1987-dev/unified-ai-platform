@@ -331,31 +331,31 @@ Restricted
 
 ---
 
-## 5. P1 裁决登记（不修改 Frozen Architecture）
+## 5. P1 裁决登记（P1 已收敛）
 
-本 WP 发现以下 Contract 必须在 P1 明确，但**本轮不自行修改 Frozen Architecture**：
+本 WP 当时登记的 Contract 问题现已由 `docs/design/12-DECISION-REGISTER.md` 与 `docs/design/15-ADAPTER-CONTRACT.md` 正式收敛。以下保留原始问题与最终结果，避免历史文档继续显示“未裁决”：
 
 ### P1-D01 — OCI Registry Adapter naming
 
 现有技术栈冻结了 Harbor candidate，WP-P1-05 首批 Adapter 列表却没有显式的 `OCIRegistryAdapter` / `RegistryAdapter`。
 
-P1 需要裁决：
+**最终结果：RESOLVED — 使用 `OCIRegistryAdapter`。** `ObjectStorageAdapter` 不覆盖 OCI distribution / manifest / digest / signature / retention 语义。
 
-- 是否新增 `OCIRegistryAdapter`；
-- 或由现有 `Artifact` / `ObjectStorageAdapter` 覆盖 OCI Registry。
-
-验收要求：UI、Deployment、SBOM、Promotion 不直接绑定 Harbor DTO。
+验收要求保持：UI、Deployment、SBOM、Promotion 不直接绑定 Harbor DTO。
 
 ### P1-D02 — AssetHubAdapter source/publish responsibilities
 
-需要明确：
+**最终结果：RESOLVED — 拆分 `AssetSourceAdapter` 与 `AssetHubAdapter`。**
 
-- ModelScope / CSGHub 是同一个 `AssetHubAdapter` 的不同实现；
-- 还是拆成 `AssetSourceAdapter` 与 `AssetHubAdapter`。
+- AssetSourceAdapter：discover / resolve / metadata / license / provenance / fetch；
+- AssetHubAdapter：mirror / publish / catalog / replication / retention；
+- 同一 Backend 可以同时实现两者，但 Conformance 独立。
 
-目标：避免“发现/下载”和“内部资产发布/治理”混成一个 Authority。
+目标保持：避免“发现/下载”和“内部资产发布/治理”混成一个 Authority。
 
 ### P1-D03 — Derived Index rule
+
+**最终结果：RESOLVED — Index 仍是可重建派生物，不是 Knowledge/Data Authority。**
 
 `Index` 必须冻结为可重建派生物，并记录：
 
@@ -369,6 +369,8 @@ P1 需要裁决：
 避免 Vector/Search backend 成为知识唯一事实源。
 
 ### P1-D04 — Gateway conformance boundary
+
+**最终结果：RESOLVED — ProviderAdapter / ServingAdapter 分离，共享最小 Capability Conformance。**
 
 `ProviderAdapter` 与 `ServingAdapter` 必须共享最小 conformance suite，但不能混为一个 Adapter：
 

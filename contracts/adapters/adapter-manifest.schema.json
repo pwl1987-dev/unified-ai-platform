@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/adapters/adapter-manifest.schema.json",
+  "title": "Unified AI Platform Adapter Implementation Manifest",
+  "type": "object",
+  "required": [
+    "adapter_kind",
+    "adapter_contract_version",
+    "implementation_name",
+    "implementation_version",
+    "implementation_revision",
+    "supported_operations",
+    "capabilities",
+    "config_schema_ref",
+    "secret_usage",
+    "operation_semantics",
+    "health_probe",
+    "conformance_profile",
+    "source",
+    "license"
+  ],
+  "properties": {
+    "adapter_kind": {
+      "type": "string",
+      "enum": [
+        "AssetSourceAdapter",
+        "AssetHubAdapter",
+        "ExperimentAdapter",
+        "ServingAdapter",
+        "TrainingAdapter",
+        "ProviderAdapter",
+        "VectorAdapter",
+        "SearchAdapter",
+        "WorkflowAdapter",
+        "MessagingAdapter",
+        "VirtualizationAdapter",
+        "SecretAdapter",
+        "ObjectStorageAdapter",
+        "IdentityAdapter",
+        "OCIRegistryAdapter"
+      ]
+    },
+    "adapter_contract_version": {
+      "const": "1.0"
+    },
+    "implementation_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "implementation_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "implementation_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "supported_operations": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "boolean",
+          "string",
+          "integer",
+          "number",
+          "array",
+          "object",
+          "null"
+        ]
+      }
+    },
+    "config_schema_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "secret_usage": {
+      "type": "object",
+      "required": [
+        "requires_secret_refs",
+        "plaintext_in_manifest_forbidden"
+      ],
+      "properties": {
+        "requires_secret_refs": {
+          "type": "boolean"
+        },
+        "plaintext_in_manifest_forbidden": {
+          "const": true
+        },
+        "secret_ref_kinds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "operation_semantics": {
+      "type": "object",
+      "required": [
+        "timeout",
+        "cancellation",
+        "idempotency",
+        "reconciliation"
+      ],
+      "properties": {
+        "timeout": {
+          "type": "string",
+          "enum": [
+            "SUPPORTED",
+            "BOUNDED_BY_CALLER"
+          ]
+        },
+        "cancellation": {
+          "type": "string",
+          "enum": [
+            "NATIVE",
+            "COOPERATIVE",
+            "NOT_SUPPORTED_RECONCILE"
+          ]
+        },
+        "idempotency": {
+          "type": "string",
+          "enum": [
+            "NATIVE",
+            "KEYED",
+            "OPERATION_SPECIFIC"
+          ]
+        },
+        "reconciliation": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "health_probe": {
+      "type": "object",
+      "required": [
+        "operation"
+      ],
+      "properties": {
+        "operation": {
+          "type": "string"
+        },
+        "readiness_distinct": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "conformance_profile": {
+      "type": "object",
+      "required": [
+        "target_level"
+      ],
+      "properties": {
+        "target_level": {
+          "type": "string",
+          "enum": [
+            "C0",
+            "C1",
+            "C2",
+            "C3"
+          ]
+        },
+        "journey_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^J(0[1-9]|10)$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "uri",
+        "revision"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "license": {
+      "type": "object",
+      "required": [
+        "spdx_or_declared",
+        "evidence_ref"
+      ],
+      "properties": {
+        "spdx_or_declared": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "sbom_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "minimum_platform_contract_version": {
+      "type": "string",
+      "default": "1.0"
+    },
+    "feature_flags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    }
+  },
+  "additionalProperties": false
+}

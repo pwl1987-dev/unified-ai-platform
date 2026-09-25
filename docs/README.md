@@ -35,6 +35,9 @@
 | [design/12-DECISION-REGISTER.md](design/12-DECISION-REGISTER.md) | P1-D01~D06 正式 Decision Register |
 | [design/13-EVENT-CONTRACT.md](design/13-EVENT-CONTRACT.md) | WP-P1-03：Domain Event Envelope、事件族、at-least-once/idempotency、outbox/replay 与 Agent/Audit/Incident 事件 |
 | [design/14-STATE-MACHINES.md](design/14-STATE-MACHINES.md) | WP-P1-04：Model/Dataset/Deployment/Run/Experiment/Approval/VM/Dependency 生命周期、LKG、retry/rollback/guard |
+| [design/15-ADAPTER-CONTRACT.md](design/15-ADAPTER-CONTRACT.md) | WP-P1-05：15 类 Adapter、ExecutionContext/Result/Error、C0-C3 conformance、Backend Replacement / Exit Path |
+| [../contracts/adapters/adapter-manifest.schema.json](../contracts/adapters/adapter-manifest.schema.json) | WP-P1-05 Adapter implementation manifest JSON Schema |
+| [../contracts/adapters/adapter-catalog.v1.json](../contracts/adapters/adapter-catalog.v1.json) | WP-P1-05 machine-readable Adapter operation/authority catalog |
 | [../contracts/state-machines/state-machines.v1.json](../contracts/state-machines/state-machines.v1.json) | WP-P1-04 machine-readable state-machine baseline |
 | [../contracts/events/event-envelope.schema.json](../contracts/events/event-envelope.schema.json) | WP-P1-03 machine-readable Event Envelope JSON Schema |
 | [../contracts/events/event-catalog.v1.json](../contracts/events/event-catalog.v1.json) | WP-P1-03 machine-readable Event Catalog |
@@ -68,14 +71,14 @@ Completed first-pass packages
   P1-02 Northbound API Contract
   P1-03 Event Contract
   P1-04 State Machines
+  P1-05 Adapter Contract
   P2-01 User Roles
   P2-02 Human-AI Responsibility
   P2-03 Golden Journeys
   P2-04 Information Architecture
         ↓
 Next Contract / UX layer
-  P1-05 Adapter Contract
-
+  P1 Contract Closure / Journey Gap closure
   P2-05 Low-fi Wireframes
 ```
 

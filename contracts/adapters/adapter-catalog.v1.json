@@ -1,0 +1,366 @@
+{
+  "catalog_version": "1.0",
+  "manifest_schema": "contracts/adapters/adapter-manifest.schema.json",
+  "conformance_levels": {
+    "C0": "Manifest Valid",
+    "C1": "Contract Conformant",
+    "C2": "Journey Conformant",
+    "C3": "Production Eligible"
+  },
+  "common": {
+    "authority": "Control Hub Domain/Policy/Gate/Approval/State Machines",
+    "result_outcomes": [
+      "SUCCEEDED",
+      "ACCEPTED",
+      "FAILED",
+      "UNKNOWN"
+    ],
+    "normalized_errors": [
+      "INVALID_CONFIG",
+      "UNSUPPORTED_CAPABILITY",
+      "BACKEND_AUTH_FAILED",
+      "BACKEND_POLICY_DENIED",
+      "BACKEND_NOT_FOUND",
+      "BACKEND_CONFLICT",
+      "BACKEND_RATE_LIMITED",
+      "BACKEND_UNAVAILABLE",
+      "BACKEND_TIMEOUT",
+      "TRANSIENT_FAILURE",
+      "PERMANENT_FAILURE",
+      "DATA_INTEGRITY_FAILURE",
+      "CANCELED",
+      "UNKNOWN_OUTCOME"
+    ],
+    "required_context": [
+      "request_id",
+      "correlation_id",
+      "project_ref",
+      "effective_principal_ref",
+      "environment",
+      "responsibility_level",
+      "deadline"
+    ],
+    "rules": [
+      "stable Domain IDs are never backend IDs",
+      "vendor DTOs never cross northbound boundary",
+      "secret plaintext never enters ordinary result/event/evidence/prompt",
+      "UNKNOWN mutation outcome requires reconciliation before retry",
+      "Adapter cannot decide Gate or Approval",
+      "Adapter cannot directly mutate authoritative status"
+    ]
+  },
+  "adapters": [
+    {
+      "kind": "AssetSourceAdapter",
+      "required_operations": [
+        "discover",
+        "resolve",
+        "metadata",
+        "license",
+        "provenance",
+        "fetch",
+        "verify_digest",
+        "health"
+      ],
+      "mutation_operations": [
+        "fetch"
+      ],
+      "external_ref_rule": "External source IDs are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "AssetHubAdapter",
+      "required_operations": [
+        "catalog",
+        "mirror",
+        "publish",
+        "replication",
+        "retention",
+        "resolve_mirror",
+        "health"
+      ],
+      "mutation_operations": [
+        "mirror",
+        "publish",
+        "replication",
+        "retention"
+      ],
+      "external_ref_rule": "Hub catalog/project IDs are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "ExperimentAdapter",
+      "required_operations": [
+        "create_projection",
+        "log_metric",
+        "log_artifact_ref",
+        "log_parameter",
+        "query_projection",
+        "export_projection",
+        "health"
+      ],
+      "mutation_operations": [
+        "create_projection",
+        "log_metric",
+        "log_artifact_ref",
+        "log_parameter"
+      ],
+      "external_ref_rule": "Backend run/experiment IDs are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "ServingAdapter",
+      "required_operations": [
+        "validate_deployment",
+        "provision",
+        "observe",
+        "start",
+        "stop",
+        "drain",
+        "endpoint_observe",
+        "rollout_step",
+        "rollback_step",
+        "collect_evidence_material",
+        "reconcile"
+      ],
+      "mutation_operations": [
+        "provision",
+        "start",
+        "stop",
+        "drain",
+        "rollout_step",
+        "rollback_step"
+      ],
+      "external_ref_rule": "Runtime/deployment backend IDs are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C2"
+    },
+    {
+      "kind": "TrainingAdapter",
+      "required_operations": [
+        "validate_run",
+        "render_job",
+        "start",
+        "observe",
+        "checkpoint",
+        "pause",
+        "resume",
+        "cancel",
+        "collect_outputs",
+        "reconcile"
+      ],
+      "mutation_operations": [
+        "start",
+        "checkpoint",
+        "pause",
+        "resume",
+        "cancel"
+      ],
+      "external_ref_rule": "Backend job/checkpoint IDs are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C2"
+    },
+    {
+      "kind": "ProviderAdapter",
+      "required_operations": [
+        "probe_capabilities",
+        "health",
+        "invoke",
+        "invoke_stream",
+        "usage_observe",
+        "reconcile_request"
+      ],
+      "mutation_operations": [
+        "invoke",
+        "invoke_stream"
+      ],
+      "external_ref_rule": "Provider request/model IDs are ExternalRef/diagnostics only",
+      "secret_policy": "secret refs only; no plaintext return",
+      "minimum_conformance": "C2"
+    },
+    {
+      "kind": "VectorAdapter",
+      "required_operations": [
+        "probe_capabilities",
+        "create_index_projection",
+        "upsert",
+        "delete_projection",
+        "query",
+        "rebuild",
+        "snapshot_metadata",
+        "health"
+      ],
+      "mutation_operations": [
+        "create_index_projection",
+        "upsert",
+        "delete_projection",
+        "rebuild"
+      ],
+      "external_ref_rule": "Collection/index IDs are ExternalRef only; Index remains derivative",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "SearchAdapter",
+      "required_operations": [
+        "probe_capabilities",
+        "index_projection",
+        "remove_projection",
+        "query",
+        "rebuild",
+        "health"
+      ],
+      "mutation_operations": [
+        "index_projection",
+        "remove_projection",
+        "rebuild"
+      ],
+      "external_ref_rule": "Search index IDs are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "WorkflowAdapter",
+      "required_operations": [
+        "submit_execution",
+        "observe",
+        "signal",
+        "cancel",
+        "resume",
+        "reconcile"
+      ],
+      "mutation_operations": [
+        "submit_execution",
+        "signal",
+        "cancel",
+        "resume"
+      ],
+      "external_ref_rule": "Workflow backend execution ID is ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C2"
+    },
+    {
+      "kind": "MessagingAdapter",
+      "required_operations": [
+        "publish",
+        "subscribe",
+        "acknowledge",
+        "consumer_health",
+        "stream_health"
+      ],
+      "mutation_operations": [
+        "publish",
+        "acknowledge"
+      ],
+      "external_ref_rule": "Transport stream/consumer IDs never replace event_id",
+      "secret_policy": "secret refs only; Event payload plaintext secrets forbidden",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "VirtualizationAdapter",
+      "required_operations": [
+        "probe_capabilities",
+        "validate_vm_spec",
+        "provision",
+        "observe",
+        "start",
+        "stop",
+        "drain",
+        "snapshot_ref",
+        "deprovision",
+        "reconcile"
+      ],
+      "mutation_operations": [
+        "provision",
+        "start",
+        "stop",
+        "drain",
+        "deprovision"
+      ],
+      "external_ref_rule": "libvirt UUID/VMware MoRef/Proxmox VMID are ExternalRef only",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C2"
+    },
+    {
+      "kind": "SecretAdapter",
+      "required_operations": [
+        "create_or_import_ref",
+        "lease_for_execution",
+        "rotate",
+        "revoke",
+        "metadata",
+        "health"
+      ],
+      "mutation_operations": [
+        "create_or_import_ref",
+        "lease_for_execution",
+        "rotate",
+        "revoke"
+      ],
+      "external_ref_rule": "Backend secret IDs/paths are ExternalRef; platform stores opaque refs",
+      "secret_policy": "plaintext only inside controlled execution target; never result/UI/Agent/log/Evidence",
+      "minimum_conformance": "C3"
+    },
+    {
+      "kind": "ObjectStorageAdapter",
+      "required_operations": [
+        "put",
+        "get_stream",
+        "head",
+        "list_prefix",
+        "delete_object",
+        "verify_digest",
+        "health"
+      ],
+      "mutation_operations": [
+        "put",
+        "delete_object"
+      ],
+      "external_ref_rule": "bucket/key are locator ExternalRef, never Artifact ID",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C1"
+    },
+    {
+      "kind": "IdentityAdapter",
+      "required_operations": [
+        "authenticate_external_subject",
+        "resolve_subject",
+        "resolve_groups",
+        "group_membership",
+        "claims_snapshot",
+        "health"
+      ],
+      "mutation_operations": [
+        "authenticate_external_subject"
+      ],
+      "external_ref_rule": "IdP user/group IDs are ExternalRef; Principal ID remains platform stable",
+      "secret_policy": "credential material not returned to Agent/UI",
+      "minimum_conformance": "C3"
+    },
+    {
+      "kind": "OCIRegistryAdapter",
+      "required_operations": [
+        "resolve_manifest",
+        "resolve_digest",
+        "pull",
+        "push",
+        "tags",
+        "attestations",
+        "signatures",
+        "scan_refs",
+        "retention_observe",
+        "health"
+      ],
+      "mutation_operations": [
+        "pull",
+        "push"
+      ],
+      "external_ref_rule": "registry/project/repository/tag are ExternalRef; digest pin required for Deployment",
+      "secret_policy": "secret refs only",
+      "minimum_conformance": "C2"
+    }
+  ]
+}
