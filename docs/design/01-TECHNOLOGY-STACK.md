@@ -1,6 +1,6 @@
-# Technology Stack Baseline v0.1
+# Technology Stack Baseline v1.0
 
-> 状态：**技术栈冻结候选（Technology Stack Freeze Candidate）**
+> 状态：**技术栈已冻结（Technology Stack Frozen v1.0）**
 >
 > 上位 Authority：`docs/design/00-FUNCTIONAL-ARCHITECTURE.md`
 >
@@ -892,3 +892,437 @@ automatic major upgrade
 > **React/TypeScript 做自有 UI，Go 做稳定可替换的 Control Plane，Python 承载 AI/ML 生态；KVM/QEMU/libvirt 提供默认 VM 隔离层，OCI/containerd 提供容器层，PostgreSQL 保存平台主状态，S3 保存资产，NATS 负责事件与异步，OpenAPI/JSON Schema 负责 Contract，所有第三方实现都留在 Adapter 后面。**
 
 这套技术栈与 Functional Architecture 的“Universal Replaceability Principle”一致。
+
+---
+
+# 16. Network / Edge / Service Discovery
+
+## 16.1 North-South Edge
+
+Stage-1 默认：
+
+```text
+Caddy
+→ TLS termination
+→ Reverse Proxy
+→ Static Web
+→ Control Hub / Gateway
+```
+
+Caddy 当前主仓为 Apache-2.0，可作为默认 Edge 实现，但必须位于 `EdgeAdapter` / Deployment 层，不进入 Domain Model。
+
+未来可替换：
+
+- Nginx；
+- Envoy；
+- Traefik；
+- Hardware / Existing Enterprise LB。
+
+## 16.2 East-West
+
+Stage-1 不引入 Service Mesh。
+
+采用：
+
+```text
+Private Network
++ Host Firewall
++ Explicit Service Identity
++ Control Hub Registry
++ DNS
+```
+
+主机网络策略优先使用 Linux 原生 `nftables` / Network Policy Adapter。
+
+只有在多节点规模、mTLS、流量治理复杂度达到真实门槛后，再评估 Service Mesh。
+
+## 16.3 Service Discovery
+
+Stage-1 不引入 Consul。
+
+服务实例通过：
+
+```text
+Control Hub Registry
++ Health / Lease
++ Explicit Endpoint
++ DNS where appropriate
+```
+
+完成发现。
+
+---
+
+# 17. Configuration / Secret / Feature Flags
+
+## 17.1 Configuration
+
+非 Secret 配置：
+
+```text
+Versioned YAML / TOML / JSON
++ JSON Schema
++ Environment-specific Overlay
+```
+
+规则：
+
+- 配置可审计；
+- 配置可 diff；
+- 配置可 rollback；
+- Production 配置必须固定 Revision；
+- 禁止不可追踪的人工配置漂移。
+
+## 17.2 Secret Management
+
+Bootstrap 阶段允许：
+
+```text
+runtime-injected secret
++ protected file
++ environment reference
+```
+
+长期默认 Secret Broker 候选：
+
+```text
+OpenBao
+```
+
+OpenBao 当前主仓为 MPL-2.0。
+
+平台只保存：
+
+```text
+Secret Reference
+Secret Scope
+Rotation Metadata
+Access Policy
+```
+
+不保存生产 Secret 明文。
+
+Secret Backend 保持可替换。
+
+## 17.3 Feature Flags
+
+平台定义：
+
+```text
+Feature Flag Contract
+```
+
+优先兼容 OpenFeature 语义，但 Stage-1 不强制部署独立 Feature Flag Server。
+
+小规模功能开关可以由 Control Hub Policy / Config 管理；规模扩大后再接专用 Backend。
+
+---
+
+# 18. OCI / Package / Supply-chain Distribution
+
+## 18.1 OCI Registry
+
+Bootstrap 可以使用标准 OCI Distribution。
+
+生产候选：
+
+```text
+Harbor
+```
+
+Harbor 当前主仓为 Apache-2.0，适合承担：
+
+- OCI Image Registry；
+- Artifact Distribution；
+- RBAC；
+- Replication；
+- Vulnerability Scan Integration；
+- Retention。
+
+Harbor 仍然只是 Artifact Backend，不是平台 Registry Authority。
+
+## 18.2 Artifact Pinning
+
+生产必须使用：
+
+```text
+image@sha256:<digest>
+```
+
+而不是仅依赖 mutable tag。
+
+每个发布单元至少记录：
+
+- Image Digest；
+- SBOM；
+- Source Revision；
+- Build Provenance；
+- License Inventory；
+- Signature / Attestation（可用时）。
+
+## 18.3 Package Mirror
+
+Python / Node / Go 依赖必须可被内部缓存或镜像。
+
+但 Stage-1 不冻结某一个统一 Package Repository 产品。
+
+后续通过：
+
+```text
+PackageMirrorAdapter
+```
+
+接入 Python Index / npm Proxy / Go Proxy / OS Package Mirror。
+
+---
+
+# 19. Database Migration
+
+PostgreSQL Schema Migration 默认采用：
+
+```text
+golang-migrate / migrate v4
+```
+
+当前主仓 MIT。
+
+Migration 规则：
+
+- migration file 入 Git；
+- migration 与应用 Revision 对齐；
+- CI 检查 forward migration；
+- destructive migration 单独 Gate；
+- 大表变更需 online / staged migration；
+- Production migration 必须有 backup / rollback plan。
+
+Domain Schema 不由 ORM 自动漂移。
+
+---
+
+# 20. Infrastructure as Code / Provisioning
+
+基础设施必须可重建。
+
+默认：
+
+```text
+OpenTofu
++ cloud-init
++ shell / targeted configuration scripts
+```
+
+OpenTofu 当前主仓 MPL-2.0。
+
+负责：
+
+- VM；
+- Network；
+- Storage；
+- Base Infrastructure；
+- Infrastructure Inventory linkage。
+
+配置管理工具如 Ansible 可以作为可选 Adapter 使用，但不是平台运行时 Authority。
+
+原则：
+
+> **Infrastructure change is reviewed code, not an undocumented console click.**
+
+对于已有 VMware / vSphere、libvirt 等环境，通过各自 Provider / Adapter 对接，不把核心 Contract 绑定到单一 Provider。
+
+---
+
+# 21. CI / CD / Release Engineering
+
+第一阶段采用：
+
+```text
+GitHub Actions
++ self-hosted runner where hardware/GPU access is required
+```
+
+CI 负责：
+
+- Lint；
+- Unit Test；
+- Contract Test；
+- License / SBOM；
+- Security Scan；
+- Build；
+- Integration Test；
+- UI E2E；
+- Reproducibility checks。
+
+GPU / Hardware Test 优先放自托管 Runner，避免公共 CI 成为 GPU Authority。
+
+CD 不允许：
+
+```text
+merge → uncontrolled production
+```
+
+而是：
+
+```text
+Build
+→ Signed / Hashed Artifact
+→ Candidate
+→ Integration / Shadow / Canary
+→ Gate
+→ Human Approval where required
+→ Promote
+```
+
+Production deployment 由 Control Hub / Release Contract 执行，不让 CI 平台成为第二 Authority。
+
+---
+
+# 22. Backup / Recovery Implementation Baseline
+
+功能架构已有 Backup / DR Contract；技术实现补充为：
+
+## PostgreSQL
+
+至少支持：
+
+```text
+Base Backup
++ WAL Archiving / PITR
++ Off-host Copy
++ Periodic Restore Test
+```
+
+具体 Backup Backend 可替换。
+
+## Object Storage
+
+要求：
+
+- Versioning where appropriate；
+- Replication / Backup Policy；
+- Immutable Evidence retention where required；
+- Content Hash Verification。
+
+## Config / Registry / IaC
+
+Git 本身不是唯一 Backup。
+
+关键配置、Contract、IaC、Registry Export 进入独立备份策略。
+
+## Recovery
+
+必须定期验证：
+
+```text
+Fresh Host / VM
+→ Restore Metadata
+→ Restore / Reconnect Artifact
+→ Recreate Environment
+→ Re-register Runtime
+→ Recover Service
+```
+
+没有 Restore Test 的 Backup 不计为 DR Evidence。
+
+---
+
+# 23. Cache Policy
+
+Stage-1 **不默认引入 Redis**。
+
+默认：
+
+```text
+bounded in-process cache
++ PostgreSQL
++ NATS JetStream where durable event state is needed
+```
+
+只有出现以下真实需求再引入分布式 Cache：
+
+- 多实例共享热点状态；
+- 明确延迟瓶颈；
+- 高并发 Rate Limit；
+- Short-lived distributed coordination。
+
+即使引入 Redis / Valkey，也必须作为 `CacheAdapter`，不得成为唯一 Authority。
+
+---
+
+# 24. Technology Stack Freeze v1.0
+
+经过最终缺口审计，本技术栈基线完成收敛。
+
+完整层级：
+
+```text
+Our React / TypeScript UI
+          ↓
+Caddy / Edge
+          ↓
+Go Control Hub / Gateway / Scheduler
+          ↓
+Capability & Adapter Contracts
+          ↓
+Python AI/ML Workers + Reused Backends
+          ↓
+OCI / containerd
+          ↓
+Guest Linux when isolation is required
+          ↓
+KVM / QEMU / libvirt or Virtualization Adapter
+          ↓
+Physical GPU / CPU / RAM / NVMe / Network
+
+State:
+PostgreSQL
+
+Assets:
+S3-compatible Object Storage
+
+Events:
+NATS + JetStream
+
+Secrets:
+Secret Broker / OpenBao candidate
+
+Images:
+OCI Registry / Harbor candidate
+
+IaC:
+OpenTofu + cloud-init
+
+Observability:
+OpenTelemetry
+
+CI:
+GitHub Actions + self-hosted hardware runners
+```
+
+## 24.1 Stage-1 明确不额外引入
+
+没有真实需求前，不增加：
+
+- Kubernetes；
+- Service Mesh；
+- Consul；
+- Redis / distributed cache；
+- Dedicated Feature Flag Server；
+- GraphQL Gateway；
+- Multiple competing workflow systems；
+- Microservice-per-feature。
+
+## 24.2 允许修改本技术栈基线的条件
+
+后续普通依赖升级不修改本文件。
+
+只有以下情况触发技术栈 Architecture Change：
+
+- 当前技术族无法满足 Frozen Functional Architecture；
+- License / Security 风险发生重大变化；
+- 实测证明存在不可接受的性能或可靠性瓶颈；
+- 新硬件 / 虚拟化 / Runtime 无法通过现有 Adapter 接入；
+- 关键依赖达到 EOL；
+- 有明确 Evidence 证明替换收益显著。
+
+至此，技术栈从 **Freeze Candidate** 转为 **Frozen v1.0**。
+
