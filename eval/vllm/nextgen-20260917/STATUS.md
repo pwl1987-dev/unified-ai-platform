@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 04（权重量化与分层混合 → Q-Profile Pareto + Gate D，v1.0 执行合同）— **完成（P0A→P4 全链；Gate D 定案经 PH4-EVIDENCE-REPAIR-01 修正 = 2 Q-Profile）**
+- **Phase**: 05（四卡拓扑赛 → Gate E）— **完成（P0A→P4 全链；Gate E 四冠军 + M4 冻结）**
 - **Last Completed**: Phase 04 全相位（2026-09-22→09-25，含 evidence repair）——Gate D **2 Q-Profile**：QP-INTERACT=Q0（S1/L2 + **X2 认证基线**）∧ QP-BATCH=Q4C；**Q1M=REJECTED_FOR_STRUCTURAL_REGRESSION**（B03 micro tj13 结构破坏）；详见 reports/phase-04-quant.md §9 勘误
-- **Current Task**: Phase 05 四卡拓扑赛（EXECUTING——P0A 契约冻结中）
-- **Next Task**: Gate E 四冠军（Throughput/Single-Agent/Dual-Agent/Mixed-Production）；输入=repro/quant-phase04/phase05-handoff.json（修复后 2 Profile）
+- **Current Task**: —（Phase 05 已收口）
+- **Next Task**: Phase 06 真实 Agent 公平横评（输入=repro/topology-phase05/phase06-handoff.json：四冠军+M4 冻结）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -167,3 +167,12 @@ classify 端到端双向验证通过（2026-09-17）。
 - **GPU 授权实况（P0B 巡检）**：空闲=GPU3/4/6（3/4 卡）；GPU2=rpg-bakeoff-llama-humanlike 容器（外部任务 up 3d20h 零触碰）；GPU5=宿主 vLLM（外围）、GPU7=docker vLLM（外围）；GPU0/1=生产；:8000 只读 health=200。**四卡臂暂缺 1 卡**——按合同先推全部非 GPU 工作+3 卡 preflight，周期复查。
 - **工具链（全部自测过）**：ph5_boot.sh（授权 Gate GPU3/4/6+TP4）/ph5_router.py v1.0（SELFTEST_PASS：sticky 5/5、least-inflight、failover rebind、route-reason 三类）/ph5_workload.py（multi/sticky/failover）/ph5_energy_node（SELFTEST_PASS；RAPL 不可读=MEASUREMENT_NOT_AVAILABLE 如实）/ph5_gate_e.py（SELFTEST_PASS 四冠军+EQUIVALENT 带+tiebreak）/bench --session-id。
 - boot smoke：TP2@131072(GPU3+4 :19711) + TP1@36864(GPU6 :19713) 冷编译中。
+
+## 2026-09-25 Phase 05 终判收口（P0A→P4）✅
+- **Gate E 四冠军（机器判定 raw/staging/PH5-P4/gate-e-verdict.json）**：Throughput=**T1(4×TP1)**（d565-C16 1.995 rps=2.5× 次名）；Single-Agent=**T4(TP4)**（三轴 203.5/72.4/19.6 全胜 +5.7~9.9%）；Dual-Agent=**T2(2×TP2)**（17.09 +12.1%，screen 级标注）；Mixed-Production=**T3(TP2+TP1+TP1)**（守门轴唯一通过：短 P95 0.27s vs 同构拓扑 50-59s 饿死）。
+- **M4 = TP2+TP1+TP1 冻结**（mixed champion 触发 m4_freeze_rule）；TP4 保留（真实任务受益非理论 KV pool）；P220K 单会话 TP4 独占实证。
+- P3：T1/T3/T4 ×3 boots 全 rc=0 + verbatim canary 9/9；跨 boot 漂移 0.0%/1.4%/0.3% ≪3% 带。
+- Debt 清偿：MS8-C8（TP1@MS8 C8 agg 232.2）+ TP1-C4（direct 78.0）CLOSED；T1L 探针=确定性 CAPACITY_LIMIT（9.05>4.8GiB 引擎数学拒绝）。
+- 机制发现：同构拓扑 mixed 短请求饿死（T2/T4）；TP4 单流 spec 带宽收益真实；router v1.1 开销<0.1%；failover 4 run 失败窗+2.3s 重绑。
+- 事故全留痕（§7 十项）：僵尸 router/僵尸 v1 编排器 tag 碰撞/热积累 rc=20/外部 docs 提交者并行 push×2（rebase 处置）等。
+- Phase 06 handoff：repro/topology-phase05/phase06-handoff.json。

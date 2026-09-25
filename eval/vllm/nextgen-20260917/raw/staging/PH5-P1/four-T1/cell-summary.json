@@ -2,7 +2,7 @@
  "scenario": "multi",
  "experiment_id": "PH5-P1-T1-FOUR-P32K",
  "api": "http://127.0.0.1:19710/v1",
- "wall_s": 18.12,
+ "wall_s": 17.66,
  "sessions": {
   "f0": {
    "fixture": "p32k",
@@ -10,13 +10,13 @@
    "requests_ok": 1,
    "requests_total": 1,
    "http_errors": 0,
-   "ttft_p50": 12.2828,
-   "ttft_max": 12.2828,
-   "tpot_med": 0.016706,
+   "ttft_p50": 12.6555,
+   "ttft_max": 12.6555,
+   "tpot_med": 0.017026,
    "sum_output_tokens": 256,
-   "batch_wall_s": 16.543,
-   "goodput_rps": 0.0604,
-   "tok_s": 15.475
+   "batch_wall_s": 16.997,
+   "goodput_rps": 0.0588,
+   "tok_s": 15.061
   },
   "f1": {
    "fixture": "p32k",
@@ -24,13 +24,13 @@
    "requests_ok": 1,
    "requests_total": 1,
    "http_errors": 0,
-   "ttft_p50": 13.0097,
-   "ttft_max": 13.0097,
-   "tpot_med": 0.016573,
+   "ttft_p50": 12.4842,
+   "ttft_max": 12.4842,
+   "tpot_med": 0.016572,
    "sum_output_tokens": 256,
-   "batch_wall_s": 17.236,
-   "goodput_rps": 0.058,
-   "tok_s": 14.853
+   "batch_wall_s": 16.71,
+   "goodput_rps": 0.0598,
+   "tok_s": 15.32
   },
   "f2": {
    "fixture": "p32k",
@@ -38,13 +38,13 @@
    "requests_ok": 1,
    "requests_total": 1,
    "http_errors": 0,
-   "ttft_p50": 13.231,
-   "ttft_max": 13.231,
-   "tpot_med": 0.016755,
+   "ttft_p50": 12.2939,
+   "ttft_max": 12.2939,
+   "tpot_med": 0.016705,
    "sum_output_tokens": 256,
-   "batch_wall_s": 17.504,
-   "goodput_rps": 0.0571,
-   "tok_s": 14.625
+   "batch_wall_s": 16.554,
+   "goodput_rps": 0.0604,
+   "tok_s": 15.465
   },
   "f3": {
    "fixture": "p32k",
@@ -52,16 +52,16 @@
    "requests_ok": 1,
    "requests_total": 1,
    "http_errors": 0,
-   "ttft_p50": 12.6402,
-   "ttft_max": 12.6402,
-   "tpot_med": 0.018873,
+   "ttft_p50": 12.6888,
+   "ttft_max": 12.6888,
+   "tpot_med": 0.016736,
    "sum_output_tokens": 256,
-   "batch_wall_s": 17.453,
-   "goodput_rps": 0.0573,
-   "tok_s": 14.668
+   "batch_wall_s": 16.956,
+   "goodput_rps": 0.059,
+   "tok_s": 15.098
   }
  },
- "aggregate_tok_s": 58.501,
- "fairness_jain_goodput": 0.9995,
- "per_session_p95_ttft": 13.231
+ "aggregate_tok_s": 60.246,
+ "fairness_jain_goodput": 0.9999,
+ "per_session_p95_ttft": 12.6888
 }

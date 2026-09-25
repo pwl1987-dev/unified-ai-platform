@@ -55,7 +55,7 @@
  ],
  "percentiles": {},
  "aggregate": {
-  "batch_wall_s": 0.043,
+  "batch_wall_s": 0.058,
   "sum_output_tokens": 0,
   "max_running_observed": null
  }

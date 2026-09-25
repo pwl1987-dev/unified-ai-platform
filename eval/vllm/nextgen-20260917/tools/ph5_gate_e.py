@@ -24,8 +24,8 @@ ST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "
 
 CHAMPIONS = {
     "throughput_champion": {
-        "cells": ["d565_c16_goodput", "d565_c8_goodput", "p4k_c16_goodput", "p4k_c8_goodput"],
-        "primary": "d565_c16_goodput", "tiebreak": ["d565_c8_goodput", "p4k_c16_goodput", "J_per_tok_p4k_c16"],
+        "cells": ["d565_c16_goodput_router", "d565_c8_goodput_router", "p4k_c16_goodput_router", "p4k_c8_goodput_router"],
+        "primary": "d565_c16_goodput_router", "tiebreak": ["d565_c8_goodput_router", "p4k_c16_goodput_router", "J_per_tok_p4k_c16"],
         "higher_better": True},
     "single_agent_champion": {
         "cells": ["d565_c1_decode", "p32k_c1_decode", "p128k_c1_decode"],
@@ -141,10 +141,10 @@ def selftest() -> int:
     topo = ["T1", "T2", "T3", "T4"]
     # 合成：T1 批处理王；T2 单Agent 带 T4 出带胜；T3 mixed 守门过且 aggregate 高；T2 dual 王
     mx = {
-        "d565_c16_goodput": {"T1": 10.0, "T2": 4.0, "T3": 8.0, "T4": 3.0},
-        "d565_c8_goodput": {"T1": 9.0, "T2": 4.0, "T3": 7.5, "T4": 3.0},
-        "p4k_c16_goodput": {"T1": 11.0, "T2": "CAPACITY_LIMIT", "T3": 9.0, "T4": 2.0},
-        "p4k_c8_goodput": {"T1": 10.0, "T2": 5.0, "T3": 8.8, "T4": 2.0},
+        "d565_c16_goodput_router": {"T1": 10.0, "T2": 4.0, "T3": 8.0, "T4": 3.0},
+        "d565_c8_goodput_router": {"T1": 9.0, "T2": 4.0, "T3": 7.5, "T4": 3.0},
+        "p4k_c16_goodput_router": {"T1": 11.0, "T2": "CAPACITY_LIMIT", "T3": 9.0, "T4": 2.0},
+        "p4k_c8_goodput_router": {"T1": 10.0, "T2": 5.0, "T3": 8.8, "T4": 2.0},
         "J_per_tok_p4k_c16": {"T1": 2.0, "T3": 2.1, "T4": 2.5},   # lower better
         "d565_c1_decode": {"T1": 100.0, "T2": 102.0, "T3": 101.0, "T4": 103.0},
         "p32k_c1_decode": {"T1": "CAPACITY_LIMIT", "T2": 50.0, "T3": 49.5, "T4": 52.0},
@@ -167,7 +167,7 @@ def selftest() -> int:
     # mixed：T1 守门 False 出局；T3 aggregate 45>30 胜
     assert v["mixed_production_champion"]["winner"] == "T3", v["mixed_production_champion"]
     # EQUIVALENT 路径：把 d565_c16 拉平 → co-declared 或 tiebreak
-    mx2 = dict(mx); mx2["d565_c16_goodput"] = {"T1": 10.0, "T2": 4.0, "T3": 9.9, "T4": 3.0}
+    mx2 = dict(mx); mx2["d565_c16_goodput_router"] = {"T1": 10.0, "T2": 4.0, "T3": 9.9, "T4": 3.0}
     v2 = judge(mx2, topo)["gate_e"]["champions"]
     assert v2["throughput_champion"]["winner"] == "T1"  # 1% 带内共胜→tiebreak c8 T1 9.0 胜
     print(json.dumps({"selftest": "SELFTEST_PASS",

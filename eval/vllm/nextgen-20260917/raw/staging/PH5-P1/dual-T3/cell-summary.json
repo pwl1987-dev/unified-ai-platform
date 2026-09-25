@@ -2,7 +2,7 @@
  "scenario": "multi",
  "experiment_id": "PH5-P1-T3-DUAL-P32K",
  "api": "http://127.0.0.1:19710/v1",
- "wall_s": 56.96,
+ "wall_s": 17.32,
  "sessions": {
   "da": {
    "fixture": "p32k",
@@ -10,13 +10,13 @@
    "requests_ok": 1,
    "requests_total": 1,
    "http_errors": 0,
-   "ttft_p50": 28.5127,
-   "ttft_max": 28.5127,
-   "tpot_med": 0.061748,
+   "ttft_p50": 12.6181,
+   "ttft_max": 12.6181,
+   "tpot_med": 0.017014,
    "sum_output_tokens": 256,
-   "batch_wall_s": 44.258,
-   "goodput_rps": 0.0226,
-   "tok_s": 5.784
+   "batch_wall_s": 16.957,
+   "goodput_rps": 0.059,
+   "tok_s": 15.097
   },
   "db": {
    "fixture": "p32k",
@@ -24,16 +24,16 @@
    "requests_ok": 1,
    "requests_total": 1,
    "http_errors": 0,
-   "ttft_p50": 42.8767,
-   "ttft_max": 42.8767,
-   "tpot_med": 0.052649,
+   "ttft_p50": 12.478,
+   "ttft_max": 12.478,
+   "tpot_med": 0.016561,
    "sum_output_tokens": 256,
-   "batch_wall_s": 56.302,
-   "goodput_rps": 0.0178,
-   "tok_s": 4.547
+   "batch_wall_s": 16.701,
+   "goodput_rps": 0.0599,
+   "tok_s": 15.328
   }
  },
- "aggregate_tok_s": 9.094,
- "fairness_jain_goodput": 0.9861,
- "per_session_p95_ttft": 42.8767
+ "aggregate_tok_s": 30.194,
+ "fairness_jain_goodput": 0.9999,
+ "per_session_p95_ttft": 12.6181
 }

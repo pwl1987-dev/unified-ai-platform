@@ -1,0 +1,63 @@
+{
+ "purpose": "Phase 06 冻结件（Gate E 产出——仅凭本文件+仓库可答真实 Agent 公平横评所需的全部拓扑/profile 事实）",
+ "frozen_utc": "2026-09-25",
+ "gate_e_verdict": "raw/staging/PH5-P4/gate-e-verdict.json",
+ "champions": {
+  "throughput": {
+   "topology": "T1=4×TP1@36864/MS4/spec-k7",
+   "key_numbers": "d565-C16 goodput 1.995 rps; p4k-C4 agg 255.7 tok/s",
+   "boundaries": "单流最弱(144)/长上下文不可服务"
+  },
+  "single_agent": {
+   "topology": "T4=TP4@262144/MS2/spec-k7",
+   "key_numbers": "d565 203.5/p32k 72.4/p128k 19.6 tok/s（3-boot 漂移≤0.3%）",
+   "boundaries": "吞吐最弱（MS2=2 槽）；P220K 独占可服务；boot 4×23.3GiB 稳定"
+  },
+  "dual_agent": {
+   "topology": "T2=2×TP2@131072/MS2/spec-k7",
+   "key_numbers": "per-session 17.09 tok/s (+12.1% vs 次名) jain 0.9996",
+   "evidence_level": "screen 1-boot×3-reps（未入 P3 名额，如实标注）",
+   "boundaries": "mixed 守门失败（短 P95 50.4s）；p220k 不可服务"
+  },
+  "mixed_production": {
+   "topology": "T3=TP2@131072 + 2×TP1@36864",
+   "key_numbers": "短 P95 TTFT 0.27s 守门唯一通过；mixed agg 28.2 并列最高",
+   "boundaries": "无标签 C1 默认落 TP1（须会话标签/角色路由）；four fairness 0.92"
+  }
+ },
+ "M4_freeze": "M4 = TP2 + TP1 + TP1（mixed champion==T3 触发 gates m4_freeze_rule）",
+ "router": "ph5_router.py v1.1（sticky+least-inflight+长度守卫+failover；SELFTEST_PASS 六断言；开销<0.1%）",
+ "q_profiles_inherited": "repro/quant-phase04/phase05-handoff.json（QP-INTERACT=Q0 含 X2 认证基线 / QP-BATCH=Q4C / Q1M=reference only）",
+ "kv": "NATIVE_BF16",
+ "runtime": "runtime029 只读（tree 4632d624…）",
+ "gpu_authorization": "GPU2/3/4/6（2026-09-25 实况；GPU0/1/:8000 生产零触碰；GPU5/7 外围）",
+ "capacity_limits": {
+  "TP1@131072": "引擎数学拒绝（9.05GiB KV 需求>4.8 可用）=确定性 CAPACITY_LIMIT",
+  "T1/T3": "p220k 不可服务",
+  "T2": "p220k 不可服务"
+ },
+ "routing_notes": [
+  "P128K 类长请求必须经长度守卫（est>cap 拦截）",
+  "异构拓扑生产须带 X-Session-标签",
+  "failover 代价=3×1s 探测窗内绑定会话失败+2.3s 重绑"
+ ],
+ "phase06_recommendations": [
+  "角色化路由端点（short/long/batch）作为 M4 生产化前提",
+  "租户隔离/强驱逐 churn 正式议题",
+  "T2 dual 冠军升级 3-boot（如双 Agent 进入生产候选）"
+ ],
+ "debt_transfers": {
+  "FP8-KV": "DEFERRED_CONDITIONAL",
+  "tenant_churn": "Phase06",
+  "graph_replay": "CONDITIONAL 未启用",
+  "MS8-C8": "CLOSED(TP1@MS8 D565-C8 232.2 agg)",
+  "TP1-C4": "CLOSED(P4K-C4 direct 78.0)",
+  "SLO238+": "DEFERRED"
+ },
+ "evidence": {
+  "screen_matrix": "raw/staging/PH5-P3/ph5-matrix.json",
+  "gate_e": "raw/staging/PH5-P4/gate-e-verdict.json",
+  "verbatim_canary": "raw/staging/PH5-P1-V-*/（9/9 PASS）",
+  "router_routes": "raw/staging/PH5-P0B/router-routes-preflight.jsonl + /data/sandbox/ph5-router-routes-T*.jsonl（沙盒）"
+ }
+}

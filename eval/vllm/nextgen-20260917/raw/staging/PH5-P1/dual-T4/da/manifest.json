@@ -3,8 +3,8 @@
  "status": "VALID_PASS",
  "evidence_class": "staging",
  "classification_reason": null,
- "created_utc": "2026-09-25T03:21:51Z",
- "harness_git_sha": "c92c1d2b68d2dc7a29df556fdcf5657cc691e677",
+ "created_utc": "2026-09-25T08:18:38Z",
+ "harness_git_sha": "a5e43561f9904b37152a111a64634d21d6deb65c",
  "harness_files_sha256": {
   "bench_nextgen.py": "c3efa7fef4e71c625398796f7d19b59b2b210065ebdd152ea74935d57d1782e4",
   "sseparser.py": "bf82c5298588a5a5db8aee79d6fe5c77b08df9a3e2ab6b514384d705b251f2fc",
@@ -16,7 +16,7 @@
   "cards": [],
   "power_limit_w": 450.0,
   "initial_temp_c": [
-   33
+   32
   ]
  },
  "server": {
@@ -43,9 +43,9 @@
   "cudagraph": "cg8-custom-ops"
  },
  "timing": {
-  "start_utc": "1970-01-20T14:40:00Z",
-  "end_utc": "1970-01-20T14:40:26Z",
-  "duration_s": 25.934
+  "start_utc": "1970-01-20T19:36:46Z",
+  "end_utc": "1970-01-20T19:37:12Z",
+  "duration_s": 25.881
  },
  "files": {
   "raw_events": "raw-events.jsonl",

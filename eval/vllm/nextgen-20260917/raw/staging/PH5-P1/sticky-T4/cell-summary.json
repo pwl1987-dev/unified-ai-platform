@@ -5,28 +5,28 @@
  "sessions": {
   "sticky-1": {
    "ttft_per_turn": [
-    0.4517,
-    0.7476,
-    0.563,
-    0.5189
+    0.4528,
+    0.7473,
+    0.5628,
+    0.5187
    ]
   },
   "sticky-2": {
    "ttft_per_turn": [
-    0.4169,
-    0.714,
+    0.4171,
+    0.7128,
     0.5272,
-    0.5187
+    0.5185
    ]
   }
  },
  "fresh_sessions_ttft": [
-  0.4489,
-  0.4485,
-  0.4284
+  0.4492,
+  0.4487,
+  0.4287
  ],
- "ttft_first_turn_med": 0.4517,
- "ttft_last_turn_med": 0.5189,
+ "ttft_first_turn_med": 0.4528,
+ "ttft_last_turn_med": 0.5187,
  "sticky_binding_ok": true,
  "session_backend_map": {
   "db": [
@@ -38,19 +38,19 @@
   "f2": [
    "t4"
   ],
-  "f1": [
+  "f3": [
    "t4"
   ],
   "f0": [
    "t4"
   ],
-  "f3": [
-   "t4"
-  ],
-  "long": [
+  "f1": [
    "t4"
   ],
   "s2": [
+   "t4"
+  ],
+  "long": [
    "t4"
   ],
   "s3": [
@@ -77,15 +77,15 @@
  },
  "prefix_cache_counter_delta": {
   "t4": {
-   "vllm:external_prefix_cache_hits_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
-   "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 18082.0,
-   "vllm:external_prefix_cache_queries_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
    "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 5120.0,
-   "vllm:prefix_cache_queries_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+   "vllm:cache_config_info{_block_size_resolved=\"True\",block_size=\"512\",cache_dtype=\"bfloat16\",enable_prefix_caching=\"True\",engine=\"0\",gpu_memory_utilization=\"0.95\",is_attention_free=\"False\",kv_cache_dtype_skip_layers=\"[]\",kv_cache_layout=\"None\",kv_cache_max_concurrency=\"4.032997250229148\",kv_cache_memory_bytes=\"None\",kv_cache_size_tokens=\"1057226\",kv_offloading_backend=\"native\",kv_offloading_size=\"None\",kv_sharing_fast_prefill=\"False\",mamba_block_size=\"128\",mamba_cache_dtype=\"auto\",mamba_cache_mode=\"align\",mamba_page_size_padded=\"None\",mamba_ssm_cache_dtype=\"float16\",num_cpu_blocks=\"None\",num_gpu_blocks=\"4400\",num_gpu_blocks_override=\"None\",prefix_cache_retention_interval=\"None\",prefix_caching_hash_algo=\"sha256\",prefix_match_unit=\"None\",replayssm_buffer_len=\"16\",skip_page_size_padded=\"None\",sliding_window=\"None\",use_kda_recoverssm=\"False\",use_replayssm=\"False\",user_specified_block_size=\"True\",user_specified_mamba_block_size=\"False\"}": 0.0,
+   "vllm:external_prefix_cache_queries_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
    "vllm:external_prefix_cache_hits_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+   "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 18082.0,
    "vllm:prefix_cache_hits_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
-   "vllm:cache_config_info{_block_size_resolved=\"True\",block_size=\"512\",cache_dtype=\"bfloat16\",enable_prefix_caching=\"True\",engine=\"0\",gpu_memory_utilization=\"0.95\",is_attention_free=\"False\",kv_cache_dtype_skip_layers=\"[]\",kv_cache_layout=\"None\",kv_cache_max_concurrency=\"3.9862511457378553\",kv_cache_memory_bytes=\"None\",kv_cache_size_tokens=\"1044971\",kv_offloading_backend=\"native\",kv_offloading_size=\"None\",kv_sharing_fast_prefill=\"False\",mamba_block_size=\"128\",mamba_cache_dtype=\"auto\",mamba_cache_mode=\"align\",mamba_page_size_padded=\"None\",mamba_ssm_cache_dtype=\"float16\",num_cpu_blocks=\"None\",num_gpu_blocks=\"4349\",num_gpu_blocks_override=\"None\",prefix_cache_retention_interval=\"None\",prefix_caching_hash_algo=\"sha256\",prefix_match_unit=\"None\",replayssm_buffer_len=\"16\",skip_page_size_padded=\"None\",sliding_window=\"None\",use_kda_recoverssm=\"False\",use_replayssm=\"False\",user_specified_block_size=\"True\",user_specified_mamba_block_size=\"False\"}": 0.0,
-   "vllm:external_prefix_cache_queries_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0
+   "vllm:external_prefix_cache_hits_total{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+   "vllm:external_prefix_cache_queries_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0,
+   "vllm:prefix_cache_queries_created{engine=\"0\",model_name=\"qwen3.8-27b\"}": 0.0
   }
  }
 }

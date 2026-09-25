@@ -3,8 +3,8 @@
  "status": "VALID_PASS",
  "evidence_class": "staging",
  "classification_reason": null,
- "created_utc": "2026-09-25T01:08:17Z",
- "harness_git_sha": "de60bb3896f43e2f4805b042bf35216624297d9e",
+ "created_utc": "2026-09-25T04:35:16Z",
+ "harness_git_sha": "a5e43561f9904b37152a111a64634d21d6deb65c",
  "harness_files_sha256": {
   "bench_nextgen.py": "c3efa7fef4e71c625398796f7d19b59b2b210065ebdd152ea74935d57d1782e4",
   "sseparser.py": "bf82c5298588a5a5db8aee79d6fe5c77b08df9a3e2ab6b514384d705b251f2fc",
@@ -24,13 +24,13 @@
   ],
   "power_limit_w": 450.0,
   "initial_temp_c": [
-   33
+   32
   ]
  },
  "server": {
   "port": 19711,
-  "pid": 3701333,
-  "pgid": 3701260,
+  "pid": 3843110,
+  "pgid": 3843039,
   "tp": 1,
   "max_num_seqs": 4,
   "launch_cmd_file": "launch-cmd.txt",
@@ -51,9 +51,9 @@
   "cudagraph": "cg8-custom-ops"
  },
  "timing": {
-  "start_utc": "1970-01-20T12:26:35Z",
-  "end_utc": "1970-01-20T12:26:52Z",
-  "duration_s": 16.938
+  "start_utc": "1970-01-20T15:53:34Z",
+  "end_utc": "1970-01-20T15:53:51Z",
+  "duration_s": 16.604
  },
  "files": {
   "raw_events": "raw-events.jsonl",
