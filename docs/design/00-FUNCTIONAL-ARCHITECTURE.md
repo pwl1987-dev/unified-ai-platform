@@ -1,6 +1,6 @@
 # AI Compute & Model Engineering Platform 总体功能设计 v1.0
 
-> 状态：**功能架构冻结候选（Functional Architecture Freeze Candidate）**  
+> 状态：**功能架构已冻结（Functional Architecture Frozen v1.0）**  
 > 当前承载仓库：`qwen3.8-27b-8x4090-stack`；**平台设计本身不绑定该仓库名称、Qwen 模型族或 8×RTX4090 单一硬件形态。**  
 > 当前角色：本仓现有 Qwen3.8-27B × 8×RTX4090 优化工程仅作为 **Reference Workload #001 / Bootstrap Implementation**，用于以真实实验资产验证平台 Contract。  
 > 本文只冻结总体功能边界、核心对象、生命周期、调度原则与自动化闭环；**UI / UX / Human-AI Interaction 另行设计，不在本文展开。**
@@ -3079,7 +3079,7 @@ Plugin / Adapter
 
 扩展，而不新增第二套 Authority 或推翻核心领域模型。
 
-从本节开始，功能层面进入 **Freeze Candidate**；下一阶段转入模块 Contract 拆分与 UI / UX / Human-AI Interaction 设计。
+从本节开始，功能层面进入冻结基线；后续新增一级能力必须通过显式 Architecture Change Proposal，不再以普通功能补充方式扩张总纲。
 
 ---
 
@@ -7064,4 +7064,353 @@ Every dependency has an exit path.
 ```
 
 这成为后续架构、开发、测试、Release Gate 和二开选型的统一约束。
+
+---
+
+# 65. Final Cross-cutting Contracts
+
+以下横向 Contract 作为冻结前最后补充。它们不新增新的平台 Plane，而是约束所有现有能力。
+
+## 65.1 Untrusted Data Boundary
+
+所有外部输入默认视为不可信数据，包括：
+
+- Web Page；
+- PDF / Office；
+- Email；
+- Model Card；
+- Dataset Description；
+- Git Repository；
+- MCP / Tool Output；
+- User-uploaded Document；
+- Retrieved Knowledge。
+
+外部内容中的自然语言指令不得修改：
+
+- System Policy；
+- Tool Permission；
+- Secret Scope；
+- Network Policy；
+- Gate；
+- Budget；
+- Human Approval Requirement。
+
+Prompt Injection、Indirect Prompt Injection、Data / Model Poisoning 必须作为 Security Gate 的正式检测对象。
+
+## 65.2 Prompt / Template / Tool / Workflow Versioning
+
+Prompt、Template、Tool Definition 和 Workflow 都是一级可版本化资产。
+
+至少记录：
+
+```text
+id
+version
+hash
+owner
+input_schema
+output_schema
+dependencies
+created_at
+status
+lineage
+evaluation_evidence
+```
+
+生产版本禁止使用“未固定版本的 Prompt / Workflow”。
+
+## 65.3 Full Reproducibility Snapshot
+
+任何需要用于：
+
+- Benchmark；
+- Gate；
+- Paper；
+- Patent Evidence；
+- Production Promotion；
+
+的实验，必须能够形成完整快照：
+
+```text
+code_revision
+runtime_image
+environment
+driver / cuda
+model_revision
+dataset_revision
+prompt / workflow revision
+seed
+config
+hardware profile
+artifact hashes
+metrics
+logs / evidence
+```
+
+如果无法重建同等实验环境，则结果不能作为强 Gate Evidence。
+
+## 65.4 Drift Detection
+
+持续检测：
+
+- Source Drift；
+- Dataset Drift；
+- Knowledge Drift；
+- Model Quality Drift；
+- Embedding Drift；
+- Retrieval Drift；
+- Traffic Drift；
+- Latency / Throughput Drift；
+- Cost / Energy Drift；
+- Security Drift。
+
+Drift 只能触发：
+
+```text
+Alert
+→ Investigation
+→ Candidate Update
+```
+
+不能直接绕过 Gate 自动替换生产版本。
+
+## 65.5 SLO / Error Budget
+
+生产 Capability 必须具有明确 SLO，例如：
+
+- Availability；
+- TTFT；
+- TPOT；
+- P95 / P99 Latency；
+- Error Rate；
+- Queue Time；
+- Quality Floor；
+- Retrieval Hit Rate；
+- Cost Ceiling。
+
+同时维护 Error Budget。
+
+当 Error Budget 持续透支时，平台优先：
+
+```text
+Stability
+→ Recovery
+→ Capacity
+→ Correctness
+```
+
+暂停非必要的激进发布和高风险自动优化。
+
+## 65.6 Tamper-evident Audit
+
+关键审计事件必须具备防篡改能力。
+
+至少覆盖：
+
+- Policy Change；
+- Gate Change；
+- Permission Change；
+- Secret Access；
+- Production Promotion；
+- Data Export；
+- Model / Dataset Deletion；
+- Human Approval；
+- Security Incident。
+
+建议采用：
+
+```text
+append-only
++ hash chain / signature
++ immutable retention
+```
+
+保证能够回答：
+
+> 谁、在什么时候、以什么权限、基于什么 Evidence、执行了什么动作。
+
+## 65.7 Retention / Deletion / Legal Hold
+
+数据删除不能只理解为“删除文件”。
+
+必须处理：
+
+```text
+Source
+→ Dataset
+→ Training Run
+→ Derived Model
+→ Quantized Artifact
+→ Deployment
+```
+
+的 Lineage 影响。
+
+支持：
+
+- Retention Policy；
+- Tombstone；
+- Secure Delete；
+- License Revocation；
+- PII Deletion Request；
+- Retrain Impact Analysis；
+- Legal Hold / Investigation Hold。
+
+Legal Hold 生效时，自动 GC / Retention 删除必须暂停。
+
+## 65.8 Feedback Quarantine
+
+Production Feedback 不允许直接进入 Training。
+
+必须：
+
+```text
+Production Feedback
+→ Quarantine
+→ Privacy / Secret Scan
+→ Dedup
+→ Quality Review
+→ Source Policy
+→ Dataset Candidate
+→ Dataset Gate
+→ Approved Dataset Version
+```
+
+防止：
+
+- Prompt Injection 污染训练集；
+- 用户隐私进入训练；
+- 错误输出自我强化；
+- Benchmark 污染。
+
+## 65.9 Last-known-good Rollback
+
+LKG 不只覆盖 Model。
+
+至少覆盖：
+
+- Model；
+- Runtime；
+- Environment；
+- Dataset；
+- Index；
+- Prompt；
+- Workflow；
+- Router Policy；
+- Scheduler Policy；
+- Platform Release。
+
+任何自动升级或自主替代必须能够恢复到已知良好版本。
+
+## 65.10 Safety Controls
+
+所有长期自动化必须具有：
+
+- Dry-run / Simulation；
+- Kill Switch；
+- Circuit Breaker；
+- Bounded Retry；
+- Max Tool Steps；
+- Max Cost / GPU Budget；
+- Change Window；
+- Human Escalation；
+- Recovery Timeout。
+
+禁止无限 Research Loop、无限 Retry 或无限自动消费资源。
+
+---
+
+# 66. Functional Architecture Freeze v1.0
+
+截至本节，功能架构总纲完成最终收敛。
+
+## 66.1 冻结结论
+
+当前设计已经覆盖：
+
+```text
+Compute / Environment
+Model / AI Capability
+AI Asset Hub
+Data / Dataset
+Knowledge / Wiki / GraphRAG
+Search / Retrieval / Vector / Rerank
+Memory
+Training / Fine-tuning / Quantization
+Experiment / Benchmark / Evaluation
+Serving / Unified Gateway
+Scheduler / Placement / Elasticity
+Tool / MCP / Actions
+Browser / Computer Use
+Code Intelligence
+Agent Control
+Workflow / Event / Messaging
+Security / Trust
+Observability / Cost / Energy
+Research / Reproduction
+Innovation / IP
+Open-source Reuse
+Upstream Risk
+Universal Replaceability
+Autonomous Replacement / Evolution
+Backup / DR
+Governance / Audit / Lineage
+```
+
+以及传统 ML、工业视觉、时序、专家系统、优化控制、TinyML 等非“大模型”能力。
+
+## 66.2 核心冻结不变量
+
+后续实现必须保持：
+
+1. **Model / Runtime / Provider Agnostic**；
+2. **Capability-first**；
+3. **Core owns policy and authority; plugins/backends provide capability**；
+4. **Every implementation is replaceable**；
+5. **Every dependency has an exit path**；
+6. **Data remains portable**；
+7. **Agents drive workflow; platform controls authority**；
+8. **Evidence before promotion**；
+9. **Business SLA first, fair-share, work-conserving scheduling**；
+10. **UI binds only to our Domain Model / Control Hub API**；
+11. **关键生产变更保留 Human Gate**；
+12. **失败 Evidence 不删除，Lineage 可追溯**。
+
+## 66.3 后续不再继续无边界发散
+
+新增普通模型、Runtime、搜索引擎、向量库、MCP、训练框架等：
+
+```text
+Adapter
++ Capability
++ Contract
++ Registry
++ Gate
+```
+
+即可，不修改总体架构。
+
+只有以下情况允许修改本总纲：
+
+- 出现新的一级 Capability Category；
+- Frozen Invariant 被真实实现证明不可行；
+- 安全 / 法规 / License 出现重大变化；
+- 现有 Contract 无法容纳的新硬件或计算范式；
+- Architecture Change Proposal 经审批通过。
+
+## 66.4 下一阶段
+
+功能设计到此收口。
+
+下一阶段正式转入：
+
+```text
+1. Reuse / Build Matrix
+2. Module & Contract Decomposition
+3. Domain Model / API Boundary
+4. UI / UX / Human-AI Interaction
+5. Stage-1 Foundation Implementation Plan
+```
+
+后续文档应引用本文件作为上位 Authority，不再重复重新讨论平台边界。
 
