@@ -1,7 +1,7 @@
 # AI Compute & Model Engineering Platform 总体功能设计 v1.0
 
 > 状态：**功能架构已冻结（Functional Architecture Frozen v1.0）**  
-> 当前承载仓库：`qwen3.8-27b-8x4090-stack`；**平台设计本身不绑定该仓库名称、Qwen 模型族或 8×RTX4090 单一硬件形态。**  
+> 当前承载仓库：`pwl1987-dev/unified-ai-platform`（MIG-01 迁移自 `qwen3.8-27b-8x4090-stack`）；**平台设计本身不绑定该仓库名称、Qwen 模型族或 8×RTX4090 单一硬件形态。**  
 > 当前角色：本仓现有 Qwen3.8-27B × 8×RTX4090 优化工程仅作为 **Reference Workload #001 / Bootstrap Implementation**，用于以真实实验资产验证平台 Contract。  
 > 本文只冻结总体功能边界、核心对象、生命周期、调度原则与自动化闭环；**UI / UX / Human-AI Interaction 另行设计，不在本文展开。**
 

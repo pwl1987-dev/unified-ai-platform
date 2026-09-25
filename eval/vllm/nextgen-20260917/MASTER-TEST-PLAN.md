@@ -1,6 +1,6 @@
 # Qwen3.8-27B / RTX 4090 下一代推理栈测试总纲
 
-> 适用仓库：`pwl1987/qwen3.8-27b-8x4090-stack`
+> 适用仓库：`pwl1987-dev/unified-ai-platform`（MIG-01 迁移自 `pwl1987/qwen3.8-27b-8x4090-stack`，git history 连续）
 > 制定基线：`main@f2d1054`（2026-09-17）
 > 计划版本：v1.2（增加同规格设备跨机器复现门与第二轮深挖漏项）
 > 主线：vLLM 0.29 + TP2 + Qwen3.8-27B coding-v1.1
@@ -900,7 +900,7 @@ docs(vllm): finalize next-generation serving recommendation
 ## 19. 给执行 Agent 的启动提示词
 
 ```text
-继续推进 pwl1987/qwen3.8-27b-8x4090-stack 的下一代 vLLM 测试。
+继续推进 pwl1987-dev/unified-ai-platform 的下一代 vLLM 测试。
 
 先只读核对 live main、eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md、现有 0.28 权威报告、GPU/进程占用、模型与环境哈希。不得根据聊天记忆猜状态，不得停止未知或生产进程。
 

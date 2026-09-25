@@ -1,0 +1,26 @@
+{
+ "step": "post_transfer_rename_verification",
+ "captured_utc": "2026-09-25T13:28:01Z",
+ "operations": [
+  {"op": "transfer", "api": "POST /repos/pwl1987/qwen3.8-27b-8x4090-stack/transfer", "new_owner": "pwl1987-dev", "result": "immediate (org admin membership)"},
+  {"op": "rename", "api": "PATCH /repos/pwl1987-dev/qwen3.8-27b-8x4090-stack", "name": "unified-ai-platform"}
+ ],
+ "new_canonical": {"full_name": "pwl1987-dev/unified-ai-platform", "url": "https://github.com/pwl1987-dev/unified-ai-platform", "default_branch": "main", "visibility": "public (unchanged)", "main_sha": "9f4c29333673fbe3d03552938ba3512aa506970e"},
+ "history_preserved": {"main_sha_equals_pre_transfer": true, "git_history_continuous": true},
+ "redirects": {
+  "git_user_old_url_pwl1987/qwen3.8-27b-8x4090-stack": {"ls_remote_main": "9f4c29333673fbe3d03552938ba3512aa506970e", "resolves": true},
+  "git_org_old_name_pwl1987-dev/qwen3.8-27b-8x4090-stack": {"ls_remote_main": "9f4c29333673fbe3d03552938ba3512aa506970e", "resolves": true},
+  "api_old_url": "repos/pwl1987/qwen3.8-27b-8x4090-stack returns 200 with full_name=pwl1987-dev/unified-ai-platform"
+ },
+ "local_origin": {"updated_to": "git@github.com:pwl1987-dev/unified-ai-platform.git", "fetch_ok": true, "origin_main": "9f4c29333673fbe3d03552938ba3512aa506970e"},
+ "attachments_post_migration": {"workflows": 0, "runners": 0, "secrets": 0, "variables": 0, "releases": 0, "impact": "none — no CI/runner/secret/package references exist to repair"},
+ "identity_reference_fixes": [
+  "README.md: clone URL + 2 cd paths -> unified-ai-platform",
+  "eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md: L3 适用仓库 + L903 启动提示词",
+  "docs/design/00-FUNCTIONAL-ARCHITECTURE.md: L4 当前承载仓库"
+ ],
+ "intentionally_not_modified": [
+  "/data/repos/qwen3.8-27b-8x4090-stack local filesystem paths in tools/*.py|*.sh (host-local checkout dir, not GitHub identity; renaming would break repro tooling)",
+  "raw evidence JSON boot_cmd strings (immutable evidence)"
+ ]
+}

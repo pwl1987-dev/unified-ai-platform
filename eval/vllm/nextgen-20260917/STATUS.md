@@ -176,3 +176,4 @@ classify 端到端双向验证通过（2026-09-17）。
 - 机制发现：同构拓扑 mixed 短请求饿死（T2/T4）；TP4 单流 spec 带宽收益真实；router v1.1 开销<0.1%；failover 4 run 失败窗+2.3s 重绑。
 - 事故全留痕（§7 十项）：僵尸 router/僵尸 v1 编排器 tag 碰撞/热积累 rc=20/外部 docs 提交者并行 push×2（rebase 处置）等。
 - Phase 06 handoff：repro/topology-phase05/phase06-handoff.json。
+- 2026-09-25 MIG-01：仓库已迁移 `pwl1987-dev/unified-ai-platform`（origin 已更新；旧 URL 重定向有效；证据 raw/staging/MIG-01/）。

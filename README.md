@@ -92,8 +92,8 @@ flowchart TD
 ### llama.cpp 生产基线
 
 ```bash
-git clone https://github.com/pwl1987/qwen3.8-27b-8x4090-stack.git
-cd qwen3.8-27b-8x4090-stack/inference/llamacpp
+git clone https://github.com/pwl1987-dev/unified-ai-platform.git
+cd unified-ai-platform/inference/llamacpp
 docker compose up -d
 # 可选：启动 GPU 与副本监控
 docker compose --profile mon up -d
@@ -104,7 +104,7 @@ docker compose --profile mon up -d
 ### vLLM 单卡高速线路
 
 ```bash
-cd qwen3.8-27b-8x4090-stack/inference/vllm
+cd unified-ai-platform/inference/vllm
 cp .env.example .env
 docker compose up -d
 ```

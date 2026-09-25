@@ -1,0 +1,11 @@
+{
+ "step": "pre_transfer_snapshot",
+ "captured_utc": "2026-09-25T13:26:20Z",
+ "source_repo": {"name_with_owner": "pwl1987/qwen3.8-27b-8x4090-stack", "visibility": "public", "default_branch": "main", "owner_type": "User", "pushed_at": "2026-09-25T08:45:37Z"},
+ "source_main_sha": "9f4c29333673fbe3d03552938ba3512aa506970e",
+ "local_head": "9f4c29333673fbe3d03552938ba3512aa506970e",
+ "working_tree_clean": true,
+ "org_precheck": {"org_exists": true, "org_login": "pwl1987-dev", "my_membership_role": "admin", "target_repo_exists": false},
+ "attachments": {"workflows": 0, "runners": 0, "secrets": 0, "variables": 0, "releases": 0, "pages": false, "packages_check": "read:packages scope absent — token cannot list; repo has no release/package artifacts and eval-only content; risk noted"},
+ "sanitation_scan_hits": 0
+}
