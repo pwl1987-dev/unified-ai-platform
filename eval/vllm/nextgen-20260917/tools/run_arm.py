@@ -153,6 +153,8 @@ def main() -> int:
     ap.add_argument("--skip-thermal", action="store_true")
     ap.add_argument("--warm-prefix", action="store_true",
                     help="正式 runs 用稳定 salt（暖前缀形态，对齐历史 warm 参考值）")
+    ap.add_argument("--thermal-api", default=None,
+                    help="thermal/metrics 探测端点（Phase 05 router 轨：传 backend API；默认用 --api）")
     ap.add_argument("--boot-tag", default="B01",
                     help="exp_id 的 boot 号（Qualify 3-boot 传 B02/B03；默认 B01 兼容既有证据）")
     args = ap.parse_args()
@@ -160,7 +162,7 @@ def main() -> int:
 
     warmup(args)
     if not args.skip_thermal:
-        ok, why = thermal_ready(args.api.rsplit("/v1", 1)[0], uuids, BASELINE)
+        ok, why = thermal_ready((args.thermal_api or args.api).rsplit("/v1", 1)[0], uuids, BASELINE)
         print(f"[thermal] {why}", flush=True)
         if not ok:
             return 20
@@ -187,7 +189,7 @@ def main() -> int:
             print(f"[warm-prefix] {wid}", flush=True)
             subprocess.run(cmd, timeout=args.max_tokens * 40 + 1800)
             if not args.skip_thermal:
-                ok, why = thermal_ready(args.api.rsplit("/v1", 1)[0], uuids, BASELINE)
+                ok, why = thermal_ready((args.thermal_api or args.api).rsplit("/v1", 1)[0], uuids, BASELINE)
                 print(f"[thermal] {why}", flush=True)
                 if not ok:
                     return 20
