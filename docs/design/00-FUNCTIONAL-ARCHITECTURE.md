@@ -22,7 +22,7 @@
 ## A. 一句话定义
 
 > 这不是单纯的“8×4090 GPU 管理后台”，也不是某一个 Qwen 模型的部署工具。  
-> 它要建设成一个 **AI 算力、模型工程、数据工程、自动实验、统一服务和持续创新的一体化平台**。
+> 它要建设成一个 **模型无关、框架无关、厂商无关的 Unified AI Gateway + AI Control Hub**：统一承载 AI 算力、模型、数据、知识、搜索、记忆、工具、Agent、自动实验、生产服务和持续创新。
 
 平台希望把过去需要人工分别完成的事情：
 
@@ -300,19 +300,25 @@ model = auto
 
 > 平台总体拥有哪些能力？
 
-先不看具体产品名，可以理解为九组能力：
+先不看具体产品名，可以理解为十五组能力：
 
 | 能力域 | 解决的问题 |
 |---|---|
-| **Compute** | 算力在哪里、是否健康、如何隔离和分配 |
-| **Model** | 有哪些模型、有什么能力、是否合格 |
+| **Compute & Environment** | 算力在哪里、是否健康、如何隔离和分配 |
+| **Model & Capability** | 有哪些模型/算法/专精能力、是否合格 |
 | **Data & Knowledge** | 数据从哪里来、质量如何、如何形成知识和训练集 |
+| **Search & Retrieval** | 如何做全文、向量、稀疏、混合、图和多模态检索 |
+| **Memory** | Agent、项目、运维和长期知识如何持续记忆与更新 |
+| **Tool / MCP & Actions** | 模型和 Agent 可以安全调用哪些工具和外部能力 |
+| **Browser / Computer Use** | 如何在隔离和审计下执行网页与桌面任务 |
+| **Code Intelligence** | 如何搜索、理解、索引和分析代码仓库 |
 | **Experiment & Training** | 如何训练、量化、复现、比较和优化 |
-| **Serving** | 如何把能力稳定地提供给业务 |
-| **Scheduler** | 业务与训练如何共享资源并自动弹性 |
+| **Serving & Gateway** | 如何把模型、工具、Agent 和检索能力统一提供给业务 |
+| **Scheduler & Resource** | 业务与训练如何共享资源并自动弹性 |
+| **Workflow / Event / Messaging** | 长任务、事件流、队列、重试和恢复如何可靠运行 |
 | **Agent Automation** | 哪些复杂步骤由 Agent 自动规划和协调 |
 | **Research & Innovation** | 如何吸收新技术、形成论文/专利/软著 |
-| **Governance** | 权限、预算、安全、Gate、审计和可追溯性 |
+| **Governance & Security** | 权限、预算、安全、Gate、审计和可追溯性 |
 
 ### 第 3 层：典型旅程（How people use it）
 
