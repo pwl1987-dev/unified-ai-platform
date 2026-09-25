@@ -41,6 +41,7 @@ def _load(path: str) -> dict:
 
 
 def validate_schema(cs: dict) -> tuple[bool, str]:
+    """Agent 场景 cell-summary（mix-*/isolation-*）schema。"""
     req_top = ["scenario", "policy", "wall_s", "per_role", "per_session",
                "fairness_jain_goodput", "failure_window_s"]
     for k in req_top:
@@ -53,6 +54,19 @@ def validate_schema(cs: dict) -> tuple[bool, str]:
         for k in ("requests", "ok", "completion_rate", "ttft_p95"):
             if k not in r:
                 return False, f"missing per_role.{role}.{k}"
+    return True, "ok"
+
+
+def validate_dual_schema(cs: dict) -> tuple[bool, str]:
+    """F3 dual 快照（ph5_workload multi cell-summary）schema。"""
+    if not isinstance(cs.get("sessions"), dict) or not cs["sessions"]:
+        return False, "missing/empty sessions"
+    for sid, v in cs["sessions"].items():
+        for k in ("sum_output_tokens", "batch_wall_s"):
+            if k not in v:
+                return False, f"sessions.{sid} missing {k}"
+    if "fairness_jain_goodput" not in cs:
+        return False, "missing fairness_jain_goodput"
     return True, "ok"
 
 
@@ -142,13 +156,16 @@ def judge_f2(iso: dict, iso_blind: dict | None) -> dict:
     roles = iso["per_role"]
     short = roles["short"]
     lng = roles["long"]
+    ev_family = ("EVICTED", "EVICTED_MIDSTREAM")
     gates = {
         "short_p95_ttft_le_bound": short["ttft_p95"] is not None and short["ttft_p95"] <= F2_BOUND_S,
         "short_completion_eq_1": short["completion_rate"] == 1.0,
         "long_completion_eq_1_excl_evicted": (
             lng["requests"] and
-            (lng["ok"] + lng["errors"].get("EVICTED", 0)) / lng["requests"] == 1.0),
-        "jain_short_ge_min": (iso["fairness_jain_goodput"] or 0) >= F2_JAIN_MIN,
+            (lng["ok"] + sum(lng["errors"].get(c, 0) for c in ev_family))
+            / lng["requests"] == 1.0),
+        "jain_short_ge_min": (iso.get("fairness_jain_short_goodput")
+                              or iso.get("fairness_jain_goodput") or 0) >= F2_JAIN_MIN,
         "failure_window_zero": iso["failure_window_s"] == 0,
         "churn_all_complete": all(v.get("requests") == v.get("ok")
                                   and (v.get("ok") or 0) > 0
@@ -168,7 +185,8 @@ def judge_f2(iso: dict, iso_blind: dict | None) -> dict:
            "values": {"short_p95_ttft_s": short["ttft_p95"],
                       "short_completion": short["completion_rate"],
                       "long_completion_excl_evicted": gates["long_completion_eq_1_excl_evicted"],
-                      "jain": iso["fairness_jain_goodput"],
+                      "jain_short": iso.get("fairness_jain_short_goodput"),
+                      "jain_all": iso["fairness_jain_goodput"],
                       "failure_window_s": iso["failure_window_s"],
                       "evict": ev,
                       "errors_long": lng.get("errors"),
@@ -245,12 +263,28 @@ def main() -> int:
         return selftest()
     if args.validate_schema:
         bad = []
+        n_agent = n_dual = 0
         for p in glob.glob(os.path.join(ST, "PH6-*", "*", "cell-summary.json")):
-            ok, why = validate_schema(_load(p))
+            base = os.path.basename(os.path.dirname(p))
+            cs = _load(p)
+            if base.startswith(("mix-", "isolation-")):
+                n_agent += 1
+                ok, why = validate_schema(cs)
+            elif base.startswith(("dual", "four", "mixed", "sticky", "failover")):
+                n_dual += 1          # F3/PH5 形制快照（ph5_workload schema）
+                continue
+            else:
+                continue
             if not ok:
                 bad.append({"path": p, "why": why})
-        print(json.dumps({"schema_check": "PASS" if not bad else "FAIL", "bad": bad},
-                         ensure_ascii=False, indent=1))
+        for p in glob.glob(os.path.join(ST, "PH6-P3", "dual*", "cell-summary.json")):
+            n_dual += 1
+            ok, why = validate_dual_schema(_load(p))
+            if not ok:
+                bad.append({"path": p, "why": why})
+        print(json.dumps({"schema_check": "PASS" if not bad else "FAIL",
+                          "agent_summaries": n_agent, "dual_snapshots": n_dual,
+                          "bad": bad}, ensure_ascii=False, indent=1))
         return 0 if not bad else 1
     if args.emit:
         # 实际布局：mix/isolation 场景统一落 PH6-P1（ph6_p1_run 单目录）；P3 快照在 PH6-P3

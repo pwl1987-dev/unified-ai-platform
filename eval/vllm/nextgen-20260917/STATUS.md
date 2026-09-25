@@ -2,10 +2,10 @@
 
 > 本文件是执行状态跟踪，不替代仓库 Roadmap/Authority。最终结论回写 docs/VLLM-OPTIMIZATION.md。
 
-- **Phase**: 05（四卡拓扑赛 → Gate E）— **完成（P0A→P4 全链；Gate E 四冠军 + M4 冻结）**
+- **Phase**: 06（真实 Agent 公平横评 → Gate F）— **完成（P0 冻结→M4 臂→F3 3-boot→Gate F 三判定；含 PH6-EVIDENCE-REPAIR-01）**
 - **Last Completed**: Phase 04 全相位（2026-09-22→09-25，含 evidence repair）——Gate D **2 Q-Profile**：QP-INTERACT=Q0（S1/L2 + **X2 认证基线**）∧ QP-BATCH=Q4C；**Q1M=REJECTED_FOR_STRUCTURAL_REGRESSION**（B03 micro tj13 结构破坏）；详见 reports/phase-04-quant.md §9 勘误
-- **Current Task**: —（Phase 05 已收口）
-- **Next Task**: Phase 06 真实 Agent 公平横评（输入=repro/topology-phase05/phase06-handoff.json：四冠军+M4 冻结）
+- **Current Task**: —（Phase 06 已收口）
+- **Next Task**: Phase 07 API/兼容/安全/运维 + 长稳（输入=repro/agent-phase06/phase07-handoff.json；MIG-01 后仓库=pwl1987-dev/unified-ai-platform）
 
 ## Phase 00 结论速览（详见 reports/phase-00-baseline.md）
 
@@ -177,3 +177,8 @@ classify 端到端双向验证通过（2026-09-17）。
 - 事故全留痕（§7 十项）：僵尸 router/僵尸 v1 编排器 tag 碰撞/热积累 rc=20/外部 docs 提交者并行 push×2（rebase 处置）等。
 - Phase 06 handoff：repro/topology-phase05/phase06-handoff.json。
 - 2026-09-25 MIG-01：仓库已迁移 `pwl1987-dev/unified-ai-platform`（origin 已更新；旧 URL 重定向有效；证据 raw/staging/MIG-01/）。
+| 2026-09-25 | **MIG-01 仓库身份迁移**：→ `pwl1987-dev/unified-ai-platform`（org transfer+rename；main SHA 迁移前后不变；双旧 URL git/API 重定向验证；附件 workflows/runners/secrets/releases=0 零影响；identity 修复仅 3 文件） | raw/staging/MIG-01/{mig01-pre-transfer,mig01-post-transfer}.json | 仓库级迁移记录 |
+| 2026-09-25 | **Phase 06 P0 合同冻结**：gates-phase06.yaml v1.0（Agent workload/AB 路由策略/F1-F3 门槛，任何正式 cell 之前）+ harness 三件（ph6_router v2.0 parity+role+evict / ph6_agent_workload / ph6_gate_f）3×SELFTEST_PASS | raw/staging/PH6-P0/selftest-results.txt | gates-phase06 ✅ |
+| 2026-09-25 | **PH6-EVIDENCE-REPAIR-01**：persona 请求漏 `enable_thinking=False`（全战役硬形制）→ 思考模板 +45 tok 击穿 p128kt 装配（131073>131072，引擎 400×203）；修复 body+CAPACITY_LIMIT 分类+每会话成败账；首轮 M4 证据作废保留 PH6-P1-INVALID-THINKING，全新重跑 | PH6-P1-INVALID-THINKING/REPAIR-NOTE.json | harness auto-repair |
+| 2026-09-25 | **F3：T2 双 Agent 冠军 3-boot 资格补足=CONFIRMED**：T2 三 boot 冷形制 17.436/17.394/17.083（中位 17.394=+14.07% vs T1 参考 15.249，逐 boot 同向 3/3，极差 2.1%）；T1-B04 漂移对照 -0.11%；辅助发现 prefix 稳态 ~3.3× 冷形制 | raw/staging/PH6-P3/dual-{T2-B01..03,T1-B04}-R1/ + PH6-P3-V-*（verbatim 4/4） | gates-phase06 gate_f.F3 ✅ |
+| 2026-09-25 | **Gate F 终判**：F1=BLIND_SUFFICIENT（正式轮 short P95 0.94 vs 0.92s 落带；placement 100%；role 层缓存局部性/公平性收益记观察级——jain 0.99 vs 0.72、agg 266 vs 90）；F2=ISOLATION_PASS（10/10 硬门：short P95 0.51s/jain_short 0.927/fw=0/驱逐 release 0.95s；vs T2 饿死基线 50.44s 降 98.7%）；F3=CONFIRMED_DUAL_CHAMPION | raw/staging/PH6-P4/gate-f-verdict.json + reports/phase-06-agent.md | gates-phase06 Gate F ✅ |

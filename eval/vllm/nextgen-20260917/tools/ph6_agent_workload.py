@@ -286,6 +286,13 @@ def pctl(xs: list[float], p: float):
 def summarize(args, t0, evict=None) -> dict:
     events = [json.loads(l) for l in open(os.path.join(args.out_dir, "events.jsonl"))]
     reqs = [e for e in events if "sid" in e]
+    # 驱逐家族重分类（合同 F2：EVICTED 单列不计失败）：被逐会话在途请求的流中断
+    # （FINISH_None）属驱逐因果 → EVICTED_MIDSTREAM（events.jsonl 原始记录不动）
+    if evict and evict.get("evicted_session"):
+        for e in reqs:
+            if (e.get("sid") == evict["evicted_session"]
+                    and e.get("error_class") == "FINISH_None"):
+                e["error_class"] = "EVICTED_MIDSTREAM"
     roles = {}
     for role in ("short", "long", "batch"):
         rs = [e for e in reqs if e["role"] == role]
@@ -318,6 +325,11 @@ def summarize(args, t0, evict=None) -> dict:
     gvals = [s["goodput_tok_s"] for s in sess.values() if s["goodput_tok_s"] is not None]
     jain = ((sum(gvals) ** 2) / (len(gvals) * sum(v * v for v in gvals))
             if gvals else None)
+    # 合同 F2 冻结指标 = jain_short_goodput（short 会话子集）；全会话 jain 另列
+    gshort = [s["goodput_tok_s"] for s in sess.values()
+              if s["role"] == "short" and s["goodput_tok_s"] is not None]
+    jain_short = ((sum(gshort) ** 2) / (len(gshort) * sum(v * v for v in gshort))
+                  if gshort else None)
     # failure window：short TTFT > bound 的最长连续时间跨度
     shorts = sorted([e for e in reqs if e["role"] == "short" and e["ttft_s"] is not None],
                     key=lambda e: e["ts"])
@@ -339,6 +351,7 @@ def summarize(args, t0, evict=None) -> dict:
         "per_role": roles,
         "per_session": sess,
         "fairness_jain_goodput": round(jain, 4) if jain else None,
+        "fairness_jain_short_goodput": round(jain_short, 4) if jain_short else None,
         "aggregate_tok_s": round(sum(e.get("out_tokens") or 0 for e in reqs) /
                                  max(1e-9, max(e["ts"] for e in reqs) -
                                      min(e["ts"] for e in reqs)), 3),
@@ -448,7 +461,8 @@ async def _selftest_mock(ph6_router) -> int:
         a.scenario, a.policy, a.api = "mix", "role", "http://127.0.0.1:19970/v1"
         a.out_dir = os.path.join(tmp, "mix")
         os.makedirs(a.out_dir, exist_ok=True)
-        s = await run_mix(a)
+        await run_mix(a)
+        s = json.load(open(os.path.join(a.out_dir, "cell-summary.json")))
         assert s["per_role"]["short"]["ok"] >= 2 and s["per_role"]["batch"]["ok"] >= 8 \
             and s["per_role"]["long"]["ok"] >= 3, s["per_role"]
         assert s["fairness_jain_goodput"] is not None and s["failure_window_s"] == 0.0

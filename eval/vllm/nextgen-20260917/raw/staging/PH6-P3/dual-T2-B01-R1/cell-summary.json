@@ -1,0 +1,39 @@
+{
+ "scenario": "multi",
+ "experiment_id": "PH5-P1-T2-DUAL-P32K",
+ "api": "http://127.0.0.1:19710/v1",
+ "wall_s": 15.22,
+ "sessions": {
+  "da": {
+   "fixture": "p32k",
+   "rc": 0,
+   "requests_ok": 1,
+   "requests_total": 1,
+   "http_errors": 0,
+   "ttft_p50": 10.7038,
+   "ttft_max": 10.7038,
+   "tpot_med": 0.015615,
+   "sum_output_tokens": 256,
+   "batch_wall_s": 14.686,
+   "goodput_rps": 0.0681,
+   "tok_s": 17.432
+  },
+  "db": {
+   "fixture": "p32k",
+   "rc": 0,
+   "requests_ok": 1,
+   "requests_total": 1,
+   "http_errors": 0,
+   "ttft_p50": 10.7098,
+   "ttft_max": 10.7098,
+   "tpot_med": 0.015565,
+   "sum_output_tokens": 256,
+   "batch_wall_s": 14.679,
+   "goodput_rps": 0.0681,
+   "tok_s": 17.44
+  }
+ },
+ "aggregate_tok_s": 34.863,
+ "fairness_jain_goodput": 1.0,
+ "per_session_p95_ttft": 10.7098
+}

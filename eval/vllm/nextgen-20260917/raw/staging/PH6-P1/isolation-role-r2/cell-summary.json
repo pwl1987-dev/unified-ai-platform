@@ -1,0 +1,164 @@
+{
+ "scenario": "isolation",
+ "policy": "role",
+ "api": "http://127.0.0.1:19710/v1",
+ "wall_s": 156.9,
+ "per_role": {
+  "short": {
+   "requests": 36,
+   "ok": 36,
+   "completion_rate": 1.0,
+   "ttft_p50": 0.2235,
+   "ttft_p95": 0.5117,
+   "ttft_max": 0.5328,
+   "tpot_med": 0.0039,
+   "sum_output_tokens": 2304,
+   "wall_med": 0.4484,
+   "errors": {}
+  },
+  "long": {
+   "requests": 90,
+   "ok": 30,
+   "completion_rate": 0.3333,
+   "ttft_p50": 0.8004,
+   "ttft_p95": 1.2903,
+   "ttft_max": 1.4837,
+   "tpot_med": 0.051949999999999996,
+   "sum_output_tokens": 3809,
+   "wall_med": 7.869,
+   "errors": {
+    "EVICTED": 59,
+    "EVICTED_MIDSTREAM": 1
+   }
+  },
+  "batch": {
+   "requests": 0,
+   "ok": 0,
+   "completion_rate": null,
+   "ttft_p50": null,
+   "ttft_p95": null,
+   "ttft_max": null,
+   "tpot_med": null,
+   "sum_output_tokens": 0,
+   "wall_med": null,
+   "errors": {}
+  }
+ },
+ "per_session": {
+  "hog-2": {
+   "requests": 19,
+   "ok": 19,
+   "tok": 2432,
+   "wall": 143.4097,
+   "role": "long",
+   "goodput_tok_s": 16.9584
+  },
+  "hog-1": {
+   "requests": 70,
+   "ok": 10,
+   "tok": 1280,
+   "wall": 79.35719999999999,
+   "role": "long",
+   "goodput_tok_s": 16.1296
+  },
+  "res-1": {
+   "requests": 6,
+   "ok": 6,
+   "tok": 270,
+   "wall": 3.0622999999999996,
+   "role": "short",
+   "goodput_tok_s": 88.169
+  },
+  "res-0": {
+   "requests": 6,
+   "ok": 6,
+   "tok": 270,
+   "wall": 5.9066,
+   "role": "short",
+   "goodput_tok_s": 45.7116
+  },
+  "res-2": {
+   "requests": 6,
+   "ok": 6,
+   "tok": 270,
+   "wall": 5.9158,
+   "role": "short",
+   "goodput_tok_s": 45.6405
+  },
+  "churn-1": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2721,
+   "role": "short",
+   "goodput_tok_s": 109.5902
+  },
+  "churn-2": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2807,
+   "role": "short",
+   "goodput_tok_s": 109.177
+  },
+  "churn-3": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2834000000000003,
+   "role": "short",
+   "goodput_tok_s": 109.0479
+  },
+  "probe-1790346601": {
+   "requests": 1,
+   "ok": 1,
+   "tok": 64,
+   "wall": 4.2102,
+   "role": "long",
+   "goodput_tok_s": 15.2012
+  },
+  "churn-4": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2811,
+   "role": "short",
+   "goodput_tok_s": 109.1579
+  },
+  "churn-5": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2815,
+   "role": "short",
+   "goodput_tok_s": 109.1387
+  },
+  "churn-6": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2817999999999996,
+   "role": "short",
+   "goodput_tok_s": 109.1244
+  }
+ },
+ "fairness_jain_goodput": 0.771,
+ "fairness_jain_short_goodput": 0.9272,
+ "aggregate_tok_s": 41.172,
+ "short_ttft_bound_s": 5.0,
+ "failure_window_s": 0.0,
+ "context_policy": {
+  "AG-SHORT": "history-accumulated",
+  "AG-LONG-p32k": "history-accumulated",
+  "AG-LONG-p128kt-hog": "stable-prefix-per-turn (doc stream, single-turn assembly <=131072)",
+  "AG-BATCH": "single-turn per task"
+ },
+ "seed": 4242,
+ "temperature": 0,
+ "evict": {
+  "evicted_session": "hog-1",
+  "release_latency_s": 0.9494,
+  "probe_ok": true,
+  "probe_error": null
+ }
+}

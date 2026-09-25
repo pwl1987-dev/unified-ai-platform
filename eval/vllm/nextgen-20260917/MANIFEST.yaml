@@ -316,3 +316,20 @@ phase05:
     M4_frozen: "M4 = TP2 + TP1 + TP1"
     p3: "T1/T3/T4×3 boots 全 rc=0；verbatim 9/9；跨 boot 漂移 ≤1.4%"
     handoff: repro/topology-phase05/phase06-handoff.json
+
+# ---------------------------------------------------------------------------
+phase06:
+  contract: repro/gates-phase06.yaml（v1.0 冻结 commit d4188a9；Gate F 三判定机器判定）
+  input_handoff: repro/topology-phase05/phase06-handoff.json（Gate E 四冠军+M4 冻结继承，未重开）
+  repo_identity: "MIG-01 完成：pwl1987/qwen3.8-27b-8x4090-stack → pwl1987-dev/unified-ai-platform（2026-09-25，history 连续；evidence raw/staging/MIG-01/）"
+  single_variable: "P1=路由策略（role-blind v1.1 parity vs role-tagged v2.0）；P2=租户隔离/churn/强驱逐场景；P3=T2 dual 跨 boot 资格"
+  router: "ph5_router.py v1.1（冻结基线）+ ph6_router.py v2.0（parity 断言 + role 池 + /admin/evict）"
+  evidence_repair: "PH6-EVIDENCE-REPAIR-01（persona 漏 enable_thinking=False → p128kt 装配击穿；首轮 M4 作废保留 PH6-P1-INVALID-THINKING）"
+  form_fact: "enable_thinking=false 为全战役硬形制；dual cell 冷前缀 R1=Gate E 参考口径，prefix 稳态（3.3×）禁混算"
+  gate_f_outcome:
+    completed_utc: "2026-09-25T22:4x+08:00"
+    F1_role_routing: "BLIND_SUFFICIENT（short P95 0.94 vs 0.92s 落带；placement 100%；role 缓存局部性收益观察级）"
+    F2_tenant_isolation: "ISOLATION_PASS（10/10 硬门；short P95 0.51s；jain_short 0.927；fw=0；驱逐 release 0.95s；vs T2 饿死 50.44s 降 98.7%）"
+    F3_t2_3boot: "CONFIRMED_DUAL_CHAMPION（3-boot 中位 17.394=+14.07%；逐 boot 同向；漂移对照 -0.11%）"
+    handoff: repro/agent-phase06/phase07-handoff.json
+  staging_prefix: "raw/staging/PH6-* 与 repro/agent-phase06/"

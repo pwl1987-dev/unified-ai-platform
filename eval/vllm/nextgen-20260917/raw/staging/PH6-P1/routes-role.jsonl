@@ -1,0 +1,475 @@
+{"session": "batch-b1-1", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 3848, "dispatch_ms": 11.992, "upstream_status": 200, "ts": 1790344824.1515}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1064, "dispatch_ms": 10.055, "upstream_status": 200, "ts": 1790344824.1526}
+{"session": "batch-b1-3", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 3848, "dispatch_ms": 14.791, "upstream_status": 200, "ts": 1790344824.157}
+{"session": "batch-b1-0", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 3848, "dispatch_ms": 14.127, "upstream_status": 200, "ts": 1790344824.1579}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1064, "dispatch_ms": 14.706, "upstream_status": 200, "ts": 1790344824.158}
+{"session": "batch-b1-2", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 3848, "dispatch_ms": 22.482, "upstream_status": 200, "ts": 1790344824.1666}
+{"session": "long-1", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28244, "dispatch_ms": 58.613, "upstream_status": 200, "ts": 1790344824.1995}
+{"session": "long-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28270, "dispatch_ms": 49.347, "upstream_status": 200, "ts": 1790344830.7552}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 4.003, "upstream_status": 200, "ts": 1790344831.4956}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.723, "upstream_status": 200, "ts": 1790344832.3883}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.962, "upstream_status": 200, "ts": 1790344832.7483}
+{"session": "long-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28296, "dispatch_ms": 46.936, "upstream_status": 200, "ts": 1790344833.0886}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.616, "upstream_status": 200, "ts": 1790344833.6438}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.686, "upstream_status": 200, "ts": 1790344834.0071}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.738, "upstream_status": 200, "ts": 1790344834.907}
+{"session": "batch-b2-3", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 3848, "dispatch_ms": 8.99, "upstream_status": 200, "ts": 1790344835.0497}
+{"session": "batch-b2-1", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 3848, "dispatch_ms": 9.575, "upstream_status": 200, "ts": 1790344835.0499}
+{"session": "batch-b2-2", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 3848, "dispatch_ms": 13.217, "upstream_status": 200, "ts": 1790344835.0547}
+{"session": "batch-b2-0", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 3848, "dispatch_ms": 14.035, "upstream_status": 200, "ts": 1790344835.0552}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 1150, "dispatch_ms": 4.589, "upstream_status": 200, "ts": 1790344835.2813}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 1150, "dispatch_ms": 3.801, "upstream_status": 200, "ts": 1790344836.4761}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 1171, "dispatch_ms": 4.622, "upstream_status": 200, "ts": 1790344836.8123}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 1171, "dispatch_ms": 4.076, "upstream_status": 200, "ts": 1790344837.8414}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 196.46, "upstream_status": 400, "ts": 1790344845.2475}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 379.641, "upstream_status": 400, "ts": 1790344845.4351}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.174, "upstream_status": 400, "ts": 1790344846.4328}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.252, "upstream_status": 400, "ts": 1790344846.6176}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 185.916, "upstream_status": 400, "ts": 1790344847.6262}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 180.691, "upstream_status": 400, "ts": 1790344847.8057}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.102, "upstream_status": 400, "ts": 1790344848.8143}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 175.846, "upstream_status": 400, "ts": 1790344848.9889}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.219, "upstream_status": 400, "ts": 1790344850.0067}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 185.348, "upstream_status": 400, "ts": 1790344850.1813}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.242, "upstream_status": 400, "ts": 1790344851.196}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 182.604, "upstream_status": 400, "ts": 1790344851.371}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.081, "upstream_status": 400, "ts": 1790344852.3806}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 177.135, "upstream_status": 400, "ts": 1790344852.5565}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.646, "upstream_status": 400, "ts": 1790344853.5739}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.151, "upstream_status": 400, "ts": 1790344853.749}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.754, "upstream_status": 400, "ts": 1790344854.7612}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 178.777, "upstream_status": 400, "ts": 1790344854.9357}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.855, "upstream_status": 200, "ts": 1790344855.0036}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 4.566, "upstream_status": 200, "ts": 1790344855.0037}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1064, "dispatch_ms": 4.526, "upstream_status": 200, "ts": 1790344855.0045}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.585, "upstream_status": 400, "ts": 1790344855.95}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 180.564, "upstream_status": 400, "ts": 1790344856.1225}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.679, "upstream_status": 400, "ts": 1790344857.1398}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 183.08, "upstream_status": 400, "ts": 1790344857.3126}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.133, "upstream_status": 400, "ts": 1790344858.3293}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 183.704, "upstream_status": 400, "ts": 1790344858.503}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.554, "upstream_status": 400, "ts": 1790344859.5141}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 178.15, "upstream_status": 400, "ts": 1790344859.687}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.833, "upstream_status": 200, "ts": 1790344859.9451}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 188.729, "upstream_status": 400, "ts": 1790344860.7097}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 191.362, "upstream_status": 400, "ts": 1790344860.8842}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.895, "upstream_status": 200, "ts": 1790344861.1965}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.071, "upstream_status": 400, "ts": 1790344861.8959}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 179.803, "upstream_status": 400, "ts": 1790344862.071}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 4.001, "upstream_status": 200, "ts": 1790344862.4556}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.145, "upstream_status": 400, "ts": 1790344863.0865}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.914, "upstream_status": 400, "ts": 1790344863.2603}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.453, "upstream_status": 200, "ts": 1790344863.5503}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1086, "dispatch_ms": 2.921, "upstream_status": 200, "ts": 1790344863.5658}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1150, "dispatch_ms": 4.162, "upstream_status": 200, "ts": 1790344863.7285}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 185.714, "upstream_status": 400, "ts": 1790344864.2781}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.072, "upstream_status": 400, "ts": 1790344864.4524}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1171, "dispatch_ms": 4.35, "upstream_status": 200, "ts": 1790344865.0094}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.023, "upstream_status": 200, "ts": 1790344865.0281}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1107, "dispatch_ms": 3.913, "upstream_status": 200, "ts": 1790344865.0373}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.318, "upstream_status": 400, "ts": 1790344865.4625}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 178.99, "upstream_status": 400, "ts": 1790344865.6374}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.572, "upstream_status": 200, "ts": 1790344866.5229}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1128, "dispatch_ms": 3.699, "upstream_status": 200, "ts": 1790344866.5312}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.275, "upstream_status": 400, "ts": 1790344866.6492}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 180.114, "upstream_status": 400, "ts": 1790344866.824}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.638, "upstream_status": 400, "ts": 1790344867.8328}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 178.931, "upstream_status": 400, "ts": 1790344868.0105}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1150, "dispatch_ms": 3.587, "upstream_status": 200, "ts": 1790344868.0481}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1150, "dispatch_ms": 3.553, "upstream_status": 200, "ts": 1790344868.0562}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.384, "upstream_status": 400, "ts": 1790344869.018}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 177.63, "upstream_status": 400, "ts": 1790344869.1944}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1171, "dispatch_ms": 3.592, "upstream_status": 200, "ts": 1790344869.5905}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1171, "dispatch_ms": 3.319, "upstream_status": 200, "ts": 1790344869.5982}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.282, "upstream_status": 400, "ts": 1790344870.2054}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 179.232, "upstream_status": 400, "ts": 1790344870.3801}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.893, "upstream_status": 400, "ts": 1790344871.3915}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 176.534, "upstream_status": 400, "ts": 1790344871.5644}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.928, "upstream_status": 400, "ts": 1790344872.5799}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 183.686, "upstream_status": 400, "ts": 1790344872.7546}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.012, "upstream_status": 400, "ts": 1790344873.7679}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.086, "upstream_status": 400, "ts": 1790344873.9424}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 175.269, "upstream_status": 400, "ts": 1790344874.9509}
+{"session": "churn-1", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.327, "upstream_status": 200, "ts": 1790344875.0022}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 176.337, "upstream_status": 400, "ts": 1790344875.1257}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.977, "upstream_status": 400, "ts": 1790344876.141}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 180.29, "upstream_status": 400, "ts": 1790344876.3128}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.231, "upstream_status": 400, "ts": 1790344877.3333}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 186.553, "upstream_status": 400, "ts": 1790344877.5057}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.108, "upstream_status": 400, "ts": 1790344878.522}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 182.581, "upstream_status": 400, "ts": 1790344878.6947}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 194.089, "upstream_status": 400, "ts": 1790344879.7225}
+{"session": "churn-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.408, "upstream_status": 200, "ts": 1790344879.7542}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 192.719, "upstream_status": 400, "ts": 1790344879.8948}
+{"session": "churn-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.825, "upstream_status": 200, "ts": 1790344880.5091}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.9, "upstream_status": 400, "ts": 1790344880.91}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.465, "upstream_status": 400, "ts": 1790344881.0831}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.986, "upstream_status": 400, "ts": 1790344882.0977}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.874, "upstream_status": 400, "ts": 1790344882.2716}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.606, "upstream_status": 400, "ts": 1790344883.2866}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.479, "upstream_status": 400, "ts": 1790344883.4597}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.704, "upstream_status": 400, "ts": 1790344884.477}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 183.349, "upstream_status": 400, "ts": 1790344884.6496}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.873, "upstream_status": 400, "ts": 1790344885.6671}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.491, "upstream_status": 400, "ts": 1790344885.8407}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.307, "upstream_status": 400, "ts": 1790344886.8575}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 198.61, "upstream_status": 400, "ts": 1790344887.0459}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.774, "upstream_status": 400, "ts": 1790344888.0422}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.947, "upstream_status": 400, "ts": 1790344888.2297}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.396, "upstream_status": 400, "ts": 1790344889.2324}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 175.275, "upstream_status": 400, "ts": 1790344889.4117}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.556, "upstream_status": 400, "ts": 1790344890.4196}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 180.712, "upstream_status": 400, "ts": 1790344890.5991}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.315, "upstream_status": 400, "ts": 1790344891.6068}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 175.929, "upstream_status": 400, "ts": 1790344891.7815}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.546, "upstream_status": 400, "ts": 1790344892.7986}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 183.432, "upstream_status": 400, "ts": 1790344892.9712}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 175.906, "upstream_status": 400, "ts": 1790344893.9825}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 178.765, "upstream_status": 400, "ts": 1790344894.1565}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.926, "upstream_status": 400, "ts": 1790344895.1689}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 177.912, "upstream_status": 400, "ts": 1790344895.3409}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.228, "upstream_status": 400, "ts": 1790344896.3585}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.891, "upstream_status": 400, "ts": 1790344896.5322}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.232, "upstream_status": 400, "ts": 1790344897.5478}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 182.124, "upstream_status": 400, "ts": 1790344897.7206}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.179, "upstream_status": 400, "ts": 1790344898.7383}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.589, "upstream_status": 400, "ts": 1790344898.9116}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.537, "upstream_status": 400, "ts": 1790344899.9255}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.889, "upstream_status": 400, "ts": 1790344900.1027}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.093, "upstream_status": 400, "ts": 1790344901.1144}
+{"session": "churn-2", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.427, "upstream_status": 200, "ts": 1790344901.2718}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 178.487, "upstream_status": 400, "ts": 1790344901.2875}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 187.617, "upstream_status": 400, "ts": 1790344902.3097}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 200.199, "upstream_status": 400, "ts": 1790344902.4941}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.991, "upstream_status": 400, "ts": 1790344903.4934}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.313, "upstream_status": 400, "ts": 1790344903.6772}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 188.864, "upstream_status": 400, "ts": 1790344904.6899}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.682, "upstream_status": 400, "ts": 1790344904.8655}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 193.621, "upstream_status": 400, "ts": 1790344905.8901}
+{"session": "churn-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.58, "upstream_status": 200, "ts": 1790344906.0358}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 195.413, "upstream_status": 400, "ts": 1790344906.0677}
+{"session": "churn-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.997, "upstream_status": 200, "ts": 1790344906.791}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.578, "upstream_status": 400, "ts": 1790344907.0784}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 181.395, "upstream_status": 400, "ts": 1790344907.2549}
+{"session": "hog-1", "event": "SESSION_EVICTED", "closed_upstreams": 0, "ts": 1790344907.5511}
+{"session": "probe-1790344907", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111529, "dispatch_ms": 190.505, "upstream_status": 200, "ts": 1790344907.7489}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344908.0814}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 184.418, "upstream_status": 400, "ts": 1790344908.4463}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344909.0849}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 185.819, "upstream_status": 400, "ts": 1790344909.6384}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344910.0877}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 182.455, "upstream_status": 400, "ts": 1790344910.8269}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344911.0905}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.199, "upstream_status": 400, "ts": 1790344912.0151}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344912.0931}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344913.0958}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.419, "upstream_status": 400, "ts": 1790344913.2038}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344914.0984}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.472, "upstream_status": 400, "ts": 1790344914.3913}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344915.1018}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.334, "upstream_status": 400, "ts": 1790344915.5766}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344916.1048}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.145, "upstream_status": 400, "ts": 1790344916.7628}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344917.1078}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.478, "upstream_status": 400, "ts": 1790344917.9502}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344918.11}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344919.1126}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.495, "upstream_status": 400, "ts": 1790344919.1377}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344920.1153}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.086, "upstream_status": 400, "ts": 1790344920.3262}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344921.1188}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 192.178, "upstream_status": 400, "ts": 1790344921.5255}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344922.1217}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.376, "upstream_status": 400, "ts": 1790344922.7128}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344923.1249}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.715, "upstream_status": 400, "ts": 1790344923.8966}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344924.1275}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.338, "upstream_status": 400, "ts": 1790344925.0829}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344925.1297}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344926.1323}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.136, "upstream_status": 400, "ts": 1790344926.2691}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344927.1356}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.255, "upstream_status": 400, "ts": 1790344927.4548}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344928.1382}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.214, "upstream_status": 400, "ts": 1790344928.642}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344929.1412}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.873, "upstream_status": 400, "ts": 1790344929.8268}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344930.1437}
+{"session": "churn-3", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.699, "upstream_status": 200, "ts": 1790344930.9532}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.572, "upstream_status": 400, "ts": 1790344931.0131}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344931.1458}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344932.1486}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.405, "upstream_status": 400, "ts": 1790344932.1974}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344933.1531}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.141, "upstream_status": 400, "ts": 1790344933.3855}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344934.1561}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.981, "upstream_status": 400, "ts": 1790344934.5737}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344935.1585}
+{"session": "churn-3", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 4.251, "upstream_status": 200, "ts": 1790344935.7152}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.894, "upstream_status": 400, "ts": 1790344935.759}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344936.1615}
+{"session": "churn-3", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.711, "upstream_status": 200, "ts": 1790344936.4696}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.442, "upstream_status": 400, "ts": 1790344936.9462}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344937.1644}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.821, "upstream_status": 400, "ts": 1790344938.1333}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344938.1672}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344939.169}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.045, "upstream_status": 400, "ts": 1790344939.3247}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344940.1721}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.616, "upstream_status": 400, "ts": 1790344940.5091}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344941.1745}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.492, "upstream_status": 400, "ts": 1790344941.6946}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344942.1766}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.316, "upstream_status": 400, "ts": 1790344942.8828}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344943.1788}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.467, "upstream_status": 400, "ts": 1790344944.0683}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344944.1811}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344945.1838}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.623, "upstream_status": 400, "ts": 1790344945.2559}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344946.1865}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.78, "upstream_status": 400, "ts": 1790344946.4445}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344947.1889}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.947, "upstream_status": 400, "ts": 1790344947.6312}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344948.1915}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.141, "upstream_status": 400, "ts": 1790344948.8172}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344949.1943}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.167, "upstream_status": 400, "ts": 1790344950.0034}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344950.1963}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.388, "upstream_status": 400, "ts": 1790344951.1929}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344951.1988}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344952.2016}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.64, "upstream_status": 400, "ts": 1790344952.3796}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344953.2053}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.503, "upstream_status": 400, "ts": 1790344953.5674}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344954.2073}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.394, "upstream_status": 400, "ts": 1790344954.7523}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344955.2105}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.971, "upstream_status": 400, "ts": 1790344955.9404}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344956.2135}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.232, "upstream_status": 400, "ts": 1790344957.1289}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344957.2157}
+{"session": "churn-4", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.495, "upstream_status": 200, "ts": 1790344957.2341}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344958.2175}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.595, "upstream_status": 400, "ts": 1790344958.3176}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344959.2204}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.342, "upstream_status": 400, "ts": 1790344959.5064}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344960.2239}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.152, "upstream_status": 400, "ts": 1790344960.6937}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344961.2269}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.295, "upstream_status": 400, "ts": 1790344961.8829}
+{"session": "churn-4", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.656, "upstream_status": 200, "ts": 1790344961.9976}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344962.229}
+{"session": "churn-4", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.472, "upstream_status": 200, "ts": 1790344962.7519}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.619, "upstream_status": 400, "ts": 1790344963.0706}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344963.2317}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344964.2347}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.188, "upstream_status": 400, "ts": 1790344964.2561}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344965.2379}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 193.065, "upstream_status": 400, "ts": 1790344965.4554}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344966.2409}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.682, "upstream_status": 400, "ts": 1790344966.639}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790344967.2432}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.508, "upstream_status": 400, "ts": 1790344967.8232}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.729, "upstream_status": 400, "ts": 1790344968.4334}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.58, "upstream_status": 400, "ts": 1790344969.0075}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.273, "upstream_status": 400, "ts": 1790344969.618}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 185.624, "upstream_status": 400, "ts": 1790344970.1994}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.081, "upstream_status": 400, "ts": 1790344970.8021}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.546, "upstream_status": 400, "ts": 1790344971.387}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.714, "upstream_status": 400, "ts": 1790344971.9923}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.451, "upstream_status": 400, "ts": 1790344972.5723}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 186.153, "upstream_status": 400, "ts": 1790344973.1847}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.183, "upstream_status": 400, "ts": 1790344973.7627}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.243, "upstream_status": 400, "ts": 1790344974.3709}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.219, "upstream_status": 400, "ts": 1790344974.946}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.648, "upstream_status": 400, "ts": 1790344975.5597}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.957, "upstream_status": 400, "ts": 1790344976.1334}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.086, "upstream_status": 400, "ts": 1790344976.7422}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.456, "upstream_status": 400, "ts": 1790344977.3184}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.111, "upstream_status": 400, "ts": 1790344977.927}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 175.256, "upstream_status": 400, "ts": 1790344978.4999}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.85, "upstream_status": 400, "ts": 1790344979.1104}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.835, "upstream_status": 400, "ts": 1790344979.6849}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.73, "upstream_status": 400, "ts": 1790344980.2964}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.857, "upstream_status": 400, "ts": 1790344980.8711}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.264, "upstream_status": 400, "ts": 1790344981.4841}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.92, "upstream_status": 400, "ts": 1790344982.0558}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 188.184, "upstream_status": 400, "ts": 1790344982.6787}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.009, "upstream_status": 400, "ts": 1790344983.2432}
+{"session": "churn-5", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.728, "upstream_status": 200, "ts": 1790344983.5162}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.289, "upstream_status": 400, "ts": 1790344983.8652}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.731, "upstream_status": 400, "ts": 1790344984.4276}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.113, "upstream_status": 400, "ts": 1790344985.0545}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.737, "upstream_status": 400, "ts": 1790344985.6162}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.707, "upstream_status": 400, "ts": 1790344986.2376}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.854, "upstream_status": 400, "ts": 1790344986.8031}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.772, "upstream_status": 400, "ts": 1790344987.4234}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.562, "upstream_status": 400, "ts": 1790344987.9863}
+{"session": "churn-5", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.656, "upstream_status": 200, "ts": 1790344988.2793}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.203, "upstream_status": 400, "ts": 1790344988.6074}
+{"session": "churn-5", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.416, "upstream_status": 200, "ts": 1790344989.0335}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.777, "upstream_status": 400, "ts": 1790344989.1691}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.687, "upstream_status": 400, "ts": 1790344989.7943}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.919, "upstream_status": 400, "ts": 1790344990.3523}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.524, "upstream_status": 400, "ts": 1790344990.979}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.411, "upstream_status": 400, "ts": 1790344991.5373}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.497, "upstream_status": 400, "ts": 1790344992.1617}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.403, "upstream_status": 400, "ts": 1790344992.7199}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.266, "upstream_status": 400, "ts": 1790344993.3468}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 176.854, "upstream_status": 400, "ts": 1790344993.9026}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 179.762, "upstream_status": 400, "ts": 1790344994.5331}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 177.804, "upstream_status": 400, "ts": 1790344995.0863}
+{"session": "churn-6", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.35, "upstream_status": 200, "ts": 1790345009.81}
+{"session": "churn-6", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.526, "upstream_status": 200, "ts": 1790345014.5734}
+{"session": "churn-6", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.481, "upstream_status": 200, "ts": 1790345015.328}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 6.075, "upstream_status": 200, "ts": 1790346501.8896}
+{"session": "batch-b1-3", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 3848, "dispatch_ms": 9.535, "upstream_status": 200, "ts": 1790346501.8944}
+{"session": "batch-b1-0", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 3848, "dispatch_ms": 11.199, "upstream_status": 200, "ts": 1790346501.8951}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1064, "dispatch_ms": 10.672, "upstream_status": 200, "ts": 1790346501.8958}
+{"session": "batch-b1-1", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 3848, "dispatch_ms": 13.819, "upstream_status": 200, "ts": 1790346501.8999}
+{"session": "batch-b1-2", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 3848, "dispatch_ms": 14.792, "upstream_status": 200, "ts": 1790346501.9013}
+{"session": "long-1", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28244, "dispatch_ms": 48.207, "upstream_status": 200, "ts": 1790346501.9303}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.969, "upstream_status": 200, "ts": 1790346506.6219}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.905, "upstream_status": 200, "ts": 1790346506.7279}
+{"session": "long-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28270, "dispatch_ms": 45.655, "upstream_status": 200, "ts": 1790346507.752}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.173, "upstream_status": 200, "ts": 1790346507.8613}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.262, "upstream_status": 200, "ts": 1790346507.9616}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.328, "upstream_status": 200, "ts": 1790346509.1102}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.3, "upstream_status": 200, "ts": 1790346509.2054}
+{"session": "long-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 28296, "dispatch_ms": 45.389, "upstream_status": 200, "ts": 1790346510.0769}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1150, "dispatch_ms": 3.346, "upstream_status": 200, "ts": 1790346510.3733}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1150, "dispatch_ms": 3.482, "upstream_status": 200, "ts": 1790346510.4627}
+{"session": "batch-b2-1", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 3848, "dispatch_ms": 9.143, "upstream_status": 200, "ts": 1790346511.1487}
+{"session": "batch-b2-0", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 3848, "dispatch_ms": 9.653, "upstream_status": 200, "ts": 1790346511.1488}
+{"session": "batch-b2-2", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 3848, "dispatch_ms": 13.004, "upstream_status": 200, "ts": 1790346511.1535}
+{"session": "batch-b2-3", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "batch", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 3848, "dispatch_ms": 13.6, "upstream_status": 200, "ts": 1790346511.1537}
+{"session": "short-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 1171, "dispatch_ms": 3.575, "upstream_status": 200, "ts": 1790346511.6496}
+{"session": "short-2", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 2, "est_tokens": 1171, "dispatch_ms": 3.45, "upstream_status": 200, "ts": 1790346511.7337}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 190.92, "upstream_status": 200, "ts": 1790346520.5805}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 358.873, "upstream_status": 200, "ts": 1790346520.753}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.756, "upstream_status": 200, "ts": 1790346528.9654}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 218.38, "upstream_status": 200, "ts": 1790346529.1361}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 4.297, "upstream_status": 200, "ts": 1790346530.3367}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.909, "upstream_status": 200, "ts": 1790346530.3369}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1064, "dispatch_ms": 4.128, "upstream_status": 200, "ts": 1790346530.3373}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.498, "upstream_status": 200, "ts": 1790346533.1204}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.629, "upstream_status": 200, "ts": 1790346534.3557}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.343, "upstream_status": 200, "ts": 1790346534.7755}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1086, "dispatch_ms": 2.827, "upstream_status": 200, "ts": 1790346534.78}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.306, "upstream_status": 200, "ts": 1790346535.5994}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 2.987, "upstream_status": 200, "ts": 1790346536.2231}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1107, "dispatch_ms": 3.146, "upstream_status": 200, "ts": 1790346536.2313}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1150, "dispatch_ms": 3.376, "upstream_status": 200, "ts": 1790346536.8565}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.808, "upstream_status": 200, "ts": 1790346537.3389}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 218.063, "upstream_status": 200, "ts": 1790346537.5114}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1128, "dispatch_ms": 3.17, "upstream_status": 200, "ts": 1790346537.6924}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1128, "dispatch_ms": 2.983, "upstream_status": 200, "ts": 1790346537.7023}
+{"session": "res-1", "backend": "t3p1b", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1171, "dispatch_ms": 3.76, "upstream_status": 200, "ts": 1790346538.1276}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1150, "dispatch_ms": 3.387, "upstream_status": 200, "ts": 1790346539.1871}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1150, "dispatch_ms": 3.07, "upstream_status": 200, "ts": 1790346539.1948}
+{"session": "res-0", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1171, "dispatch_ms": 3.384, "upstream_status": 200, "ts": 1790346540.7089}
+{"session": "res-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 1171, "dispatch_ms": 3.381, "upstream_status": 200, "ts": 1790346540.716}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.982, "upstream_status": 200, "ts": 1790346545.7094}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 214.507, "upstream_status": 200, "ts": 1790346545.8794}
+{"session": "churn-1", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.282, "upstream_status": 200, "ts": 1790346550.3372}
+{"session": "churn-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.176, "upstream_status": 200, "ts": 1790346552.6265}
+{"session": "churn-1", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.027, "upstream_status": 200, "ts": 1790346553.3641}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.19, "upstream_status": 200, "ts": 1790346554.0797}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 220.634, "upstream_status": 200, "ts": 1790346554.2546}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.423, "upstream_status": 200, "ts": 1790346562.4477}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 216.402, "upstream_status": 200, "ts": 1790346562.6191}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.085, "upstream_status": 200, "ts": 1790346570.8232}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 215.031, "upstream_status": 200, "ts": 1790346570.9945}
+{"session": "churn-2", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.38, "upstream_status": 200, "ts": 1790346574.1158}
+{"session": "churn-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.16, "upstream_status": 200, "ts": 1790346576.4133}
+{"session": "churn-2", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.041, "upstream_status": 200, "ts": 1790346577.1509}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 195.527, "upstream_status": 200, "ts": 1790346579.2106}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 232.449, "upstream_status": 200, "ts": 1790346579.3835}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 181.46, "upstream_status": 200, "ts": 1790346587.5843}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 217.062, "upstream_status": 200, "ts": 1790346587.7573}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.767, "upstream_status": 200, "ts": 1790346595.9563}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 218.003, "upstream_status": 200, "ts": 1790346596.1286}
+{"session": "churn-3", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.383, "upstream_status": 200, "ts": 1790346597.9017}
+{"session": "churn-3", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 4.131, "upstream_status": 200, "ts": 1790346600.2012}
+{"session": "churn-3", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.686, "upstream_status": 200, "ts": 1790346600.9398}
+{"session": "hog-1", "event": "SESSION_EVICTED", "closed_upstreams": 1, "ts": 1790346601.6846}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "error": "ClientConnectionError('Connection closed')", "evicted": true, "upstream_status": 409, "ts": 1790346601.6848}
+{"session": "probe-1790346601", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111529, "dispatch_ms": 190.56, "upstream_status": 200, "ts": 1790346601.8823}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346602.6905}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346603.6937}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346604.6969}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 180.993, "upstream_status": 200, "ts": 1790346604.7018}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346605.7}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346606.7032}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346607.7062}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346608.7094}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346609.7124}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346610.7154}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346611.7183}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346612.7212}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 184.088, "upstream_status": 200, "ts": 1790346612.9395}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346613.7244}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346614.727}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346615.7302}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346616.7332}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346617.736}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346618.7388}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346619.7413}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.247, "upstream_status": 200, "ts": 1790346620.3989}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346620.7441}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346621.7468}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346622.7502}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346623.753}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346624.7558}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346625.7584}
+{"session": "churn-4", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.485, "upstream_status": 200, "ts": 1790346625.9021}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346626.7611}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346627.7646}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 182.913, "upstream_status": 200, "ts": 1790346627.8589}
+{"session": "churn-4", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.124, "upstream_status": 200, "ts": 1790346628.2001}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346628.7673}
+{"session": "churn-4", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.373, "upstream_status": 200, "ts": 1790346628.9378}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346629.7692}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346630.7719}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346631.7746}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346632.7773}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346633.78}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346634.7827}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 187.704, "upstream_status": 200, "ts": 1790346635.3296}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346635.7861}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346636.7889}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346637.7916}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346638.7943}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346639.7969}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346640.7996}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346641.8022}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 180.728, "upstream_status": 200, "ts": 1790346642.7866}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346642.805}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346643.8076}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346644.8103}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346645.8129}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346646.8155}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346647.8181}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346648.8208}
+{"session": "churn-5", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.358, "upstream_status": 200, "ts": 1790346649.686}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346649.8235}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 183.26, "upstream_status": 200, "ts": 1790346650.2519}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346650.827}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346651.8302}
+{"session": "churn-5", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.328, "upstream_status": 200, "ts": 1790346651.9837}
+{"session": "churn-5", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.24, "upstream_status": 200, "ts": 1790346652.7216}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346652.8322}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346653.8343}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346654.837}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346655.8405}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346656.8433}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 111581, "dispatch_ms": 178.923, "upstream_status": 200, "ts": 1790346657.7079}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346657.8453}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346658.848}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346659.8508}
+{"session": "hog-1", "reason": "EVICTED_REJECT", "upstream_status": 409, "ts": 1790346660.8535}
+{"session": "hog-1", "backend": "t3tp2", "reason": "ROLE_NEW", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 183.194, "upstream_status": 200, "ts": 1790346662.0426}
+{"session": "hog-2", "backend": "t3tp2", "reason": "ROLE_STICKY_HIT", "role": "long", "path": "/v1/chat/completions", "inflight_at_route": 1, "est_tokens": 111581, "dispatch_ms": 177.689, "upstream_status": 200, "ts": 1790346665.5641}
+{"session": "churn-6", "backend": "t3p1a", "reason": "ROLE_NEW", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1064, "dispatch_ms": 3.553, "upstream_status": 200, "ts": 1790346673.4704}
+{"session": "churn-6", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1086, "dispatch_ms": 3.281, "upstream_status": 200, "ts": 1790346675.768}
+{"session": "churn-6", "backend": "t3p1a", "reason": "ROLE_STICKY_HIT", "role": "short", "path": "/v1/chat/completions", "inflight_at_route": 0, "est_tokens": 1107, "dispatch_ms": 3.366, "upstream_status": 200, "ts": 1790346676.5063}

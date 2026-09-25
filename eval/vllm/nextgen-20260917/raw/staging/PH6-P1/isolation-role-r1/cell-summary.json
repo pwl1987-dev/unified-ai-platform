@@ -1,0 +1,164 @@
+{
+ "scenario": "isolation",
+ "policy": "role",
+ "api": "http://127.0.0.1:19710/v1",
+ "wall_s": 156.9,
+ "per_role": {
+  "short": {
+   "requests": 36,
+   "ok": 36,
+   "completion_rate": 1.0,
+   "ttft_p50": 0.2233,
+   "ttft_p95": 0.5106,
+   "ttft_max": 0.5328,
+   "tpot_med": 0.00395,
+   "sum_output_tokens": 2304,
+   "wall_med": 0.4487,
+   "errors": {}
+  },
+  "long": {
+   "requests": 91,
+   "ok": 31,
+   "completion_rate": 0.3407,
+   "ttft_p50": 0.8526,
+   "ttft_p95": 1.2851,
+   "ttft_max": 1.4778,
+   "tpot_med": 0.0519,
+   "sum_output_tokens": 3939,
+   "wall_med": 7.8699,
+   "errors": {
+    "EVICTED": 59,
+    "EVICTED_MIDSTREAM": 1
+   }
+  },
+  "batch": {
+   "requests": 0,
+   "ok": 0,
+   "completion_rate": null,
+   "ttft_p50": null,
+   "ttft_p95": null,
+   "ttft_max": null,
+   "tpot_med": null,
+   "sum_output_tokens": 0,
+   "wall_med": null,
+   "errors": {}
+  }
+ },
+ "per_session": {
+  "hog-1": {
+   "requests": 71,
+   "ok": 11,
+   "tok": 1408,
+   "wall": 86.11770000000001,
+   "role": "long",
+   "goodput_tok_s": 16.3497
+  },
+  "hog-2": {
+   "requests": 19,
+   "ok": 19,
+   "tok": 2432,
+   "wall": 144.6039,
+   "role": "long",
+   "goodput_tok_s": 16.8184
+  },
+  "res-1": {
+   "requests": 6,
+   "ok": 6,
+   "tok": 270,
+   "wall": 3.0642,
+   "role": "short",
+   "goodput_tok_s": 88.1144
+  },
+  "res-0": {
+   "requests": 6,
+   "ok": 6,
+   "tok": 270,
+   "wall": 5.9122,
+   "role": "short",
+   "goodput_tok_s": 45.6683
+  },
+  "res-2": {
+   "requests": 6,
+   "ok": 6,
+   "tok": 270,
+   "wall": 5.923,
+   "role": "short",
+   "goodput_tok_s": 45.585
+  },
+  "churn-1": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2672,
+   "role": "short",
+   "goodput_tok_s": 109.8271
+  },
+  "churn-2": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2819,
+   "role": "short",
+   "goodput_tok_s": 109.1196
+  },
+  "churn-3": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2814,
+   "role": "short",
+   "goodput_tok_s": 109.1435
+  },
+  "probe-1790346221": {
+   "requests": 1,
+   "ok": 1,
+   "tok": 64,
+   "wall": 4.1842,
+   "role": "long",
+   "goodput_tok_s": 15.2956
+  },
+  "churn-4": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2788999999999997,
+   "role": "short",
+   "goodput_tok_s": 109.2632
+  },
+  "churn-5": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.278,
+   "role": "short",
+   "goodput_tok_s": 109.3064
+  },
+  "churn-6": {
+   "requests": 3,
+   "ok": 3,
+   "tok": 249,
+   "wall": 2.2773000000000003,
+   "role": "short",
+   "goodput_tok_s": 109.34
+  }
+ },
+ "fairness_jain_goodput": 0.771,
+ "fairness_jain_short_goodput": 0.9269,
+ "aggregate_tok_s": 41.816,
+ "short_ttft_bound_s": 5.0,
+ "failure_window_s": 0.0,
+ "context_policy": {
+  "AG-SHORT": "history-accumulated",
+  "AG-LONG-p32k": "history-accumulated",
+  "AG-LONG-p128kt-hog": "stable-prefix-per-turn (doc stream, single-turn assembly <=131072)",
+  "AG-BATCH": "single-turn per task"
+ },
+ "seed": 4242,
+ "temperature": 0,
+ "evict": {
+  "evicted_session": "hog-1",
+  "release_latency_s": 0.9273,
+  "probe_ok": true,
+  "probe_error": null
+ }
+}

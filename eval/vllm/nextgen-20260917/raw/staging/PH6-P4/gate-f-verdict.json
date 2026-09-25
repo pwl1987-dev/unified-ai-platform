@@ -1,0 +1,141 @@
+{
+ "gate_f": {
+  "F1_role_routing": {
+   "question": "F1_role_routing",
+   "verdict": "BLIND_SUFFICIENT",
+   "reason": "all axes within 3% band (EQUIVALENT) — simpler router wins",
+   "axes": {
+    "short_p95_ttft_rel_gain": 0.0233,
+    "short_p95_band_out": false,
+    "batch_goodput_rel": 1.0649,
+    "fairness_a": 0.7169,
+    "fairness_b": 0.9902,
+    "long_completion_both_1": true,
+    "placement_accuracy": 1.0
+   },
+   "short_p95_ttft": {
+    "A_blind": 0.9397,
+    "B_role": 0.9178
+   },
+   "batch_goodput_proxy": {
+    "A": 49.313,
+    "B": 101.828
+   },
+   "values": {
+    "A": {
+     "short_p95": 0.9397,
+     "long_completion": 1.0,
+     "fairness": 0.7169
+    },
+    "B": {
+     "short_p95": 0.9178,
+     "long_completion": 1.0,
+     "fairness": 0.9902
+    }
+   },
+   "placement": {
+    "requests": 354,
+    "accurate": 354,
+    "accuracy": 1.0,
+    "per_role_backend": {
+     "batch": {
+      "t3p1a": 8,
+      "t3p1b": 8
+     },
+     "short": {
+      "t3p1a": 72,
+      "t3p1b": 24
+     },
+     "long": {
+      "t3tp2": 242
+     }
+    }
+   }
+  },
+  "F2_tenant_isolation": {
+   "question": "F2_tenant_isolation",
+   "verdict": "ISOLATION_PASS",
+   "gates": {
+    "short_p95_ttft_le_bound": true,
+    "short_completion_eq_1": true,
+    "long_completion_eq_1_excl_evicted": true,
+    "jain_short_ge_min": true,
+    "failure_window_zero": true,
+    "churn_all_complete": true,
+    "session_map_no_leak": true,
+    "evict_client_clear_error": true,
+    "evict_release_le_bound": true,
+    "evict_probe_ok": true
+   },
+   "values": {
+    "short_p95_ttft_s": 0.5117,
+    "short_completion": 1.0,
+    "long_completion_excl_evicted": true,
+    "jain_short": 0.9272,
+    "jain_all": 0.771,
+    "failure_window_s": 0.0,
+    "evict": {
+     "evicted_session": "hog-1",
+     "release_latency_s": 0.9494,
+     "probe_ok": true,
+     "probe_error": null
+    },
+    "errors_long": {
+     "EVICTED": 59,
+     "EVICTED_MIDSTREAM": 1
+    },
+    "bound_s": 5.0
+   },
+   "starvation_reference": {
+    "PH5_mixed_T2_short_p95_s": 50.4439,
+    "PH5_mixed_T3_short_p95_s": 0.2699
+   },
+   "blind_comparison": {
+    "short_p95_ttft_s": 0.5114,
+    "short_completion": 1.0,
+    "failure_window_s": 0.0,
+    "jain": 0.7714
+   }
+  },
+  "F3_t2_3boot": {
+   "question": "F3_t2_3boot",
+   "t2_boot_medians": {
+    "B01": 17.436,
+    "B02": 17.394,
+    "B03": 17.083
+   },
+   "t1_control": {
+    "boot_med": 15.232,
+    "p3_ref": 15.249,
+    "drift_rel": -0.0011
+   },
+   "drift_ok": true,
+   "escalate_full_matrix": false,
+   "t2_3boot_median": 17.394,
+   "rel_vs_t1": 0.1407,
+   "per_boot_direction_positive": true,
+   "verdict": "CONFIRMED_DUAL_CHAMPION",
+   "reason": "T2 3-boot median 17.394 >= T1 ref 15.249 +3% and all boots positive",
+   "aux_prefix_warm_reps": {
+    "B01": [
+     59.204,
+     58.689
+    ],
+    "B02": [
+     59.13,
+     59.355
+    ],
+    "B03": [
+     56.259,
+     56.612
+    ]
+   }
+  }
+ },
+ "epsilon_band": 0.03,
+ "inputs": [
+  "raw/staging/PH6-P1",
+  "raw/staging/PH6-P2",
+  "raw/staging/PH6-P3"
+ ]
+}

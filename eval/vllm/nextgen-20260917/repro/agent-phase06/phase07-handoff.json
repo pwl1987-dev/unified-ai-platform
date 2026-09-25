@@ -1,0 +1,51 @@
+{
+ "purpose": "Phase 07 冻结件（Gate F 产出——API/兼容/安全/运维与长稳认证所需的全部 Phase 06 事实）",
+ "frozen_utc": "2026-09-25",
+ "gate_f_verdict": "raw/staging/PH6-P4/gate-f-verdict.json",
+ "verdicts": {
+  "F1_role_routing": {
+   "verdict": "BLIND_SUFFICIENT",
+   "key_numbers": "正式轮 short P95 blind 0.9397s vs role 0.9178s（Δ2.3% 落带）；placement 100%（354/354）",
+   "observation_level": "role 轮 long P95 0.55s vs blind 11.6s；jain 0.990 vs 0.717；agg 266 vs 90 tok/s——缓存局部性/公平性实质收益，未入 F1 主判定（主轴=short P95，冻结在先）",
+   "recommendation": "Phase 07 生产装配可选用 ph6_router v2.0 role 池换取确定性前缀局部性；短尾保护不需要它"
+  },
+  "F2_tenant_isolation": {
+   "verdict": "ISOLATION_PASS",
+   "key_numbers": "short P95 0.5117s（门 5s）/jain_short 0.9272/failure window 0/churn 6 波全成/强驱逐 release 0.9494s（门 15s）",
+   "starvation_quantified": "PH5 mixed-T2 50.44s → M4 0.51s（降 98.7%）；blind/role 两策略同场景等价守住"
+  },
+  "F3_t2_3boot": {
+   "verdict": "CONFIRMED_DUAL_CHAMPION",
+   "key_numbers": "T2 3-boot 中位 17.394 tok/s/session（B01 17.436/B02 17.394/B03 17.083）vs T1 参考 15.249 = +14.07%，逐 boot 同向 3/3，跨 boot 极差 2.1%",
+   "drift_control": "T1-B04 对照 15.232 vs PH5-P3 参考 15.249 = -0.11%（≤3%，跨时段可比成立）"
+  }
+ },
+ "artifacts": {
+  "router": "ph5_router.py v1.1（冻结基线）+ ph6_router.py v2.0（v1.1 parity 断言 + role 池 + /admin/evict + 宽限窗 60s）",
+  "harness": "ph6_agent_workload.py（mix/isolation 场景，事件级采集）+ ph6_f3_run.py（3-boot 资格链）+ ph6_gate_f.py（判定器+schema）",
+  "contract": "repro/gates-phase06.yaml v1.0"
+ },
+ "form_facts": {
+  "persona_request_body": "chat_template_kwargs.enable_thinking=false 为全战役硬形制（思考模板 +~45 tok 会击穿 p128kt 装配——PH6-EVIDENCE-REPAIR-01）",
+  "dual_cell_form": "冷前缀 R1=PH5 每 boot 单次执行同形制（Gate E 参考值口径）；同 prompt 重复执行进入前缀缓存稳态（3.3×），禁止混算",
+  "invalid_evidence": "raw/staging/PH6-P1-INVALID-THINKING/（首轮 M4，作废保留）"
+ },
+ "debt_transfers": {
+  "M4-COMPOSED": "账本已建（合同 ARM-C）未执行——batch→Q4C backend 异构部署，Phase 07 生产装配前可选",
+  "agent_product_cross_eval": "MTP §12 Agent 产品层横评（Pi/Claude Code 等多客户端）→ Phase 06b/07 前置（本机暂无第二 Agent 产品实例）",
+  "FP8-KV": "DEFERRED_CONDITIONAL（继承）",
+  "SLO238+": "DEFERRED（继承）"
+ },
+ "phase07_inputs": {
+  "production_candidate": "M4=TP2@131072 MS2 + 2×TP1@36864 MS4（短尾/隔离已认证；role 池与驱逐端点可用）",
+  "api_compat_targets": "MTP §13（OpenAI/Anthropic adapter、tool calling、流故障注入、路由器重启风暴）",
+  "stability_targets": "MTP §14（30min smoke→2h→8h→24h 门；混合流量建议纳入 prefix-cache 稳态红利）",
+  "router_upgrade_decision": "v1.1 vs v2.0 role 池：按 F1 观察级收益在 Phase 07 装配时拍板"
+ },
+ "evidence": {
+  "f1_f2": "raw/staging/PH6-P1/（8 场景=2 轮×2 策略×{mix,isolation}，含 events.jsonl/route log/routes-role.jsonl）",
+  "f3": "raw/staging/PH6-P3/（dual-{T2-B01..B03,T1-B04}-R{1,2,3} 快照）+ PH6-P3-V-*（verbatim 4/4）",
+  "gate_f": "raw/staging/PH6-P4/gate-f-verdict.json",
+  "energy": "sandbox energy-ph6-m4（窗口上下文，未入 Gate F）"
+ }
+}
