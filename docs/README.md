@@ -9,25 +9,32 @@
 3. 看 [技术栈基线](design/01-TECHNOLOGY-STACK.md)，了解 React/TypeScript + Go + Python 的前后端分工、数据层、事件总线与部署边界。
 4. 看 [任务分解基线](design/02-WORK-BREAKDOWN.md)，了解 P0-P10、七条并行轨道、UI/UX 时间点和第一批 Work Package。
 5. 看 [Reuse / Build Matrix](design/03-REUSE-BUILD-MATRIX.md)，了解第三方能力哪些 REUSE / ADAPTER / BUILD / REPLACE_LATER / RESTRICTED，以及每项的 Authority、数据归属和 Exit Path。
-6. 看 [User Roles](ux/01-ROLES.md)，了解首批九类产品角色、人机责任边界和后续 Golden Journey / IA / Low-fi 的设计输入。
-7. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解已完成的优化实验。
-8. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
-9. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
+6. 看 [Dependency Register](design/04-DEPENDENCY-REGISTER.md)，核对第三方 exact repo / audit revision / License Evidence / mirror / replacement path。
+7. 看 [Core Domain Model](design/10-DOMAIN-MODEL.md)，了解 27 个一级 Domain Object、Stable ID、lifecycle、ownership、lineage、Evidence 和第三方 DTO 边界。
+8. 看 [User Roles](ux/01-ROLES.md)，了解首批九类产品角色。
+9. 看 [Human-AI Responsibility Matrix](ux/04-HUMAN-AI-RESPONSIBILITY.md)，了解 AI 可执行/仅建议/需人审/人类最终决定的边界。
+10. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
+11. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
+12. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
 
 ## 文档索引
 
 | 文档 | 定位 |
 |---|---|
-| [design/00-FUNCTIONAL-ARCHITECTURE.md](design/00-FUNCTIONAL-ARCHITECTURE.md) | 模型/框架/厂商无关的 AI Compute & Model Engineering Platform 总体功能设计：统一网关、模型/数据/实验、GPU 调度、Agent 自动化、研究复现与成果转化 |
-| [design/01-TECHNOLOGY-STACK.md](design/01-TECHNOLOGY-STACK.md) | 技术栈已冻结 v1.0：React/TypeScript 前端、Go Control Plane、Python AI/ML Worker、VM/Container 层、PostgreSQL/S3/NATS 与 Adapter-first 边界 |
-| [design/02-WORK-BREAKDOWN.md](design/02-WORK-BREAKDOWN.md) | P0-P10 任务分解基线：Reuse/Build、Domain/API、UI/UX、Foundation、Infra、Integration、AI Factory、Scheduler/Agent、Hardening 与 Release |
-| [design/03-REUSE-BUILD-MATRIX.md](design/03-REUSE-BUILD-MATRIX.md) | WP-P0-01：19 类候选的 Reuse/Build 主判定、八问、License 风险、Authority 边界、Exit Path 与自主替代优先级 |
-| [ux/01-ROLES.md](ux/01-ROLES.md) | WP-P2-01：Platform Admin、AI Engineer、Data/Knowledge Engineer、Researcher、App Developer、SRE、Security/Auditor、Approver、Viewer 九类角色与 AI Operator 边界 |
+| [design/00-FUNCTIONAL-ARCHITECTURE.md](design/00-FUNCTIONAL-ARCHITECTURE.md) | Functional Architecture Frozen v1.0；模型/框架/厂商无关的 Unified AI Gateway + AI Control Hub 总体功能设计 |
+| [design/01-TECHNOLOGY-STACK.md](design/01-TECHNOLOGY-STACK.md) | Technology Stack Frozen v1.0；React/TypeScript、Go、Python、VM/Container、PostgreSQL/S3/NATS 与 Adapter-first 边界 |
+| [design/02-WORK-BREAKDOWN.md](design/02-WORK-BREAKDOWN.md) | P0-P10 任务分解基线、七条并行轨道、UI/UX 时间点和 Work Package |
+| [design/03-REUSE-BUILD-MATRIX.md](design/03-REUSE-BUILD-MATRIX.md) | WP-P0-01：19 类候选的 Reuse/Build 主判定、八问、Authority、Exit Path 与自主替代优先级 |
+| [design/04-DEPENDENCY-REGISTER.md](design/04-DEPENDENCY-REGISTER.md) | WP-P0-02：第三方 audit revision、License Evidence、风险、内部镜像与 Replacement Register |
+| [design/10-DOMAIN-MODEL.md](design/10-DOMAIN-MODEL.md) | WP-P1-01：27 个一级 Domain Object、Stable ID、spec/status、ownership、lineage、Evidence 与 P1 裁决登记 |
+| [../contracts/schemas/domain-envelope.schema.json](../contracts/schemas/domain-envelope.schema.json) | WP-P1-01 机器可读 common Domain Envelope JSON Schema baseline |
+| [ux/01-ROLES.md](ux/01-ROLES.md) | WP-P2-01：九类 User Roles 与 AI Operator 权限继承边界 |
+| [ux/04-HUMAN-AI-RESPONSIBILITY.md](ux/04-HUMAN-AI-RESPONSIBILITY.md) | WP-P2-02：R0-R3 Human-AI Responsibility、预授权自动化、Decision Packet 和高风险动作边界 |
 | [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md) | 权重解剖、量化配方、MTP 实测、三引擎横评与 SGLang 决策 |
 | [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md) | vLLM 生产线实验日志、DFlash2、KV、显存与 P0 归因 |
 | [VLLM-OPTIMIZATION-PLAN-ARCHIVE.md](VLLM-OPTIMIZATION-PLAN-ARCHIVE.md) | 早期规划存档，不替代当前测试总纲 |
 | [PROBLEMS-AND-FIXES.md](PROBLEMS-AND-FIXES.md) | 问题、踩坑、根因和修复记录 |
-| [ROADMAP.md](ROADMAP.md) | 后续优化路线和待验证事项 |
+| [ROADMAP.md](ROADMAP.md) | Reference Workload 后续优化路线和待验证事项 |
 
 ## 当前平台设计推进点
 
@@ -39,17 +46,35 @@ Frozen Authority
 Work Breakdown
   02 WBS
         ↓
-First-pass Work Packages
-  03 Reuse / Build Matrix
-  ux/01 User Roles
+Completed first-pass packages
+  P0-01 Reuse / Build Matrix
+  P0-02 Dependency Register
+  P1-01 Core Domain Model
+  P2-01 User Roles
+  P2-02 Human-AI Responsibility
         ↓
-Next
-  P1 Core Domain Model
-  P2 Human-AI Responsibility
-  P2 Golden Journeys
-  P2 Information Architecture
-  P2 Low-fi Wireframes
+Next Contract / UX layer
+  P1-02 Northbound API Contract
+  P1-03 Event Contract
+  P1-04 State Machines
+  P1-05 Adapter Contract
+
+  P2-03 Golden Journeys
+  P2-04 Information Architecture
+  P2-05 Low-fi Wireframes
 ```
+
+## 当前 P1 裁决登记
+
+已识别但未越过 Authority 的问题：
+
+- OCI Registry Adapter naming；
+- Asset source vs Asset hub boundary；
+- Scope / Identity primitives 是否升格为一级 Domain Object；
+- business revision 与 resource_version 分离；
+- Provider / Serving conformance boundary。
+
+这些必须在对应 P1 Contract 中继续收敛，不能由 UI 或第三方实现反向决定。
 
 ## 规则
 
@@ -60,4 +85,5 @@ Next
 - Frozen Architecture / Technology Stack 只由有 Evidence 的 Architecture Change 修改；
 - UI 只绑定我方 Domain Model / Control Hub API，不绑定第三方内部 DTO；
 - 第三方复用必须经过 Adapter / Contract；
-- Work Package 必须有明确 Acceptance Criteria 与 Exit Path。
+- Work Package 必须有明确 Acceptance Criteria 与 Exit Path；
+- AI/Agent 不得通过 AI Operator、Command Palette 或 backend admin API 绕过同一套 Policy / Approval / Evidence。
