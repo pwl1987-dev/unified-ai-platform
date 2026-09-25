@@ -1,20 +1,20 @@
 {
  "scenario": "failover",
  "experiment_id": "PH5-P1-T1-FAILOVER",
- "kill_pid": 3715055,
+ "kill_pid": 3825288,
  "runs_rc": [
   0,
   0,
   0,
-  0,
-  0,
-  0,
-  0,
-  0,
+  3,
+  3,
+  3,
+  3,
+  3,
   0,
   0
  ],
- "failed_runs": 0,
+ "failed_runs": 5,
  "rebind_count": 0,
- "wall_s": 12.8
+ "wall_s": 9.2
 }

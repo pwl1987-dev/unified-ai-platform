@@ -1,0 +1,62 @@
+{
+ "experiment_id": "PH5-P1-T3-FAILOVER-fo3",
+ "schema_version": "nextgen-metrics-1",
+ "client_version": "bench_nextgen-1",
+ "mode": "fixed-output",
+ "fixture_name": "d565",
+ "fixture_sha256": "131ca085aced4ec859845cda24ff38aa07f7584eaafa90f7397838ade5b5eea7",
+ "concurrency": 1,
+ "max_tokens": 128,
+ "requested_output_tokens": 128,
+ "requests_total": 1,
+ "requests_ok": 0,
+ "http_errors": 1,
+ "count_mismatch_samples": 0,
+ "early_stop_samples": 0,
+ "sampler_stats": {
+  "metrics_endpoint": {
+   "requested_interval_ms": 100,
+   "actual_interval_ms_min": null,
+   "actual_interval_ms_median": null,
+   "actual_interval_ms_max": null,
+   "missing_sample_ratio": null,
+   "max_gap_ms": null,
+   "sampler_exit_code": 0,
+   "samples_collected": 1,
+   "errors": []
+  },
+  "nvml": {
+   "requested_interval_ms": 500,
+   "actual_interval_ms_min": 0.0,
+   "actual_interval_ms_median": 0.0,
+   "actual_interval_ms_max": 0.0,
+   "missing_sample_ratio": 0.0,
+   "max_gap_ms": 0.0,
+   "sampler_exit_code": 0,
+   "samples_collected": 8,
+   "errors": []
+  }
+ },
+ "per_request": [
+  {
+   "request_index": 0,
+   "ok": false,
+   "ttfb_s": null,
+   "ttft_s": null,
+   "e2e_latency_s": null,
+   "output_tokens": null,
+   "e2e_output_tok_s": null,
+   "client_observed_decode_tok_s": null,
+   "tpot_s": null,
+   "null_reason": null,
+   "early_stop": false,
+   "stop_reason": null
+  }
+ ],
+ "percentiles": {},
+ "aggregate": {
+  "batch_wall_s": 0.063,
+  "sum_output_tokens": 0,
+  "max_running_observed": null
+ }
+}

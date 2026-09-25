@@ -25,8 +25,8 @@ DIRECT_MAP = {
     r"C1-L032K": ("p32k_c1_decode", "NS"),
     r"C1-L128K[TT]?": ("p128k_c1_decode", "NS"),
     r"C4-L004K": ("p4k_c4_agg", "NS"),
-    r"C8-L0565": ("d565_c8_goodput", "NS"),
-    r"C16-L0565": ("d565_c16_goodput", "NS"),
+    r"C8-L0565": ("d565_c8_goodput", "F512"),
+    r"C16-L0565": ("d565_c16_goodput", "F512"),
     r"C8-L004K": ("p4k_c8_goodput", "NS"),
     r"C16-L004K": ("p4k_c16_goodput", "NS"),
 }
@@ -102,27 +102,37 @@ def main() -> int:
                         cells.setdefault(axis[:-len("_decode")] + "_ttft", {})[topo] = r["ttft"]
                     prov[f"{topo}:{axis}:{track}"] = [os.path.relpath(d, ST) for d in dirs][:12]
     # 场景类 cell-summary（multi/sticky/failover/mixed）
-    for f in glob.glob(os.path.join(ST, "PH5-P1", "*cell-summary.json")) + \
-             glob.glob(os.path.join(ST, "PH5-P3", "*cell-summary.json")):
+    for f in glob.glob(os.path.join(ST, "PH5-P1", "*", "cell-summary.json")) + \
+             glob.glob(os.path.join(ST, "PH5-P3", "*", "cell-summary.json")):
         cs = json.load(open(f))
         name = os.path.basename(os.path.dirname(f))
-        m = re.match(r"(dual|four|mixed|sticky|failover)-?(T\d\w*)?", name)
+        m = re.match(r"(dual|dual128|four|mixed|sticky|failover)-?(T\d\w*)?$", name)
         if not m:
             continue
         scen, topo = m.group(1), m.group(2) or "T?"
-        if scen == "dual" or (cs.get("scenario") == "multi" and "dual" in name):
-            d = cs.get("sessions") or {}
-            toks = [v.get("sum_output_tokens") or 0 for v in d.values()]
-            walls = [v.get("batch_wall_s") or 1 for v in d.values()]
+        d = cs.get("sessions") or {}
+        toks = [v.get("sum_output_tokens") or 0 for v in d.values()]
+        walls = [v.get("batch_wall_s") or 1 for v in d.values()]
+        if scen == "dual" or scen == "dual128":
+            pre = "dual_p32k" if scen == "dual" else "dual_p128k"
             if toks:
-                cells.setdefault("dual_p32k_sess_decode", {})[topo] = round(
+                cells.setdefault(pre + "_sess_decode", {})[topo] = round(
                     statistics.median([t / w for t, w in zip(toks, walls)]), 3)
-                cells.setdefault("dual_p32k_aggregate", {})[topo] = round(sum(toks) / max(walls), 3)
-                cells.setdefault("dual_p32k_fairness", {})[topo] = cs.get("fairness_jain_goodput")
+                cells.setdefault(pre + "_aggregate", {})[topo] = round(sum(toks) / max(walls), 3)
+                cells.setdefault(pre + "_fairness", {})[topo] = cs.get("fairness_jain_goodput")
+        elif scen == "four":
+            if toks:
+                cells.setdefault("four_p32k_aggregate", {})[topo] = round(sum(toks) / max(walls), 3)
+                cells.setdefault("four_p32k_fairness", {})[topo] = cs.get("fairness_jain_goodput")
         elif scen == "mixed":
+            long_ok = any(k == "long" and (v.get("requests_ok") or 0) >= 1 for k, v in d.items())
+            short_p95 = max((v.get("ttft_max") or 0) for k, v in d.items() if k.startswith("s"))
+            base = (cells.get("d565_c1_ttft", {}).get(topo))
+            guard = bool(base and short_p95 and short_p95 <= base * 1.05 + 0.05)
+            cells.setdefault("mixed_short_p95_ttft_guard", {})[topo] = guard
+            cells.setdefault("mixed_long_completion_rate", {})[topo] = 1.0 if long_ok else 0.0
             cells.setdefault("mixed_aggregate", {})[topo] = cs.get("aggregate_tok_s")
-            cells.setdefault("mixed_short_p95_ttft_guard", {})[topo] = cs.get("short_p95_guard")
-            cells.setdefault("mixed_long_completion_rate", {})[topo] = cs.get("long_completion_rate")
+            cells.setdefault("mixed_short_p95_ttft_s", {})[topo] = round(short_p95, 4)
     out = {"topologies": topos, "cells": cells, "provenance": prov,
            "note": "CAPACITY_LIMIT/UNSUPPORTED 由 boot/容量快照侧另行并入（gate_e 支配判定）"}
     os.makedirs(os.path.dirname(args.out), exist_ok=True)

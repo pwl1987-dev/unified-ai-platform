@@ -16,11 +16,11 @@
  "sampler_stats": {
   "metrics_endpoint": {
    "requested_interval_ms": 100,
-   "actual_interval_ms_min": 44.6,
+   "actual_interval_ms_min": 43.8,
    "actual_interval_ms_median": 100.1,
-   "actual_interval_ms_max": 100.2,
+   "actual_interval_ms_max": 100.1,
    "missing_sample_ratio": 0.0,
-   "max_gap_ms": 100.2,
+   "max_gap_ms": 100.1,
    "sampler_exit_code": 0,
    "samples_collected": 10,
    "errors": []
@@ -29,9 +29,9 @@
    "requested_interval_ms": 500,
    "actual_interval_ms_min": 0.0,
    "actual_interval_ms_median": 0.0,
-   "actual_interval_ms_max": 507.7,
+   "actual_interval_ms_max": 507.5,
    "missing_sample_ratio": 0.0,
-   "max_gap_ms": 507.7,
+   "max_gap_ms": 507.5,
    "sampler_exit_code": 0,
    "samples_collected": 16,
    "errors": []
@@ -41,13 +41,13 @@
   {
    "request_index": 0,
    "ok": true,
-   "ttfb_s": 0.0584,
-   "ttft_s": 0.2564,
-   "e2e_latency_s": 0.9518,
+   "ttfb_s": 0.059,
+   "ttft_s": 0.2514,
+   "e2e_latency_s": 0.9418,
    "output_tokens": 128,
-   "e2e_output_tok_s": 134.488,
-   "client_observed_decode_tok_s": 182.644,
-   "tpot_s": 0.005475,
+   "e2e_output_tok_s": 135.912,
+   "client_observed_decode_tok_s": 183.948,
+   "tpot_s": 0.005436,
    "null_reason": null,
    "early_stop": false,
    "stop_reason": "length"
@@ -55,9 +55,9 @@
  ],
  "percentiles": {},
  "aggregate": {
-  "batch_wall_s": 0.952,
+  "batch_wall_s": 0.942,
   "sum_output_tokens": 128,
-  "aggregate_output_tok_s": 134.488,
+  "aggregate_output_tok_s": 135.912,
   "max_running_observed": null
  }
 }

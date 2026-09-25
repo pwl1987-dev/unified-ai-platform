@@ -1,68 +1,368 @@
 {
  "topologies": [
-  "T1F",
-  "T2F"
+  "T1",
+  "T2",
+  "T3",
+  "T4"
  ],
  "cells": {
   "d565_c1_decode": {
-   "T1F": 143.581,
-   "T2F": 182.374
+   "T1": 141.451,
+   "T2": 185.125,
+   "T3": 175.266,
+   "T4": 204.064
   },
   "d565_c1_ttft": {
-   "T1F": 0.2538,
-   "T2F": 0.2238
+   "T1": 0.2693,
+   "T2": 0.2285,
+   "T3": 0.2285,
+   "T4": 0.2478
+  },
+  "d565_c1_decode_router": {
+   "T1": 141.445,
+   "T2": 185.054,
+   "T3": 175.217,
+   "T4": 204.152
   },
   "p32k_c1_decode": {
-   "T1F": 53.349,
-   "T2F": 69.987
+   "T1": 60.791,
+   "T2": 67.28,
+   "T3": 68.795,
+   "T4": 72.478
   },
   "p32k_c1_ttft": {
-   "T1F": 0.3842,
-   "T2F": 0.3234
+   "T1": 0.3989,
+   "T2": 0.3327,
+   "T3": 0.3159,
+   "T4": 0.3494
   },
-  "p4k_c4_agg": {
-   "T1F": 78.032
+  "p32k_c1_decode_router": {
+   "T1": 60.789,
+   "T2": 67.276,
+   "T3": 61.906,
+   "T4": 72.301
+  },
+  "p4k_c4_agg_router": {
+   "T1": 267.978,
+   "T2": 155.466,
+   "T3": 180.963,
+   "T4": 102.515
+  },
+  "d565_c8_goodput_router": {
+   "T1": 1.1116,
+   "T2": 0.4728,
+   "T3": 0.9637,
+   "T4": 0.2314
+  },
+  "d565_c16_goodput_router": {
+   "T1": 2.0063,
+   "T2": 0.4734,
+   "T3": 0.8065,
+   "T4": 0.2299
+  },
+  "p4k_c8_goodput_router": {
+   "T1": 1.4235,
+   "T2": 0.7344,
+   "T3": 0.9544,
+   "T4": 0.5868
+  },
+  "p4k_c16_goodput_router": {
+   "T1": 1.667,
+   "T2": 0.7889,
+   "T3": 1.1742,
+   "T4": 0.5659
   },
   "p128k_c1_decode": {
-   "T2F": 20.111
+   "T2": 18.501,
+   "T3": 18.529,
+   "T4": 19.588
   },
   "p128k_c1_ttft": {
-   "T2F": 0.8419
+   "T2": 0.8434,
+   "T3": 0.8544,
+   "T4": 0.7675
+  },
+  "p128k_c1_decode_router": {
+   "T2": 18.499,
+   "T3": 18.499,
+   "T4": 19.619
+  },
+  "dual_p32k_sess_decode": {
+   "T2": 17.086,
+   "T1": 15.039,
+   "T3": 5.166,
+   "T4": 10.073
+  },
+  "dual_p32k_aggregate": {
+   "T2": 33.525,
+   "T1": 29.301,
+   "T3": 9.094,
+   "T4": 19.743
+  },
+  "dual_p32k_fairness": {
+   "T2": 0.9996,
+   "T1": 0.9993,
+   "T3": 0.9861,
+   "T4": 0.9996
+  },
+  "dual_p128k_sess_decode": {
+   "T2": 2.15,
+   "T3": 1.383,
+   "T4": 1.393
+  },
+  "dual_p128k_aggregate": {
+   "T2": 4.299,
+   "T3": 2.264,
+   "T4": 2.337
+  },
+  "dual_p128k_fairness": {
+   "T2": 1.0,
+   "T3": 0.9668,
+   "T4": 0.9746
+  },
+  "mixed_short_p95_ttft_guard": {
+   "T2": false,
+   "T3": true,
+   "T4": false
+  },
+  "mixed_long_completion_rate": {
+   "T2": 1.0,
+   "T3": 1.0,
+   "T4": 1.0
+  },
+  "mixed_aggregate": {
+   "T2": 27.921,
+   "T3": 28.265,
+   "T4": 24.582
+  },
+  "mixed_short_p95_ttft_s": {
+   "T2": 50.4439,
+   "T3": 0.2699,
+   "T4": 63.4002
+  },
+  "four_p32k_aggregate": {
+   "T1": 58.501,
+   "T2": 39.339,
+   "T3": 47.337,
+   "T4": 19.826
+  },
+  "four_p32k_fairness": {
+   "T1": 0.9995,
+   "T2": 0.9999,
+   "T3": 0.7565,
+   "T4": 0.9102
   }
  },
  "provenance": {
-  "T1F:d565_c1_decode:direct": [
-   "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R01",
-   "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R02",
-   "V29-PH5-T1F-TP1-C1-L0565-F512-F512-B01-R03"
+  "T1:d565_c1_decode:direct": [
+   "V29-PH5-T1-DIR-C1-L0565-F512-B01-R01",
+   "V29-PH5-T1-DIR-C1-L0565-F512-B01-R02",
+   "V29-PH5-T1-DIR-C1-L0565-F512-B01-R03"
   ],
-  "T1F:p32k_c1_decode:direct": [
-   "V29-PH5-T1F-TP1-C1-L032K-NS-NS-B01-R01",
-   "V29-PH5-T1F-TP1-C1-L032K-NS-NS-B01-R02",
-   "V29-PH5-T1F-TP1-C1-L032K-NS-NS-B01-R03"
+  "T1:d565_c1_decode:router": [
+   "V29-PH5R-T1-C1-L0565-F512-B01-R01",
+   "V29-PH5R-T1-C1-L0565-F512-B01-R02",
+   "V29-PH5R-T1-C1-L0565-F512-B01-R03"
   ],
-  "T1F:p4k_c4_agg:direct": [
-   "V29-PH5-T1F-TP1-C4-L004K-NS-NS-B01-R01",
-   "V29-PH5-T1F-TP1-C4-L004K-NS-NS-B01-R02",
-   "V29-PH5-T1F-TP1-C4-L004K-NS-NS-B01-R03"
+  "T1:p32k_c1_decode:direct": [
+   "V29-PH5-T1-DIR-C1-L032K-NS-B01-R01",
+   "V29-PH5-T1-DIR-C1-L032K-NS-B01-R02",
+   "V29-PH5-T1-DIR-C1-L032K-NS-B01-R03"
   ],
-  "T2F:d565_c1_decode:direct": [
-   "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R01",
-   "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R02",
-   "V29-PH5-T2F-TP2-C1-L0565-F512-F512-B01-R03"
+  "T1:p32k_c1_decode:router": [
+   "V29-PH5R-T1-C1-L032K-NS-B01-R01",
+   "V29-PH5R-T1-C1-L032K-NS-B01-R02",
+   "V29-PH5R-T1-C1-L032K-NS-B01-R03"
   ],
-  "T2F:p32k_c1_decode:direct": [
-   "V29-PH5-T2F-TP2-C1-L032K-NS-NS-B01-R01",
-   "V29-PH5-T2F-TP2-C1-L032K-NS-NS-B01-R02",
-   "V29-PH5-T2F-TP2-C1-L032K-NS-NS-B01-R03"
+  "T1:p4k_c4_agg:router": [
+   "V29-PH5R-T1-C4-L004K-NS-B01-R01",
+   "V29-PH5R-T1-C4-L004K-NS-B01-R02",
+   "V29-PH5R-T1-C4-L004K-NS-B01-R03"
   ],
-  "T2F:p128k_c1_decode:direct": [
-   "V29-PH5-T2F-TP2-C1-L128KT-MT128-NS-B01-R01",
-   "V29-PH5-T2F-TP2-C1-L128KT-MT128-NS-B01-R02",
-   "V29-PH5-T2F-TP2-C1-L128KT-MT128-NS-B01-R03",
-   "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R01",
-   "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R02",
-   "V29-PH5-T2F-TP2-C1-L128KT-NS-NS-B01-R03"
+  "T1:d565_c8_goodput:router": [
+   "V29-PH5R-T1-C8-L0565-F512-B01-R01",
+   "V29-PH5R-T1-C8-L0565-F512-B01-R02",
+   "V29-PH5R-T1-C8-L0565-F512-B01-R03"
+  ],
+  "T1:d565_c16_goodput:router": [
+   "V29-PH5R-T1-C16-L0565-F512-B01-R01",
+   "V29-PH5R-T1-C16-L0565-F512-B01-R02",
+   "V29-PH5R-T1-C16-L0565-F512-B01-R03"
+  ],
+  "T1:p4k_c8_goodput:router": [
+   "V29-PH5R-T1-C8-L004K-NS-B01-R01",
+   "V29-PH5R-T1-C8-L004K-NS-B01-R02",
+   "V29-PH5R-T1-C8-L004K-NS-B01-R03"
+  ],
+  "T1:p4k_c16_goodput:router": [
+   "V29-PH5R-T1-C16-L004K-NS-B01-R01",
+   "V29-PH5R-T1-C16-L004K-NS-B01-R02",
+   "V29-PH5R-T1-C16-L004K-NS-B01-R03"
+  ],
+  "T2:d565_c1_decode:direct": [
+   "V29-PH5-T2-DIR-C1-L0565-F512-B01-R01",
+   "V29-PH5-T2-DIR-C1-L0565-F512-B01-R02",
+   "V29-PH5-T2-DIR-C1-L0565-F512-B01-R03"
+  ],
+  "T2:d565_c1_decode:router": [
+   "V29-PH5R-T2-C1-L0565-F512-B01-R01",
+   "V29-PH5R-T2-C1-L0565-F512-B01-R02",
+   "V29-PH5R-T2-C1-L0565-F512-B01-R03"
+  ],
+  "T2:p32k_c1_decode:direct": [
+   "V29-PH5-T2-DIR-C1-L032K-NS-B01-R01",
+   "V29-PH5-T2-DIR-C1-L032K-NS-B01-R02",
+   "V29-PH5-T2-DIR-C1-L032K-NS-B01-R03"
+  ],
+  "T2:p32k_c1_decode:router": [
+   "V29-PH5R-T2-C1-L032K-NS-B01-R01",
+   "V29-PH5R-T2-C1-L032K-NS-B01-R02",
+   "V29-PH5R-T2-C1-L032K-NS-B01-R03"
+  ],
+  "T2:p128k_c1_decode:direct": [
+   "V29-PH5-T2-DIR-C1-L128KT-NS-B01-R01",
+   "V29-PH5-T2-DIR-C1-L128KT-NS-B01-R02",
+   "V29-PH5-T2-DIR-C1-L128KT-NS-B01-R03"
+  ],
+  "T2:p128k_c1_decode:router": [
+   "V29-PH5R-T2-C1-L128KT-NS-B01-R01",
+   "V29-PH5R-T2-C1-L128KT-NS-B01-R02",
+   "V29-PH5R-T2-C1-L128KT-NS-B01-R03"
+  ],
+  "T2:p4k_c4_agg:router": [
+   "V29-PH5R-T2-C4-L004K-NS-B01-R01",
+   "V29-PH5R-T2-C4-L004K-NS-B01-R02",
+   "V29-PH5R-T2-C4-L004K-NS-B01-R03"
+  ],
+  "T2:d565_c8_goodput:router": [
+   "V29-PH5R-T2-C8-L0565-F512-B01-R01",
+   "V29-PH5R-T2-C8-L0565-F512-B01-R02",
+   "V29-PH5R-T2-C8-L0565-F512-B01-R03"
+  ],
+  "T2:d565_c16_goodput:router": [
+   "V29-PH5R-T2-C16-L0565-F512-B01-R01",
+   "V29-PH5R-T2-C16-L0565-F512-B01-R02",
+   "V29-PH5R-T2-C16-L0565-F512-B01-R03"
+  ],
+  "T2:p4k_c8_goodput:router": [
+   "V29-PH5R-T2-C8-L004K-NS-B01-R01",
+   "V29-PH5R-T2-C8-L004K-NS-B01-R02",
+   "V29-PH5R-T2-C8-L004K-NS-B01-R03"
+  ],
+  "T2:p4k_c16_goodput:router": [
+   "V29-PH5R-T2-C16-L004K-NS-B01-R01",
+   "V29-PH5R-T2-C16-L004K-NS-B01-R02",
+   "V29-PH5R-T2-C16-L004K-NS-B01-R03"
+  ],
+  "T3:d565_c1_decode:direct": [
+   "V29-PH5-T3-DIR-C1-L0565-F512-B01-R01",
+   "V29-PH5-T3-DIR-C1-L0565-F512-B01-R02",
+   "V29-PH5-T3-DIR-C1-L0565-F512-B01-R03"
+  ],
+  "T3:d565_c1_decode:router": [
+   "V29-PH5R-T3-C1-L0565-F512-B01-R01",
+   "V29-PH5R-T3-C1-L0565-F512-B01-R02",
+   "V29-PH5R-T3-C1-L0565-F512-B01-R03"
+  ],
+  "T3:p32k_c1_decode:direct": [
+   "V29-PH5-T3-DIR-C1-L032K-NS-B01-R01",
+   "V29-PH5-T3-DIR-C1-L032K-NS-B01-R02",
+   "V29-PH5-T3-DIR-C1-L032K-NS-B01-R03"
+  ],
+  "T3:p32k_c1_decode:router": [
+   "V29-PH5R-T3-C1-L032K-NS-B01-R01",
+   "V29-PH5R-T3-C1-L032K-NS-B01-R02",
+   "V29-PH5R-T3-C1-L032K-NS-B01-R03"
+  ],
+  "T3:p128k_c1_decode:direct": [
+   "V29-PH5-T3-DIR-C1-L128KT-NS-B01-R01",
+   "V29-PH5-T3-DIR-C1-L128KT-NS-B01-R02",
+   "V29-PH5-T3-DIR-C1-L128KT-NS-B01-R03"
+  ],
+  "T3:p128k_c1_decode:router": [
+   "V29-PH5R-T3-C1-L128KT-NS-B01-R01",
+   "V29-PH5R-T3-C1-L128KT-NS-B01-R02",
+   "V29-PH5R-T3-C1-L128KT-NS-B01-R03"
+  ],
+  "T3:p4k_c4_agg:router": [
+   "V29-PH5R-T3-C4-L004K-NS-B01-R01",
+   "V29-PH5R-T3-C4-L004K-NS-B01-R02",
+   "V29-PH5R-T3-C4-L004K-NS-B01-R03"
+  ],
+  "T3:d565_c8_goodput:router": [
+   "V29-PH5R-T3-C8-L0565-F512-B01-R01",
+   "V29-PH5R-T3-C8-L0565-F512-B01-R02",
+   "V29-PH5R-T3-C8-L0565-F512-B01-R03"
+  ],
+  "T3:d565_c16_goodput:router": [
+   "V29-PH5R-T3-C16-L0565-F512-B01-R01",
+   "V29-PH5R-T3-C16-L0565-F512-B01-R02",
+   "V29-PH5R-T3-C16-L0565-F512-B01-R03"
+  ],
+  "T3:p4k_c8_goodput:router": [
+   "V29-PH5R-T3-C8-L004K-NS-B01-R01",
+   "V29-PH5R-T3-C8-L004K-NS-B01-R02",
+   "V29-PH5R-T3-C8-L004K-NS-B01-R03"
+  ],
+  "T3:p4k_c16_goodput:router": [
+   "V29-PH5R-T3-C16-L004K-NS-B01-R01",
+   "V29-PH5R-T3-C16-L004K-NS-B01-R02",
+   "V29-PH5R-T3-C16-L004K-NS-B01-R03"
+  ],
+  "T4:d565_c1_decode:direct": [
+   "V29-PH5-T4-DIR-C1-L0565-F512-B01-R01",
+   "V29-PH5-T4-DIR-C1-L0565-F512-B01-R02",
+   "V29-PH5-T4-DIR-C1-L0565-F512-B01-R03"
+  ],
+  "T4:d565_c1_decode:router": [
+   "V29-PH5R-T4-C1-L0565-F512-B01-R01",
+   "V29-PH5R-T4-C1-L0565-F512-B01-R02",
+   "V29-PH5R-T4-C1-L0565-F512-B01-R03"
+  ],
+  "T4:p32k_c1_decode:direct": [
+   "V29-PH5-T4-DIR-C1-L032K-NS-B01-R01",
+   "V29-PH5-T4-DIR-C1-L032K-NS-B01-R02",
+   "V29-PH5-T4-DIR-C1-L032K-NS-B01-R03"
+  ],
+  "T4:p32k_c1_decode:router": [
+   "V29-PH5R-T4-C1-L032K-NS-B01-R01",
+   "V29-PH5R-T4-C1-L032K-NS-B01-R02",
+   "V29-PH5R-T4-C1-L032K-NS-B01-R03"
+  ],
+  "T4:p128k_c1_decode:direct": [
+   "V29-PH5-T4-DIR-C1-L128KT-NS-B01-R01",
+   "V29-PH5-T4-DIR-C1-L128KT-NS-B01-R02",
+   "V29-PH5-T4-DIR-C1-L128KT-NS-B01-R03"
+  ],
+  "T4:p128k_c1_decode:router": [
+   "V29-PH5R-T4-C1-L128KT-NS-B01-R01",
+   "V29-PH5R-T4-C1-L128KT-NS-B01-R02",
+   "V29-PH5R-T4-C1-L128KT-NS-B01-R03"
+  ],
+  "T4:p4k_c4_agg:router": [
+   "V29-PH5R-T4-C4-L004K-NS-B01-R01",
+   "V29-PH5R-T4-C4-L004K-NS-B01-R02",
+   "V29-PH5R-T4-C4-L004K-NS-B01-R03"
+  ],
+  "T4:d565_c8_goodput:router": [
+   "V29-PH5R-T4-C8-L0565-F512-B01-R01",
+   "V29-PH5R-T4-C8-L0565-F512-B01-R02",
+   "V29-PH5R-T4-C8-L0565-F512-B01-R03"
+  ],
+  "T4:d565_c16_goodput:router": [
+   "V29-PH5R-T4-C16-L0565-F512-B01-R01",
+   "V29-PH5R-T4-C16-L0565-F512-B01-R02",
+   "V29-PH5R-T4-C16-L0565-F512-B01-R03"
+  ],
+  "T4:p4k_c8_goodput:router": [
+   "V29-PH5R-T4-C8-L004K-NS-B01-R01",
+   "V29-PH5R-T4-C8-L004K-NS-B01-R02",
+   "V29-PH5R-T4-C8-L004K-NS-B01-R03"
+  ],
+  "T4:p4k_c16_goodput:router": [
+   "V29-PH5R-T4-C16-L004K-NS-B01-R01",
+   "V29-PH5R-T4-C16-L004K-NS-B01-R02",
+   "V29-PH5R-T4-C16-L004K-NS-B01-R03"
   ]
  },
  "note": "CAPACITY_LIMIT/UNSUPPORTED 由 boot/容量快照侧另行并入（gate_e 支配判定）"

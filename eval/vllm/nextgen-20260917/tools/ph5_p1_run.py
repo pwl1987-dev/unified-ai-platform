@@ -97,11 +97,13 @@ def kill_own(tag) -> bool:
 
 def run_arm_cell(exp_prefix, api, port, tp, ms, uuids, tag, fixture, mode_key, mt, conc, reps,
                  boot_tag="B01", thermal_api=None) -> list:
+    global _BT
+    bt = boot_tag if boot_tag != "B01" else globals().get("_BT", "B01")
     cmd = [PY, os.path.join(HERE, "run_arm.py"), "--api", api, "--port", str(port),
            "--tp", str(tp), "--ms", str(ms), "--gpu-uuids", uuids,
            "--server-pid", open(f"{SBX}/log-ph5-{tag}/server.pid").read().strip(),
            "--server-pgid", open(f"{SBX}/log-ph5-{tag}/server.pgid").read().strip(),
-           "--tag", f"ph5-{tag}", "--boot-tag", boot_tag,
+           "--tag", f"ph5-{tag}", "--boot-tag", bt,
            "--exp-prefix", exp_prefix, "--runs", f"{mode_key}:{reps}",
            "--fixture", fixture, "--max-tokens", str(mt), "--concurrency", str(conc)] \
         + (["--thermal-api", thermal_api] if thermal_api else [])
@@ -141,9 +143,12 @@ def main() -> int:
     ap.add_argument("--topology", choices=list(TOPOS), required=True)
     ap.add_argument("--skip-boot", action="store_true", help="backends 已在线（复用）")
     ap.add_argument("--only", default="", help="逗号分隔 cell 名子集（补测模式，其余跳过）")
+    ap.add_argument("--boot-tag", default="B01", help="run_arm boot 编号（P3 3-boot 用 B02/B03/B04）")
     args = ap.parse_args()
     T = args.topology
     ONLY = set(x for x in args.only.split(",") if x)
+    BT = args.boot_tag
+    globals()["_BT"] = BT
     spec = TOPOS[T]
     arm = {"topology": T, "t_boot_start": time.time(), "cells": {}, "capacity_limit": []}
     auth4 = ",".join(UUID[g] for g in (2, 3, 4, 6))
@@ -196,6 +201,15 @@ def main() -> int:
                 return
             t0 = time.time()
             arm["cells"][name] = {"rc": fn(), "wall_s": round(time.time() - t0, 1)}
+
+        # ---- semantic canary（verbatim 100 行逐位，每 boot）----
+        vd = os.path.join(NG, "raw", "staging", f"PH5-P1-V-{T}-{BT}")
+        os.makedirs(vd, exist_ok=True)
+        vr = sh([PY, os.path.join(HERE, "verbatim_check.py"), "probe",
+                 "--api", f"http://127.0.0.1:{fport}/v1", "--out-dir", vd,
+                 "--experiment-id", f"PH5-{T}-{BT}-VERBATIM"], timeout=600)
+        arm["verbatim"] = {"rc": vr.returncode}
+        log(f"[canary] verbatim rc={vr.returncode}")
 
         # ---- direct C1 refs（first backend，同日直轨）----
         cell("dir_d565_c1", lambda: run_arm_cell(
