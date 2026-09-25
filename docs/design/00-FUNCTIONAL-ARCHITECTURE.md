@@ -6692,3 +6692,376 @@ Continuous Upstream Intelligence
 
 > **借上游完成起跑，用自己的 Contract 保持独立，再把真正有战略价值的部分逐步变成自有能力，同时持续吸收整个开源生态的创新。**
 
+---
+
+# 63. Universal Replaceability Principle
+
+平台新增最高级架构规定：
+
+> **Every implementation is replaceable; contracts and authority remain sovereign.**
+
+中文定义：
+
+> **任何外部实现、运行时、引擎、框架、模型、存储、检索、队列、工作流、训练后端和工具，都必须允许被替换；平台长期稳定的是自己的 Contract、Domain Model、Authority、Policy、Gate、Identity、Lineage 和 Northbound API。**
+
+这不是“所有代码都随便拔插”，而是要求所有实现都处于明确边界后面。
+
+## 63.1 Replaceable Implementation
+
+以下对象原则上全部属于可替换实现：
+
+```text
+Asset Hub
+Experiment Backend
+Model Registry Backend
+Object Storage
+Database
+Search Engine
+Vector Engine
+Graph Engine
+Memory Engine
+Message Queue
+Event Stream
+Workflow Engine
+LLM Gateway Backend
+Provider Router
+Inference Runtime
+Generic Serving Runtime
+Training Framework
+Quantization Framework
+Evaluation Framework
+Model Source
+Dataset Source
+Browser Runtime
+Computer-use Runtime
+Code Search Backend
+Observability Backend
+VM / Container Backend
+Scheduler Algorithm Implementation
+Agent Framework
+MCP / Tool Protocol Adapter
+Industrial AI Runtime
+Edge Runtime
+```
+
+替换时原则上只影响：
+
+```text
+Adapter
+Migration
+Deployment
+Compatibility Test
+```
+
+不应要求修改：
+
+```text
+Northbound API
+UI Domain Model
+Business Workflow
+Authority
+Policy
+Gate Definition
+Core Resource Identity
+```
+
+## 63.2 Stable Sovereign Layer
+
+长期必须由平台自己掌握的稳定层：
+
+```text
+Northbound Contract
+Domain Model
+Capability Contract
+Resource Identity
+Authority
+Policy
+Identity / Permission Semantics
+Gate Semantics
+Lineage Semantics
+Audit Semantics
+Human Approval Semantics
+Lifecycle State Machine
+Evidence Contract
+```
+
+底层实现可以变化，但这些语义不能被某个第三方项目定义。
+
+## 63.3 Replaceability Levels
+
+不同组件按替换难度分级：
+
+### R0 — Hot-swappable
+
+无需数据迁移即可切换：
+
+- Provider；
+- Model Runtime；
+- Reranker；
+- Embedding Endpoint；
+- Browser Backend；
+- Tool Adapter。
+
+### R1 — Contract-swappable
+
+需要 Adapter / Contract Test：
+
+- Gateway；
+- Generic Serving；
+- Training Backend；
+- Agent Framework；
+- Search Backend。
+
+### R2 — Stateful Migration
+
+需要数据迁移：
+
+- Asset Hub；
+- Experiment Store；
+- Vector DB；
+- Graph DB；
+- Message / Workflow Backend；
+- Metadata DB。
+
+### R3 — Core Evolution
+
+涉及我们自己的核心 Contract：
+
+- Domain Model；
+- Authority；
+- Gate；
+- Identity；
+- Lifecycle。
+
+R3 也可以演进，但不属于普通 Backend Replacement，必须经过：
+
+```text
+Architecture Proposal
+→ Versioned Contract
+→ Compatibility Plan
+→ Migration
+→ Shadow
+→ Human Approval
+```
+
+因此：
+
+> **“任何组件可替换”不等于“核心语义可以随意变化”。**
+
+## 63.4 No Direct Third-party Dependency Rule
+
+UI、业务系统和 Agent 不得直接依赖第三方内部对象。
+
+禁止：
+
+```text
+UI
+→ CSGHub-specific Model Object
+
+Business App
+→ LiteLLM-specific Route Object
+
+Agent
+→ MLflow-specific Run Semantics
+```
+
+必须：
+
+```text
+UI / App / Agent
+        ↓
+Our API / Capability Contract
+        ↓
+Adapter
+        ↓
+Third-party Backend
+```
+
+## 63.5 No Irreplaceable Data Rule
+
+任何关键数据不能只存在于无法迁移的第三方私有格式中。
+
+关键资产必须具有：
+
+- Export；
+- Import；
+- Version；
+- Hash；
+- Schema；
+- Backup；
+- Restore；
+- Migration Tooling。
+
+重要数据同时进入平台自己的：
+
+```text
+Registry Metadata
+Artifact Store
+Lineage
+Evidence
+```
+
+第三方 DB 可以作为运行 Backend，但不能成为唯一真实来源。
+
+## 63.6 Replacement Readiness
+
+关键 Backend 上线前至少满足：
+
+```text
+Adapter exists
+Contract tests exist
+Data export works
+Backup/restore works
+Pinned version exists
+License snapshot exists
+Internal mirror exists
+Replacement candidate identified
+Rollback path exists
+```
+
+不满足这些条件则标记：
+
+```text
+LOCK_IN_RISK
+```
+
+禁止升级为不可替代 Critical Dependency。
+
+---
+
+# 64. Loosely Coupled Capability Architecture
+
+平台整体采用：
+
+> **Loosely Coupled Capability Architecture**
+
+而不是把多个开源系统直接硬拼成一个巨型系统。
+
+逻辑结构：
+
+```text
+                 Our Product / UI
+                        │
+                        ▼
+                Control Hub API
+                        │
+                        ▼
+               Capability Contracts
+                        │
+        ┌───────────────┼───────────────┐
+        ▼               ▼               ▼
+     Adapter A        Adapter B       Adapter C
+        │               │               │
+        ▼               ▼               ▼
+   Backend A        Backend B       Backend C
+```
+
+任何一个 Backend 可以变为：
+
+```text
+Backend A
+   ↓
+Backend A2
+   ↓
+Native Implementation
+   ↓
+Another Open-source Backend
+```
+
+而上层保持稳定。
+
+## 64.1 Capability-first
+
+平台不暴露：
+
+```text
+“调用 Qdrant”
+“调用 CSGHub”
+“调用 BentoML”
+```
+
+而暴露：
+
+```text
+Search
+Store Asset
+Run Experiment
+Serve Model
+Train Model
+Execute Tool
+Run Workflow
+```
+
+业务绑定 Capability，不绑定产品名。
+
+## 64.2 Replace / Upgrade / Native 三种路径
+
+每个组件始终允许：
+
+```text
+UPGRADE
+当前上游新版本
+
+REPLACE
+切换另一开源实现
+
+NATIVE
+替换为自己的实现
+```
+
+三种路径共享同一 Contract Test。
+
+## 64.3 Multi-backend Coexistence
+
+替换不是必须“一刀切”。
+
+允许：
+
+```text
+Backend A 70%
+Backend B 20%
+Native Candidate 10%
+```
+
+通过：
+
+- Shadow；
+- Canary；
+- Tenant Routing；
+- Workload Routing；
+- Capability Routing；
+
+逐步切换。
+
+这对数据库、向量引擎、Gateway、Runtime、Scheduler 等关键组件尤其重要。
+
+## 64.4 Default Architecture Rule
+
+今后新增任何一级能力，设计评审必须回答：
+
+1. Capability Contract 是什么？
+2. 默认 Backend 是什么？
+3. Adapter Boundary 在哪里？
+4. 数据如何导出？
+5. Backend 消失后如何恢复？
+6. 至少一个替代实现是什么？
+7. 未来如何自主实现？
+8. 上游升级如何做 Contract Test？
+
+任何一级能力如果回答不了这些问题，不允许直接进入 Core。
+
+## 64.5 Architecture Invariant
+
+最终冻结为：
+
+```text
+Core owns semantics and authority.
+Adapters isolate implementations.
+Backends provide replaceable capability.
+Data remains portable.
+UI binds only to our domain.
+Every dependency has an exit path.
+```
+
+这成为后续架构、开发、测试、Release Gate 和二开选型的统一约束。
+
