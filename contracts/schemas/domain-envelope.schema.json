@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/schemas/domain-envelope.schema.json",
+  "title": "Platform Domain Object Envelope",
+  "description": "WP-P1-01 common envelope. Object-specific spec/status schemas are added by subsequent P1 contracts.",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "schema_version",
+    "resource_version",
+    "name",
+    "owner_ref",
+    "created_at",
+    "updated_at",
+    "spec",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 128,
+      "description": "Immutable Control Hub generated ID. Normative form: <kind>_<uuidv7>."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "Resource",
+        "Node",
+        "GPU",
+        "VM",
+        "Environment",
+        "Artifact",
+        "ModelAsset",
+        "DatasetAsset",
+        "Capability",
+        "Runtime",
+        "Deployment",
+        "Experiment",
+        "TrainingRun",
+        "EvaluationRun",
+        "Workflow",
+        "Agent",
+        "Tool",
+        "KnowledgeAsset",
+        "Index",
+        "Memory",
+        "Evidence",
+        "GateResult",
+        "Policy",
+        "Approval",
+        "Provider",
+        "Adapter",
+        "UpstreamDependency"
+      ]
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "resource_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonic authoritative mutation/concurrency version; not a business revision."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": ["string", "null"],
+      "maxLength": 4096
+    },
+    "scope_ref": {
+      "$ref": "#/$defs/scopeRef"
+    },
+    "owner_ref": {
+      "$ref": "#/$defs/ownerRef"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "maxLength": 255
+      }
+    },
+    "external_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/externalRef"
+      }
+    },
+    "lineage": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineageEdge"
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "policy_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "spec": {
+      "type": "object",
+      "description": "Declared/desired object-specific contract. Refined by kind-specific schema."
+    },
+    "status": {
+      "$ref": "#/$defs/status"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "ownerRef": {
+      "type": "object",
+      "required": ["subject_type", "subject_id"],
+      "properties": {
+        "subject_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "subject_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "display_name": {
+          "type": ["string", "null"],
+          "maxLength": 255
+        }
+      },
+      "additionalProperties": false
+    },
+    "scopeRef": {
+      "type": ["object", "null"],
+      "required": ["scope_type", "scope_id"],
+      "properties": {
+        "scope_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "scope_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      },
+      "additionalProperties": false
+    },
+    "externalRef": {
+      "type": "object",
+      "required": ["system", "kind", "value"],
+      "properties": {
+        "system": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "revision": {
+          "type": ["string", "null"],
+          "maxLength": 255
+        },
+        "url": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineageEdge": {
+      "type": "object",
+      "required": ["relation", "object_id"],
+      "properties": {
+        "relation": {
+          "type": "string",
+          "enum": [
+            "DERIVED_FROM",
+            "PRODUCED_BY",
+            "CONSUMES",
+            "EVALUATES",
+            "TRAINS_FROM",
+            "DEPLOYS",
+            "INDEXES",
+            "GENERATED_FROM",
+            "SUPERSEDES",
+            "REPLACES",
+            "MIRRORS",
+            "VALIDATED_BY"
+          ]
+        },
+        "object_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "object_version": {
+          "type": ["string", "integer", "null"]
+        },
+        "evidence_ref": {
+          "type": ["string", "null"],
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "object",
+      "required": ["phase", "observed_at"],
+      "properties": {
+        "phase": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "health": {
+          "type": ["string", "null"],
+          "maxLength": 64
+        },
+        "reason_code": {
+          "type": ["string", "null"],
+          "maxLength": 128
+        },
+        "message": {
+          "type": ["string", "null"],
+          "maxLength": 4096
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "observed_generation": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
