@@ -4770,4 +4770,524 @@ Audit
 
 外围能力通过 Adapter 和 Capability Contract 持续增长。
 
+---
+
+# 51. AI Asset & Capability Hub
+
+平台增加一级能力：**AI Asset & Capability Hub**。
+
+它的定位类似“内部 Hugging Face / ModelScope”，但不是只做资产展示，而是把：
+
+```text
+发现
+→ 获取
+→ 验证
+→ 训练
+→ 评测
+→ 优化
+→ 部署
+→ 使用
+→ 导出
+```
+
+全部打通。
+
+## 51.1 Hub 中可以找到什么
+
+统一 Catalog 不只管理“大模型”。
+
+至少包括：
+
+### Models
+
+- LLM；
+- Reasoning；
+- Code；
+- VLM；
+- ASR；
+- TTS；
+- OCR；
+- Embedding；
+- Reranker；
+- Decision / Jev-style；
+- Judge / Reward；
+- Image / Video / Audio Generation；
+- YOLO / Detection；
+- Segmentation；
+- Tracking；
+- Anomaly Detection；
+- Time-series；
+- Classical ML；
+- TinyML / Edge；
+- Security Model；
+- Scientific Model；
+- Specialized Industrial Model。
+
+### Datasets
+
+- Text；
+- Image；
+- Audio；
+- Video；
+- Multimodal；
+- Time-series；
+- Sensor；
+- Structured / Tabular；
+- Graph；
+- Code；
+- Document；
+- OCR；
+- Industrial Inspection；
+- Benchmark；
+- Gold Set；
+- Synthetic Dataset。
+
+### Training / Optimization Assets
+
+- Training Recipe；
+- LoRA / Adapter；
+- Fine-tune Config；
+- Continued Pretraining Recipe；
+- Quantization Recipe；
+- Distillation Recipe；
+- Calibration Dataset；
+- Prompt / Template；
+- Tokenizer；
+- Optimizer Config；
+- Scheduler Config。
+
+### Runtime / Deployment Assets
+
+- Runtime Profile；
+- Container Image；
+- Environment Profile；
+- Deployment Template；
+- GPU Resource Profile；
+- Serving Profile；
+- Autoscaling Profile；
+- Edge Package。
+
+### AI Application Assets
+
+- Agent；
+- MCP Server；
+- Tool；
+- Workflow；
+- RAG Pipeline；
+- GraphRAG Pipeline；
+- Search Pipeline；
+- Memory Backend；
+- Code Intelligence Pipeline；
+- Browser / Computer Automation；
+- Demo / App。
+
+### Evaluation Assets
+
+- Benchmark Suite；
+- Evaluation Dataset；
+- Judge Model；
+- Metric；
+- Gate Profile；
+- Regression Suite；
+- Reproduction Contract。
+
+因此 Hub 的资产单位不是“一个权重文件”，而是一个可追溯的 **AI Asset**。
+
+## 51.2 Federated Catalog
+
+平台自己的 Hub 不需要把所有外部资产重新人工录入。
+
+通过 `HubSourceAdapter` 联邦发现：
+
+```text
+Internal Hub
+├── Hugging Face
+├── ModelScope
+├── GitHub
+├── Vendor Model Hub
+├── Internal Artifact Store
+├── Internal Dataset Store
+├── Research Registry
+└── Future Sources
+```
+
+用户可以从一个入口搜索：
+
+```text
+“中文 embedding”
+“工业缺陷检测”
+“video shot boundary”
+“本地 reranker”
+“Jev-style decision”
+“ASR”
+“金融时间序列”
+```
+
+返回结果时统一展示：
+
+- Source；
+- Task；
+- Modality；
+- Size；
+- License；
+- Runtime Compatibility；
+- Hardware Requirement；
+- Quality Evidence；
+- Download Status；
+- Trust / Security Status；
+- Local Availability；
+- Training Support；
+- Serving Support。
+
+## 51.3 外部资产与本地资产分层
+
+Catalog 中资产至少区分：
+
+```text
+REMOTE_ONLY
+DISCOVERED
+MIRRORED
+QUARANTINED
+VERIFIED
+LOCAL_AVAILABLE
+TRAINABLE
+SERVABLE
+PRODUCTION_APPROVED
+RETIRED
+```
+
+“搜索得到”不等于“允许生产使用”。
+
+只有通过平台 Intake / Gate 的资产，才能成为本地可信 Capability。
+
+## 51.4 一键获取，但不是盲目下载
+
+用户选择一个外部模型后，平台自动：
+
+```text
+Resolve Source
+→ Pin Revision
+→ Check License
+→ Check File Manifest
+→ Estimate Size
+→ Check Storage
+→ Download
+→ Hash
+→ Provenance
+→ Quarantine
+→ Inspect
+→ Runtime Probe
+→ Benchmark
+→ Register
+```
+
+支持：
+
+- Full Download；
+- Selective File Download；
+- Resume；
+- Local Mirror；
+- Content-addressed Dedup；
+- Shared Read-only Weights；
+- Storage Tiering。
+
+## 51.5 数据集也是一级资产
+
+Dataset Hub 不是模型的附属页。
+
+用户可以：
+
+```text
+Search Dataset
+→ Preview
+→ Inspect License
+→ Profile
+→ Sample
+→ Download / Stream
+→ Clean
+→ Transform
+→ Annotate
+→ Version
+→ Freeze
+→ Train
+```
+
+训练集、验证集、测试集和 Benchmark-only 数据必须保持用途隔离。
+
+Dataset Hub 与 Model Hub 通过 Lineage 关联：
+
+```text
+Model
+  ↓ trained_on
+Dataset Version
+  ↓ derived_from
+Source Snapshot
+```
+
+## 51.6 Training Factory
+
+任何标记为 `TRAINABLE` 的模型可以进入统一训练入口。
+
+```text
+Choose Base Model
++ Choose Dataset
++ Choose Training Recipe
++ Choose Goal
++ Budget
+        ↓
+Training Planner
+        ↓
+Resource Admission
+        ↓
+Training / Fine-tune
+        ↓
+Evaluation
+        ↓
+Candidate Model
+```
+
+用户不必须先理解具体框架。
+
+高级用户可以再展开：
+
+- Framework；
+- Optimizer；
+- Learning Rate；
+- Batch；
+- LoRA Rank；
+- Precision；
+- Parallelism；
+- Checkpoint；
+- Scheduler。
+
+## 51.7 Evaluation & Comparison
+
+Hub 中的模型不能只展示“点赞、下载量和参数量”。
+
+平台自己的核心排序依据应来自：
+
+```text
+Official Metadata
++ Community Metadata
++ Our Benchmark
++ Our Hardware Evidence
++ Our Production Evidence
+```
+
+支持：
+
+- Compare Models；
+- Compare Runtimes；
+- Compare Quantizations；
+- Compare Embeddings；
+- Compare Rerankers；
+- Compare Industrial Models；
+- Compare Cost / Power / Latency。
+
+对于本地环境，自己的 Evidence 优先于外部宣传指标。
+
+## 51.8 One-click Use
+
+通过验证的资产应支持多种“使用方式”：
+
+### Online API
+
+```text
+Asset
+→ Deploy
+→ Capability Alias
+→ Unified Gateway
+```
+
+### Batch
+
+```text
+Asset
+→ Job
+→ Scheduler
+→ Output Artifact
+```
+
+### Workflow
+
+```text
+Asset
+→ Pipeline Node
+→ Workflow
+```
+
+### Agent Tool
+
+```text
+Asset
+→ Capability / Tool
+→ Agent
+```
+
+### SDK / Local
+
+生成受控的 SDK / Client Config / Local Runtime Package。
+
+业务用户只选择“能力”，不需要手工拼装底层组件。
+
+## 51.9 Unified Output / Export Factory
+
+“输出”不只是 API 返回文本。
+
+平台应支持将经过验证的成果导出为：
+
+- Unified API Endpoint；
+- OpenAI-compatible Endpoint；
+- Batch Result；
+- Model Artifact；
+- LoRA / Adapter；
+- Safetensors；
+- GGUF；
+- ONNX；
+- TensorRT Engine；
+- OpenVINO Artifact；
+- Edge Package；
+- OCI Image；
+- Deployment Bundle；
+- Dataset Snapshot；
+- Embedding Index；
+- Knowledge Package；
+- Benchmark Report；
+- Reproducibility Package。
+
+任何格式转换均生成新 Artifact Version，并保留 Lineage。
+
+## 51.10 Internal Publish
+
+内部训练或优化完成的模型可以“发布回 Hub”：
+
+```text
+Experiment
+→ Candidate Artifact
+→ Gate
+→ Model Card / Capability Card
+→ Internal Publish
+→ Searchable
+→ Reusable
+```
+
+自动生成的 Card 至少包含：
+
+- 来源；
+- 版本；
+- Base Model；
+- Dataset；
+- Training Recipe；
+- License；
+- Runtime；
+- Hardware；
+- Benchmark；
+- Known Limitations；
+- Safety；
+- Recommended Use；
+- Gate Evidence。
+
+这样同一个成果不会在不同项目里重复训练和重复踩坑。
+
+## 51.11 Public / Private / Restricted
+
+Hub 默认首先是组织内部平台。
+
+资产可具有：
+
+```text
+PUBLIC
+ORGANIZATION
+PROJECT
+PRIVATE
+RESTRICTED
+```
+
+未来如果需要建设对外社区，可以在同一 Contract 上增加 Public Publishing，但不要求第一阶段就做社交社区。
+
+## 51.12 Hub 与 Gateway 的关系
+
+```text
+AI Asset & Capability Hub
+负责：
+“有什么、从哪里来、能不能用、怎么训练、证据是什么”
+
+Unified AI Gateway
+负责：
+“业务如何统一调用”
+
+Scheduler / Runtime
+负责：
+“实际上在哪里跑、怎么分资源”
+
+Governance
+负责：
+“谁能用、能用到什么程度”
+```
+
+最终形成：
+
+```text
+         Federated Sources
+HF / ModelScope / GitHub / Internal / Vendor
+                  ↓
+          AI Asset Hub
+                  ↓
+      Acquire / Train / Evaluate
+                  ↓
+          Capability Registry
+                  ↓
+             Deployment
+                  ↓
+          Unified AI Gateway
+                  ↓
+     App / Agent / User / Workflow
+```
+
+---
+
+# 52. Unified AI Marketplace View
+
+在 UI 层未来可以把 Hub 呈现成统一的“AI 能力市场/目录”，但它首先是内部工程资产目录，而不是商业商城。
+
+用户按任务找能力，而不是按品牌找模型：
+
+```text
+Text
+Vision
+Audio
+Video
+Embedding
+Rerank
+Decision
+Search
+Industrial AI
+Time-series
+Security
+Scientific
+Agent
+Tool
+Workflow
+Dataset
+```
+
+每个条目统一支持：
+
+```text
+View
+Compare
+Acquire
+Test
+Train
+Fine-tune
+Evaluate
+Deploy
+Use
+Export
+Fork / Derive
+Retire
+```
+
+这成为后续 UI / UX 的一个核心一级入口。
+
 
