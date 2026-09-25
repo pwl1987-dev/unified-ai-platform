@@ -14,9 +14,10 @@
 8. 看 [Northbound API Boundary](design/11-API-BOUNDARY.md) 与 [P1 Decision Register](design/12-DECISION-REGISTER.md)，了解 /v1、/api/v1、Capability-first API、统一错误/异步/审批/Gate contract 与 P1-D01~D06 裁决。
 9. 看 [User Roles](ux/01-ROLES.md)，了解首批九类产品角色。
 10. 看 [Human-AI Responsibility Matrix](ux/04-HUMAN-AI-RESPONSIBILITY.md)，了解 AI 可执行/仅建议/需人审/人类最终决定的边界。
-11. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
-12. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
-13. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
+11. 看 [Golden Journeys](ux/02-GOLDEN-JOURNEYS.md)，了解十条端到端任务流、Contract Gap 与 Orphan API Risk 审计。
+12. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
+13. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
+14. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
 
 ## 文档索引
 
@@ -33,6 +34,7 @@
 | [../contracts/openapi/unified-ai-platform.v1.json](../contracts/openapi/unified-ai-platform.v1.json) | OpenAPI 3.1 machine-readable baseline；用于 TypeScript/Go/Python client generation |
 | [../contracts/schemas/domain-envelope.schema.json](../contracts/schemas/domain-envelope.schema.json) | WP-P1-01 机器可读 common Domain Envelope JSON Schema baseline |
 | [ux/01-ROLES.md](ux/01-ROLES.md) | WP-P2-01：九类 User Roles 与 AI Operator 权限继承边界 |
+| [ux/02-GOLDEN-JOURNEYS.md](ux/02-GOLDEN-JOURNEYS.md) | WP-P2-03：十条 Golden Journeys、R0-R3、Evidence/Gate/Approval、15 项 Contract Gap 与 Orphan API Risk 审计 |
 | [ux/04-HUMAN-AI-RESPONSIBILITY.md](ux/04-HUMAN-AI-RESPONSIBILITY.md) | WP-P2-02：R0-R3 Human-AI Responsibility、预授权自动化、Decision Packet 和高风险动作边界 |
 | [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md) | 权重解剖、量化配方、MTP 实测、三引擎横评与 SGLang 决策 |
 | [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md) | vLLM 生产线实验日志、DFlash2、KV、显存与 P0 归因 |
@@ -57,13 +59,13 @@ Completed first-pass packages
   P1-02 Northbound API Contract
   P2-01 User Roles
   P2-02 Human-AI Responsibility
+  P2-03 Golden Journeys
         ↓
 Next Contract / UX layer
   P1-03 Event Contract
   P1-04 State Machines
   P1-05 Adapter Contract
 
-  P2-03 Golden Journeys
   P2-04 Information Architecture
   P2-05 Low-fi Wireframes
 ```
