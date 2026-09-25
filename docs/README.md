@@ -17,9 +17,10 @@
 11. 看 [Golden Journeys](ux/02-GOLDEN-JOURNEYS.md)，了解十条端到端任务流、Contract Gap 与 Orphan API Risk 审计。
 12. 看 [Information Architecture](ux/03-INFORMATION-ARCHITECTURE.md)，了解八个一级导航、全局入口与对象跨域规则。
 13. 看 [Low-fi Wireframes](ux/05-LOW-FI-WIREFRAMES.md)，了解 12 个核心页面的任务流、Authority、Evidence/Gate/Approval 和异常状态。
-14. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
-15. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
-16. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
+14. 看 [Design System Direction](ux/06-DESIGN-SYSTEM.md)，了解 App Shell、视觉语义、Status/R0-R3、表格/表单、Evidence/Gate/Approval、Dark Mode 与可访问性。
+15. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
+16. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
+17. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
 
 ## 文档索引
 
@@ -48,6 +49,8 @@
 | [ux/02-GOLDEN-JOURNEYS.md](ux/02-GOLDEN-JOURNEYS.md) | WP-P2-03：十条 Golden Journeys、R0-R3、Evidence/Gate/Approval、15 项 Contract Gap 与 Orphan API Risk 审计 |
 | [ux/03-INFORMATION-ARCHITECTURE.md](ux/03-INFORMATION-ARCHITECTURE.md) | WP-P2-04：Home / AI Hub / Build / Run / Improve / Knowledge / Compute / Govern 与五个全局入口 |
 | [ux/05-LOW-FI-WIREFRAMES.md](ux/05-LOW-FI-WIREFRAMES.md) | WP-P2-05：12 个核心页 Low-fi、Candidate/Production/LKG、spec/status、Evidence/Gate/Approval、AI suggestion/execution 与异常状态 |
+| [ux/06-DESIGN-SYSTEM.md](ux/06-DESIGN-SYSTEM.md) | WP-P2-06：专业控制平面 Design System Direction、App Shell、semantic tokens、density、Evidence/Gate/Approval、Dark Mode、WCAG |
+| [../contracts/ui/design-tokens.v1.json](../contracts/ui/design-tokens.v1.json) | WP-P2-06 machine-readable semantic design token baseline |
 | [ux/04-HUMAN-AI-RESPONSIBILITY.md](ux/04-HUMAN-AI-RESPONSIBILITY.md) | WP-P2-02：R0-R3 Human-AI Responsibility、预授权自动化、Decision Packet 和高风险动作边界 |
 | [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md) | 权重解剖、量化配方、MTP 实测、三引擎横评与 SGLang 决策 |
 | [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md) | vLLM 生产线实验日志、DFlash2、KV、显存与 P0 归因 |
@@ -79,9 +82,10 @@ Completed first-pass packages
   P2-03 Golden Journeys
   P2-04 Information Architecture
   P2-05 Low-fi Wireframes
+  P2-06 Design System Direction
         ↓
 Next Contract / UX layer
-  P2-06 Design System Direction
+  P2-07 Hi-fi Visual Prototype
 ```
 
 ## 当前 P1 裁决登记

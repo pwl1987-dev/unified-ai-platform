@@ -1,0 +1,256 @@
+{
+  "version": "1.0",
+  "status": "baseline",
+  "principles": {
+    "base_unit_px": 4,
+    "wcag_target": "2.2 AA",
+    "default_density": "comfortable-dense",
+    "color_only_meaning_forbidden": true,
+    "vendor_tokens_in_product_ui_forbidden": true
+  },
+  "spacing_px": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48,
+    "4xl": 64
+  },
+  "radius_px": {
+    "sm": 6,
+    "md": 8,
+    "lg": 12,
+    "pill": 999
+  },
+  "layout": {
+    "nav_expanded_px": 240,
+    "nav_collapsed_px": 64,
+    "context_rail_min_px": 320,
+    "context_rail_max_px": 400,
+    "page_padding_desktop_px": 24,
+    "collapse_nav_below_px": 1024,
+    "overlay_context_rail_below_px": 1280
+  },
+  "density": {
+    "comfortable-dense": {
+      "table_row_px": 40,
+      "control_min_px": 36,
+      "toolbar_px": 40,
+      "card_padding_px": 16
+    },
+    "compact": {
+      "table_row_px": 34,
+      "control_min_px": 32,
+      "toolbar_px": 34,
+      "card_padding_px": 12
+    }
+  },
+  "typography": {
+    "font_sans": [
+      "Inter",
+      "Noto Sans SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "system-ui",
+      "sans-serif"
+    ],
+    "font_mono": [
+      "ui-monospace",
+      "SFMono-Regular",
+      "Consolas",
+      "Liberation Mono",
+      "monospace"
+    ],
+    "scale": {
+      "page_title": {
+        "size_px": 24,
+        "line_px": 32,
+        "weight": 600
+      },
+      "section_title": {
+        "size_px": 18,
+        "line_px": 28,
+        "weight": 600
+      },
+      "subsection": {
+        "size_px": 16,
+        "line_px": 24,
+        "weight": 600
+      },
+      "body": {
+        "size_px": 14,
+        "line_px": 22,
+        "weight": 400
+      },
+      "body_strong": {
+        "size_px": 14,
+        "line_px": 22,
+        "weight": 600
+      },
+      "metadata": {
+        "size_px": 13,
+        "line_px": 20,
+        "weight": 400
+      },
+      "caption": {
+        "size_px": 12,
+        "line_px": 18,
+        "weight": 400
+      }
+    }
+  },
+  "semantic_colors": {
+    "light": {
+      "canvas": "#F7F8FA",
+      "surface": "#FFFFFF",
+      "surface_elevated": "#FFFFFF",
+      "surface_muted": "#F3F4F6",
+      "border": "#D1D5DB",
+      "border_strong": "#9CA3AF",
+      "text_primary": "#111827",
+      "text_secondary": "#374151",
+      "text_muted": "#6B7280",
+      "action_primary": "#1D4ED8",
+      "action_primary_hover": "#1E40AF",
+      "focus_ring": "#2563EB",
+      "success_fg": "#065F46",
+      "success_bg": "#ECFDF5",
+      "success_border": "#A7F3D0",
+      "info_fg": "#1E3A8A",
+      "info_bg": "#EFF6FF",
+      "info_border": "#BFDBFE",
+      "warning_fg": "#92400E",
+      "warning_bg": "#FFFBEB",
+      "warning_border": "#FDE68A",
+      "danger_fg": "#991B1B",
+      "danger_bg": "#FEF2F2",
+      "danger_border": "#FECACA",
+      "neutral_fg": "#374151",
+      "neutral_bg": "#F3F4F6",
+      "neutral_border": "#D1D5DB",
+      "lkg_fg": "#5B21B6",
+      "lkg_bg": "#F5F3FF",
+      "lkg_border": "#DDD6FE",
+      "production_fg": "#065F46",
+      "production_bg": "#ECFDF5",
+      "production_border": "#6EE7B7",
+      "environment_production_fg": "#6D28D9",
+      "environment_production_bg": "#F5F3FF",
+      "environment_production_border": "#C4B5FD"
+    },
+    "dark": {
+      "canvas": "#0B1020",
+      "surface": "#111827",
+      "surface_elevated": "#182235",
+      "surface_muted": "#1F2937",
+      "border": "#334155",
+      "border_strong": "#64748B",
+      "text_primary": "#F9FAFB",
+      "text_secondary": "#E5E7EB",
+      "text_muted": "#CBD5E1",
+      "action_primary": "#60A5FA",
+      "action_primary_hover": "#93C5FD",
+      "focus_ring": "#60A5FA",
+      "success_fg": "#6EE7B7",
+      "success_bg": "#052E2B",
+      "success_border": "#047857",
+      "info_fg": "#93C5FD",
+      "info_bg": "#172554",
+      "info_border": "#1D4ED8",
+      "warning_fg": "#FDE68A",
+      "warning_bg": "#422006",
+      "warning_border": "#A16207",
+      "danger_fg": "#FCA5A5",
+      "danger_bg": "#450A0A",
+      "danger_border": "#B91C1C",
+      "neutral_fg": "#E5E7EB",
+      "neutral_bg": "#1F2937",
+      "neutral_border": "#475569",
+      "lkg_fg": "#C4B5FD",
+      "lkg_bg": "#2E1065",
+      "lkg_border": "#7C3AED",
+      "production_fg": "#6EE7B7",
+      "production_bg": "#052E2B",
+      "production_border": "#10B981",
+      "environment_production_fg": "#DDD6FE",
+      "environment_production_bg": "#2E1065",
+      "environment_production_border": "#8B5CF6"
+    }
+  },
+  "state_mapping": {
+    "CANDIDATE": "info",
+    "PRODUCTION": "production",
+    "FAILED": "danger",
+    "DEGRADED": "warning",
+    "BLOCKED": "warning",
+    "LKG": "lkg",
+    "PENDING": "neutral",
+    "RUNNING": "info",
+    "RETIRED": "neutral",
+    "ARCHIVED": "neutral",
+    "GATE_PASS": "success",
+    "GATE_FAIL": "danger",
+    "GATE_BLOCKED": "warning",
+    "APPROVAL_PENDING": "warning",
+    "APPROVAL_APPROVED": "success",
+    "APPROVAL_REJECTED": "danger",
+    "APPROVAL_EXPIRED": "neutral",
+    "APPROVAL_REVOKED": "danger"
+  },
+  "responsibility_mapping": {
+    "R0": {
+      "semantic": "neutral",
+      "label": "AI/System may execute within policy"
+    },
+    "R1": {
+      "semantic": "info",
+      "label": "AI may propose only"
+    },
+    "R2": {
+      "semantic": "warning",
+      "label": "Human approval required before execution"
+    },
+    "R3": {
+      "semantic": "danger",
+      "label": "Human-only final decision"
+    }
+  },
+  "components": {
+    "semantic_components": [
+      "AppShell",
+      "ScopeSwitcher",
+      "EnvironmentBadge",
+      "StatusBadge",
+      "ResponsibilityBadge",
+      "EvidenceList",
+      "GatePanel",
+      "DecisionPacket",
+      "ApprovalActions",
+      "AttentionItem",
+      "DomainHeader",
+      "SpecStatusSplit",
+      "OperationProgress",
+      "ExternalImplementationPanel",
+      "DataTable",
+      "MetricComparison",
+      "AIActionStep",
+      "DangerActionDialog"
+    ],
+    "status_requires_icon_and_text": true,
+    "production_requires_text_label": true,
+    "ai_execution_requires_timestamp_actor_and_reference": true
+  },
+  "motion": {
+    "transition_ms_min": 120,
+    "transition_ms_max": 200,
+    "reduced_motion_required": true
+  },
+  "locales": {
+    "primary": "zh-CN",
+    "prepared": [
+      "en-US"
+    ]
+  }
+}

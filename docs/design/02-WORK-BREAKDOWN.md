@@ -522,6 +522,9 @@ docs/ux/03-INFORMATION-ARCHITECTURE.md
 
 ## WP-P2-06 — Design System Direction
 
+> 状态：**Baseline Frozen v1.0**  
+> 输出：docs/ux/06-DESIGN-SYSTEM.md + contracts/ui/design-tokens.v1.json
+
 低保真稳定后再冻结：
 
 - Color Tokens；
