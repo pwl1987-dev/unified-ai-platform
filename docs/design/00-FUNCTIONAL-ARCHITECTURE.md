@@ -875,7 +875,7 @@ AUTO
 
 ## 2.2 Model & Capability Plane
 
-平台不以“模型品牌”为核心，而以 **Capability** 为核心。
+平台不以“模型品牌”为核心，而以 **Capability** 为核心；同时不要求所有 Capability 都必须由“大模型”实现。传统机器学习、小型专精网络、统计模型、规则系统、优化器和工业算法流水线均可作为一等能力接入。
 
 支持的模型/能力类型至少包括：
 
@@ -3472,5 +3472,584 @@ Discover
 ```
 
 而不是修改 Knowledge Plane 或 Retrieval Plane 的核心 Authority。
+
+---
+
+# 38. Model / AI Capability Taxonomy
+
+平台的能力分类不能等同于“LLM 分类”。统一抽象应为：
+
+```text
+Capability
+  ↓
+Implementation
+  ├── Foundation Model
+  ├── Small Specialized Model
+  ├── Classical ML Model
+  ├── Statistical Model
+  ├── Rule / Expert System
+  ├── Optimization / Solver
+  └── Composite Pipeline
+```
+
+因此 Registry 层建议逐步从“只管理 Model”扩展为：
+
+```text
+Capability Registry
++ Model Registry
++ Algorithm / Engine Metadata
+```
+
+其中 `Model Registry` 管理权重型模型，`Capability Registry` 才是业务长期稳定接口。
+
+## 38.1 Generative Foundation Models
+
+包括：
+
+- Text LLM；
+- Reasoning Model；
+- Code Model；
+- VLM；
+- Omni / Native Multimodal Model；
+- Image Generation；
+- Video Generation；
+- Audio / Music Generation；
+- TTS / Speech Generation；
+- Vision-Language-Action 等未来基础模型。
+
+这些模型通常参数量较大，但平台不以“参数越大越高级”为原则。
+
+## 38.2 Decision / System-One Models
+
+单独作为一级模型类型：
+
+- Jev / System-One style typed decision；
+- Local Jev-style model；
+- Distilled Decision Model；
+- Choice / Score / Probability Model；
+- Router Model；
+- Risk Scoring Model；
+- Admission Decision Model；
+- Tool Selection Model；
+- Retry / Stop Model。
+
+本地化实现可通过 `DecisionModelAdapter` 接入。
+
+截至 2026-09，已经出现多种独立的本地 Jev-style 实现，例如：
+
+- 直接利用本地小型 LLM 的 masked-logit / first-token probability；
+- 通过 llama.cpp / SGLang 提供 Choice / Score / Noul；
+- 将 Teacher 的软标签蒸馏到更小的 Encoder / Classifier；
+- 独立开放权重的 Jev-style student model。
+
+这些均应进入 Technology Radar 和本地 Benchmark，而不是默认依赖云端 Jev。
+
+重点 Gate：
+
+- Accuracy；
+- Calibration / ECE；
+- Brier Score；
+- Confidence Reliability；
+- Latency；
+- Throughput；
+- CPU / GPU Cost；
+- Out-of-domain Behavior；
+- Abstention / Human Escalation Quality。
+
+## 38.3 Embedding / Representation Models
+
+Embedding 单独作为模型类型，而不是 RAG 的一个参数。
+
+至少支持：
+
+- Text Embedding；
+- Multilingual Embedding；
+- Code Embedding；
+- Image Embedding；
+- Audio Embedding；
+- Video Embedding；
+- Multimodal Embedding；
+- Sparse Embedding；
+- Entity / Graph Embedding；
+- Metric Learning / Siamese Embedding。
+
+Embedding Model 必须有独立 Benchmark 和版本生命周期，因为它直接决定 Index Compatibility。
+
+## 38.4 Reranker / Retrieval Models
+
+一级类型包括：
+
+- Cross-Encoder Reranker；
+- Bi-Encoder Retriever；
+- Sparse Neural Retriever；
+- Late-Interaction / ColBERT-style Model；
+- Multi-vector Retriever；
+- Query Rewriter；
+- Query / Document Expander；
+- Relevance Classifier；
+- Evidence Selector；
+- Memory Reranker；
+- Learned Fusion Model。
+
+因此 Retrieval Pipeline 可以组合：
+
+```text
+Retriever
+→ Candidate Fusion
+→ Reranker
+→ Evidence Selector
+→ Context Builder
+```
+
+而不是把所有能力压进 Vector DB。
+
+## 38.5 Judge / Verifier / Reward Models
+
+与生成模型分开管理：
+
+- Reward Model；
+- Pairwise Preference Model；
+- LLM Judge；
+- Factuality Verifier；
+- Groundedness Verifier；
+- Citation Verifier；
+- Safety Judge；
+- Code Verifier；
+- Math Verifier；
+- Hallucination Detector；
+- Policy Compliance Model。
+
+Judge 只能形成 Evidence / Proposal，不能单独拥有 Release Authority。
+
+## 38.6 Classification Models
+
+包括传统和深度分类：
+
+- Text Classification；
+- Image Classification；
+- Audio Classification；
+- Video Classification；
+- Multi-label Classification；
+- Intent Classification；
+- Sentiment / Topic；
+- Quality Classification；
+- Defect Category；
+- Alarm / Fault Category；
+- Spam / Fraud / Risk Classification。
+
+分类器可以从几十 KB 到数十亿参数，平台按 Capability 而不是参数规模统一管理。
+
+## 38.7 Industrial Vision / Machine Vision
+
+工业视觉是独立重点能力域。
+
+至少支持：
+
+### Detection
+
+- Object Detection；
+- Open-vocabulary Detection；
+- Small-object Detection；
+- Oriented Bounding Box / Rotated Detection；
+- Industrial Part / Defect Detection。
+
+### Segmentation
+
+- Semantic Segmentation；
+- Instance Segmentation；
+- Panoptic Segmentation；
+- Interactive / Promptable Segmentation；
+- Industrial Surface / Region Segmentation。
+
+### Tracking / Identity
+
+- Single / Multi-object Tracking；
+- Re-identification；
+- Trajectory Analysis；
+- Counting；
+- Line Crossing；
+- Zone Intrusion。
+
+### Geometry / Measurement
+
+- Keypoint / Pose；
+- Depth Estimation；
+- Stereo；
+- Optical Flow；
+- 3D Detection；
+- Point Cloud / LiDAR；
+- Measurement / Metrology；
+- Alignment / Registration。
+
+### Industrial Inspection
+
+- Visual Anomaly Detection；
+- Surface Defect Detection；
+- Few-shot / One-class Defect Detection；
+- Foreign-object Detection；
+- Assembly Verification；
+- Missing-part Detection；
+- Quality Inspection；
+- OCR / Barcode / QR / Character Recognition。
+
+工业异常检测需单独支持类似“只用正常样本训练”的模型；例如 PatchCore 一类方法会使用正常图像特征 memory bank，通过最近邻距离定位异常区域。citeturn332485search12
+
+YOLO 类框架只是其中一个 Adapter。当前 Ultralytics 文档所覆盖的任务已经包括 Detection、Instance/Semantic Segmentation、Classification、Pose、OBB、Depth，并可在检测/分割/姿态/OBB 结果之上进行 Tracking，因此我们的 Capability Schema 也必须比“YOLO=目标检测”更宽。citeturn332485search0turn332485search4
+
+## 38.8 Video Understanding / 镜头与事件模型
+
+视频任务不能只理解为 VLM。
+
+至少支持：
+
+- Shot Boundary Detection / 镜头切分；
+- Scene Boundary Detection；
+- Scene Classification；
+- Action Recognition；
+- Temporal Action Localization；
+- Event Detection；
+- Highlight Detection；
+- Video Summarization；
+- Multi-object Tracking；
+- Video Anomaly Detection；
+- Crowd / Flow Analysis；
+- Lip / Gesture / Behavior Recognition；
+- Temporal Segmentation。
+
+这类“小而专”的模型往往比通用 VLM 延迟更低、成本更低，也更容易形成稳定工业指标。
+
+## 38.9 OCR / Document Intelligence Models
+
+进一步拆分：
+
+- Text Detection；
+- Text Recognition；
+- Layout Detection；
+- Table Structure Recognition；
+- Formula Recognition；
+- Handwriting Recognition；
+- Document Classification；
+- Key Information Extraction；
+- Document Relation Extraction；
+- Reading Order；
+- Signature / Stamp / Seal Detection；
+- Document Quality / Tamper Detection。
+
+VLM 可以作为补充，但不应默认替代专业 OCR / Layout 模型。
+
+## 38.10 Speech / Audio Specialized Models
+
+包括：
+
+- VAD；
+- Keyword Spotting；
+- ASR；
+- Speaker Diarization；
+- Speaker Identification / Verification；
+- Acoustic Event Detection；
+- Audio Classification；
+- Acoustic Anomaly Detection；
+- Speech Enhancement；
+- Noise Suppression；
+- Source Separation；
+- Voice Activity / Turn Detection；
+- TTS；
+- Voice Conversion。
+
+例如很多 VAD、KWS、声纹和工业声学异常检测完全没必要调用大语言模型。
+
+## 38.11 Time-Series / Sensor / Industrial Process Models
+
+这是工业平台必须补齐的一类。
+
+至少包括：
+
+- Forecasting；
+- Anomaly Detection；
+- Change-point Detection；
+- Fault Diagnosis；
+- Remaining Useful Life / RUL；
+- Predictive Maintenance；
+- Soft Sensor；
+- Process State Estimation；
+- Multivariate Sensor Fusion；
+- Root-cause Ranking；
+- Energy / Load Forecast；
+- Vibration Analysis；
+- Thermal / Pressure / Current Pattern Analysis。
+
+实现可能是：
+
+```text
+Small Transformer
+TCN / RNN / CNN
+AutoEncoder
+Graph Neural Network
+Isolation Forest
+XGBoost
+State-space Model
+Statistical Model
+```
+
+而不是强制 LLM 化。
+
+## 38.12 Classical Machine Learning
+
+传统机器学习作为一等 Capability，不作为“旧技术”排除。
+
+至少支持：
+
+- Linear / Logistic Regression；
+- SVM；
+- kNN；
+- Decision Tree；
+- Random Forest；
+- Gradient Boosting；
+- XGBoost / LightGBM / CatBoost 类模型；
+- Naive Bayes；
+- PCA / ICA；
+- Clustering；
+- Isolation Forest；
+- One-Class SVM；
+- Gaussian Process；
+- HMM；
+- Probabilistic Models。
+
+对于结构化数据、小样本、高解释性、毫秒级 CPU 推理场景，这些模型可能优于大模型。
+
+## 38.13 Statistical / Signal Processing Models
+
+工业 AI 中必须允许非神经网络算法成为 Capability：
+
+- ARIMA / ETS；
+- State-space；
+- Kalman Filter；
+- Particle Filter；
+- FFT / Spectral Analysis；
+- Wavelet；
+- Change Detection；
+- SPC / Control Chart；
+- Signal Envelope / Feature Extraction；
+- Correlation / Causal Statistics。
+
+这些能力可与学习模型组成 Composite Pipeline。
+
+## 38.14 Expert System / Rule / Fuzzy Logic
+
+“传统人工智能”也应纳入：
+
+- Rule Engine；
+- Expert System；
+- Decision Table；
+- Fuzzy Logic；
+- Knowledge-based Diagnosis；
+- Constraint Rules；
+- Policy Engine。
+
+典型用法：
+
+```text
+ML Model
+→ Probability
+
+Expert Rule
+→ Safety Constraint
+
+LLM / Agent
+→ Explanation
+
+Deterministic Gate
+→ Final Action
+```
+
+平台不应该为了“AI 化”而强行把成熟规则逻辑改造成 LLM。
+
+## 38.15 Optimization / Operations Research / Control
+
+这类在工业系统同样属于智能能力：
+
+- Linear Programming；
+- Integer / Mixed Integer Programming；
+- Constraint Programming；
+- Scheduling Solver；
+- Vehicle / Route Optimization；
+- Resource Optimization；
+- Bayesian Optimization；
+- Evolutionary Algorithm；
+- Reinforcement Learning；
+- Model Predictive Control；
+- Control Policy；
+- PID / Controller Tuning。
+
+它们可以直接成为 Agent Tool，也可以作为 Scheduler / Production 的专用求解器。
+
+## 38.16 Graph / Recommender / Ranking Models
+
+包括：
+
+- Graph Neural Network；
+- Node Classification；
+- Link Prediction；
+- Graph Embedding；
+- Fraud / Relation Detection；
+- Recommender；
+- CTR / CVR；
+- Learning-to-Rank；
+- Candidate Generation；
+- Matching；
+- Personalization。
+
+这与 Knowledge Graph / Retrieval Plane 相互连接，但生命周期和 Benchmark 独立。
+
+## 38.17 Scientific / Physics-aware Models
+
+预留：
+
+- Physics-Informed Neural Network；
+- Surrogate Model；
+- Emulator；
+- Differentiable Simulation；
+- Scientific Foundation Model；
+- Molecule / Protein / Material Model；
+- Weather / Geospatial Model；
+- PDE / Field Prediction。
+
+它们可能需要完全不同的输入、指标和 GPU Profile，因此必须通过 Capability Schema 解耦。
+
+## 38.18 Security Specialized Models
+
+Security & Trust Plane 可调用：
+
+- Malware Classifier；
+- Intrusion Detection；
+- UEBA / Behavior Anomaly；
+- Phishing / Spam；
+- DLP / Sensitive-data Detector；
+- Secret Detector；
+- Prompt Injection Detector；
+- Toxicity / Abuse Detector；
+- Model / Data Poisoning Detector；
+- Supply-chain Risk Classifier。
+
+安全模型不得拥有“自动放行”最终 Authority，只提供信号给 Policy / Gate。
+
+## 38.19 Edge / TinyML / CPU-first Models
+
+平台不能假定所有模型都跑在 4090 上。
+
+支持：
+
+```text
+GPU
+CPU
+NPU
+iGPU
+Edge GPU
+Embedded Accelerator
+Future Accelerator
+```
+
+需要管理：
+
+- ONNX；
+- TensorRT；
+- OpenVINO；
+- TFLite；
+- CoreML；
+- GGUF / llama.cpp；
+- vendor-specific runtime；
+- tiny / quantized artifacts。
+
+适合：
+
+- 摄像头边缘检测；
+- 工业网关；
+- KWS / VAD；
+- 传感器异常检测；
+- 本地分类；
+- 低延迟控制前置判断。
+
+## 38.20 Composite AI Pipeline
+
+实际工业能力往往不是单模型：
+
+```text
+Camera
+→ Detector
+→ Tracker
+→ OCR
+→ Rule Engine
+→ Small Classifier
+→ LLM Explanation
+→ Deterministic Gate
+```
+
+或者：
+
+```text
+Sensors
+→ Signal Processing
+→ Anomaly Model
+→ Fault Classifier
+→ Knowledge Base
+→ Decision Model
+→ Human / Control System
+```
+
+因此 Deployment Unit 和 Workflow DAG 必须允许：
+
+> **Model + Algorithm + Rule + Tool + LLM**
+
+共同组成一个 Capability。
+
+## 38.21 模型分类元数据
+
+每个可学习模型至少逐步记录：
+
+```yaml
+model_class: ...
+task_family: ...
+modality: ...
+architecture_family: ...
+parameter_count: ...
+input_schema: ...
+output_schema: ...
+runtime_targets: ...
+hardware_targets: ...
+latency_class: ...
+memory_profile: ...
+trainable: ...
+incremental_learning: ...
+explainability: ...
+calibration: ...
+license: ...
+safety_class: ...
+benchmark_profile: ...
+```
+
+业务不直接依赖这些字段；Router、Scheduler、Gate 和 Registry 使用它们做选择。
+
+## 38.22 统一原则
+
+平台模型体系最终遵循：
+
+> **不是“大模型优先”，而是“最合适能力优先”。**
+
+选择模型/算法时综合考虑：
+
+```text
+Accuracy / Quality
+Latency
+Determinism
+Calibration
+Resource
+Cost
+Privacy
+Explainability
+Maintainability
+Safety
+```
+
+如果一个 20MB 工业异常模型能够稳定解决问题，就不应因为平台拥有 27B/70B 模型而强行调用大模型。
 
 
