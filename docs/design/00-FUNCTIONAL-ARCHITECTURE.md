@@ -1,8 +1,8 @@
 # AI Compute & Model Engineering Platform 总体功能设计 v1.0
 
 > 状态：**功能架构冻结候选（Functional Architecture Freeze Candidate）**  
-> 适用仓库：`qwen3.8-27b-8x4090-stack`  
-> 当前角色：本仓现有 Qwen3.8-27B × 8×RTX4090 优化工程作为 **Reference Workload #001 / Bootstrap Implementation**。  
+> 当前承载仓库：`qwen3.8-27b-8x4090-stack`；**平台设计本身不绑定该仓库名称、Qwen 模型族或 8×RTX4090 单一硬件形态。**  
+> 当前角色：本仓现有 Qwen3.8-27B × 8×RTX4090 优化工程仅作为 **Reference Workload #001 / Bootstrap Implementation**，用于以真实实验资产验证平台 Contract。  
 > 本文只冻结总体功能边界、核心对象、生命周期、调度原则与自动化闭环；**UI / UX / Human-AI Interaction 另行设计，不在本文展开。**
 
 
@@ -99,7 +99,7 @@ model = auto
 - 模型实际运行在哪张 GPU；
 - 当前有几个副本；
 - 是 SGLang 还是 vLLM；
-- 是本地 Qwen 还是外部 Provider；
+- 是哪一个本地模型族、哪一个本地 Runtime，还是外部 Provider；
 - 是否临时扩容；
 - 是否由 ASR + VLM + OCR + LLM 组合完成；
 - 内部使用了哪个端口。
@@ -260,6 +260,469 @@ model = auto
 - 一次性要求全部实现的开发任务清单。
 
 因此后续可以逐步实现，但不能在实现过程中破坏本文已经冻结的核心边界。
+
+
+## J. 五层设计阅读法
+
+为了让同一份总纲既能给人看、又能给工程实现使用，平台设计统一分成五层理解。
+
+### 第 1 层：愿景（Why）
+
+回答：
+
+> 为什么需要这套平台？
+
+目标不是为了“把 GPU 管起来”，而是把 AI 从一次次人工项目，变成可以持续生产能力的工程体系：
+
+```text
+算力
++ 模型
++ 数据
++ 实验
++ 服务
++ 研究
++ 治理
+        ↓
+可持续、可复现、可自动迭代的 AI 能力工厂
+```
+
+这一层主要给：
+
+- 管理者；
+- 项目负责人；
+- 业务负责人；
+- 合作单位；
+- 新加入项目的人。
+
+### 第 2 层：能力地图（What）
+
+回答：
+
+> 平台总体拥有哪些能力？
+
+先不看具体产品名，可以理解为九组能力：
+
+| 能力域 | 解决的问题 |
+|---|---|
+| **Compute** | 算力在哪里、是否健康、如何隔离和分配 |
+| **Model** | 有哪些模型、有什么能力、是否合格 |
+| **Data & Knowledge** | 数据从哪里来、质量如何、如何形成知识和训练集 |
+| **Experiment & Training** | 如何训练、量化、复现、比较和优化 |
+| **Serving** | 如何把能力稳定地提供给业务 |
+| **Scheduler** | 业务与训练如何共享资源并自动弹性 |
+| **Agent Automation** | 哪些复杂步骤由 Agent 自动规划和协调 |
+| **Research & Innovation** | 如何吸收新技术、形成论文/专利/软著 |
+| **Governance** | 权限、预算、安全、Gate、审计和可追溯性 |
+
+### 第 3 层：典型旅程（How people use it）
+
+回答：
+
+> 人真正使用平台时，从哪里开始、最后得到什么？
+
+核心旅程至少包括：
+
+1. **接入一个模型并上线服务**；
+2. **从零建设一个领域 AI**；
+3. **复现一篇论文或一个开源项目**；
+4. **让训练任务利用业务低谷 GPU**；
+5. **处理生产流量激增和自动扩容**；
+6. **把一次实验结果升级为正式生产能力**；
+7. **从内部成果生成论文 / 专利 / 软著候选材料**；
+8. **平台发现新技术并在人工监督下自我升级**。
+
+UI/UX 后续应围绕这些旅程组织，而不是围绕数据库表或技术组件堆菜单。
+
+### 第 4 层：功能域（How the platform is organized）
+
+回答：
+
+> 系统内部由哪些稳定边界组成？
+
+即本文后面的：
+
+- Gateway & Provider；
+- Model & Capability；
+- Compute & Virtualization；
+- Runtime & Plugin；
+- Data & Artifact；
+- Experiment & Training；
+- Scheduler & Placement；
+- Governance & Lifecycle；
+
+以及横向：
+
+- Observability & Lineage；
+- Agent Control Plane；
+- Research / Reproducibility；
+- Innovation / IP；
+- Platform Evolution。
+
+### 第 5 层：技术 Contract（How it is implemented safely）
+
+回答：
+
+> 每个能力如何变成可执行、可验证、不可随意漂移的工程对象？
+
+包括：
+
+- API Contract；
+- Adapter Contract；
+- Registry Contract；
+- State Machine；
+- Policy；
+- Resource Contract；
+- Experiment Contract；
+- Gate；
+- Evidence；
+- Lease / Fencing；
+- Version / Hash / Lineage。
+
+五层关系可以概括为：
+
+```text
+愿景
+ ↓
+能力地图
+ ↓
+典型旅程
+ ↓
+功能域
+ ↓
+技术 Contract
+```
+
+上层回答“为什么和做什么”，下层回答“怎样可靠地实现”。
+
+## K. 模型无关、框架无关、厂商无关
+
+平台必须坚持 **Model-Agnostic / Runtime-Agnostic / Provider-Agnostic**。
+
+### 模型不是架构中心
+
+Qwen3.8-27B 是当前真实参考工作负载，但平台不能假定：
+
+- 永远使用 Qwen；
+- 永远是纯文本 LLM；
+- 永远是 27B 参数规模；
+- 永远是单机 8×4090；
+- 永远使用同一个 Tokenizer；
+- 永远使用 SGLang 或 vLLM；
+- 永远只运行本地模型。
+
+未来可能接入：
+
+```text
+不同开源模型族
+不同商业模型
+不同参数规模
+不同量化格式
+不同模态
+不同 Runtime
+不同 Provider
+不同 GPU / CPU / Accelerator
+```
+
+这些变化原则上只应增加：
+
+```text
+Asset
++ Capability
++ Adapter
++ Environment Profile
++ Benchmark
++ Gate
+```
+
+而不是修改核心平台架构。
+
+### 平台真正识别的是 Capability
+
+例如业务请求：
+
+```text
+coding
+reasoning
+vision
+asr
+embedding
+video_understanding
+image_generation
+auto
+```
+
+平台再根据：
+
+- Quality；
+- SLA；
+- Cost；
+- Privacy；
+- Availability；
+- Hardware Fit；
+- Runtime Compatibility；
+- Current Load；
+
+选择实际模型和 Provider。
+
+因此：
+
+> **模型是可替换实现，Capability 才是长期稳定接口。**
+
+## L. 从“模型平台”进一步理解为“AI 能力工厂”
+
+从人的角度，平台最终不是一个模型仓库，而是一条能力生产线：
+
+```text
+外部世界
+论文 / 项目 / 模型 / 数据 / 业务需求
+                ↓
+            Discover
+                ↓
+     Reproduce / Curate
+                ↓
+          Evaluate
+                ↓
+          Optimize
+                ↓
+          Integrate
+                ↓
+            Deploy
+                ↓
+           Production
+                ↓
+        Feedback / Evidence
+                ↓
+           Innovate
+                ↓
+论文 / 专利 / 软著 / 新能力
+                ↓
+         下一轮 Discover
+```
+
+因此同一套基础设施既可以服务：
+
+- 通用大模型；
+- 编程模型；
+- 视觉模型；
+- 语音模型；
+- OCR；
+- 视频分析；
+- Embedding / Reranker；
+- 领域模型；
+- 多模型 Agent；
+- 未来尚未出现的新模型形态。
+
+## M. 功能地图：人看一眼应知道“有什么”
+
+### 1. 算力与环境
+
+```text
+节点发现
+GPU/CPU/RAM/NVMe 盘点
+硬件健康
+温度/功耗
+Topology
+VM
+Container
+Driver/CUDA Environment
+隔离
+资源池
+```
+
+### 2. 模型与运行
+
+```text
+模型导入
+模型验证
+Capability Probe
+Runtime 适配
+量化
+Deployment
+副本
+统一逻辑模型
+本地/云路由
+```
+
+### 3. 数据与知识
+
+```text
+外部采集
+文件导入
+OCR/ASR
+清洗
+去重
+标注
+Ontology
+知识抽取
+Synthetic Dataset
+Gold Set
+RAG Knowledge Base
+```
+
+### 4. 实验与训练
+
+```text
+Baseline
+Experiment Contract
+训练
+微调
+量化
+Benchmark
+A/B
+Ablation
+Power Tuning
+Pareto
+Evidence
+```
+
+### 5. 调度与弹性
+
+```text
+Priority
+Service Class
+Admission
+Queue
+Fair Share
+Gang
+Elastic
+Checkpoint
+Preemption
+Training Debt
+Reservation
+Backfill
+Autoscaling
+Scale-to-Zero
+Cloud Burst
+```
+
+### 6. 生产服务
+
+```text
+Unified API
+Auth
+Quota
+Rate Limit
+Shadow
+Canary
+Progressive Rollout
+Rollback
+SLA
+Observability
+```
+
+### 7. 自动化与 Agent
+
+```text
+Goal
+Plan
+Tool Calling
+Execution
+Observation
+Diagnosis
+Retry
+Proposal
+Human Gate
+Continuous Loop
+```
+
+### 8. 科研与创新
+
+```text
+Technology Radar
+论文/项目发现
+复现
+文献与证据
+Ablation
+研究报告
+论文草稿
+专利候选
+软著候选
+成果资产库
+```
+
+### 9. 治理与安全
+
+```text
+RBAC
+Service Account
+Secret
+Policy
+Budget
+Data Classification
+Supply Chain
+Audit
+Backup/DR
+Gate
+Lineage
+IP Gate
+```
+
+## N. 平台成熟度不是“一次做完”
+
+总体功能设计是长期能力边界，不代表第一版全部实现。
+
+建议后续实施按成熟度理解：
+
+### Stage 0 — Reference Workload
+
+当前真实 Qwen3.8 / 8×4090 实验继续提供：
+
+- Benchmark；
+- Environment；
+- Artifact；
+- Quantization；
+- Power；
+- Scheduler；
+
+首批真实 Evidence。
+
+### Stage 1 — Foundation
+
+先建设最小平台骨架：
+
+- Registry；
+- Resource Inventory；
+- Environment；
+- Plugin Contract；
+- Unified API；
+- Basic Scheduler；
+- Gate / Evidence。
+
+### Stage 2 — Engineering Platform
+
+增加：
+
+- Training；
+- Quantization；
+- Data Factory；
+- Auto Benchmark；
+- Deployment Lifecycle；
+- Autoscaling。
+
+### Stage 3 — Autonomous Platform
+
+增加：
+
+- Agent Control Plane；
+- AutoLab；
+- Data Acquisition；
+- Synthetic Dataset；
+- Technology Radar；
+- Automatic Reproduction。
+
+### Stage 4 — Innovation Platform
+
+增加：
+
+- Research Evidence Graph；
+- Publication Builder；
+- IP Workspace；
+- Platform Evolution Controller；
+- 更高级多节点与跨 Provider 调度。
+
+因此后续开发应：
+
+> **先保证骨架正确，再逐步让自动化和智能化越来越深。**
 
 ---
 
