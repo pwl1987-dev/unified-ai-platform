@@ -5291,4 +5291,543 @@ Retire
 
 这成为后续 UI / UX 的一个核心一级入口。
 
+---
+
+# 53. Open-Source Reuse & Commercialization Audit
+
+平台优先采用“**稳定 Core + 成熟开源能力复用 + 自有 UI / Control Hub**”，避免从零重复开发已经成熟的基础能力。
+
+本节记录当前第一轮开源复用与许可证审计结论。它是工程选型输入，不替代正式法律意见；任何准备打包发布、对外提供 SaaS、再分发或商业授权的版本，仍需在具体版本冻结后进行一次依赖级法律审查。
+
+## 53.1 审计原则
+
+不能只看组织名或主仓许可证。
+
+必须至少逐项确认：
+
+```text
+Repository
++ Exact Revision
++ Root License
++ Subdirectory License
++ Optional Enterprise / EE Code
++ Direct Dependencies
++ Bundled Dependencies
++ Model Weight License
++ Dataset License
++ Runtime / Driver Terms
++ Redistribution Terms
+```
+
+核心规则：
+
+> **软件许可证、模型权重许可证、数据集许可证必须分开审。**
+
+不能因为 Framework 是 Apache-2.0，就默认其中下载的模型或数据也能商用。
+
+## 53.2 第一批候选结论
+
+### CSGHub / OpenCSG
+
+适合作为 **AI Asset & Capability Hub** 的首选复用底座。
+
+当前已核对：
+
+```text
+OpenCSGs/csghub              Apache-2.0
+OpenCSGs/csghub-server       Apache-2.0
+OpenCSGs/csghub-sdk          Apache-2.0
+OpenCSGs/csghub-charts       Apache-2.0
+OpenCSGs/csghub-omnibus      Apache-2.0
+OpenCSGs/csghub-mcp-servers  Apache-2.0
+OpenCSGs/llm-finetune        Apache-2.0
+```
+
+这些组件可进入优先二开候选池。
+
+但是同一 OpenCSG 组织内存在不同许可证：
+
+```text
+OpenCSGs/csghub-dataflow     GPL-3.0
+OpenCSGs/image-syncer        GPL-3.0
+OpenCSGs/coagent             AGPL-3.0
+OpenCSGs/csglite             Other / 待逐文件确认
+OpenCSGs/csgclaw             Other / 待逐文件确认
+```
+
+因此禁止采用：
+
+> “OpenCSG 组织项目全部自动批准”
+
+这种粗粒度策略。
+
+### CSGHub Dataflow 的处理
+
+`csghub-dataflow` 当前为 GPL-3.0。
+
+平台建议：
+
+```text
+默认：不嵌入 proprietary Core
+可选：独立进程 / 独立部署 Adapter
+上线前：单独 License Review
+```
+
+如果未来需要其能力，可优先：
+
+1. 通过 API 以外部服务方式集成；
+2. 或选择许可证更宽松的数据处理引擎；
+3. 或自行实现符合我们 Contract 的 Data Worker。
+
+### OpenCSG Coagent 的处理
+
+`coagent` 当前为 AGPL-3.0。
+
+由于它属于网络服务/Agent Framework 类，AGPL 对网络交互场景的源代码义务更敏感。
+
+默认策略：
+
+```text
+REFERENCE_ONLY / OPTIONAL_EXTERNAL
+```
+
+不进入我们 proprietary / closed-distribution Core。
+
+## 53.3 MLflow
+
+`mlflow/mlflow` 当前主仓为 Apache-2.0。
+
+适合复用：
+
+- Experiment Tracking；
+- Run / Metric；
+- Artifact；
+- Model Registry；
+- Evaluation；
+- Tracing；
+- Evidence；
+- GenAI / Agent Observability。
+
+建议定位：
+
+```text
+Experiment / Evidence Backend
+```
+
+而不是平台 Authority。
+
+我们的：
+
+- Gate；
+- Scheduler；
+- Capability Registry；
+- Production Promotion；
+- Security Policy；
+
+仍保留在自有 Core。
+
+## 53.4 BentoML
+
+`bentoml/BentoML` 当前主仓为 Apache-2.0。
+
+`bentoml/OpenLLM` 当前也为 Apache-2.0。
+
+适合：
+
+- Generic Model Serving；
+- Python Model Serving；
+- Multi-model Pipeline；
+- Container Build；
+- CPU/GPU Specialized Model；
+- Industrial AI；
+- Embedding / Reranker；
+- YOLO / OCR / Traditional ML；
+- Job / API。
+
+建议定位：
+
+```text
+Generic Serving Adapter
+```
+
+重要注意：
+
+部分 BentoML 示例仓库（例如某些 BentoSentenceTransformers / BentoYolo 示例）当前未在仓库根部发现显式 LICENSE 文件。
+
+因此：
+
+> **示例代码不能因为“属于 BentoML GitHub 组织”就自动视为 Apache-2.0。**
+
+没有明确许可证的示例：
+
+```text
+REFERENCE_ONLY
+```
+
+除非后续确认其许可证或自行重写实现。
+
+同样，BentoML 能运行的模型权重仍需按模型自己的 License 审计。
+
+## 53.5 LiteLLM
+
+LiteLLM 是有价值的 Gateway Adapter 候选，但许可证边界比上述 Apache 项目复杂。
+
+当前根 LICENSE 明确：
+
+- `enterprise/` 之外代码：MIT；
+- Enterprise 部分：单独 BerriAI Enterprise License；
+- Enterprise License 对生产使用要求有效商业许可。
+
+因此建议：
+
+```text
+LiteLLM OSS Core
+→ 可作为 Provider / Gateway Adapter 候选
+
+LiteLLM Enterprise Code / Commercial Features
+→ 默认禁止进入我们的发行包
+→ 除非单独采购 / 明确授权
+```
+
+另外社区已经公开提出过 OSS / Enterprise 功能边界不够物理清晰的问题。
+
+因此 LiteLLM 风险等级建议：
+
+```text
+P1 / CONTROLLED_REUSE
+```
+
+而不是像 Apache-only 项目一样直接进入核心依赖。
+
+如果采用，应：
+
+- 固定 exact revision；
+- 扫描 enterprise import；
+- 禁止 vendoring enterprise code；
+- SBOM 标记 MIT / commercial boundary；
+- CI 自动检查 forbidden path；
+- 仅将其视为 Gateway Adapter，不作为平台 Authority。
+
+同时保留对其他 Gateway 候选（如 Bifrost / TensorZero 等）进行许可证与能力对照的空间。
+
+## 53.6 ModelScope / ms-swift / FunASR
+
+### ModelScope Core
+
+`modelscope/modelscope` 当前为 Apache-2.0。
+
+适合作为：
+
+- Model Hub Adapter；
+- Inference Pipeline Adapter；
+- CV / Speech / Multimodal Model Intake；
+- Dataset / Model Source。
+
+### ms-swift
+
+`modelscope/ms-swift` 当前为 Apache-2.0。
+
+适合作为：
+
+- SFT；
+- LoRA / QLoRA；
+- CPT；
+- DPO / GRPO；
+- Multimodal Fine-tuning；
+- Quantization / Export；
+
+等 Training Adapter 候选。
+
+### FunASR
+
+FunASR Toolkit 当前为 MIT。
+
+但其官方文档明确：
+
+> Toolkit License 与 Model Weight License 是两回事。
+
+因此：
+
+```text
+FunASR Toolkit
+→ MIT / 可作为 Adapter
+
+FunASR / Third-party Weight
+→ 必须逐模型卡、逐 revision 审核
+```
+
+部分权重可能采用独立的 Model License，而不是 MIT。
+
+这进一步证明我们的 Hub 必须将：
+
+```text
+software_license
+model_license
+dataset_license
+redistribution_policy
+commercial_use_policy
+```
+
+分开建模。
+
+## 53.7 初步复用等级
+
+建议当前冻结为：
+
+```text
+P0 — 优先复用 / 二开
+├── CSGHub Portal / Server / SDK
+├── CSGHub Charts / Omnibus
+├── MLflow
+├── BentoML
+├── ModelScope Core
+└── ms-swift
+
+P1 — 受控复用
+├── LiteLLM OSS Core
+├── FunASR Toolkit
+└── OpenLLM
+
+P2 — 可选独立服务 / 需特别审查
+├── CSGHub Dataflow (GPL-3.0)
+└── 其他 GPL 组件
+
+RESTRICTED / 默认不进入 Core
+├── OpenCSG Coagent (AGPL-3.0)
+├── LiteLLM Enterprise
+├── No-License 示例仓库
+└── License=Other 且未完成审计的仓库
+```
+
+这里的 P0/P1/P2 表示“复用工程优先级与许可风险等级”，不是功能优劣排名。
+
+## 53.8 SBOM / License Gate
+
+所有进入生产镜像或发行包的第三方组件必须生成：
+
+```text
+SBOM
++ License Inventory
++ Copyright Notice
++ Source Revision
++ Dependency Graph
+```
+
+License Gate 至少输出：
+
+```text
+APPROVED
+APPROVED_WITH_NOTICE
+ISOLATE_AS_SERVICE
+LEGAL_REVIEW_REQUIRED
+REJECTED
+```
+
+禁止仅靠人工 Excel 长期维护。
+
+License Scan 应进入：
+
+```text
+Capability Intake
+Model Intake
+Container Build
+Release Gate
+```
+
+---
+
+# 54. UI Ownership Strategy
+
+UI 建议由我们自己设计和实现。
+
+不是因为现有开源 UI 不能用，而是因为我们的产品边界已经显著超过 CSGHub / MLflow / LiteLLM 任一单项目。
+
+## 54.1 为什么不长期 Fork CSGHub Portal 作为主 UI
+
+CSGHub Portal 本身 Apache-2.0，可以合法作为参考或短期复用。
+
+但它的产品 IA 主要围绕：
+
+- Model；
+- Dataset；
+- Space；
+- Code；
+- Asset Hub。
+
+我们的 UI 还必须统一表达：
+
+- GPU / Compute；
+- Runtime；
+- Scheduler；
+- Training；
+- Experiment；
+- Data Factory；
+- Knowledge；
+- Retrieval；
+- Memory；
+- Agent；
+- Tool / MCP；
+- Browser / Computer Use；
+- Workflow；
+- Security；
+- Research；
+- IP；
+- Platform Evolution。
+
+长期直接 Fork CSGHub Portal 会导致：
+
+- IA 被上游产品结构绑死；
+- 上游升级与自定义 UI 冲突；
+- 权限模型出现双 Authority；
+- 页面层需要大量反向改造；
+- Control Hub 体验无法真正统一。
+
+因此建议：
+
+> **复用 CSGHub Server / SDK / OpenAPI，不把其 Portal 作为长期产品 Shell。**
+
+## 54.2 UI 分层
+
+建议：
+
+```text
+Our Web UI
+        ↓
+Our Control Hub API
+        ↓
+Adapter / Backend Services
+├── CSGHub Server
+├── MLflow
+├── LiteLLM / Gateway
+├── BentoML
+├── Training Backend
+├── Scheduler
+├── Knowledge
+└── Security
+```
+
+浏览器不直接同时调用十几个开源后端。
+
+所有后端通过我们的 Control Hub API 聚合：
+
+- Identity；
+- Permission；
+- Audit；
+- Error Model；
+- Resource ID；
+- State；
+- Human Approval。
+
+这样 UI 永远只认识我们的领域模型。
+
+## 54.3 开源 UI 的正确用法
+
+现有开源 UI 可以：
+
+- 作为功能参考；
+- 用作开发/运维 fallback；
+- 用于早期验证第三方服务；
+- 借鉴交互模式；
+- 合法情况下复用通用组件。
+
+但正式产品 UI：
+
+```text
+Information Architecture
+Navigation
+Role View
+Dashboard
+Human Inbox
+Workflow
+Agent Interaction
+Design System
+```
+
+全部由我们自己定义。
+
+## 54.4 Headless-first
+
+第三方系统优先选择：
+
+```text
+API-first
+SDK-first
+Headless-capable
+```
+
+UI 是否漂亮不是选型核心。
+
+真正重要的是：
+
+- API 完整；
+- Contract 稳定；
+- 权限可接管；
+- 数据可迁移；
+- 无强制 SaaS 依赖；
+- 可以自托管；
+- License 清晰。
+
+---
+
+# 55. Recommended Reuse Architecture v0
+
+当前建议的复用结构：
+
+```text
+                    Our Unified AI Control Hub
+       Authority / Policy / Gate / Security / Scheduler
+                           │
+       ┌───────────────────┼───────────────────┐
+       ▼                   ▼                   ▼
+    CSGHub               MLflow             Gateway
+ Asset Backend       Experiment/Evidence   Adapter Layer
+       │                   │                   │
+       │                   │              LiteLLM OSS
+       │                   │              / Alternatives
+       │                   │
+       ├───────────┬───────┴────────────┐
+       ▼           ▼                    ▼
+   BentoML     LLM Runtime         Training Adapters
+ Generic       SGLang/vLLM        ms-swift / Custom
+ Serving       llama.cpp
+       │           │                    │
+       └───────────┴──────────┬─────────┘
+                              ▼
+                        Compute Plane
+                     GPU / CPU / NPU / Edge
+```
+
+其中：
+
+### 我们自己掌握
+
+```text
+Unified Domain Model
+Capability Registry Overlay
+Authority
+Policy
+Scheduler
+Gate
+Security
+Lineage
+Human Approval
+Platform Evolution
+Unified UI
+```
+
+### 尽量复用
+
+```text
+Asset Storage / Hub
+Experiment Tracking
+Provider Compatibility
+Generic Serving
+Training Framework
+Model Download
+Model Source Adapter
+Existing Runtime
+```
+
+这条边界是后续工程实施的重要冻结条件。
+
 
