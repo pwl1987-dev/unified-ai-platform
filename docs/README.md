@@ -36,6 +36,7 @@
 | [design/13-EVENT-CONTRACT.md](design/13-EVENT-CONTRACT.md) | WP-P1-03：Domain Event Envelope、事件族、at-least-once/idempotency、outbox/replay 与 Agent/Audit/Incident 事件 |
 | [design/14-STATE-MACHINES.md](design/14-STATE-MACHINES.md) | WP-P1-04：Model/Dataset/Deployment/Run/Experiment/Approval/VM/Dependency 生命周期、LKG、retry/rollback/guard |
 | [design/15-ADAPTER-CONTRACT.md](design/15-ADAPTER-CONTRACT.md) | WP-P1-05：15 类 Adapter、ExecutionContext/Result/Error、C0-C3 conformance、Backend Replacement / Exit Path |
+| [design/16-P1-CONTRACT-CLOSURE.md](design/16-P1-CONTRACT-CLOSURE.md) | WP-P1-CLOSE-01：CG-01~CG-15 闭合、OpenAPI 0.2 additive surface 与 P3 readiness |
 | [../contracts/adapters/adapter-manifest.schema.json](../contracts/adapters/adapter-manifest.schema.json) | WP-P1-05 Adapter implementation manifest JSON Schema |
 | [../contracts/adapters/adapter-catalog.v1.json](../contracts/adapters/adapter-catalog.v1.json) | WP-P1-05 machine-readable Adapter operation/authority catalog |
 | [../contracts/state-machines/state-machines.v1.json](../contracts/state-machines/state-machines.v1.json) | WP-P1-04 machine-readable state-machine baseline |
@@ -72,14 +73,15 @@ Completed first-pass packages
   P1-03 Event Contract
   P1-04 State Machines
   P1-05 Adapter Contract
+  P1-CLOSE-01 Golden Journey Contract Closure
   P2-01 User Roles
   P2-02 Human-AI Responsibility
   P2-03 Golden Journeys
   P2-04 Information Architecture
+  P2-05 Low-fi Wireframes
         ↓
 Next Contract / UX layer
-  P1 Contract Closure / Journey Gap closure
-  P2-05 Low-fi Wireframes
+  P2-06 Design System Direction
 ```
 
 ## 当前 P1 裁决登记

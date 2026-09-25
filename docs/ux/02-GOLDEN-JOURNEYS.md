@@ -913,3 +913,16 @@ Golden Journeys 对 WP-P1-02 baseline 的反向审计结果如下。
 # 15. Exit Condition
 
 WP-P2-03 完成。下一步直接进入 WP-P2-04 Information Architecture；P1 Contract Gap 保持显式，不阻塞 IA/Low-fi，但在 P3 Repository Skeleton 前必须有 owner 与收敛顺序。
+
+
+# 16. P1 Contract Closure Status
+
+在 WP-P1-03 Event、WP-P1-04 State Machines、WP-P1-05 Adapter Contract 与 WP-P1-CLOSE-01 完成后，§11 的 CG-01~CG-15 已全部获得正式 Contract Owner。
+
+规范 closure 表见：
+
+- docs/design/16-P1-CONTRACT-CLOSURE.md
+
+本文件保留原 Gap Register 作为发现记录；其 Priority 不再表示“仍未裁决”。
+
+**当前未关闭 Golden Journey Contract Gap：0。**

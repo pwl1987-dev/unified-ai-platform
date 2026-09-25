@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Unified AI Platform Northbound API",
-    "version": "0.1.0",
-    "description": "WP-P1-02 baseline. Capability-first, backend-agnostic Unified AI Gateway + AI Control Hub northbound contract."
+    "version": "0.2.0",
+    "description": "WP-P1-02 + P1 Contract Closure baseline. Capability-first, backend-agnostic Unified AI Gateway + AI Control Hub northbound contract with Golden Journey action/read surfaces."
   },
   "tags": [
     {
@@ -705,6 +705,955 @@
           }
         }
       }
+    },
+    "/api/v1/model-assets:import": {
+      "post": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "importModelAsset",
+        "summary": "Import a ModelAsset candidate through AssetSource/AssetHub contracts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelImportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/model-assets/{model_id}": {
+      "get": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "getModelAsset",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ModelAssetId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ModelAsset read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/dataset-assets:import": {
+      "post": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "importDatasetAsset",
+        "summary": "Import a DatasetAsset candidate into quarantine/curation flow",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatasetImportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/dataset-assets/{dataset_id}": {
+      "get": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "getDatasetAsset",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DatasetAssetId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DatasetAsset read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/experiments": {
+      "post": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "createExperiment",
+        "summary": "Create an Experiment or research reproduction contract",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperimentCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/experiments/{experiment_id}": {
+      "get": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "getExperiment",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExperimentId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Experiment read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge-assets/{knowledge_id}": {
+      "get": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "getKnowledgeAsset",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/KnowledgeAssetId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "KnowledgeAsset read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge-assets/{knowledge_id}:rebuild-index": {
+      "post": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "rebuildKnowledgeIndex",
+        "summary": "Rebuild a derivative Index from canonical knowledge",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/KnowledgeAssetId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IndexRebuildRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}:checkpoint": {
+      "post": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "checkpointTrainingRun",
+        "summary": "Request a guarded TrainingRun checkpoint",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RunId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunCheckpointRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}:resume": {
+      "post": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "resumeTrainingRun",
+        "summary": "Resume a PAUSED/PREEMPTED TrainingRun from a verified checkpoint",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RunId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunResumeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/policies/{policy_id}": {
+      "get": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "getPolicy",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PolicyId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Policy read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "updatePolicySpec",
+        "summary": "Propose/update Policy spec under optimistic concurrency and approval rules",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PolicyId"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicySpecPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated Policy when immediately allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/upstream-dependencies": {
+      "get": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "listUpstreamDependencies",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/PageToken"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dependency page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DependencyPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/upstream-dependencies/{dependency_id}": {
+      "get": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "getUpstreamDependency",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DependencyId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "UpstreamDependency read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/upstream-dependencies/{dependency_id}:begin-migration": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "beginDependencyMigration",
+        "summary": "Begin a guarded dependency migration from AT_RISK",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DependencyId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DependencyMigrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/adapters/{adapter_id}": {
+      "get": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "getAdapter",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AdapterId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Adapter read model including conformance level",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/adapters/{adapter_id}:replace-backend": {
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "replaceAdapterBackend",
+        "summary": "Start a conformance-gated backend replacement",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AdapterId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BackendReplacementRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/migrations/{operation_id}/external-ref-mappings": {
+      "get": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "listExternalRefMigrationMappings",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OperationId"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/PageToken"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ExternalRef migration mapping page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalRefMigrationPage"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/approvals": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "requestApproval",
+        "summary": "Create an Approval with a complete Decision Packet",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApprovalCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/approvals/{approval_id}": {
+      "get": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "getApproval",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApprovalId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Approval Decision Packet/read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApprovalReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments/{deployment_id}": {
+      "get": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "getDeployment",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DeploymentId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deployment read model including active revision and LKG designation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainObjectReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments/{deployment_id}:recover": {
+      "post": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "recoverDeploymentToLKG",
+        "summary": "Recover a degraded deployment to a verified LKG revision",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DeploymentId"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoverToLKGRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/incidents/{incident_id}": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "operationId": "getIncidentReadModel",
+        "summary": "Read incident/recovery projection without creating a second Domain Authority",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IncidentId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Incident/recovery read model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentReadModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -839,6 +1788,78 @@
         "schema": {
           "type": "string",
           "pattern": "^approval_[A-Za-z0-9_-]+$"
+        }
+      },
+      "ModelAssetId": {
+        "name": "model_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^modelasset_[A-Za-z0-9_-]+$"
+        }
+      },
+      "DatasetAssetId": {
+        "name": "dataset_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^datasetasset_[A-Za-z0-9_-]+$"
+        }
+      },
+      "ExperimentId": {
+        "name": "experiment_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^experiment_[A-Za-z0-9_-]+$"
+        }
+      },
+      "KnowledgeAssetId": {
+        "name": "knowledge_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^knowledgeasset_[A-Za-z0-9_-]+$"
+        }
+      },
+      "PolicyId": {
+        "name": "policy_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^policy_[A-Za-z0-9_-]+$"
+        }
+      },
+      "AdapterId": {
+        "name": "adapter_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^adapter_[A-Za-z0-9_-]+$"
+        }
+      },
+      "DependencyId": {
+        "name": "dependency_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^upstreamdependency_[A-Za-z0-9_-]+$"
+        }
+      },
+      "IncidentId": {
+        "name": "incident_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^incident_[A-Za-z0-9_-]+$"
         }
       }
     },
@@ -2311,6 +3332,824 @@
               "STAGING",
               "PRODUCTION"
             ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DomainObjectReadModel": {
+        "type": "object",
+        "required": [
+          "metadata",
+          "spec",
+          "status"
+        ],
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/DomainMetadata"
+          },
+          "spec": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "status": {
+            "type": "object",
+            "required": [
+              "phase",
+              "observed_at"
+            ],
+            "properties": {
+              "phase": {
+                "type": "string"
+              },
+              "health": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reason_code": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "message": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": true
+          },
+          "lineage": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          },
+          "external_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalRef"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "SourceRef": {
+        "type": "object",
+        "required": [
+          "system",
+          "value"
+        ],
+        "properties": {
+          "system": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "digest": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModelImportRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "scope_ref",
+          "source_ref",
+          "business_revision"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "source_ref": {
+            "$ref": "#/components/schemas/SourceRef"
+          },
+          "business_revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "intended_capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secret_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatasetImportRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "scope_ref",
+          "source_ref",
+          "business_revision",
+          "classification"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "source_ref": {
+            "$ref": "#/components/schemas/SourceRef"
+          },
+          "business_revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "classification": {
+            "type": "string"
+          },
+          "intended_use": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secret_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExperimentCreateRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "scope_ref",
+          "mode",
+          "hypothesis",
+          "pinned_inputs",
+          "acceptance"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "EXPERIMENT",
+              "REPRODUCTION"
+            ]
+          },
+          "hypothesis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceRef"
+            }
+          },
+          "pinned_inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "environment_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "acceptance": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "budget": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IndexRebuildRequest": {
+        "type": "object",
+        "required": [
+          "recipe_revision",
+          "reason"
+        ],
+        "properties": {
+          "index_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "recipe_revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "backend_candidate_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "RunCheckpointRequest": {
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "preemption_intent": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "RunResumeRequest": {
+        "type": "object",
+        "required": [
+          "checkpoint_ref",
+          "reason"
+        ],
+        "properties": {
+          "checkpoint_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "PolicySpecPatch": {
+        "type": "object",
+        "required": [
+          "business_revision",
+          "reason"
+        ],
+        "properties": {
+          "business_revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rules": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "effective_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DependencyMigrationRequest": {
+        "type": "object",
+        "required": [
+          "replacement_ref",
+          "migration_plan",
+          "rollback_plan"
+        ],
+        "properties": {
+          "replacement_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "migration_plan": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "rollback_plan": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendReplacementRequest": {
+        "type": "object",
+        "required": [
+          "replacement_implementation_ref",
+          "target_environment",
+          "rollback_plan"
+        ],
+        "properties": {
+          "replacement_implementation_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_environment": {
+            "type": "string",
+            "enum": [
+              "SANDBOX",
+              "DEVELOPMENT",
+              "STAGING",
+              "PRODUCTION"
+            ]
+          },
+          "conformance_evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rollback_plan": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalRefMigrationMapping": {
+        "type": "object",
+        "required": [
+          "domain_id",
+          "old_external_ref",
+          "new_external_ref",
+          "verified"
+        ],
+        "properties": {
+          "domain_id": {
+            "type": "string"
+          },
+          "old_external_ref": {
+            "$ref": "#/components/schemas/ExternalRef"
+          },
+          "new_external_ref": {
+            "$ref": "#/components/schemas/ExternalRef"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalRefMigrationPage": {
+        "type": "object",
+        "required": [
+          "items",
+          "page"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalRefMigrationMapping"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMeta"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExecutionContextSummary": {
+        "type": "object",
+        "required": [
+          "acting_as",
+          "scope_ref",
+          "environment",
+          "responsibility_level"
+        ],
+        "properties": {
+          "acting_as": {
+            "$ref": "#/components/schemas/PrincipalRef"
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "environment": {
+            "type": "string",
+            "enum": [
+              "SANDBOX",
+              "DEVELOPMENT",
+              "STAGING",
+              "PRODUCTION"
+            ]
+          },
+          "responsibility_level": {
+            "type": "string",
+            "enum": [
+              "R0",
+              "R1",
+              "R2",
+              "R3"
+            ]
+          },
+          "agent_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "policy_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DecisionPacket": {
+        "type": "object",
+        "required": [
+          "action",
+          "execution_context",
+          "affected_object_refs",
+          "side_effects",
+          "evidence_refs"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "execution_context": {
+            "$ref": "#/components/schemas/ExecutionContextSummary"
+          },
+          "affected_object_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "side_effects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          },
+          "gate_result_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rollback_lkg_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "requested_expiry": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "exception_scope": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true
+          },
+          "ai_recommendation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Advisory only; never a final decision."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApprovalCreateRequest": {
+        "type": "object",
+        "required": [
+          "decision_packet",
+          "required_role"
+        ],
+        "properties": {
+          "decision_packet": {
+            "$ref": "#/components/schemas/DecisionPacket"
+          },
+          "required_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApprovalReadModel": {
+        "type": "object",
+        "required": [
+          "approval_id",
+          "resource_version",
+          "phase",
+          "decision_packet",
+          "requested_by",
+          "created_at"
+        ],
+        "properties": {
+          "approval_id": {
+            "type": "string"
+          },
+          "resource_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "REQUESTED",
+              "PENDING",
+              "APPROVED",
+              "REJECTED",
+              "CHANGES_REQUESTED",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED"
+            ]
+          },
+          "decision_packet": {
+            "$ref": "#/components/schemas/DecisionPacket"
+          },
+          "requested_by": {
+            "$ref": "#/components/schemas/PrincipalRef"
+          },
+          "decided_by": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PrincipalRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "decision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "APPROVE",
+              "REJECT",
+              null
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecoverToLKGRequest": {
+        "type": "object",
+        "required": [
+          "lkg_ref",
+          "reason"
+        ],
+        "properties": {
+          "lkg_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "incident_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "approval_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "recovery_mode": {
+            "type": "string",
+            "enum": [
+              "PREAUTHORIZED_INCIDENT_POLICY",
+              "APPROVAL_BACKED"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "IncidentReadModel": {
+        "type": "object",
+        "required": [
+          "incident_id",
+          "phase",
+          "severity",
+          "affected_object_refs",
+          "opened_at",
+          "observed_at",
+          "evidence_refs"
+        ],
+        "properties": {
+          "incident_id": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "MITIGATING",
+              "RECOVERING",
+              "RECOVERED",
+              "ESCALATED",
+              "CLOSED"
+            ]
+          },
+          "severity": {
+            "type": "string"
+          },
+          "affected_object_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "active_operation_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "selected_lkg_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "opened_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DependencyPage": {
+        "type": "object",
+        "required": [
+          "items",
+          "page"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainObjectReadModel"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMeta"
           }
         },
         "additionalProperties": false

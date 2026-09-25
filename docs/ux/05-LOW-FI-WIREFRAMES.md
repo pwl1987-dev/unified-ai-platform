@@ -987,3 +987,23 @@ Low-fi 已冻结以下非视觉要求，P2-06 不得反向破坏：
 # 18. Exit Condition
 
 WP-P2-05 完成。Low-fi 已足以启动 P2-06 Design System Direction，但 **P3 Repository Skeleton 仍不得被解释为可以实现全部业务动作**；P1-03/P1-04/P1-05 仍需先收敛 Journey 暴露的事件、状态机和 Adapter action contract。
+
+
+# 19. Post-P1 Contract Closure Amendment
+
+§15 的 Contract Pending 清单是 P2-05 冻结时的真实状态。
+
+当前在 P1-03 / P1-04 / P1-05 / P1-CLOSE-01 后：
+
+- Model/Dataset intake：已分配正式 API + Adapter Contract；
+- Experiment/Reproduction create：已有 API；
+- Scheduler Policy mutation：已有 GET/PATCH + State/Responsibility guard；
+- checkpoint/resume：已有 API + TrainingRun State Machine + TrainingAdapter；
+- backend replacement：已有 Adapter replacement Contract + API；
+- dependency risk exception：使用 Approval Decision Packet + expiry；
+- AI Operator Decision Packet：已有 ExecutionContext/Approval read model；
+- recover-to-LKG：已有 Deployment recovery action + State Machine。
+
+因此 Low-fi 核心 control 可以从 **Contract Pending** 转为 **Contracted / Not Implemented**。
+
+这不表示功能已编码；P3/P8 实现仍必须通过 generated client 与 Contract CI。

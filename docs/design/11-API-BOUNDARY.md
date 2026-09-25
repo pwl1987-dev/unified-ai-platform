@@ -434,3 +434,41 @@ Command Palette 同样不能绕过这些约束。
 - 不修改 eval/vllm/nextgen-20260917/**。
 
 下一步由 WP-P2-03 Golden Journeys 反向验证 Contract Gap / Orphan API Risk。
+
+
+# 24. Golden Journey Contract Closure Amendment — OpenAPI 0.2
+
+WP-P2-03 暴露的 CG-01~CG-15 已由 P1-03 / P1-04 / P1-05 与本次 additive API extension 收敛。
+
+新增 northbound family：
+
+- ModelAsset / DatasetAsset intake + detail；
+- Experiment create/detail；
+- Knowledge Index rebuild；
+- TrainingRun checkpoint/resume；
+- Policy read/mutate；
+- UpstreamDependency read/migration；
+- Adapter replacement / ExternalRef migration mapping；
+- Approval request / Decision Packet read；
+- Deployment detail / recover-to-LKG；
+- Incident recovery read projection。
+
+详细闭合证据见：
+
+- docs/design/16-P1-CONTRACT-CLOSURE.md
+
+约束保持：
+
+1. 不提供 backend-admin passthrough；
+2. 不提供 AI Operator 特权 endpoint；
+3. 不允许 direct PATCH status；
+4. 所有 mutation 仍受 State Machine / Policy / Gate / Approval；
+5. Incident 当前只做 read-only projection；
+6. Scheduler preemption 保持内部 Policy action，不暴露任意手工抢占 API。
+
+# 25. P1-02 Closure Acceptance
+
+- [x] Golden Journey CG-01~CG-15 均有 Northbound / Event / State / Adapter owner。
+- [x] OpenAPI 保持 3.1。
+- [x] 仍是 additive、task-driven surface，不是全量 CRUD。
+- [x] P3 Contract CI 可以以本文件 + OpenAPI 0.2 为 baseline。
