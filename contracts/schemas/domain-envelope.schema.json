@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://contracts.local/schemas/domain-envelope.schema.json",
   "title": "Platform Domain Object Envelope",
-  "description": "WP-P1-01 common envelope. Object-specific spec/status schemas are added by subsequent P1 contracts.",
+  "description": "WP-P1-01 common envelope amended by WP-P1-02 P1-D05: Project and Principal are first-class scope/identity primitives. Object-specific spec/status schemas are refined by later P1 contracts.",
   "type": "object",
   "required": [
     "id",
@@ -26,6 +26,8 @@
     "kind": {
       "type": "string",
       "enum": [
+        "Principal",
+        "Project",
         "Resource",
         "Node",
         "GPU",
@@ -70,7 +72,10 @@
       "maxLength": 255
     },
     "description": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "maxLength": 4096
     },
     "scope_ref": {
@@ -134,7 +139,10 @@
   "$defs": {
     "ownerRef": {
       "type": "object",
-      "required": ["subject_type", "subject_id"],
+      "required": [
+        "subject_type",
+        "subject_id"
+      ],
       "properties": {
         "subject_type": {
           "type": "string",
@@ -147,15 +155,24 @@
           "maxLength": 255
         },
         "display_name": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 255
         }
       },
       "additionalProperties": false
     },
     "scopeRef": {
-      "type": ["object", "null"],
-      "required": ["scope_type", "scope_id"],
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "scope_type",
+        "scope_id"
+      ],
       "properties": {
         "scope_type": {
           "type": "string",
@@ -172,7 +189,11 @@
     },
     "externalRef": {
       "type": "object",
-      "required": ["system", "kind", "value"],
+      "required": [
+        "system",
+        "kind",
+        "value"
+      ],
       "properties": {
         "system": {
           "type": "string",
@@ -190,11 +211,17 @@
           "maxLength": 2048
         },
         "revision": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 255
         },
         "url": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "format": "uri",
           "maxLength": 4096
         }
@@ -203,7 +230,10 @@
     },
     "lineageEdge": {
       "type": "object",
-      "required": ["relation", "object_id"],
+      "required": [
+        "relation",
+        "object_id"
+      ],
       "properties": {
         "relation": {
           "type": "string",
@@ -228,10 +258,17 @@
           "maxLength": 128
         },
         "object_version": {
-          "type": ["string", "integer", "null"]
+          "type": [
+            "string",
+            "integer",
+            "null"
+          ]
         },
         "evidence_ref": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 128
         }
       },
@@ -239,7 +276,10 @@
     },
     "status": {
       "type": "object",
-      "required": ["phase", "observed_at"],
+      "required": [
+        "phase",
+        "observed_at"
+      ],
       "properties": {
         "phase": {
           "type": "string",
@@ -247,15 +287,24 @@
           "maxLength": 64
         },
         "health": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 64
         },
         "reason_code": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 128
         },
         "message": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 4096
         },
         "observed_at": {
@@ -263,7 +312,10 @@
           "format": "date-time"
         },
         "observed_generation": {
-          "type": ["integer", "null"],
+          "type": [
+            "integer",
+            "null"
+          ],
           "minimum": 0
         }
       },

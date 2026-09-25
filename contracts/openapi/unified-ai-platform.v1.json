@@ -1,0 +1,2320 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Unified AI Platform Northbound API",
+    "version": "0.1.0",
+    "description": "WP-P1-02 baseline. Capability-first, backend-agnostic Unified AI Gateway + AI Control Hub northbound contract."
+  },
+  "tags": [
+    {
+      "name": "AI Data Plane"
+    },
+    {
+      "name": "Capabilities"
+    },
+    {
+      "name": "Deployments"
+    },
+    {
+      "name": "Runs"
+    },
+    {
+      "name": "Resources"
+    },
+    {
+      "name": "Operations"
+    },
+    {
+      "name": "Evidence"
+    },
+    {
+      "name": "Governance"
+    },
+    {
+      "name": "Providers"
+    }
+  ],
+  "paths": {
+    "/v1/capabilities/{capability_id}:invoke": {
+      "post": {
+        "tags": [
+          "AI Data Plane"
+        ],
+        "operationId": "invokeCapability",
+        "summary": "Invoke a stable Capability",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CapabilityId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapabilityInvocationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CapabilityInvocation"
+          },
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "502": {
+            "$ref": "#/components/responses/BackendError"
+          },
+          "503": {
+            "$ref": "#/components/responses/BackendUnavailable"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/v1/chat/completions": {
+      "post": {
+        "tags": [
+          "AI Data Plane"
+        ],
+        "operationId": "createChatCompletion",
+        "summary": "Compatibility chat facade bound to Capability semantics",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CapabilityInvocation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/BackendUnavailable"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/v1/responses": {
+      "post": {
+        "tags": [
+          "AI Data Plane"
+        ],
+        "operationId": "createResponse",
+        "summary": "Unified text/multimodal response facade",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CapabilityInvocation"
+          },
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/BackendUnavailable"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/v1/embeddings": {
+      "post": {
+        "tags": [
+          "AI Data Plane"
+        ],
+        "operationId": "createEmbeddings",
+        "summary": "Embedding facade bound to an embedding Capability",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmbeddingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CapabilityInvocation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/BackendUnavailable"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/capabilities": {
+      "get": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "listCapabilities",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/PageToken"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Capability page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapabilityPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/capabilities/{capability_id}": {
+      "get": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "getCapability",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CapabilityId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Capability",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capability"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Capabilities"
+        ],
+        "operationId": "updateCapabilitySpec",
+        "summary": "Mutate Capability spec using optimistic concurrency",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CapabilityId"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapabilitySpecPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated Capability",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capability"
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments/{deployment_id}:promote": {
+      "post": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "promoteDeployment",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DeploymentId"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeploymentPromotionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs": {
+      "post": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "createRun",
+        "summary": "Create TrainingRun or EvaluationRun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}": {
+      "get": {
+        "tags": [
+          "Runs"
+        ],
+        "operationId": "getRun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RunId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Run"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/resources/gpus": {
+      "get": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "listGPUReadModels",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/PageToken"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GPU read model page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GPUReadModelPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/operations/{operation_id}": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "operationId": "getOperation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OperationId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/{evidence_id}": {
+      "get": {
+        "tags": [
+          "Evidence"
+        ],
+        "operationId": "getEvidence",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EvidenceId"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Evidence reference/detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceReference"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/approvals/{approval_id}:decide": {
+      "post": {
+        "tags": [
+          "Governance"
+        ],
+        "operationId": "decideApproval",
+        "summary": "Human-only final approval decision endpoint",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApprovalId"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          },
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApprovalDecisionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Approval decision recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApprovalDecisionResult"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/v1/providers": {
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "onboardProviderCandidate",
+        "summary": "Onboard a Provider candidate through platform authority",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/XCorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderOnboardingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/AcceptedOperation"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "XRequestId": {
+        "name": "X-Request-ID",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "maxLength": 128
+        }
+      },
+      "XCorrelationId": {
+        "name": "X-Correlation-ID",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "maxLength": 128
+        }
+      },
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 255
+        }
+      },
+      "IfMatch": {
+        "name": "If-Match",
+        "in": "header",
+        "required": true,
+        "description": "Quoted current resource_version.",
+        "schema": {
+          "type": "string",
+          "pattern": "^\\\"?[1-9][0-9]*\\\"?$"
+        }
+      },
+      "PageSize": {
+        "name": "page_size",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 50
+        }
+      },
+      "PageToken": {
+        "name": "page_token",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "Filter": {
+        "name": "filter",
+        "in": "query",
+        "required": false,
+        "description": "Server-defined allowlisted filter grammar.",
+        "schema": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "Sort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "description": "Allowlisted sort field; prefix - means descending.",
+        "schema": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "CapabilityId": {
+        "name": "capability_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^capability_[A-Za-z0-9_-]+$"
+        }
+      },
+      "DeploymentId": {
+        "name": "deployment_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^deployment_[A-Za-z0-9_-]+$"
+        }
+      },
+      "RunId": {
+        "name": "run_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^(trainingrun|evaluationrun)_[A-Za-z0-9_-]+$"
+        }
+      },
+      "OperationId": {
+        "name": "operation_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^operation_[A-Za-z0-9_-]+$"
+        }
+      },
+      "EvidenceId": {
+        "name": "evidence_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^evidence_[A-Za-z0-9_-]+$"
+        }
+      },
+      "ApprovalId": {
+        "name": "approval_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^approval_[A-Za-z0-9_-]+$"
+        }
+      }
+    },
+    "responses": {
+      "CapabilityInvocation": {
+        "description": "Capability invocation result",
+        "headers": {
+          "X-Request-ID": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "X-Correlation-ID": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CapabilityInvocationResponse"
+            }
+          }
+        }
+      },
+      "AcceptedOperation": {
+        "description": "Accepted asynchronous operation",
+        "headers": {
+          "X-Request-ID": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "X-Correlation-ID": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OperationReference"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Approval required, Gate blocked, idempotency conflict, or incompatible state",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "PreconditionFailed": {
+        "description": "resource_version / If-Match mismatch",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Policy or permission denied",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Rate limit or quota exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "BackendError": {
+        "description": "Normalized backend failure",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "BackendUnavailable": {
+        "description": "Capability/backend temporarily unavailable",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      },
+      "Error": {
+        "description": "Common error envelope",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ScopeRef": {
+        "type": "object",
+        "required": [
+          "scope_type",
+          "scope_id"
+        ],
+        "properties": {
+          "scope_type": {
+            "type": "string",
+            "enum": [
+              "PROJECT",
+              "SYSTEM"
+            ]
+          },
+          "scope_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PrincipalRef": {
+        "type": "object",
+        "required": [
+          "principal_id"
+        ],
+        "properties": {
+          "principal_id": {
+            "type": "string",
+            "pattern": "^principal_[A-Za-z0-9_-]+$"
+          },
+          "display_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalRef": {
+        "type": "object",
+        "required": [
+          "system",
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "system": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EvidenceReference": {
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "evidence_type",
+          "summary",
+          "produced_at"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string"
+          },
+          "evidence_type": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "produced_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "immutable_hash": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "uri_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApprovalRequirement": {
+        "type": "object",
+        "required": [
+          "responsibility_level",
+          "action",
+          "scope_ref",
+          "environment",
+          "required_role"
+        ],
+        "properties": {
+          "responsibility_level": {
+            "type": "string",
+            "enum": [
+              "R2",
+              "R3"
+            ]
+          },
+          "action": {
+            "type": "string"
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "environment": {
+            "type": "string",
+            "enum": [
+              "SANDBOX",
+              "DEVELOPMENT",
+              "STAGING",
+              "PRODUCTION"
+            ]
+          },
+          "required_role": {
+            "type": "string"
+          },
+          "approval_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "expires_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GateBlock": {
+        "type": "object",
+        "required": [
+          "gate_result_id",
+          "gate_name",
+          "state",
+          "failed_checks",
+          "evidence_refs"
+        ],
+        "properties": {
+          "gate_result_id": {
+            "type": "string"
+          },
+          "gate_name": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "BLOCKED",
+              "FAILED"
+            ]
+          },
+          "failed_checks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          },
+          "retryable_after_new_evidence": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorDetail": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "ErrorBody": {
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "category",
+          "retryable",
+          "request_id",
+          "correlation_id"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "VALIDATION",
+              "AUTH",
+              "POLICY",
+              "CONFLICT",
+              "GATE",
+              "APPROVAL",
+              "RATE_LIMIT",
+              "BACKEND",
+              "UNAVAILABLE",
+              "INTERNAL"
+            ]
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "correlation_id": {
+            "type": "string"
+          },
+          "details": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          },
+          "approval_requirement": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ApprovalRequirement"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "gate_block": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GateBlock"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "external_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalRef"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorEnvelope": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorBody"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageMeta": {
+        "type": "object",
+        "required": [
+          "next_page_token"
+        ],
+        "properties": {
+          "next_page_token": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total_size": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "DomainMetadata": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "schema_version",
+          "resource_version",
+          "name",
+          "owner_ref",
+          "scope_ref",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "schema_version": {
+            "type": "string"
+          },
+          "resource_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "owner_ref": {
+            "$ref": "#/components/schemas/PrincipalRef"
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalRef"
+            }
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapabilitySpec": {
+        "type": "object",
+        "required": [
+          "business_revision",
+          "modalities"
+        ],
+        "properties": {
+          "business_revision": {
+            "type": "string",
+            "description": "Business revision; never resource_version."
+          },
+          "modalities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "constraints": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapabilityStatus": {
+        "type": "object",
+        "required": [
+          "phase",
+          "observed_at"
+        ],
+        "properties": {
+          "phase": {
+            "type": "string"
+          },
+          "health": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "available_implementations": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "Capability": {
+        "type": "object",
+        "required": [
+          "metadata",
+          "spec",
+          "status"
+        ],
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/DomainMetadata"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/CapabilitySpec"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CapabilityStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapabilitySpecPatch": {
+        "type": "object",
+        "properties": {
+          "business_revision": {
+            "type": "string"
+          },
+          "modalities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "constraints": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapabilityPage": {
+        "type": "object",
+        "required": [
+          "items",
+          "page"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Capability"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMeta"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentPart": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "text"
+            ],
+            "properties": {
+              "type": {
+                "const": "text"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "asset_ref"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "image",
+                  "audio",
+                  "video",
+                  "document"
+                ]
+              },
+              "asset_ref": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "CapabilityInvocationRequest": {
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "properties": {
+          "input": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContentPart"
+                }
+              }
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "response_mode": {
+            "type": "string",
+            "enum": [
+              "SYNC",
+              "ASYNC",
+              "STREAM"
+            ],
+            "default": "SYNC"
+          },
+          "constraints": {
+            "type": "object",
+            "properties": {
+              "max_latency_ms": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "max_cost": {
+                "type": "number",
+                "minimum": 0
+              },
+              "privacy_class": {
+                "type": "string"
+              },
+              "min_quality_profile": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "secret_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Opaque references only; plaintext secrets are forbidden."
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usage": {
+        "type": "object",
+        "properties": {
+          "input_units": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "output_units": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "billable_units": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapabilityInvocationResponse": {
+        "type": "object",
+        "required": [
+          "request_id",
+          "correlation_id",
+          "capability_id",
+          "output",
+          "usage",
+          "evidence_refs"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string"
+          },
+          "correlation_id": {
+            "type": "string"
+          },
+          "capability_id": {
+            "type": "string"
+          },
+          "output": {},
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          },
+          "execution_metadata": {
+            "type": "object",
+            "properties": {
+              "provider_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "deployment_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "runtime_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatMessage": {
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "system",
+              "user",
+              "assistant",
+              "tool"
+            ]
+          },
+          "content": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContentPart"
+                }
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "messages"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Stable Capability ID or platform capability alias, not backend model authority."
+          },
+          "messages": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            }
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "input"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Stable Capability ID or alias."
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContentPart"
+                }
+              }
+            ]
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmbeddingRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "input"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Embedding Capability ID or alias."
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "dimensions": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperationReference": {
+        "type": "object",
+        "required": [
+          "operation_id",
+          "status",
+          "resource_ref",
+          "correlation_id"
+        ],
+        "properties": {
+          "operation_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "RUNNING",
+              "BLOCKED",
+              "SUCCEEDED",
+              "FAILED",
+              "CANCELLED"
+            ]
+          },
+          "resource_ref": {
+            "type": "string"
+          },
+          "workflow_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "correlation_id": {
+            "type": "string"
+          },
+          "retry_after_seconds": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "Operation": {
+        "type": "object",
+        "required": [
+          "operation_id",
+          "status",
+          "resource_ref",
+          "correlation_id",
+          "evidence_refs"
+        ],
+        "properties": {
+          "operation_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "RUNNING",
+              "BLOCKED",
+              "SUCCEEDED",
+              "FAILED",
+              "CANCELLED"
+            ]
+          },
+          "resource_ref": {
+            "type": "string"
+          },
+          "workflow_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "correlation_id": {
+            "type": "string"
+          },
+          "progress": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1
+          },
+          "approval_requirement": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ApprovalRequirement"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "gate_block": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GateBlock"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "error": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeploymentPromotionRequest": {
+        "type": "object",
+        "required": [
+          "target_environment",
+          "candidate_revision",
+          "gate_result_id",
+          "rollout",
+          "rollback_lkg_ref"
+        ],
+        "properties": {
+          "target_environment": {
+            "const": "PRODUCTION"
+          },
+          "candidate_revision": {
+            "type": "string"
+          },
+          "gate_result_id": {
+            "type": "string"
+          },
+          "rollout": {
+            "type": "object",
+            "required": [
+              "strategy"
+            ],
+            "properties": {
+              "strategy": {
+                "type": "string",
+                "enum": [
+                  "CANARY",
+                  "PROGRESSIVE",
+                  "BLUE_GREEN"
+                ]
+              },
+              "initial_percent": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              }
+            },
+            "additionalProperties": false
+          },
+          "rollback_lkg_ref": {
+            "type": "string"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "RunCreateRequest": {
+        "type": "object",
+        "required": [
+          "kind",
+          "name",
+          "scope_ref",
+          "spec"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "TrainingRun",
+              "EvaluationRun"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "spec": {
+            "type": "object",
+            "required": [
+              "business_revision",
+              "inputs"
+            ],
+            "properties": {
+              "business_revision": {
+                "type": "string"
+              },
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "environment_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "Run": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "resource_version",
+          "spec",
+          "status",
+          "evidence_refs",
+          "external_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "TrainingRun",
+              "EvaluationRun"
+            ]
+          },
+          "resource_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "spec": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "status": {
+            "type": "object",
+            "required": [
+              "phase",
+              "observed_at"
+            ],
+            "properties": {
+              "phase": {
+                "type": "string"
+              },
+              "progress": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": true
+          },
+          "operation_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "workflow_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          },
+          "external_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalRef"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "GPUReadModel": {
+        "type": "object",
+        "required": [
+          "gpu_id",
+          "node_id",
+          "health",
+          "allocation_state",
+          "observed_at"
+        ],
+        "properties": {
+          "gpu_id": {
+            "type": "string"
+          },
+          "node_id": {
+            "type": "string"
+          },
+          "model": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "memory_total_bytes": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "memory_used_bytes": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "utilization_percent": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "temperature_c": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "power_w": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "health": {
+            "type": "string"
+          },
+          "allocation_state": {
+            "type": "string"
+          },
+          "active_workload_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalRef"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "GPUReadModelPage": {
+        "type": "object",
+        "required": [
+          "items",
+          "page"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GPUReadModel"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMeta"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApprovalDecisionRequest": {
+        "type": "object",
+        "required": [
+          "decision",
+          "reason"
+        ],
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "REJECT"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApprovalDecisionResult": {
+        "type": "object",
+        "required": [
+          "approval_id",
+          "decision",
+          "decided_by",
+          "decided_at",
+          "resource_version",
+          "evidence_refs"
+        ],
+        "properties": {
+          "approval_id": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "REJECT"
+            ]
+          },
+          "decided_by": {
+            "$ref": "#/components/schemas/PrincipalRef"
+          },
+          "decided_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resource_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProviderOnboardingRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "provider_type",
+          "scope_ref",
+          "adapter_ref",
+          "endpoint_ref"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "provider_type": {
+            "type": "string"
+          },
+          "scope_ref": {
+            "$ref": "#/components/schemas/ScopeRef"
+          },
+          "adapter_ref": {
+            "type": "string"
+          },
+          "endpoint_ref": {
+            "type": "string",
+            "description": "Non-secret endpoint/config reference."
+          },
+          "secret_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requested_environment": {
+            "type": "string",
+            "enum": [
+              "SANDBOX",
+              "DEVELOPMENT",
+              "STAGING",
+              "PRODUCTION"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

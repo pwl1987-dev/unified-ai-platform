@@ -202,11 +202,13 @@ DomainObject
 
 对象所在作用域。
 
-本轮暂时只定义为 value type reference；是否引入 Project / Workspace / Tenant 一级对象，登记为 §18 P1 裁决项。
+P1-D05 已在 WP-P1-02 收敛：Project 是平台内稳定的一等 Scope primitive；全局对象可以使用 system/global scope。Workspace 只属于 UX 组合层，Tenant 暂不进入 Stage-1 Domain，外部 Team 通过 IdentityAdapter/ExternalRef 映射。
 
 ### owner_ref
 
-拥有该对象业务责任的 Principal / Team / Service Account reference。
+拥有该对象业务责任的 Principal reference；外部 Team 可以作为经过 IdentityAdapter 解析的 group reference 参与授权，但不能替代平台 Principal。
+
+ServiceAccount 不再单独形成一级对象，而是 Principal.kind = SERVICE_ACCOUNT。
 
 owner 不是“最后修改者”。
 
@@ -238,7 +240,7 @@ desired / declared / immutable design input。
 
 # 5. Common Value Types
 
-这些是跨对象 Value Type，不在 v0.1 中增加为一级 Domain Object。
+以下仍是跨对象 Value Type。P1-D05 已把 Project 与 Principal 提升为一等 Domain Object；OwnerRef / ScopeRef 继续作为跨对象引用形态。
 
 ## 5.1 OwnerRef
 
@@ -372,9 +374,11 @@ Derived 丢失不得造成 canonical truth 丢失。
 
 # 7. 一级 Domain Objects
 
-第一批一级对象保持 WBS 冻结清单：
+第一批对象由 WBS 冻结的 27 个核心对象，加上 P1-D05 为 ownership / RBAC / Approval / Agent authority 收敛的两个基础对象组成：
 
 ```text
+Project
+Principal
 Resource
 Node
 GPU
@@ -405,6 +409,27 @@ UpstreamDependency
 ```
 
 不因当前 Qwen / SGLang / 4090 workload 改变对象集合。
+
+## 7.1 Project
+
+Project 是 Stage-1 的最小稳定 Scope Authority，用于 ownership、RBAC、Policy、Approval、quota 与 Agent execution scope。
+
+- Stable ID：project_<uuidv7>
+- Lifecycle：DRAFT → ACTIVE → SUSPENDED → ARCHIVED
+- Project 不等于 UI Workspace；Workspace 可以组合多个视图但不能拥有 Authority。
+- Stage-1 不引入 Tenant 对象；未来多租户需要独立 Architecture Change。
+
+## 7.2 Principal
+
+Principal 是平台稳定的 actor/identity primitive。
+
+- Stable ID：principal_<uuidv7>
+- kind：HUMAN | SERVICE_ACCOUNT
+- Lifecycle：ACTIVE → SUSPENDED → REVOKED
+- 外部 IdP/user/group ID 仅进入 external_refs。
+- Team 保持 IdentityAdapter group reference，不新增 Team 一级对象。
+- Agent 的真实副作用动作必须绑定 effective Principal；Agent 不能提升 Principal 权限。
+- Secret value 不属于 Principal payload。
 
 ---
 
@@ -1806,83 +1831,20 @@ Policy
 
 # 18. P1 裁决登记
 
-以下问题被发现，但本 WP 不越权修改 Frozen Architecture。
+P1 裁决的规范 Authority 已迁移到：
 
-## P1-D01 — OCI Registry Adapter naming
+- docs/design/12-DECISION-REGISTER.md
 
-Harbor 已冻结为 candidate，但 Adapter list 没显式 OCI Registry contract。
+本文件只保留结果摘要，避免裁决散落在 prose 中：
 
-本 Domain Model 只规定：
+- P1-D01：RESOLVED — 使用 OCIRegistryAdapter；Harbor 只是可替换实现。
+- P1-D02：RESOLVED — 拆分 AssetSourceAdapter 与 AssetHubAdapter。
+- P1-D03：RESOLVED — Index 是可重建派生物，不是 Knowledge/Data Authority。
+- P1-D04：RESOLVED — ProviderAdapter 与 ServingAdapter 分离，共享最小 capability conformance 语义。
+- P1-D05：RESOLVED — Project、Principal 升格一等对象；ServiceAccount 是 Principal.kind；Team 外部映射；Workspace 非 Authority；Tenant 延后。
+- P1-D06：RESOLVED — business revision 与 resource_version 永久分离。
 
-- OCI image/artifact 是 `Artifact`；
-- registry backend 是可替换实现；
-- Harbor project/tag 不成为 Domain lifecycle。
-
-具体是否命名 `OCIRegistryAdapter` 交 WP-P1-05。
-
-## P1-D02 — Asset source vs Asset hub boundary
-
-ModelScope/CSGHub 的发现、下载、镜像、发布责任需要 WP-P1-05 确认是否拆为：
-
-```text
-AssetSourceAdapter
-AssetHubAdapter
-```
-
-本 Domain Model 已保证二者都不能拥有 ModelAsset/DatasetAsset Authority。
-
-## P1-D03 — Derived Index rule
-
-**本项在 Domain 层完成裁决：**
-
-> Index 是可重建派生物，不是 Knowledge/Data Authority。
-
-WP-P1-05 只需据此设计 Vector/Search Adapter。
-
-## P1-D04 — Provider vs Serving
-
-**本项在 Domain 层明确语义：**
-
-- Provider：逻辑 AI/provider endpoint；
-- Runtime：执行引擎 profile；
-- Deployment：受控部署实例；
-- Adapter：第三方边界；
-- Capability：稳定 northbound semantic。
-
-具体 conformance interface 交 WP-P1-05。
-
-## P1-D05 — Scope / Identity primitive
-
-WBS 一级对象没有：
-
-- Project；
-- Workspace；
-- Tenant；
-- Principal；
-- Team；
-- ServiceAccount。
-
-但 ownership、RBAC、Approval separation 都需要 scope/identity reference。
-
-本轮处理：
-
-- 先定义 `OwnerRef` / `ScopeRef` value types；
-- **不擅自新增一级 Domain Object**。
-
-后续 P1 必须裁决：
-
-> 这些保持 IdentityAdapter 外部引用，还是至少增加 Project/Principal 为一级对象。
-
-在该裁决前，数据库/API 不应把 provider-specific identity ID 写死为 Domain key。
-
-## P1-D06 — Business revision vs resource_version
-
-本轮明确：
-
-- `resource_version` = 对象 mutation/concurrency version；
-- model/dataset/environment/policy 等业务 revision = spec 内的 immutable logical revision。
-
-P1-02/P1-03 必须保持二者分离。
+任何后续修改以上裁决，必须更新 Decision Register，并满足其 Revisit Trigger。
 
 ---
 
@@ -2018,7 +1980,7 @@ State Machine 必须再补：
 
 WP-P1-01 完成条件：
 
-- [x] 覆盖 WBS 冻结的 27 个一级 Domain Object；
+- [x] 覆盖 WBS 冻结的 27 个核心 Domain Object，并按 P1-D05 增补 Project / Principal 两个基础对象；
 - [x] 每个对象都有稳定 ID 规则；
 - [x] 每个对象都有 ownership；
 - [x] 每个对象都有 lifecycle；

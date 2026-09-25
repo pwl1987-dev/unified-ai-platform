@@ -10,12 +10,13 @@
 4. 看 [任务分解基线](design/02-WORK-BREAKDOWN.md)，了解 P0-P10、七条并行轨道、UI/UX 时间点和第一批 Work Package。
 5. 看 [Reuse / Build Matrix](design/03-REUSE-BUILD-MATRIX.md)，了解第三方能力哪些 REUSE / ADAPTER / BUILD / REPLACE_LATER / RESTRICTED，以及每项的 Authority、数据归属和 Exit Path。
 6. 看 [Dependency Register](design/04-DEPENDENCY-REGISTER.md)，核对第三方 exact repo / audit revision / License Evidence / mirror / replacement path。
-7. 看 [Core Domain Model](design/10-DOMAIN-MODEL.md)，了解 27 个一级 Domain Object、Stable ID、lifecycle、ownership、lineage、Evidence 和第三方 DTO 边界。
-8. 看 [User Roles](ux/01-ROLES.md)，了解首批九类产品角色。
-9. 看 [Human-AI Responsibility Matrix](ux/04-HUMAN-AI-RESPONSIBILITY.md)，了解 AI 可执行/仅建议/需人审/人类最终决定的边界。
-10. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
-11. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
-12. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
+7. 看 [Core Domain Model](design/10-DOMAIN-MODEL.md)，了解核心 Domain Object、Stable ID、lifecycle、ownership、lineage、Evidence 和第三方 DTO 边界。
+8. 看 [Northbound API Boundary](design/11-API-BOUNDARY.md) 与 [P1 Decision Register](design/12-DECISION-REGISTER.md)，了解 /v1、/api/v1、Capability-first API、统一错误/异步/审批/Gate contract 与 P1-D01~D06 裁决。
+9. 看 [User Roles](ux/01-ROLES.md)，了解首批九类产品角色。
+10. 看 [Human-AI Responsibility Matrix](ux/04-HUMAN-AI-RESPONSIBILITY.md)，了解 AI 可执行/仅建议/需人审/人类最终决定的边界。
+11. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解 Reference Workload 已完成的优化实验。
+12. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
+13. 需要继续推进参考工作负载时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
 
 ## 文档索引
 
@@ -26,7 +27,10 @@
 | [design/02-WORK-BREAKDOWN.md](design/02-WORK-BREAKDOWN.md) | P0-P10 任务分解基线、七条并行轨道、UI/UX 时间点和 Work Package |
 | [design/03-REUSE-BUILD-MATRIX.md](design/03-REUSE-BUILD-MATRIX.md) | WP-P0-01：19 类候选的 Reuse/Build 主判定、八问、Authority、Exit Path 与自主替代优先级 |
 | [design/04-DEPENDENCY-REGISTER.md](design/04-DEPENDENCY-REGISTER.md) | WP-P0-02：第三方 audit revision、License Evidence、风险、内部镜像与 Replacement Register |
-| [design/10-DOMAIN-MODEL.md](design/10-DOMAIN-MODEL.md) | WP-P1-01：27 个一级 Domain Object、Stable ID、spec/status、ownership、lineage、Evidence 与 P1 裁决登记 |
+| [design/10-DOMAIN-MODEL.md](design/10-DOMAIN-MODEL.md) | WP-P1-01 + P1-D05 amendment：27 个核心对象 + Project/Principal 基础对象、Stable ID、spec/status、ownership、lineage 与 Evidence |
+| [design/11-API-BOUNDARY.md](design/11-API-BOUNDARY.md) | WP-P1-02：Northbound API Boundary；/v1 AI Data Plane、/api/v1 Control/Governance Plane、async/error/evidence/approval/gate/mutation contract |
+| [design/12-DECISION-REGISTER.md](design/12-DECISION-REGISTER.md) | P1-D01~D06 正式 Decision Register |
+| [../contracts/openapi/unified-ai-platform.v1.json](../contracts/openapi/unified-ai-platform.v1.json) | OpenAPI 3.1 machine-readable baseline；用于 TypeScript/Go/Python client generation |
 | [../contracts/schemas/domain-envelope.schema.json](../contracts/schemas/domain-envelope.schema.json) | WP-P1-01 机器可读 common Domain Envelope JSON Schema baseline |
 | [ux/01-ROLES.md](ux/01-ROLES.md) | WP-P2-01：九类 User Roles 与 AI Operator 权限继承边界 |
 | [ux/04-HUMAN-AI-RESPONSIBILITY.md](ux/04-HUMAN-AI-RESPONSIBILITY.md) | WP-P2-02：R0-R3 Human-AI Responsibility、预授权自动化、Decision Packet 和高风险动作边界 |
@@ -50,11 +54,11 @@ Completed first-pass packages
   P0-01 Reuse / Build Matrix
   P0-02 Dependency Register
   P1-01 Core Domain Model
+  P1-02 Northbound API Contract
   P2-01 User Roles
   P2-02 Human-AI Responsibility
         ↓
 Next Contract / UX layer
-  P1-02 Northbound API Contract
   P1-03 Event Contract
   P1-04 State Machines
   P1-05 Adapter Contract
@@ -66,15 +70,9 @@ Next Contract / UX layer
 
 ## 当前 P1 裁决登记
 
-已识别但未越过 Authority 的问题：
+P1-D01~D06 已在 [design/12-DECISION-REGISTER.md](design/12-DECISION-REGISTER.md) 正式收敛。
 
-- OCI Registry Adapter naming；
-- Asset source vs Asset hub boundary；
-- Scope / Identity primitives 是否升格为一级 Domain Object；
-- business revision 与 resource_version 分离；
-- Provider / Serving conformance boundary。
-
-这些必须在对应 P1 Contract 中继续收敛，不能由 UI 或第三方实现反向决定。
+关键结果：OCIRegistryAdapter；AssetSourceAdapter / AssetHubAdapter 拆分；ProviderAdapter / ServingAdapter 分离；Index 为 derivative；Project / Principal 一等化；business revision 与 resource_version 分离。
 
 ## 规则
 
