@@ -542,6 +542,9 @@ docs/ux/03-INFORMATION-ARCHITECTURE.md
 
 ## WP-P2-07 — Hi-fi Visual Prototype
 
+> 状态：**Visual Baseline Complete v1.0**  
+> 输出：`docs/ux/07-HI-FI-PROTOTYPE.md` + `docs/ux/prototype/`
+
 依赖：
 
 ~~~text
@@ -552,7 +555,11 @@ P2 Low-fi
 Design System Direction
 ~~~
 
-此时才进入“视觉成品稿”。
+第一轮视觉成品稿已完成，覆盖 Home/Attention、AI Hub/Model Detail、Deployment Promotion/LKG、Experiment、Compute/GPU、Govern、Approval Inbox、AI Operator，并提供 Light/Dark 静态原型。
+
+**P2 First-pass = COMPLETE。**
+
+P3-01 Repository Skeleton 已满足启动条件；P3-05 Contract CI 作为 Foundation 首要保护线。
 
 ---
 
