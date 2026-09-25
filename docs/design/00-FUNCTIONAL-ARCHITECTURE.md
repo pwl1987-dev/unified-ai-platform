@@ -4052,4 +4052,716 @@ Safety
 
 如果一个 20MB 工业异常模型能够稳定解决问题，就不应因为平台拥有 27B/70B 模型而强行调用大模型。
 
+---
+
+# 39. Search & Retrieval Capability Domain
+
+平台不仅提供“模型推理”，还应提供统一搜索能力。
+
+支持：
+
+- Full-text Search；
+- BM25；
+- Dense Retrieval；
+- Sparse Retrieval；
+- Hybrid Retrieval；
+- Metadata Filter；
+- Multi-vector Retrieval；
+- Multi-modal Retrieval；
+- Graph Retrieval；
+- Code Search；
+- Web Search Adapter；
+- Dataset Search；
+- Model Search；
+- Experiment Search；
+- Log / Trace Search；
+- Research / Paper Search。
+
+统一抽象：
+
+```text
+SearchRequest
+  ↓
+Query Planner
+  ↓
+Search / Retrieval Backends
+  ↓
+Fusion / Rerank
+  ↓
+Evidence
+```
+
+Search 与 Retrieval 是平台的基础服务，可被：
+
+- RAG；
+- Agent；
+- Research；
+- Code Intelligence；
+- Security；
+- Operations；
+- Dataset Factory；
+
+共同复用。
+
+---
+
+# 40. GraphRAG & Knowledge Graph Capability
+
+GraphRAG 不应只是某一个开源项目的名字，而应作为 Knowledge Plane 的一级检索模式。
+
+统一能力：
+
+```text
+Source
+→ Entity / Relation Extraction
+→ Knowledge Graph
+→ Community / Cluster
+→ Summary / Synthesis
+→ Graph Query
+→ Evidence
+→ LLM / Agent
+```
+
+平台支持：
+
+- Entity Graph；
+- Relation Graph；
+- Event Graph；
+- Temporal Graph；
+- Citation Graph；
+- Research Graph；
+- Code Dependency Graph；
+- Infrastructure Topology Graph；
+- Experiment Lineage Graph。
+
+GraphRAG 可与传统 RAG 组合：
+
+```text
+Vector Retrieval
++ BM25
++ Knowledge Graph
++ Metadata
++ Reranker
+→ Context
+```
+
+GraphRAG Backend 通过 Adapter 接入，核心只掌握：
+
+- Graph Schema；
+- Provenance；
+- Version；
+- Evidence；
+- Query Contract；
+- Gate。
+
+---
+
+# 41. Memory Plane
+
+长期记忆是独立一级能力，不应等同于“把聊天记录存数据库”。
+
+平台将 Memory 至少拆成：
+
+```text
+Working Memory
+Short-term Session Memory
+Episodic Memory
+Semantic Memory
+Procedural Memory
+Project Memory
+Agent Memory
+Operational Memory
+Human-reviewed Memory
+```
+
+## 41.1 Agent Memory
+
+Agent Memory 至少记录：
+
+- Goal；
+- Plan；
+- Decision；
+- Tool Result；
+- Failure；
+- Recovery；
+- Preference；
+- Constraint；
+- Learned Pattern；
+- Unresolved Question；
+- Evidence Reference。
+
+Agent 不允许把任意自然语言内容直接升级为长期事实。
+
+Memory 写入需要：
+
+```text
+Observation
+→ Candidate Memory
+→ Normalize
+→ Source / Evidence
+→ Conflict Check
+→ Policy
+→ Commit
+```
+
+## 41.2 Memory Retrieval
+
+Memory Retrieval 可组合：
+
+- Recency；
+- Relevance；
+- Importance；
+- Entity；
+- Time；
+- Project；
+- User / Tenant Scope；
+- Confidence；
+- Evidence；
+- Embedding；
+- Graph；
+- Reranker。
+
+## 41.3 Memory Lifecycle
+
+```text
+OBSERVED
+→ CANDIDATE
+→ VERIFIED
+→ ACTIVE
+→ UPDATED
+→ CONFLICTED
+→ SUPERSEDED
+→ ARCHIVED
+→ DELETED / TOMBSTONED
+```
+
+所有 Memory 必须有 Scope 和 Retention Policy。
+
+---
+
+# 42. Tool / MCP / Action Plane
+
+模型能力和“行动能力”必须分离。
+
+统一 Tool Registry 管理：
+
+- MCP Server；
+- Native Tool；
+- REST / OpenAPI Tool；
+- CLI Tool；
+- Database Tool；
+- Search Tool；
+- Browser Tool；
+- Code Tool；
+- Scheduler Tool；
+- Infrastructure Tool；
+- Internal Business Tool；
+- Agent-to-Agent Endpoint。
+
+每个 Tool 至少记录：
+
+```yaml
+tool_id: ...
+version: ...
+protocol: ...
+input_schema: ...
+output_schema: ...
+permissions: ...
+network_scope: ...
+secret_scope: ...
+risk_class: ...
+timeout: ...
+idempotent: ...
+reversible: ...
+approval_policy: ...
+audit_policy: ...
+```
+
+## 42.1 MCP 只是协议适配，不是 Authority
+
+平台支持 MCP，但核心不能绑定某个协议版本。
+
+统一：
+
+```text
+ToolAdapter
+├── MCPAdapter
+├── RESTAdapter
+├── OpenAPIAdapter
+├── CLIAdapter
+├── NativeAdapter
+└── FutureProtocolAdapter
+```
+
+MCP Server 进入：
+
+```text
+Discover
+→ Inspect
+→ Permission Review
+→ Sandbox
+→ Test
+→ Tool Gate
+→ Active
+```
+
+Tool 调用必须经过：
+
+- Identity；
+- RBAC；
+- Policy；
+- Secret Scope；
+- Network Scope；
+- Risk；
+- Audit；
+- Budget；
+- Approval。
+
+---
+
+# 43. Browser / Computer Use Plane
+
+浏览器和桌面操作属于高风险 Action Capability，应单独管理。
+
+支持能力：
+
+- Browser Navigation；
+- Form Fill；
+- Download / Upload；
+- Structured Page Extraction；
+- Accessibility-tree Interaction；
+- Screenshot / Vision Interaction；
+- Login Session；
+- Multi-step Web Workflow；
+- Desktop UI Automation；
+- Remote Computer Use；
+- VM / Sandbox Computer Use。
+
+统一：
+
+```text
+Agent
+→ Action Planner
+→ Policy
+→ Browser / Computer Runtime
+→ Observation
+→ Evidence
+```
+
+## 43.1 安全边界
+
+Browser / Computer Use 默认：
+
+- Sandbox；
+- Egress Policy；
+- Download Quarantine；
+- Credential Isolation；
+- Domain Allowlist / Denylist；
+- Human Approval for high-risk action；
+- Screenshot / Action Audit；
+- Bounded Steps；
+- Timeout；
+- Kill Switch。
+
+外部网页内容一律视为 **Untrusted Data**，不得因为网页中的文字而改变 Agent System Policy、Tool Permission 或 Gate。
+
+---
+
+# 44. Code Intelligence Plane
+
+代码本身也是一级知识资产。
+
+能力包括：
+
+- Repository Discovery；
+- Code Search；
+- Symbol Search；
+- Definition / Reference；
+- Dependency Graph；
+- Call Graph；
+- AST / Semantic Index；
+- Commit / Diff Search；
+- Blame / History；
+- Architecture Extraction；
+- Code Wiki；
+- Vulnerability Search；
+- Test Mapping；
+- Code Ownership；
+- Impact Analysis。
+
+统一：
+
+```text
+Repo
+→ Parse / Index
+→ Symbol / AST / Embedding / Graph
+→ Code Search
+→ Agent
+→ Evidence
+```
+
+Code Intelligence 服务于：
+
+- Coding Agent；
+- Security Agent；
+- Research Agent；
+- Refactor Agent；
+- Release Gate；
+- Documentation；
+- Platform Self-Evolution。
+
+代码搜索后端同样通过 Adapter 接入，平台不锁定某一搜索产品。
+
+---
+
+# 45. Event / Streaming Plane
+
+平台不能只靠同步 API 和数据库轮询。
+
+统一 Event Backbone 用于：
+
+- Model lifecycle events；
+- Dataset events；
+- Experiment events；
+- GPU health；
+- Scheduler events；
+- Deployment events；
+- Security events；
+- Audit events；
+- Agent events；
+- Research events；
+- Knowledge update events；
+- Production telemetry。
+
+事件格式至少包含：
+
+```yaml
+event_id: ...
+event_type: ...
+source: ...
+subject: ...
+timestamp: ...
+correlation_id: ...
+causation_id: ...
+tenant: ...
+payload_schema: ...
+payload: ...
+```
+
+支持：
+
+- Pub/Sub；
+- Stream；
+- Consumer Group；
+- Replay；
+- Retention；
+- Dead-letter；
+- Ordering where required；
+- At-least-once；
+- Idempotent Consumer。
+
+---
+
+# 46. Messaging & Queue Plane
+
+Event Stream 和 Job Queue 不是一回事。
+
+平台需要统一 Messaging Adapter：
+
+```text
+MessagingAdapter
+├── NATS / JetStream
+├── Kafka
+├── Redis Streams
+├── RabbitMQ
+└── Future Backend
+```
+
+用途包括：
+
+- Async Job；
+- GPU Job Dispatch；
+- Data Pipeline；
+- Training Workflow；
+- Notification；
+- Agent Task；
+- Event Fan-out；
+- Backpressure；
+- Retry；
+- Dead-letter；
+- Delayed / Scheduled Work。
+
+核心平台掌握：
+
+- Message Contract；
+- Job State；
+- Idempotency；
+- Lease；
+- Retry Policy；
+- Dead-letter Policy；
+
+而不是依赖某个消息产品来定义业务状态。
+
+---
+
+# 47. Durable Workflow Plane
+
+Agent 编排和消息队列之上，还必须有 Durable Workflow。
+
+它负责：
+
+```text
+Long-running Workflow
+Checkpoint
+Retry
+Resume
+Compensation
+Human Approval
+Timeout
+Parallel Step
+Fan-out / Fan-in
+Conditional Branch
+Event Wait
+State Recovery
+```
+
+典型流程：
+
+```text
+Download Model
+→ Scan
+→ Build Environment
+→ Smoke
+→ Benchmark
+→ Gate
+→ Deploy
+```
+
+即使 Controller / Agent / VM 重启，也必须能够从 Durable State 继续，而不是重新从第一步开始。
+
+Agent 负责“决定下一步”，Workflow Engine 负责“保证这一步可靠执行”。
+
+---
+
+# 48. Model / Artifact Intake Factory
+
+“找到一个模型 → 人工下载 → 人工试一下”正式升级为自动化流水线。
+
+统一：
+
+```text
+Model / Artifact Discovery
+→ Metadata Fetch
+→ License / Usage Policy
+→ Revision Pin
+→ Manifest
+→ Download
+→ Hash
+→ Signature / Provenance
+→ Static Scan
+→ Quarantine
+→ Format Inspect
+→ Runtime Compatibility Probe
+→ Smoke
+→ Benchmark
+→ Gate
+→ Registry
+→ Candidate Deployment
+```
+
+## 48.1 Model Source Adapter
+
+支持：
+
+- Hugging Face Hub；
+- ModelScope；
+- GitHub Release；
+- Vendor Model Hub；
+- Internal Artifact Store；
+- HTTP / Object Storage；
+- Offline Import；
+- Future Model Registry。
+
+下载必须 pin：
+
+- model_id；
+- revision / commit；
+- file list；
+- hash；
+- size；
+- license；
+- source URL / repository；
+- downloaded_at。
+
+## 48.2 自动权重测试
+
+自动检测：
+
+- format；
+- architecture；
+- tokenizer；
+- config；
+- dtype；
+- quantization；
+- custom code；
+- runtime support；
+- hardware requirements；
+- VRAM estimate；
+- context length；
+- multimodal assets。
+
+然后自动尝试候选 Runtime：
+
+```text
+Candidate Model
+   ↓
+Runtime Probe Matrix
+   ├─ SGLang
+   ├─ vLLM
+   ├─ llama.cpp
+   ├─ TensorRT / ONNX / OpenVINO
+   └─ Specialized Runtime
+```
+
+支持的 Runtime 才进入 Benchmark。
+
+## 48.3 自动 Benchmark 与模型画像
+
+模型进入平台后自动形成：
+
+```text
+Capability Profile
+Quality Profile
+Latency Profile
+Throughput Profile
+VRAM Profile
+Power Profile
+Cost Profile
+Safety Profile
+Runtime Compatibility Profile
+```
+
+最终 Router 和 Scheduler 不看“模型名好不好听”，只使用 Profile + Policy 做选择。
+
+---
+
+# 49. AI Gateway / Control Hub 定位升级
+
+平台最终北向入口不仅是 LLM Gateway。
+
+目标演进为：
+
+> **Unified AI Gateway + AI Control Hub**
+
+统一纳管：
+
+```text
+Models
+Providers
+Capabilities
+Tools
+MCP
+Agents
+Search
+Retrieval
+Knowledge
+Memory
+Browser
+Computer Use
+Code Intelligence
+Data Pipelines
+Training
+Experiments
+GPU / Compute
+Workflows
+Events
+Security
+Research
+Innovation
+```
+
+北向接口可以分为：
+
+```text
+AI Data Plane
+├── Model API
+├── Search API
+├── Retrieval API
+├── Tool API
+├── Agent API
+└── Workflow API
+
+AI Control Plane
+├── Registry
+├── Policy
+├── Scheduler
+├── Gate
+├── Observability
+├── Security
+└── Administration
+```
+
+业务系统最终依赖的是稳定 Capability，而不是底层具体实现。
+
+---
+
+# 50. Capability Intake Loop
+
+以后遇到任何“底层能跑”的新技术，不直接硬编码到 Core，而进入统一 Intake：
+
+```text
+Discover
+→ Classify
+→ Acquire
+→ Quarantine
+→ Inspect
+→ Reproduce
+→ Benchmark
+→ Security Gate
+→ Capability Gate
+→ Adapter
+→ Candidate
+→ Shadow / Canary
+→ Active
+```
+
+适用对象不仅是模型，也包括：
+
+- Model Weights；
+- Runtime；
+- Vector Engine；
+- Search Engine；
+- MCP Server；
+- Tool；
+- Browser Automation；
+- Memory Engine；
+- Graph Engine；
+- Data Tool；
+- Agent Framework；
+- Scheduler；
+- Compiler；
+- Kernel；
+- Quantizer；
+- Training Framework；
+- Evaluation Framework。
+
+这保证平台“做大做强”的方式是：
+
+> **不断吸收能力，而不是不断扩大 Core。**
+
+Core 长期保持稳定：
+
+```text
+Authority
+Policy
+Registry
+Scheduler
+Gate
+Lineage
+Security
+Audit
+```
+
+外围能力通过 Adapter 和 Capability Contract 持续增长。
+
 
