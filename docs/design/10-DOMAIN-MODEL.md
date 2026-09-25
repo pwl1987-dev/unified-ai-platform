@@ -1075,8 +1075,9 @@ DRAFT
 DEGRADED
 FAILED
 ROLLING_BACK
-LKG
 ```
+
+LKG 在 P1-04 中收敛为 **经过验证的 Deployment revision designation**，不是与 PRODUCTION 互斥的 lifecycle phase。Production 可以同时指向一个 LKG revision；恢复完成后 phase 仍为 PRODUCTION，并记录 lkg_ref / recovered evidence。
 
 ### Ownership
 
@@ -1693,7 +1694,7 @@ decision packet、approver、time、scope、reason、conditions。
 
 ### Invariant
 
-self-approval 是否允许只能由 Policy 决定。
+AI/Agent final self-approval 永久禁止。Human requester 是否可以审批自己的低风险请求由 Separation-of-Duty Policy 决定；Production/Security/License/privileged action 默认要求独立 Human Approver。
 
 ---
 

@@ -1,0 +1,1512 @@
+{
+  "contract_version": "1.0",
+  "rules": {
+    "optimistic_concurrency": true,
+    "direct_status_patch_forbidden": true,
+    "failed_evidence_immutable": true,
+    "long_running_returns_operation": true,
+    "lkg_semantics": "orthogonal verified Deployment revision designation"
+  },
+  "machines": [
+    {
+      "kind": "ModelAsset",
+      "states": [
+        "DISCOVERED",
+        "IMPORTING",
+        "CANDIDATE",
+        "VERIFIED",
+        "READY",
+        "DEPRECATED",
+        "RETIRED",
+        "RESTRICTED",
+        "QUARANTINED",
+        "FAILED"
+      ],
+      "transitions": [
+        {
+          "name": "begin-import",
+          "from": [
+            "DISCOVERED"
+          ],
+          "to": "IMPORTING",
+          "responsibility": "R0",
+          "guard": "source/provenance reference exists",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.status.changed"
+        },
+        {
+          "name": "import-complete",
+          "from": [
+            "IMPORTING"
+          ],
+          "to": "CANDIDATE",
+          "responsibility": "R0",
+          "guard": "artifact digest and source/license evidence exist",
+          "required_evidence": [
+            "artifact_digest",
+            "source",
+            "license"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.revision.created"
+        },
+        {
+          "name": "quarantine",
+          "from": [
+            "DISCOVERED",
+            "IMPORTING",
+            "CANDIDATE",
+            "VERIFIED"
+          ],
+          "to": "QUARANTINED",
+          "responsibility": "R0_POLICY",
+          "guard": "security/data/license risk detected",
+          "required_evidence": [
+            "risk"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.status.changed"
+        },
+        {
+          "name": "verify",
+          "from": [
+            "CANDIDATE"
+          ],
+          "to": "VERIFIED",
+          "responsibility": "R0",
+          "guard": "capability probe and evaluation complete",
+          "required_evidence": [
+            "probe",
+            "evaluation"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.validation.completed"
+        },
+        {
+          "name": "mark-ready",
+          "from": [
+            "VERIFIED"
+          ],
+          "to": "READY",
+          "responsibility": "R0_OR_R2",
+          "guard": "required GateResult PASS",
+          "required_evidence": [
+            "gate_result"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.status.changed"
+        },
+        {
+          "name": "restrict",
+          "from": [
+            "CANDIDATE",
+            "VERIFIED",
+            "READY"
+          ],
+          "to": "RESTRICTED",
+          "responsibility": "R0_POLICY_OR_R2",
+          "guard": "blocking policy/risk",
+          "required_evidence": [
+            "risk"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.status.changed"
+        },
+        {
+          "name": "deprecate",
+          "from": [
+            "READY"
+          ],
+          "to": "DEPRECATED",
+          "responsibility": "R1_TO_R2",
+          "guard": "impact assessed",
+          "required_evidence": [
+            "impact"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.status.changed"
+        },
+        {
+          "name": "retire",
+          "from": [
+            "DEPRECATED"
+          ],
+          "to": "RETIRED",
+          "responsibility": "R2_IF_CONSUMERS",
+          "guard": "no active required consumer",
+          "required_evidence": [],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "model.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "DatasetAsset",
+      "states": [
+        "DISCOVERED",
+        "DECLARED",
+        "INGESTING",
+        "CURATING",
+        "CANDIDATE",
+        "READY",
+        "DEPRECATED",
+        "RETIRED",
+        "RESTRICTED",
+        "QUARANTINED",
+        "FAILED"
+      ],
+      "transitions": [
+        {
+          "name": "begin-ingest",
+          "from": [
+            "DISCOVERED",
+            "DECLARED"
+          ],
+          "to": "INGESTING",
+          "responsibility": "R0",
+          "guard": "source declared",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        },
+        {
+          "name": "begin-curation",
+          "from": [
+            "INGESTING"
+          ],
+          "to": "CURATING",
+          "responsibility": "R0",
+          "guard": "content hash available",
+          "required_evidence": [
+            "content_hash",
+            "source"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        },
+        {
+          "name": "candidate",
+          "from": [
+            "CURATING"
+          ],
+          "to": "CANDIDATE",
+          "responsibility": "R0",
+          "guard": "profile/dedupe/classification evidence complete",
+          "required_evidence": [
+            "quality",
+            "classification",
+            "license"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.revision.created"
+        },
+        {
+          "name": "ready",
+          "from": [
+            "CANDIDATE"
+          ],
+          "to": "READY",
+          "responsibility": "R0_OR_R2",
+          "guard": "data Gate PASS",
+          "required_evidence": [
+            "gate_result"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        },
+        {
+          "name": "quarantine",
+          "from": [
+            "INGESTING",
+            "CURATING",
+            "CANDIDATE"
+          ],
+          "to": "QUARANTINED",
+          "responsibility": "R0_POLICY",
+          "guard": "risk or unresolved classification",
+          "required_evidence": [
+            "risk"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        },
+        {
+          "name": "restrict",
+          "from": [
+            "CANDIDATE",
+            "READY"
+          ],
+          "to": "RESTRICTED",
+          "responsibility": "R2",
+          "guard": "classification/license/security policy",
+          "required_evidence": [],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        },
+        {
+          "name": "deprecate",
+          "from": [
+            "READY"
+          ],
+          "to": "DEPRECATED",
+          "responsibility": "R1_TO_R2",
+          "guard": "downstream impact known",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        },
+        {
+          "name": "retire",
+          "from": [
+            "DEPRECATED"
+          ],
+          "to": "RETIRED",
+          "responsibility": "R2",
+          "guard": "no required downstream dependency",
+          "required_evidence": [],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dataset.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "Deployment",
+      "states": [
+        "DRAFT",
+        "CANDIDATE",
+        "PROVISIONING",
+        "STAGING",
+        "READY",
+        "PROMOTING",
+        "PRODUCTION",
+        "DRAINING",
+        "RETIRED",
+        "DEGRADED",
+        "FAILED",
+        "ROLLING_BACK"
+      ],
+      "orthogonal_fields": [
+        "active_revision",
+        "lkg_ref"
+      ],
+      "transitions": [
+        {
+          "name": "create-candidate",
+          "from": [
+            "DRAFT"
+          ],
+          "to": "CANDIDATE",
+          "responsibility": "R0",
+          "guard": "spec complete",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.candidate.created"
+        },
+        {
+          "name": "provision",
+          "from": [
+            "CANDIDATE"
+          ],
+          "to": "PROVISIONING",
+          "responsibility": "R0",
+          "guard": "runtime/provider/environment resolvable",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.status.changed"
+        },
+        {
+          "name": "stage",
+          "from": [
+            "PROVISIONING"
+          ],
+          "to": "STAGING",
+          "responsibility": "R0",
+          "guard": "provision post-check pass",
+          "required_evidence": [
+            "readiness"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.status.changed"
+        },
+        {
+          "name": "ready",
+          "from": [
+            "STAGING"
+          ],
+          "to": "READY",
+          "responsibility": "R0",
+          "guard": "required validation Gate complete",
+          "required_evidence": [
+            "gate_result"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.status.changed"
+        },
+        {
+          "name": "promote",
+          "from": [
+            "READY"
+          ],
+          "to": "PROMOTING",
+          "responsibility": "R2",
+          "guard": "Gate PASS + valid Approval/policy + LKG + resource_version match",
+          "required_evidence": [
+            "gate_result",
+            "approval",
+            "lkg"
+          ],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": "rollback-to-lkg",
+          "emits": "deployment.rollout.started"
+        },
+        {
+          "name": "rollout-complete",
+          "from": [
+            "PROMOTING"
+          ],
+          "to": "PRODUCTION",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "rollout post-check pass",
+          "required_evidence": [
+            "rollout",
+            "health"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.rollout.completed"
+        },
+        {
+          "name": "degrade",
+          "from": [
+            "PRODUCTION"
+          ],
+          "to": "DEGRADED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "health/SLA policy violated",
+          "required_evidence": [
+            "health"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.status.changed"
+        },
+        {
+          "name": "recover-bounded",
+          "from": [
+            "DEGRADED"
+          ],
+          "to": "PRODUCTION",
+          "responsibility": "R0_POLICY",
+          "guard": "bounded recovery post-check pass",
+          "required_evidence": [
+            "recovery"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.status.changed"
+        },
+        {
+          "name": "begin-rollback",
+          "from": [
+            "DEGRADED",
+            "PROMOTING"
+          ],
+          "to": "ROLLING_BACK",
+          "responsibility": "R0_OR_R2",
+          "guard": "verified lkg_ref and policy/approval",
+          "required_evidence": [
+            "lkg"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": "restore-lkg",
+          "emits": "deployment.rollback.started"
+        },
+        {
+          "name": "rollback-complete",
+          "from": [
+            "ROLLING_BACK"
+          ],
+          "to": "PRODUCTION",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "active_revision equals verified lkg_ref and post-check pass",
+          "required_evidence": [
+            "lkg",
+            "post_check"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.recovered_to_lkg"
+        },
+        {
+          "name": "drain",
+          "from": [
+            "PRODUCTION"
+          ],
+          "to": "DRAINING",
+          "responsibility": "R0_POLICY_OR_R2",
+          "guard": "traffic evacuation guard",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": "return-to-production-if-safe",
+          "emits": "deployment.status.changed"
+        },
+        {
+          "name": "retire",
+          "from": [
+            "DRAINING"
+          ],
+          "to": "RETIRED",
+          "responsibility": "R2",
+          "guard": "no active traffic",
+          "required_evidence": [],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "deployment.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "TrainingRun",
+      "states": [
+        "QUEUED",
+        "ADMITTED",
+        "PREPARING",
+        "RUNNING",
+        "CHECKPOINTING",
+        "PAUSED",
+        "PREEMPTED",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELED"
+      ],
+      "transitions": [
+        {
+          "name": "admit",
+          "from": [
+            "QUEUED"
+          ],
+          "to": "ADMITTED",
+          "responsibility": "R0",
+          "guard": "scheduler policy + resource quota",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "prepare",
+          "from": [
+            "ADMITTED"
+          ],
+          "to": "PREPARING",
+          "responsibility": "R0",
+          "guard": "resources allocated",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "start",
+          "from": [
+            "PREPARING"
+          ],
+          "to": "RUNNING",
+          "responsibility": "R0",
+          "guard": "environment and inputs verified",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "checkpoint",
+          "from": [
+            "RUNNING"
+          ],
+          "to": "CHECKPOINTING",
+          "responsibility": "R0",
+          "guard": "checkpoint-capable",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "checkpoint-return",
+          "from": [
+            "CHECKPOINTING"
+          ],
+          "to": "RUNNING",
+          "responsibility": "R0",
+          "guard": "checkpoint verified and continue requested",
+          "required_evidence": [
+            "checkpoint"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.checkpoint.created"
+        },
+        {
+          "name": "preempt",
+          "from": [
+            "CHECKPOINTING"
+          ],
+          "to": "PREEMPTED",
+          "responsibility": "R0_POLICY",
+          "guard": "checkpoint verified before resource release",
+          "required_evidence": [
+            "checkpoint"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "pause",
+          "from": [
+            "CHECKPOINTING"
+          ],
+          "to": "PAUSED",
+          "responsibility": "R0_OR_R2",
+          "guard": "checkpoint verified",
+          "required_evidence": [
+            "checkpoint"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "resume",
+          "from": [
+            "PAUSED",
+            "PREEMPTED"
+          ],
+          "to": "ADMITTED",
+          "responsibility": "R0_POLICY",
+          "guard": "checkpoint available and resources may be re-admitted",
+          "required_evidence": [
+            "checkpoint"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "succeed",
+          "from": [
+            "RUNNING"
+          ],
+          "to": "SUCCEEDED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "outputs/evidence complete",
+          "required_evidence": [
+            "output_digest",
+            "metrics"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "fail",
+          "from": [
+            "PREPARING",
+            "RUNNING",
+            "CHECKPOINTING"
+          ],
+          "to": "FAILED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "terminal error or retry budget exhausted",
+          "required_evidence": [
+            "failure"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "cancel",
+          "from": [
+            "QUEUED",
+            "ADMITTED",
+            "PREPARING",
+            "RUNNING",
+            "PAUSED",
+            "PREEMPTED"
+          ],
+          "to": "CANCELED",
+          "responsibility": "R0_OR_R2",
+          "guard": "cancellation policy",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "EvaluationRun",
+      "states": [
+        "QUEUED",
+        "ADMITTED",
+        "PREPARING",
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELED",
+        "INVALIDATED"
+      ],
+      "transitions": [
+        {
+          "name": "admit",
+          "from": [
+            "QUEUED"
+          ],
+          "to": "ADMITTED",
+          "responsibility": "R0",
+          "guard": "scheduler policy",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "prepare",
+          "from": [
+            "ADMITTED"
+          ],
+          "to": "PREPARING",
+          "responsibility": "R0",
+          "guard": "pinned evaluator/dataset/environment",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "start",
+          "from": [
+            "PREPARING"
+          ],
+          "to": "RUNNING",
+          "responsibility": "R0",
+          "guard": "inputs verified",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "succeed",
+          "from": [
+            "RUNNING"
+          ],
+          "to": "SUCCEEDED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "raw evidence complete",
+          "required_evidence": [
+            "raw_result",
+            "summary"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "fail",
+          "from": [
+            "PREPARING",
+            "RUNNING"
+          ],
+          "to": "FAILED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "terminal execution failure",
+          "required_evidence": [
+            "failure"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "invalidate",
+          "from": [
+            "RUNNING",
+            "SUCCEEDED"
+          ],
+          "to": "INVALIDATED",
+          "responsibility": "R1_TO_R2",
+          "guard": "evaluator/data/rubric integrity invalid",
+          "required_evidence": [
+            "integrity_issue"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        },
+        {
+          "name": "cancel",
+          "from": [
+            "QUEUED",
+            "ADMITTED",
+            "PREPARING",
+            "RUNNING"
+          ],
+          "to": "CANCELED",
+          "responsibility": "R0_OR_R2",
+          "guard": "cancellation policy",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "run.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "Experiment",
+      "states": [
+        "DRAFT",
+        "PLANNED",
+        "READY",
+        "RUNNING",
+        "COMPLETED",
+        "ARCHIVED",
+        "BLOCKED",
+        "FAILED",
+        "CANCELED"
+      ],
+      "transitions": [
+        {
+          "name": "plan",
+          "from": [
+            "DRAFT"
+          ],
+          "to": "PLANNED",
+          "responsibility": "R0",
+          "guard": "hypothesis and acceptance drafted",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "ready",
+          "from": [
+            "PLANNED"
+          ],
+          "to": "READY",
+          "responsibility": "R0",
+          "guard": "inputs/revisions/environment/acceptance pinned",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "block",
+          "from": [
+            "PLANNED",
+            "READY"
+          ],
+          "to": "BLOCKED",
+          "responsibility": "R0_POLICY",
+          "guard": "dependency/risk/input blocker",
+          "required_evidence": [
+            "blocker"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "unblock",
+          "from": [
+            "BLOCKED"
+          ],
+          "to": "READY",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "blocker resolved with evidence",
+          "required_evidence": [
+            "resolution"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "run",
+          "from": [
+            "READY"
+          ],
+          "to": "RUNNING",
+          "responsibility": "R0",
+          "guard": "run references created",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "complete",
+          "from": [
+            "RUNNING"
+          ],
+          "to": "COMPLETED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "interpretable result/evidence exists",
+          "required_evidence": [
+            "analysis"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "fail",
+          "from": [
+            "RUNNING"
+          ],
+          "to": "FAILED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "experiment contract cannot complete",
+          "required_evidence": [
+            "failure"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "cancel",
+          "from": [
+            "PLANNED",
+            "READY",
+            "RUNNING",
+            "BLOCKED"
+          ],
+          "to": "CANCELED",
+          "responsibility": "R0_OR_R2",
+          "guard": "cancellation policy",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        },
+        {
+          "name": "archive",
+          "from": [
+            "COMPLETED"
+          ],
+          "to": "ARCHIVED",
+          "responsibility": "R0",
+          "guard": "retention policy",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "experiment.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "Approval",
+      "states": [
+        "REQUESTED",
+        "PENDING",
+        "APPROVED",
+        "REJECTED",
+        "CHANGES_REQUESTED",
+        "CANCELED",
+        "EXPIRED",
+        "REVOKED"
+      ],
+      "transitions": [
+        {
+          "name": "packet-complete",
+          "from": [
+            "REQUESTED"
+          ],
+          "to": "PENDING",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "Decision Packet complete",
+          "required_evidence": [
+            "decision_packet"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "approval.requested"
+        },
+        {
+          "name": "approve",
+          "from": [
+            "PENDING"
+          ],
+          "to": "APPROVED",
+          "responsibility": "R3_HUMAN_ONLY",
+          "guard": "authorized human + separation of duty + unexpired",
+          "required_evidence": [
+            "decision_packet"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "none",
+          "compensation": null,
+          "emits": "approval.decided"
+        },
+        {
+          "name": "reject",
+          "from": [
+            "PENDING"
+          ],
+          "to": "REJECTED",
+          "responsibility": "R3_HUMAN_ONLY",
+          "guard": "authorized human",
+          "required_evidence": [
+            "decision_packet"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "none",
+          "compensation": null,
+          "emits": "approval.decided"
+        },
+        {
+          "name": "request-changes",
+          "from": [
+            "REQUESTED",
+            "PENDING"
+          ],
+          "to": "CHANGES_REQUESTED",
+          "responsibility": "R3_HUMAN_ONLY",
+          "guard": "human requests missing/new evidence",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "approval.status.changed"
+        },
+        {
+          "name": "cancel",
+          "from": [
+            "REQUESTED",
+            "PENDING"
+          ],
+          "to": "CANCELED",
+          "responsibility": "R0_REQUESTER_OR_R2",
+          "guard": "request withdrawal policy",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "approval.status.changed"
+        },
+        {
+          "name": "expire",
+          "from": [
+            "REQUESTED",
+            "PENDING"
+          ],
+          "to": "EXPIRED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "expiry reached",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "approval.expired"
+        },
+        {
+          "name": "revoke",
+          "from": [
+            "APPROVED"
+          ],
+          "to": "REVOKED",
+          "responsibility": "R3_HUMAN_ONLY",
+          "guard": "approval not yet consumed or governance revocation recorded",
+          "required_evidence": [
+            "revocation_reason"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "none",
+          "compensation": null,
+          "emits": "approval.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "VM",
+      "states": [
+        "PLANNED",
+        "PROVISIONING",
+        "STOPPED",
+        "RUNNING",
+        "DRAINING",
+        "DEPROVISIONING",
+        "RETIRED",
+        "FAILED",
+        "UNKNOWN"
+      ],
+      "transitions": [
+        {
+          "name": "provision",
+          "from": [
+            "PLANNED"
+          ],
+          "to": "PROVISIONING",
+          "responsibility": "R0_OR_R2",
+          "guard": "spec + quota + virtualization adapter available",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "provision-stopped",
+          "from": [
+            "PROVISIONING"
+          ],
+          "to": "STOPPED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "post-provision evidence",
+          "required_evidence": [
+            "provision_receipt"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "start",
+          "from": [
+            "STOPPED"
+          ],
+          "to": "RUNNING",
+          "responsibility": "R0_OR_R2",
+          "guard": "policy and capacity",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "drain",
+          "from": [
+            "RUNNING"
+          ],
+          "to": "DRAINING",
+          "responsibility": "R0_POLICY_OR_R2",
+          "guard": "workload evacuation plan",
+          "required_evidence": [
+            "evacuation"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "drain-complete",
+          "from": [
+            "DRAINING"
+          ],
+          "to": "STOPPED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "no active workload",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "deprovision",
+          "from": [
+            "STOPPED"
+          ],
+          "to": "DEPROVISIONING",
+          "responsibility": "R2",
+          "guard": "no authoritative data + backup/migration evidence",
+          "required_evidence": [
+            "data_safety"
+          ],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "retire",
+          "from": [
+            "DEPROVISIONING"
+          ],
+          "to": "RETIRED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "destroy receipt",
+          "required_evidence": [
+            "destroy_receipt"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "observation-lost",
+          "from": [
+            "PROVISIONING",
+            "STOPPED",
+            "RUNNING",
+            "DRAINING"
+          ],
+          "to": "UNKNOWN",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "backend observation stale/unreachable",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        },
+        {
+          "name": "fail",
+          "from": [
+            "PROVISIONING",
+            "RUNNING",
+            "DRAINING",
+            "DEPROVISIONING"
+          ],
+          "to": "FAILED",
+          "responsibility": "R0_CONTROLLER",
+          "guard": "terminal operation failure",
+          "required_evidence": [
+            "failure"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "vm.status.changed"
+        }
+      ]
+    },
+    {
+      "kind": "UpstreamDependency",
+      "states": [
+        "DISCOVERED",
+        "UNDER_REVIEW",
+        "ACCEPTED",
+        "RESTRICTED",
+        "REJECTED",
+        "ACTIVE",
+        "AT_RISK",
+        "MIGRATING",
+        "REPLACED",
+        "RETIRED"
+      ],
+      "transitions": [
+        {
+          "name": "review",
+          "from": [
+            "DISCOVERED"
+          ],
+          "to": "UNDER_REVIEW",
+          "responsibility": "R0",
+          "guard": "exact revision/license evidence available",
+          "required_evidence": [
+            "revision",
+            "license"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "accept",
+          "from": [
+            "UNDER_REVIEW"
+          ],
+          "to": "ACCEPTED",
+          "responsibility": "R2_IF_CRITICAL",
+          "guard": "risk acceptable",
+          "required_evidence": [
+            "review"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "restrict",
+          "from": [
+            "UNDER_REVIEW"
+          ],
+          "to": "RESTRICTED",
+          "responsibility": "R2",
+          "guard": "risk requires constrained use",
+          "required_evidence": [
+            "risk"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "reject",
+          "from": [
+            "UNDER_REVIEW"
+          ],
+          "to": "REJECTED",
+          "responsibility": "R2",
+          "guard": "unacceptable risk",
+          "required_evidence": [
+            "risk"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "activate",
+          "from": [
+            "ACCEPTED"
+          ],
+          "to": "ACTIVE",
+          "responsibility": "R0_OR_R2",
+          "guard": "adapter/conformance ready",
+          "required_evidence": [
+            "conformance"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "risk-detected",
+          "from": [
+            "ACTIVE"
+          ],
+          "to": "AT_RISK",
+          "responsibility": "R0_POLICY",
+          "guard": "license/security/EOL/supply-chain risk",
+          "required_evidence": [
+            "risk"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.risk.changed"
+        },
+        {
+          "name": "begin-migration",
+          "from": [
+            "AT_RISK"
+          ],
+          "to": "MIGRATING",
+          "responsibility": "R1_TO_R2",
+          "guard": "replacement + migration + rollback plan",
+          "required_evidence": [
+            "replacement_plan"
+          ],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "replacement-complete",
+          "from": [
+            "MIGRATING"
+          ],
+          "to": "REPLACED",
+          "responsibility": "R2",
+          "guard": "conformance + cutover evidence",
+          "required_evidence": [
+            "conformance",
+            "cutover"
+          ],
+          "required_approval": true,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": "restore-previous-backend",
+          "emits": "dependency.status.changed"
+        },
+        {
+          "name": "retire",
+          "from": [
+            "REPLACED"
+          ],
+          "to": "RETIRED",
+          "responsibility": "R0_OR_R2",
+          "guard": "rollback window closed and no active dependency",
+          "required_evidence": [],
+          "required_approval": false,
+          "timeout_policy": "policy-defined",
+          "retry": "bounded/idempotent",
+          "compensation": null,
+          "emits": "dependency.status.changed"
+        }
+      ]
+    }
+  ]
+}

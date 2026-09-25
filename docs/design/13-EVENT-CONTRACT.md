@@ -264,6 +264,21 @@ Breaking payload 必须提升 payload_version，并提供迁移窗口。
 
 # 10. Baseline Event Families
 
+## 10.0 P1-04 additive state-transition events
+
+为避免 State Machine 为每个 transition 发明私有事件，P1-04 以 backward-compatible additive 方式补充：
+
+- model.status.changed
+- dataset.status.changed
+- experiment.status.changed
+- deployment.status.changed
+- vm.status.changed
+- dependency.status.changed
+- approval.status.changed
+- gate.evaluated
+
+这些事件只表达状态变化事实；更具体的 rollout / approval.decided / dependency.risk.changed 等事件仍优先使用。
+
 ## 10.1 Resource Events
 
 - resource.observation.updated

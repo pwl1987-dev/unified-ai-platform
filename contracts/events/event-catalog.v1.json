@@ -468,6 +468,134 @@
       ],
       "attention_candidate": false,
       "evidence_required": true
+    },
+    {
+      "event_type": "model.status.changed",
+      "family": "Model",
+      "subject_kinds": [
+        "ModelAsset"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "dataset.status.changed",
+      "family": "Dataset",
+      "subject_kinds": [
+        "DatasetAsset"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "experiment.status.changed",
+      "family": "Experiment",
+      "subject_kinds": [
+        "Experiment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "deployment.status.changed",
+      "family": "Deployment",
+      "subject_kinds": [
+        "Deployment"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "vm.status.changed",
+      "family": "Resource",
+      "subject_kinds": [
+        "VM"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "dependency.status.changed",
+      "family": "Dependency",
+      "subject_kinds": [
+        "UpstreamDependency"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "approval.status.changed",
+      "family": "Approval",
+      "subject_kinds": [
+        "Approval"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "object_ref",
+        "from_phase",
+        "to_phase",
+        "reason_code"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
+    },
+    {
+      "event_type": "gate.evaluated",
+      "family": "Governance",
+      "subject_kinds": [
+        "GateResult"
+      ],
+      "payload_version": "1.0",
+      "required_payload_fields": [
+        "gate_result_ref",
+        "subject_ref",
+        "result",
+        "evidence_refs"
+      ],
+      "attention_candidate": true,
+      "evidence_required": true
     }
   ]
 }
