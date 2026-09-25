@@ -7,9 +7,10 @@
 1. 先看根目录 [README](../README.md)，了解当前状态和入口。
 2. 看 [总体功能设计](design/00-FUNCTIONAL-ARCHITECTURE.md)，了解模型无关、框架无关、厂商无关的 AI Compute & Model Engineering Platform 完整功能蓝图；当前 Qwen3.8 × 8×RTX4090 只是第一套真实参考工作负载。
 3. 看 [技术栈基线](design/01-TECHNOLOGY-STACK.md)，了解 React/TypeScript + Go + Python 的前后端分工、数据层、事件总线与部署边界。
-4. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解已完成的优化实验。
-5. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
-6. 需要继续推进时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
+4. 看 [任务分解基线](design/02-WORK-BREAKDOWN.md)，了解 P0-P10、七条并行轨道、UI/UX 时间点和第一批 Work Package。
+5. 再看 [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md)，了解已完成的优化实验。
+6. 需要了解模型、量化和三引擎决策时，阅读 [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md)。
+7. 需要继续推进时，阅读 [ROADMAP.md](ROADMAP.md) 和下一代 [MASTER-TEST-PLAN.md](../eval/vllm/nextgen-20260917/MASTER-TEST-PLAN.md)。
 
 ## 文档索引
 
@@ -17,6 +18,7 @@
 |---|---|
 | [design/00-FUNCTIONAL-ARCHITECTURE.md](design/00-FUNCTIONAL-ARCHITECTURE.md) | 模型/框架/厂商无关的 AI Compute & Model Engineering Platform 总体功能设计：统一网关、模型/数据/实验、GPU 调度、Agent 自动化、研究复现与成果转化 |
 | [design/01-TECHNOLOGY-STACK.md](design/01-TECHNOLOGY-STACK.md) | 技术栈已冻结 v1.0：React/TypeScript 前端、Go Control Plane、Python AI/ML Worker、VM/Container 层、PostgreSQL/S3/NATS 与 Adapter-first 边界 |
+| [design/02-WORK-BREAKDOWN.md](design/02-WORK-BREAKDOWN.md) | P0-P10 任务分解基线：Reuse/Build、Domain/API、UI/UX、Foundation、Infra、Integration、AI Factory、Scheduler/Agent、Hardening 与 Release |
 | [QWEN27B-ANALYSIS.md](QWEN27B-ANALYSIS.md) | 权重解剖、量化配方、MTP 实测、三引擎横评与 SGLang 决策 |
 | [VLLM-OPTIMIZATION.md](VLLM-OPTIMIZATION.md) | vLLM 生产线实验日志、DFlash2、KV、显存与 P0 归因 |
 | [VLLM-OPTIMIZATION-PLAN-ARCHIVE.md](VLLM-OPTIMIZATION-PLAN-ARCHIVE.md) | 早期规划存档，不替代当前测试总纲 |
