@@ -110,11 +110,11 @@ def run_arm_cell(exp_prefix, api, port, tp, ms, uuids, tag, fixture, mode_key, m
     return [r.returncode]
 
 
-def workload_cell(scenario, out_dir, exp, extra: list) -> int:
+def workload_cell(scenario, out_dir, exp, extra: list, rlog: str = "") -> int:
     os.makedirs(out_dir, exist_ok=True)
     cmd = [PY, os.path.join(HERE, "ph5_workload.py"), "--scenario", scenario,
            "--api", f"http://127.0.0.1:{ROUTER_PORT}/v1", "--experiment-id", exp,
-           "--out-dir", out_dir, "--route-log", RLOG] + extra
+           "--out-dir", out_dir, "--route-log", rlog or f"{SBX}/ph5-router-routes.jsonl"] + extra
     r = sh(cmd, timeout=3600)
     log(f"[scene] {exp} rc={r.returncode}")
     return r.returncode
@@ -240,15 +240,15 @@ def main() -> int:
         # ---- 场景 cells（through-router）----
         ST = os.path.join(NG, "raw", "staging", "PH5-P1")
         cell("dual_2xp32k", lambda: workload_cell("multi", os.path.join(ST, f"dual-{T}"),
-             f"PH5-P1-{T}-DUAL-P32K", ["--sess", "da:p32k:256", "--sess", "db:p32k:256"]))
+             f"PH5-P1-{T}-DUAL-P32K", ["--sess", "da:p32k:256", "--sess", "db:p32k:256"], rlog=RLOG))
         if long_capable:
             cell("dual_2xp128kt", lambda: workload_cell("multi", os.path.join(ST, f"dual128-{T}"),
-                 f"PH5-P1-{T}-DUAL-P128KT", ["--sess", "da:p128kt:128", "--sess", "db:p128kt:128"]))
+                 f"PH5-P1-{T}-DUAL-P128KT", ["--sess", "da:p128kt:128", "--sess", "db:p128kt:128"], rlog=RLOG))
         else:
             arm["capacity_limit"].append("dual_2xp128kt")
         cell("four_4xp32k", lambda: workload_cell("multi", os.path.join(ST, f"four-{T}"),
              f"PH5-P1-{T}-FOUR-P32K",
-             sum([["--sess", f"f{i}:p32k:256"] for i in range(4)], [])))
+             sum([["--sess", f"f{i}:p32k:256"] for i in range(4)], []), rlog=RLOG))
         for fx, mt in (("d565", 512), ("p4k", 256)):
             for cc in (4, 8, 16):
                 mk = "f512" if fx == "d565" else "ns"
@@ -260,16 +260,16 @@ def main() -> int:
             cell("mixed", lambda: workload_cell("multi", os.path.join(ST, f"mixed-{T}"),
                  f"PH5-P1-{T}-MIXED",
                  ["--sess", "long:p128kt:128", "--sess", "s1:d565:512",
-                  "--sess", "s2:d565:512", "--sess", "s3:d565:512"]))
+                  "--sess", "s2:d565:512", "--sess", "s3:d565:512"], rlog=RLOG))
         else:
             arm["capacity_limit"].append("mixed(long 组件不可服务)")
         cell("sticky", lambda: workload_cell("sticky", os.path.join(ST, f"sticky-{T}"),
-             f"PH5-P1-{T}-STICKY", ["--turns", "4", "--sticky-sessions", "2", "--parallel-new", "3"]))
+             f"PH5-P1-{T}-STICKY", ["--turns", "4", "--sticky-sessions", "2", "--parallel-new", "3"], rlog=RLOG))
         if len(spec["backends"]) > 1:
             last = spec["backends"][-1]
             kpid = int(open(f"{SBX}/log-ph5-{last[0]}/server.pid").read().strip())
             cell("failover", lambda: workload_cell("failover", os.path.join(ST, f"failover-{T}"),
-                 f"PH5-P1-{T}-FAILOVER", ["--kill-pid", str(kpid), "--kill-after-s", "3", "--max-runs", "10"]))
+                 f"PH5-P1-{T}-FAILOVER", ["--kill-pid", str(kpid), "--kill-after-s", "3", "--max-runs", "10"], rlog=RLOG))
         else:
             arm["capacity_limit"].append("failover(单 backend N/A)")
         arm["status"] = "COMPLETE"
