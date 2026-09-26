@@ -1,0 +1,40 @@
+{
+ "provenance": "reconstructed EXACTLY from screening.py probe_zh (deterministic code path) that produced the 4229-char-reasoning/empty-content anomaly in runs/stage1/A-ista-gsq-iq3s-mtp.json",
+ "artifact": {
+  "repo": "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+  "revision": "d562806dbafae37109975e970aae91b43e73b440",
+  "gguf": "Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf",
+  "sha256": "58fd826723939933dc86f45b7fe04545cbc2de1c70f6fe2cdd3858c87a98c12f",
+  "is_mtp_build": true,
+  "mtp_decoding_enabled": false,
+  "mmproj_loaded": false,
+  "llama_cpp": "b10715",
+  "docker_image": "llama-server:cuda12.4-b10715",
+  "digest": "sha256:cc0782dc7b595e34ca2611729d7d23e47db6aa3d09aff4f9a8ddc3fd45f751fa",
+  "ctx": 65536,
+  "kv": "q4_0/q4_0",
+  "fa": "on",
+  "jinja": true,
+  "parallel": 1
+ },
+ "http_endpoint": "POST /v1/chat/completions",
+ "request": {
+  "messages": [
+   {
+    "role": "user",
+    "content": "用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。"
+   }
+  ],
+  "max_tokens": 3072,
+  "temperature": 0.0,
+  "seed": 42,
+  "stream": true,
+  "stream_options": {
+   "include_usage": true
+  }
+ },
+ "user_prompt_sha256": "f04b12bb9eff5b1f4b88fe9a340f5759556f006e1bbaac7889283016e4330bc8",
+ "sampler_note": "greedy (temperature=0); no top_p/top_k/min_p overrides sent; server defaults: top_k 20 top_p 0.95 min_p 0.05",
+ "system_prompt": "none (probe sends user message only)",
+ "note_first_occurrence": "shakeout run used max_tokens=800 (2858 reasoning chars); stage1 final used 3072 (4229 chars); both hit the cap with empty content"
+}

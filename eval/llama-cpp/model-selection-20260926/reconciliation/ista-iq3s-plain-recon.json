@@ -1,0 +1,965 @@
+{
+ "key": "ista-iq3s-plain",
+ "model": "/labmodels/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-IQ3_S.gguf",
+ "gpu": "3",
+ "runtime": "llama-server:cuda12.4-b10715",
+ "sections": {
+  "apply_template": {
+   "T1_default": {
+    "sha256": "3b2223cdfa190d82e29e5b3028a026947fa1dae4ba9588f539361647e42cfb6d",
+    "tail": "er plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "has_think": true,
+    "think_closed_in_prompt": false,
+    "len": 346
+   },
+   "T2_think_on": {
+    "sha256": "3b2223cdfa190d82e29e5b3028a026947fa1dae4ba9588f539361647e42cfb6d",
+    "tail": "er plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "has_think": true,
+    "think_closed_in_prompt": false,
+    "len": 346
+   },
+   "T3_think_off": {
+    "sha256": "b8748c19219de807ea3284aa80bbf3001cd989834b115e9311ed3bed4b619e6b",
+    "tail": "<|im_start|>user\n用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "has_think": true,
+    "think_closed_in_prompt": true,
+    "len": 120
+   }
+  },
+  "raw_completion": {
+   "template_prompt_tail": "stency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+   "greedy_np2048": {
+    "n_predict": 2048,
+    "stop_type": "limit",
+    "stop": true,
+    "generated_chars": 2934,
+    "has_think_open": true,
+    "think_close_pos": -1,
+    "content_after_think": null,
+    "content_head": "We need answer in Chinese, ~200 words. User asks: 用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。\n\nNeed produce final only. Need maybe around 200 Chinese characters? \"200 字左右\" likely 200 Chinese c",
+    "content_tail": "126 因127 此128 同129 样130 缓131 存132 大133 小134 下135 显136 存137 占138 用139 下140 降141 可142 支143 持144 更145 长146 上147 下148 文149 或150 更151 大152 代153 价154 是155 可156 能157 引",
+    "usage": null
+   },
+   "greedy_np8192": {
+    "n_predict": 8192,
+    "stop_type": "eos",
+    "stop": true,
+    "generated_chars": 4134,
+    "has_think_open": true,
+    "think_close_pos": 3803,
+    "content_after_think": "\n\n在 LLM 推理中，模型每生成一个 token，都要根据已有文本计算注意力。为避免重复计算，会把每层注意力里历史 token 的 Key 和 Value 张量缓存下来，这就是 KV cache；新 token 只需计算自己的 Query，再与缓存的 K/V 做注意力。随着序列变长，KV cache 按层数、头数、序列长度线性增长，常比模型权重还占显存。量化是把原本 FP16/BF16 的 KV 值用更低位宽（如 INT8/INT4）近似存储，每个元素占用字节更少，因此同样缓存大小下显存占用下降，可支持更长上下文或更大 batch，代价是可能引入少量精度损失。对长文本尤其明显，因为缓存随 t",
+    "content_head": "We need answer in Chinese, ~200 words. User asks: 用中文向新同事解释：什么是 LLM 推理中的 KV cache？为什么量化它能省显存？200 字左右。\n\nNeed produce final only. Need maybe around 200 Chinese characters? \"200 字左右\" likely 200 Chinese c",
+    "content_tail": "线性增长，常比模型权重还占显存。量化是把原本 FP16/BF16 的 KV 值用更低位宽（如 INT8/INT4）近似存储，每个元素占用字节更少，因此同样缓存大小下显存占用下降，可支持更长上下文或更大 batch，代价是可能引入少量精度损失。对长文本尤其明显，因为缓存随 token 数累积，也能降低带宽压力并提升吞吐。",
+    "usage": null
+   }
+  },
+  "budget_gradient": {
+   "zh_b1024": [
+    {
+     "rep": 0,
+     "finish_reason": "length",
+     "content": "",
+     "content_len": 0,
+     "reasoning_len": 1633,
+     "reasoning_tail": "11 节112 更113 少114 因115 此116 同117 样118 缓119 存120 大121 小122 下123 显124 存125 占126 用127 下128 降129 可130 支131 持132 更133 长134 上1",
+     "usage": {
+      "completion_tokens": 1024,
+      "prompt_tokens": 82,
+      "total_tokens": 1106,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 17.1
+    },
+    {
+     "rep": 1,
+     "finish_reason": "length",
+     "content": "",
+     "content_len": 0,
+     "reasoning_len": 1633,
+     "reasoning_tail": "11 节112 更113 少114 因115 此116 同117 样118 缓119 存120 大121 小122 下123 显124 存125 占126 用127 下128 降129 可130 支131 持132 更133 长134 上1",
+     "usage": {
+      "completion_tokens": 1024,
+      "prompt_tokens": 82,
+      "total_tokens": 1106,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 17.0
+    },
+    {
+     "rep": 2,
+     "finish_reason": "length",
+     "content": "",
+     "content_len": 0,
+     "reasoning_len": 1633,
+     "reasoning_tail": "11 节112 更113 少114 因115 此116 同117 样118 缓119 存120 大121 小122 下123 显124 存125 占126 用127 下128 降129 可130 支131 持132 更133 长134 上1",
+     "usage": {
+      "completion_tokens": 1024,
+      "prompt_tokens": 82,
+      "total_tokens": 1106,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 17.0
+    }
+   ],
+   "zh_b4096": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "在 LLM 推理中，模型每生成一个 token，都要根据已有文本计算注意力。为避免重复计算，会把每层注意力里历史 token 的 Key 和 Value 张量缓存下来，这就是 KV cache；新 token 只需计算自己的 Query，再与缓存的 K/V 做注意力。随着序列变长，KV cache 按层数、头数、序列长度线性增长，常比模型权重还占显存。量化是把原本 FP16/BF16 的 KV 值用更低位宽（如 INT8/INT4）近似存储，每个元素占用字节更少，因此同样缓存大小下显存占用下降，可支持更长上下文或更大 batch，代价是可能引入少量精度损失。对长文本尤其明显，因为缓存随 token 数累积，也能降低带宽压力并提升吞吐。",
+     "content_len": 321,
+     "reasoning_len": 3803,
+     "reasoning_tail": "It's 194 Chinese chars plus English terms. Good.\n\nNeed final only. Ensure Chinese. Could mention \"KV cache\" etc. final.\n",
+     "usage": {
+      "completion_tokens": 2709,
+      "prompt_tokens": 82,
+      "total_tokens": 2791,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 44.7
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "在 LLM 推理中，模型每生成一个 token，都要根据已有文本计算注意力。为避免重复计算，会把每层注意力里历史 token 的 Key 和 Value 张量缓存下来，这就是 KV cache；新 token 只需计算自己的 Query，再与缓存的 K/V 做注意力。随着序列变长，KV cache 按层数、头数、序列长度线性增长，常比模型权重还占显存。量化是把原本 FP16/BF16 的 KV 值用更低位宽（如 INT8/INT4）近似存储，每个元素占用字节更少，因此同样缓存大小下显存占用下降，可支持更长上下文或更大 batch，代价是可能引入少量精度损失。对长文本尤其明显，因为缓存随 token 数累积，也能降低带宽压力并提升吞吐。",
+     "content_len": 321,
+     "reasoning_len": 3803,
+     "reasoning_tail": "It's 194 Chinese chars plus English terms. Good.\n\nNeed final only. Ensure Chinese. Could mention \"KV cache\" etc. final.\n",
+     "usage": {
+      "completion_tokens": 2709,
+      "prompt_tokens": 82,
+      "total_tokens": 2791,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 44.8
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "在 LLM 推理中，模型每生成一个 token，都要根据已有文本计算注意力。为避免重复计算，会把每层注意力里历史 token 的 Key 和 Value 张量缓存下来，这就是 KV cache；新 token 只需计算自己的 Query，再与缓存的 K/V 做注意力。随着序列变长，KV cache 按层数、头数、序列长度线性增长，常比模型权重还占显存。量化是把原本 FP16/BF16 的 KV 值用更低位宽（如 INT8/INT4）近似存储，每个元素占用字节更少，因此同样缓存大小下显存占用下降，可支持更长上下文或更大 batch，代价是可能引入少量精度损失。对长文本尤其明显，因为缓存随 token 数累积，也能降低带宽压力并提升吞吐。",
+     "content_len": 321,
+     "reasoning_len": 3803,
+     "reasoning_tail": "It's 194 Chinese chars plus English terms. Good.\n\nNeed final only. Ensure Chinese. Could mention \"KV cache\" etc. final.\n",
+     "usage": {
+      "completion_tokens": 2709,
+      "prompt_tokens": 82,
+      "total_tokens": 2791,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 44.8
+    }
+   ],
+   "zh_terminated_at": 4096,
+   "tcp_b1024": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+     "content_len": 47,
+     "reasoning_len": 78,
+     "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+     "usage": {
+      "completion_tokens": 75,
+      "prompt_tokens": 63,
+      "total_tokens": 138,
+      "prompt_tokens_details": {
+       "cached_tokens": 0
+      }
+     },
+     "wall_s": 1.4
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+     "content_len": 47,
+     "reasoning_len": 78,
+     "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+     "usage": {
+      "completion_tokens": 75,
+      "prompt_tokens": 63,
+      "total_tokens": 138,
+      "prompt_tokens_details": {
+       "cached_tokens": 59
+      }
+     },
+     "wall_s": 1.5
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+     "content_len": 47,
+     "reasoning_len": 78,
+     "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+     "usage": {
+      "completion_tokens": 75,
+      "prompt_tokens": 63,
+      "total_tokens": 138,
+      "prompt_tokens_details": {
+       "cached_tokens": 59
+      }
+     },
+     "wall_s": 1.3
+    }
+   ],
+   "tcp_terminated_at": 1024,
+   "coding_b1024": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+     "content_len": 403,
+     "reasoning_len": 1069,
+     "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+     "usage": {
+      "completion_tokens": 448,
+      "prompt_tokens": 80,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+       "cached_tokens": 42
+      }
+     },
+     "wall_s": 7.6
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+     "content_len": 403,
+     "reasoning_len": 1069,
+     "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+     "usage": {
+      "completion_tokens": 448,
+      "prompt_tokens": 80,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+       "cached_tokens": 76
+      }
+     },
+     "wall_s": 7.8
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+     "content_len": 403,
+     "reasoning_len": 1069,
+     "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+     "usage": {
+      "completion_tokens": 448,
+      "prompt_tokens": 80,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+       "cached_tokens": 76
+      }
+     },
+     "wall_s": 7.5
+    }
+   ],
+   "coding_terminated_at": 1024
+  },
+  "sampler_fairness": {
+   "fair_greedy_zh": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "简单说，LLM 推理是逐 token 生成。每生成新 token，都要和前面所有 token 做注意力计算。为避免重复计算，我们把每层、每个注意力头算出的 Key 和 Value 张量缓存下来，这就是 KV cache。它随上下文长度、层数和头数增长，是长文本推理的主要显存开销。量化是把原本 FP16/BF16 的 KV 值转成 INT8/INT4 等低精度格式，每个元素从 2 字节降到 1 或 0.5 字节，因此同样缓存占用显存更少，可支持更长上下文或更大 batch，对显存紧张的服务尤其有用，也可降低带宽压力并提升吞吐，是常见优化，适合长对话和批量服务。代价是可能轻微损失精度，需要缩放/校准。",
+     "content_len": 302,
+     "reasoning_len": 6622,
+     "reasoning_tail": "nglish and punctuation maybe >250. But likely Chinese words. We can keep concise.\n\nNeed final only. Ensure no analysis.\n",
+     "usage": {
+      "completion_tokens": 4989,
+      "prompt_tokens": 82,
+      "total_tokens": 5071,
+      "prompt_tokens_details": {
+       "cached_tokens": 42
+      }
+     },
+     "wall_s": 82.7
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "简单说，LLM 推理是逐 token 生成。每生成新 token，都要和前面所有 token 做注意力计算。为避免重复计算，我们把每层、每个注意力头算出的 Key 和 Value 张量缓存下来，这就是 KV cache。它随上下文长度、层数和头数增长，是长文本推理的主要显存开销。量化是把原本 FP16/BF16 的 KV 值转成 INT8/INT4 等低精度格式，每个元素从 2 字节降到 1 或 0.5 字节，因此同样缓存占用显存更少，可支持更长上下文或更大 batch，对显存紧张的服务尤其有用，也可降低带宽压力并提升吞吐，是常见优化，适合长对话和批量服务。代价是可能轻微损失精度，需要缩放/校准。",
+     "content_len": 302,
+     "reasoning_len": 6622,
+     "reasoning_tail": "nglish and punctuation maybe >250. But likely Chinese words. We can keep concise.\n\nNeed final only. Ensure no analysis.\n",
+     "usage": {
+      "completion_tokens": 4989,
+      "prompt_tokens": 82,
+      "total_tokens": 5071,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 83.0
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "简单说，LLM 推理是逐 token 生成。每生成新 token，都要和前面所有 token 做注意力计算。为避免重复计算，我们把每层、每个注意力头算出的 Key 和 Value 张量缓存下来，这就是 KV cache。它随上下文长度、层数和头数增长，是长文本推理的主要显存开销。量化是把原本 FP16/BF16 的 KV 值转成 INT8/INT4 等低精度格式，每个元素从 2 字节降到 1 或 0.5 字节，因此同样缓存占用显存更少，可支持更长上下文或更大 batch，对显存紧张的服务尤其有用，也可降低带宽压力并提升吞吐，是常见优化，适合长对话和批量服务。代价是可能轻微损失精度，需要缩放/校准。",
+     "content_len": 302,
+     "reasoning_len": 6622,
+     "reasoning_tail": "nglish and punctuation maybe >250. But likely Chinese words. We can keep concise.\n\nNeed final only. Ensure no analysis.\n",
+     "usage": {
+      "completion_tokens": 4989,
+      "prompt_tokens": 82,
+      "total_tokens": 5071,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 82.6
+    }
+   ],
+   "fair_greedy_coding": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+     "content_len": 403,
+     "reasoning_len": 1069,
+     "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+     "usage": {
+      "completion_tokens": 448,
+      "prompt_tokens": 80,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+       "cached_tokens": 42
+      }
+     },
+     "wall_s": 7.5
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+     "content_len": 403,
+     "reasoning_len": 1069,
+     "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+     "usage": {
+      "completion_tokens": 448,
+      "prompt_tokens": 80,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+       "cached_tokens": 76
+      }
+     },
+     "wall_s": 7.4
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+     "content_len": 403,
+     "reasoning_len": 1069,
+     "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+     "usage": {
+      "completion_tokens": 448,
+      "prompt_tokens": 80,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+       "cached_tokens": 76
+      }
+     },
+     "wall_s": 7.5
+    }
+   ],
+   "qwen_recommended_t06_zh": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "KV cache 是大模型推理时，为了加速生成的“缓存”。模型每生成一个新词，都要回头计算它和前面所有词的注意力关系；如果每次都从头算，会很慢。于是把前面词对应的 Key 和 Value 矩阵存下来，后续直接复用，这就是 KV cache。\n\n它省显存的原因是：KV cache 会随上下文长度、层数和注意力头数迅速变大，通常占推理显存的很大一部分。量化就是把原本用 FP16/BF16 存储的 KV 数值，转成 INT8/INT4 等更低位宽表示。比如从 16 位降到 8 位，显存大约减半；降到 4 位，大约降到四分之一。只要精度损失可接受，就能显著降低显存占用。",
+     "content_len": 284,
+     "reasoning_len": 305,
+     "reasoning_tail": "占用显存很大。量化：把原本 FP16/BF16 的 KV 张量用更低比特（如 INT8/INT4）存储，数值范围映射到更小整数，显存占用近似减少一半/四分之一，精度损失可控，因此省显存。\n\n控制字数大约200字。可以口语化。最终只给答案。\n",
+     "usage": {
+      "completion_tokens": 344,
+      "prompt_tokens": 82,
+      "total_tokens": 426,
+      "prompt_tokens_details": {
+       "cached_tokens": 42
+      }
+     },
+     "wall_s": 5.8
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "KV cache 是 LLM 自回归推理时缓存历史 token 的 Key/Value 张量。每生成新 token，注意力需要用它与所有历史 token 的 K/V 计算；若每次重算会很慢，缓存后可复用，只算新 token。\n\n它的显存占用约为：层数 × 头数 × 头维 × 序列长度 × batch × 每元素字节，且 K 和 V 各一份，所以随上下文和并发增长很快。\n\n量化是把 FP16/BF16 的 K/V 近似存成 INT8/INT4 等低精度格式，例如从 16 bit 降到 8/4 bit，显存占用按比例减少；代价是轻微精度损失，因此能省显存、支持更长上下文或更大 batch。",
+     "content_len": 296,
+     "reasoning_len": 1079,
+     "reasoning_tail": "度损失，因此能省显存、支持更长上下文或更大 batch。 (~76)\nTotal ~191. Good.\n\nNeed final only answer. Ensure not too long. Maybe “200字左右” okay.\n",
+     "usage": {
+      "completion_tokens": 779,
+      "prompt_tokens": 82,
+      "total_tokens": 861,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 13.2
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "KV cache 是大模型推理时缓存每个 token 的 Key/Value 向量。生成新 token 时，需要用它和已有 token 做注意力计算；如果每次都重算，会很慢，所以把历史 K/V 存起来复用。\n\n它占显存的原因是：每层、每个注意力头、每个历史 token 都要存 K 和 V，序列越长、模型越大，缓存越大。\n\n量化能省显存，是因为把原本 FP16/BF16 的高精度数值转成 INT8/INT4 等低比特表示，用更少字节存近似值。这样 KV cache 的显存占用明显下降，可以支持更长上下文或更大 batch，代价通常是轻微精度损失。",
+     "content_len": 275,
+     "reasoning_len": 298,
+     "reasoning_tail": "度增长，显存占用大。量化把高精度浮点（如 FP16/BF16）压成低比特（INT8/INT4）存储，数值范围缩放/零点，用更少字节表示近似值，因此显存占用下降，可容纳更长上下文或更大 batch，代价是轻微精度损失。需要口语化。控制字数。\n",
+     "usage": {
+      "completion_tokens": 339,
+      "prompt_tokens": 82,
+      "total_tokens": 421,
+      "prompt_tokens_details": {
+       "cached_tokens": 78
+      }
+     },
+     "wall_s": 5.9
+    }
+   ],
+   "qwen_recommended_t06_coding": [
+    {
+     "rep": 0,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i in range(len(s)):\n        if i + 1 < len(s) and values[s[i]] < values[s[i + 1]]:\n            total -= values[s[i]]\n        else:\n            total += values[s[i]]\n    return total\n```",
+     "content_len": 394,
+     "reasoning_len": 303,
+     "reasoning_tail": "ion likely LeetCode 13. Need robust. Only code block. Could include mapping and loop. Ensure type hints. No extra text.\n",
+     "usage": {
+      "completion_tokens": 237,
+      "prompt_tokens": 80,
+      "total_tokens": 317,
+      "prompt_tokens_details": {
+       "cached_tokens": 42
+      }
+     },
+     "wall_s": 4.3
+    },
+    {
+     "rep": 1,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        \"I\": 1,\n        \"V\": 5,\n        \"X\": 10,\n        \"L\": 50,\n        \"C\": 100,\n        \"D\": 500,\n        \"M\": 1000,\n    }\n\n    total = 0\n    for i, char in enumerate(s):\n        if i + 1 < len(s) and values[char] < values[s[i + 1]]:\n            total -= values[char]\n        else:\n            total += values[char]\n\n    return total\n```",
+     "content_len": 397,
+     "reasoning_len": 1186,
+     "reasoning_tail": "    total -= values[ch]\n       else: total += values[ch]\n    return total\n\nNeed only code block. Ensure no explanation.\n",
+     "usage": {
+      "completion_tokens": 474,
+      "prompt_tokens": 80,
+      "total_tokens": 554,
+      "prompt_tokens_details": {
+       "cached_tokens": 76
+      }
+     },
+     "wall_s": 8.2
+    },
+    {
+     "rep": 2,
+     "finish_reason": "stop",
+     "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i in range(len(s)):\n        if i + 1 < len(s) and values[s[i]] < values[s[i + 1]]:\n            total -= values[s[i]]\n        else:\n            total += values[s[i]]\n    return total\n```",
+     "content_len": 394,
+     "reasoning_len": 298,
+     "reasoning_tail": "on romanToInt. Typical LeetCode. Need ensure only code block. Could include mapping and iterate. Let's produce concise.\n",
+     "usage": {
+      "completion_tokens": 232,
+      "prompt_tokens": 80,
+      "total_tokens": 312,
+      "prompt_tokens_details": {
+       "cached_tokens": 76
+      }
+     },
+     "wall_s": 4.2
+    }
+   ]
+  },
+  "server_flags": {
+   "reasoning_on": {
+    "flags": "--reasoning on",
+    "template_think_closed": false,
+    "template_tail": "rioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用一句话说明 TCP 和 UDP 的核心区别。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "probes": {
+     "tcp": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 1.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 59
+        }
+       },
+       "wall_s": 1.4
+      }
+     ],
+     "coding": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 42
+        }
+       },
+       "wall_s": 7.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 76
+        }
+       },
+       "wall_s": 7.6
+      }
+     ]
+    }
+   },
+   "reasoning_off": {
+    "flags": "--reasoning off",
+    "template_think_closed": true,
+    "template_tail": "<|im_start|>user\n用一句话说明 TCP 和 UDP 的核心区别。<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "probes": {
+     "tcp": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接的、保证可靠传输的协议，而 UDP 是无连接的、不保证可靠传输但速度更快的协议。",
+       "content_len": 49,
+       "reasoning_len": 0,
+       "reasoning_tail": "",
+       "usage": {
+        "completion_tokens": 28,
+        "prompt_tokens": 23,
+        "total_tokens": 51,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 0.7
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接的、保证可靠传输的协议，而 UDP 是无连接的、不保证可靠传输但速度更快的协议。",
+       "content_len": 49,
+       "reasoning_len": 0,
+       "reasoning_tail": "",
+       "usage": {
+        "completion_tokens": 28,
+        "prompt_tokens": 23,
+        "total_tokens": 51,
+        "prompt_tokens_details": {
+         "cached_tokens": 19
+        }
+       },
+       "wall_s": 0.8
+      }
+     ],
+     "coding": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    roman_map = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    total = 0\n    prev = 0\n    for char in reversed(s):\n        val = roman_map[char]\n        if val < prev:\n            total -= val\n        else:\n            total += val\n        prev = val\n    return total\n```",
+       "content_len": 397,
+       "reasoning_len": 0,
+       "reasoning_tail": "",
+       "usage": {
+        "completion_tokens": 147,
+        "prompt_tokens": 40,
+        "total_tokens": 187,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 2.6
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    roman_map = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    total = 0\n    prev = 0\n    for char in reversed(s):\n        val = roman_map[char]\n        if val < prev:\n            total -= val\n        else:\n            total += val\n        prev = val\n    return total\n```",
+       "content_len": 397,
+       "reasoning_len": 0,
+       "reasoning_tail": "",
+       "usage": {
+        "completion_tokens": 147,
+        "prompt_tokens": 40,
+        "total_tokens": 187,
+        "prompt_tokens_details": {
+         "cached_tokens": 36
+        }
+       },
+       "wall_s": 2.7
+      }
+     ]
+    }
+   },
+   "reasoning_auto": {
+    "flags": "--reasoning auto",
+    "template_think_closed": false,
+    "template_tail": "rioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用一句话说明 TCP 和 UDP 的核心区别。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "probes": {
+     "tcp": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 1.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 59
+        }
+       },
+       "wall_s": 1.4
+      }
+     ],
+     "coding": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 42
+        }
+       },
+       "wall_s": 7.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 76
+        }
+       },
+       "wall_s": 7.6
+      }
+     ]
+    }
+   },
+   "reasoning_budget512": {
+    "flags": "--reasoning on --reasoning-budget 512",
+    "template_think_closed": false,
+    "template_tail": "rioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用一句话说明 TCP 和 UDP 的核心区别。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "probes": {
+     "tcp": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 1.6
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 59
+        }
+       },
+       "wall_s": 1.6
+      }
+     ],
+     "coding": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 42
+        }
+       },
+       "wall_s": 7.6
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 76
+        }
+       },
+       "wall_s": 7.9
+      }
+     ]
+    }
+   },
+   "reasoning_budget1024": {
+    "flags": "--reasoning on --reasoning-budget 1024",
+    "template_think_closed": false,
+    "template_tail": "rioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用一句话说明 TCP 和 UDP 的核心区别。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "probes": {
+     "tcp": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 1.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 59
+        }
+       },
+       "wall_s": 1.4
+      }
+     ],
+     "coding": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 42
+        }
+       },
+       "wall_s": 7.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 76
+        }
+       },
+       "wall_s": 7.6
+      }
+     ]
+    }
+   },
+   "reasoning_budget2048": {
+    "flags": "--reasoning on --reasoning-budget 2048",
+    "template_think_closed": false,
+    "template_tail": "rioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\n用一句话说明 TCP 和 UDP 的核心区别。<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "probes": {
+     "tcp": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 0
+        }
+       },
+       "wall_s": 1.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "TCP 是面向连接、保证可靠有序传输的协议，而 UDP 是无连接、不保证可靠但延迟更低的协议。",
+       "content_len": 47,
+       "reasoning_len": 78,
+       "reasoning_tail": "用户要求用一句话说明 TCP 和 UDP 的核心区别。需要简洁中文回答。核心：TCP 面向连接、可靠有序传输；UDP 无连接、不可靠但低延迟。一句话即可。\n",
+       "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 63,
+        "total_tokens": 138,
+        "prompt_tokens_details": {
+         "cached_tokens": 59
+        }
+       },
+       "wall_s": 1.4
+      }
+     ],
+     "coding": [
+      {
+       "rep": 0,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 42
+        }
+       },
+       "wall_s": 7.5
+      },
+      {
+       "rep": 1,
+       "finish_reason": "stop",
+       "content": "```python\ndef romanToInt(s: str) -> int:\n    values = {\n        'I': 1,\n        'V': 5,\n        'X': 10,\n        'L': 50,\n        'C': 100,\n        'D': 500,\n        'M': 1000\n    }\n    \n    total = 0\n    for i, ch in enumerate(s):\n        value = values[ch]\n        if i + 1 < len(s) and value < values[s[i + 1]]:\n            total -= value\n        else:\n            total += value\n    return total\n",
+       "content_len": 403,
+       "reasoning_len": 1069,
+       "reasoning_tail": "y. Could use dict. Ensure type hints.\n\nFinal only:\n```python\ndef romanToInt(s: str) -> int:\n    ...\n```\n\nNo extra text.\n",
+       "usage": {
+        "completion_tokens": 448,
+        "prompt_tokens": 80,
+        "total_tokens": 528,
+        "prompt_tokens_details": {
+         "cached_tokens": 76
+        }
+       },
+       "wall_s": 7.6
+      }
+     ]
+    }
+   }
+  }
+ }
+}

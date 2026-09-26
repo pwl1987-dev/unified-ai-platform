@@ -11,7 +11,8 @@
 
 - **PRIMARY-BUSINESS-MODEL = `ukisai/Swift-1.5-Qwen3.8-27B-GGUF` @ `a161446` 的 `Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf`，2×RTX4090 + 256K + KV q4_0 + FA on**（编程/长码/长上下文综合最优）。
 - **LONGCTX-ECONOMY-PROFILE = `ukisai/Swift-1.5-Qwen3.8-27B-GSQ-RCO-GGUF` @ `d74895b` 的 `IQ3_S-mtp`（sha256 `9aecf1cd…`），1×RTX4090 + 256K**（单卡全深度 needle 100%、思考 token 最省、C8 可用）。
-- ⚠️ **License Gate：两者都是 Swift Open License v1.0（年收入 ≥ US$1M 需企业授权）→ `TECHNICAL_WINNER_BUT_LICENSE_REVIEW_REQUIRED`**。若业务方确认超线且不签企业协议，则合法 PRIMARY 回落到 ISTA（Apache-2.0），但其默认模板存在"无限思考"缺陷（见 §A）。
+- ⚠️ **License Gate：两者都是 Swift Open License v1.0（年收入 ≥ US$1M 需企业授权）→ `TECHNICAL_WINNER_BUT_LICENSE_REVIEW_REQUIRED`**。若业务方确认超线且不签企业协议，则合法 PRIMARY 回落到 ISTA（Apache-2.0）。
+- **【2026-09-26 修订】原"ISTA 默认模板无限思考缺陷"经专项复核撤销**：根因 = TOKEN_BUDGET_EXHAUSTION（harness max_tokens=3072 低于其默认 xhigh 思考需求）+ 贪心采样放大；足额预算（≥4096）下 ISTA 稳定收束思考并正确作答，needle 128K/256K 补测全过。详见 `reconciliation/ISTA-REASONING-RECONCILIATION.md`。ISTA 为合法 Apache-2.0 回落候选（能力同级略弱、思考成本更高）。
 - **PRODUCTION-LLAMA-CPP-RUNTIME：维持 b10715 不变**（本驱动上最优 prefill + 与生产零迁移成本）；官方 CUDA13 全线不兼容 R580@13.0；官方 CUDA12.8 与本地 CUDA13-sm89 数据留档备升级决策（需拍板，本轮不动生产）。
 
 ---
@@ -44,15 +45,15 @@
 
 | 探针 | A ISTA GSQ IQ3_S-mtp | B Swift1.5 GSQ IQ3_S-mtp | C Swift1.5 Q5_K_M | D Swift1.0 Q4_K_M |
 |---|---|---|---|---|
-| 中文解释（默认思考） | **✗ 无限思考**（4229 字推理、正文为空） | ✓（**思考仅 78 字**） | ✓（586 字） | ✓（542 字） |
+| 中文解释（默认思考） | ✗ 预算耗尽*（4229 字推理、正文为空；*复核后改判，见 §附录A） | ✓（**思考仅 78 字**） | ✓（586 字） | ✓（542 字） |
 | 中文解释（enable_thinking=false） | ✓ | ✓ | ✓ | ✓ |
 | 编程(roman)/JSON/工具/数学 | ✓/✓/✓/✓ | ✓/✓/✓/✓ | ✓/✓/✓/✓ | ✓/✓/✓/✓ |
 | needle 32K / 64K | ✓ / ✓（64K 一次 400 为 harness 余量伪影，手验 PASS） | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
 | 重启×3 | ✓ | ✓ | ✓ | ✓ |
 | 单卡 VRAM@64K | 13.2GB | 13.2GB | 21.1GB | 18.1GB |
 
-- **淘汰/定位**：A 保留为量化对照（Apache-2.0、官方 mmproj），不作主选（默认模板不可用级缺陷）；D（Swift 1.0）提前退出——共享套件上被 1.5 支配或持平（coding 8/13 < C 9/13；structured 5/7 < 6/7；无任何 D 优势轴），1.5 另有思考效率与长上下文优势。
-- **Swift 1.5 vs 基线 Qwen3.8（ISTA）**：同 quant 预算下 1.5 修复了无限思考（78 vs 4229 字）、needle 更稳（B 全深度 100% vs A 128K 94.4%）、agent/写作更强。真实业务改善成立。
+- **淘汰/定位**【2026-09-26 修订】：A（ISTA）**不再是"缺陷出局"**——zh 探针失败经复核为 harness 预算不足（3072 < 其 xhigh 默认思考需求；4096 即全对），补测 coding 3/3、needle 128K/256K 全过、失败集合与 Swift 兄弟一致。A 保留为 Apache-2.0 回落候选（见 §6 修订）；D（Swift 1.0）提前退出——共享套件上被 1.5 支配或持平（coding 8/13 < C 9/13；structured 5/7 < 6/7；无任何 D 优势轴），1.5 另有思考效率与长上下文优势。
+- **Swift 1.5 vs 基线 Qwen3.8（ISTA）**：同 quant 预算下 1.5 思考 token 大幅更少（zh 探针 78 vs 298-6622 字，与预算/采样无关的后训练差异）、needle 全深度 100%（ISTA 128K 电池 94.4%，d98 多针漏 1）、agent dependent 场景过（ISTA 败）。真实业务改善成立，但幅度以"效率与边角稳健性"计，不再以"对手缺陷"计。
 
 ## 4. 决赛数据（问题 12-27）
 
@@ -104,7 +105,7 @@ B（GSQ IQ3_S-mtp，单卡 256K）优化矩阵（正确性探针全 3/3）：
 - **保留 LONGCTX-ECONOMY = Swift 1.5 GSQ IQ3_S-mtp @ 1×4090**：单卡 256K 全能力 + 思考最省 + C8 可用，与 PRIMARY 互补（经济位/溢出位）。
 - 为什么不是 B 做主选：编程与长码是第一优先级，C 分别 9 vs 7、4 vs 3；B 的优势轴（agent 9 vs 8、写作 10 vs 9、思考 78 vs 586）权重靠后且差距小。
 - 为什么不是 Q6_K：双卡实测无速度优势（-4~-6%），无质量证据（KLD 已在 IQ 系列满足），纯成本。
-- 为什么不是 ISTA：技术缺陷（默认模板无限思考）+ needle 128K 94.4%；仅当 License 审查失败时回落（回落方案：ISTA IQ3_S-mtp + 强制 enable_thinking=false 模板/无思考部署 + mmproj，代价是 agent/写作/编程分数下降，且需业务接受）。
+- 为什么不是 ISTA【2026-09-26 修订，缺陷论据已撤销】：**性能而非缺陷**——(1) 全套 13 题 coding 证据上 C=9/13 领先，ISTA 仅补测 3/3（无全套对比），longcode 前 3 题与 B/C 同败；(2) 思考成本：ISTA 该探针贪心 6622 字/推荐采样 298-1079 字 vs Swift 78-586 字，Success/ThinkingToken 与墙钟劣势真实；(3) needle 全深度电池 ISTA 128K 94.4%（d98 多针漏 1）< Swift 100%；(4) agent dependent 场景 ISTA 失败（C 亦败、B 过）。License 是 ISTA 唯一优势轴（Apache-2.0）——审查不过时的回落位，能力同级略弱、思考成本更高；enable_thinking=false/--reasoning-budget 为效率选项而非缺陷规避。
 - **License 双保险提示**：LONGCTX 与 PRIMARY 同属 Swift 系；若审查不过，两档都要回落（ISTA IQ3_S-mtp 单卡可同时顶两档，Q5 档无 Apache 替代）。
 
 ## 7. PRIMARY-BUSINESS-PROFILE（问题 48，可直接部署）
@@ -194,10 +195,16 @@ longctx_economy_profile:
 
 ---
 
-### 附录 A：ISTA 默认模板"无限思考"实录
+### 附录 A：ISTA "无限思考" 复核结论（2026-09-26 修订，撤销缺陷判定）
 
-- 探针："用中文解释 KV cache 量化…200 字左右"（默认思考模板）：ISTA IQ3_S-mtp 输出 4229 字推理、0 正文（max_tokens 3072 内未收敛）；`enable_thinking=false` 后正常（152 汉字）。Swift 1.5 同探针 78 字推理 + 132 汉字正文。Stage-1 证据：runs/stage1/A-….json probes.zh。
-- 含义：以 ISTA 为生产默认必须强制无思考模板或额外采样约束；这是 Base Qwen3.8 与 Swift 1.5 的最尖锐行为差。
+- 原记录：zh 探针（默认思考模板，max_tokens=3072，贪心）输出 4229 字推理、0 正文 → 曾判"ISTA_FATAL_BEHAVIOR_DEFECT"。
+- 复核（reconciliation/ISTA-REASONING-RECONCILIATION.md，全部证据机器留档）：
+  1. **归类 = B. TOKEN_BUDGET_EXHAUSTION**：同一请求 4096 即 `stop`+321 字正文；8192 亦然；raw `/completion`（绕过 parser）8192 下 `</think>` 闭合+答案+EOS。completion_tokens=3072 恰为上限。
+  2. 模板无差异：ISTA 与 Swift1.5 内嵌模板逐字节相同（默认 thinking on + effort=xhigh——长思考是设计）；`enable_thinking=false` 路径预闭合且工作正常。
+  3. 促成因素：贪心(T=0)对思考型模型是离群采样器——思考 6622 字（含退化逐字枚举）vs 推荐采样(T0.6) 298-1079 字；且贪心轨迹对 runtime kernel 数值混沌（同 prompt：b10715 3803 字 vs CUDA12.8 b11176 958 字，两版均正常终止）。
+  4. MTP 无关（-mtp 与非-mtp 行为完全一致）；parser 无关（raw 复现同象）。
+  5. 预算修正（8192）补测：coding 3/3、structured 2/3（唯一失败项与 Swift 决赛者相同）、agent 2/3（dependent 失败与 C 相同）、needle 32K/128K/256K（d50 single+multi4）全过；失败集合与 Swift 兄弟一致，无 ISTA 特有失败模式。
+- 影响：ISTA 以"合法 Apache-2.0 候选（回落位）"重新进入 Pareto；PRIMARY 维持 Swift Q5_K_M，但依据改为真实性能差（coding 全套、思考成本、needle 边角、agent 场景），不再引用"对手缺陷"。
 
 ### 附录 B：本轮已验证的工程事实（供复用）
 

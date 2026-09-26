@@ -34,13 +34,13 @@ FILES_TEXT = [
 ]
 DIRS_JSON = ["runs/runtime-ab", "runs/stage1", "runs/longctx", "runs/long-code", "runs/coding",
              "runs/structured-output", "runs/agent", "runs/writing", "runs/vision", "runs/opt",
-             "runs/concurrency", "runs/gpu"]
+             "runs/concurrency", "runs/gpu", "runs/soak", "reconciliation"]
 OPS_FILES = ["docker-compose.yml", "build-sm89.sh", "download-stage1.sh", "battery.sh", "scale_queue.sh",
              "build/Dockerfile.sm89", "build/BUILD-SHA.txt"]
 OPS_RUNNER = ["lab.py", "runtime_ab.py", "screening.py", "needle.py", "longcode.py", "coding.py",
               "structured.py", "agent.py", "writing.py", "vision.py", "opt_ab.py", "concurrency.py",
               "gpu_scale.py", "soak_smoke.py", "soak_plain.py", "summarize.py", "parse_runtime_logs.py",
-              "export_repo.py", "pyproject.toml", "uv.lock"]
+              "export_repo.py", "recon_ista.py", "recon_battery.py", "pyproject.toml", "uv.lock"]
 
 MAX_BYTES = 2_000_000
 BAN = re.compile(r"d@f%s\^x&|api\.lytv\.tv|msadmin\.lytv\.tv|file\.lytv\.tv|m3u8-channel\.lytv\.tv|<内部账号>|<已脱敏>|10\.30\.51\.13|10\.30\.51\.12")

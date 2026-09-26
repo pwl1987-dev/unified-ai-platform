@@ -4,7 +4,12 @@
    "128K": 0.944,
    "256K": 1.0,
    "zh_default": 0,
-   "json_tool_stage1": null
+   "json_tool_stage1": null,
+   "128K_battery": "94.4% (d98 multi4 miss, real)",
+   "128K_d50_retest_budget8192": 1.0,
+   "256K_d50_retest_budget8192": 1.0,
+   "zh_budget8192": "stop+content",
+   "license": "apache-2.0 (eligible)"
   },
   "B-swift15-gsq-iq3s-mtp": {
    "128K": 1.0,
@@ -25,5 +30,11 @@
    "json_tool_stage1": null
   }
  },
- "frontier_notes": []
+ "frontier_notes": [],
+ "ista_reconciliation_20260926": {
+  "classification": "B. TOKEN_BUDGET_EXHAUSTION (+greedy amplification); ISTA_FATAL_BEHAVIOR_DEFECT revoked",
+  "ista_pareto_status": "re-entered as Apache-2.0 fallback candidate (peer-level capability, higher thinking cost, needle full-depth 128K 94.4% vs finalists 100%)",
+  "primary_impact": "Swift 1.5 Q5_K_M stays PRIMARY on real-performance grounds (coding 9/13, longcode 4/8, dual 256K prefill, thinking-token efficiency)",
+  "evidence": "reconciliation/ista-reconciliation.json"
+ }
 }

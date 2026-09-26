@@ -74,9 +74,15 @@
     "production_status": "CANDIDATE (economy tier)"
   },
   "excluded": {
-    "A-ista-gsq-iq3s-mtp": "kept as Apache-2.0 fallback only; default-template infinite-thinking defect, needle 128K 94.4%",
+    "A-ista-gsq-iq3s-mtp": "REVOKED defect exclusion (2026-09-26 reconciliation): 'infinite thinking' was TOKEN_BUDGET_EXHAUSTION at harness max_tokens=3072 (+greedy amplification); with budget>=4096 ISTA completes and answers, needle 128K/256K retest all-pass. Status: legitimate Apache-2.0 fallback candidate — peer-level capability (coding 3/3 sample, structured/agent fail-set identical to Swift finalists), higher thinking cost (298-6622 chars vs Swift 78-586), needle full-depth 128K 94.4%. See reconciliation/ISTA-REASONING-RECONCILIATION.md",
     "C-swift15-q6k": "dual-GPU no speed gain vs Q5_K_M (-4~-6%), no quality evidence — dropped",
     "D-swift10-q4km": "dominated by Swift 1.5 on shared suites (coding 8<9, structured 5<6); early exit",
     "control-prod-model": "not a candidate (incumbent reference)"
+  },
+  "reconciliation_addendum": {
+    "date": "2026-09-26",
+    "trigger": "user-directed ISTA-REASONING-ROOT-CAUSE-RECONCILIATION",
+    "classification": "B. TOKEN_BUDGET_EXHAUSTION (contributing: greedy-sampler amplification; runtime-kernel greedy chaos documented)",
+    "primary_recommendation_impact": "none — Swift 1.5 Q5_K_M stays PRIMARY on corrected (real-performance) grounds; LONGCTX unchanged; ISTA re-enters Pareto as Apache-2.0 fallback"
   }
 }

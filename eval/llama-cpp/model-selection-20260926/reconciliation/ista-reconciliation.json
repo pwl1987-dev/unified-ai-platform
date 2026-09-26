@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-09-26T15:10:00+08:00",
+  "scope": "ISTA-REASONING-ROOT-CAUSE-RECONCILIATION; no big-matrix rerun, no prod changes, original evidence untouched (commit bab628c preserved)",
+  "original_claim": {
+    "text": "ISTA 基线默认模板无限思考（4229 字 reasoning、正文为空）→ ISTA_FATAL_BEHAVIOR_DEFECT",
+    "recorded_in": ["PRODUCTION-RECOMMENDATION.md §0/§3/§6/附录A", "model-profiles.json excluded", "README.md", "runs/stage1/A-ista-gsq-iq3s-mtp.json probes.zh (pass=0)"],
+    "artifact": {
+      "repo": "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+      "revision": "d562806dbafae37109975e970aae91b43e73b440",
+      "gguf": "Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf",
+      "gguf_sha256": "58fd826723939933dc86f45b7fe04545cbc2de1c70f6fe2cdd3858c87a98c12f",
+      "mtp_decoding_enabled": false, "mmproj_loaded": false,
+      "runtime": "llama-server:cuda12.4-b10715 (sha256:cc0782dc…)",
+      "ctx": 65536, "kv": "q4_0/q4_0", "fa": "on", "jinja": true,
+      "sampler": "temperature=0 greedy, seed 42",
+      "max_tokens": 3072
+    },
+    "reproduced_exactly": "original-failure-response.json: finish=length, completion_tokens=3072(=cap), content_len=0, reasoning_len=4229"
+  },
+  "new_evidence": {
+    "raw_completion_bypassing_parser": {
+      "np2048": "think_close_pos=-1, stop=limit (thinking still open at cap)",
+      "np8192": "think_close_pos=3803(chars), stop=eos — model terminates thinking and answers normally",
+      "verdict": "Case B: not a parser bug; generation terminates with sufficient budget"
+    },
+    "budget_gradient_greedy_chat": {
+      "zh_b1024": {"finish": "length", "content_len": 0, "reasoning_chars": 1633},
+      "zh_b4096": {"finish": "stop", "content_len": 321, "reasoning_chars": 3803},
+      "zh_b8192_greedy": {"finish": "stop", "content_len": 302, "reasoning_chars": 6622, "reps_identical": 3},
+      "tcp_b1024": {"finish": "stop", "content_len": 47, "reasoning_chars": 78},
+      "coding_b1024": {"finish": "stop", "content_len": 403, "reasoning_chars": 1069},
+      "verdict": "4096 suffices on the same runtime/config that failed at 3072"
+    },
+    "template": {
+      "ista_vs_swift15_embedded": "byte-identical (sha256 c3cf9e34abf4f9e3, 8952 bytes)",
+      "default_when_thinking_on": "enable_thinking undefined->true AND reasoning_effort default 'xhigh' with injected deep-think instruction",
+      "thinking_off_path": "<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\n (pre-closed, verified working)",
+      "apply_template_T1_sha": "3b2223cdfa190d82 (identical on both runtimes); T3 thinking-off sha b8748c19219de807"
+    },
+    "sampler_fairness": {
+      "fair_greedy_zh": {"reasoning_chars": 6622, "content": 302, "finish": "stop"},
+      "qwen_recommended_t06_zh": {"reasoning_chars": [305, 1079, 298], "content_all_present": true},
+      "qwen_recommended_t06_coding": {"reasoning_chars": [303, 1186, 298]},
+      "note": "greedy produced degenerate char-enumeration inside thinking (tail: '104 等105 低106 精107 度…'); recommended sampler 3-20x shorter thinking; greedy trajectory deterministic per runtime"
+    },
+    "non_mtp_vs_mtp": {
+      "plain_gguf": "Qwen3.8-27B-GSQ-RCO-IQ3_S.gguf sha256 64b53b64c7aa39f20a7e54bd80582fe595b1d745624ee8a72e92508c0326d810",
+      "result": "identical behavior to -mtp on every probe (zh b1024 length/1633, b4096 stop/3803, greedy 6622, t06 298) — MTP head is inert weights"
+    },
+    "runtime_ab": {
+      "b10715_vs_official_cuda128_b11176": "same GGUF, byte-identical final prompt (apply-template sha equal), greedy thinking 3803 vs 958 chars — argmax trajectory divergence from kernel numerics; BOTH terminate and answer; no compatibility defect"
+    },
+    "server_flags": {
+      "reasoning_on_auto": "identical behavior (terminate+answer)",
+      "reasoning_off": "template pre-closed, 0 reasoning, direct answers",
+      "reasoning_budget_512_1024_2048": "all completed; usable as efficiency guardrail"
+    },
+    "small_battery_budget8192_same_evaluators": {
+      "coding3": "3/3 (exec-verified)",
+      "longcode_first3": "0/3 — same three questions ALSO failed by both Swift finalists (hard items, not ISTA-specific)",
+      "structured3": "2/3 (nested_deep fail = the same single failure of Swift finalists)",
+      "agent3": "2/3 (dependent fail; finalist C also fails dependent)",
+      "needle32k": "single 1/1, multi4 4/4",
+      "needle_128k_256k": "128K single 1/1 + multi4 4/4; 256K single 1/1 + multi4 4/4 (d0.5, budget 8192) — ALL PASS",
+      "verdict": "ISTA failure set matches its Swift siblings; no ISTA-specific failure mode"
+    }
+  },
+  "classification": {
+    "primary": "B. TOKEN_BUDGET_EXHAUSTION",
+    "contributing": "greedy(temperature=0) is an outlier sampler for this thinking model: amplifies thinking length 3-20x vs Qwen-recommended (t=0.6), occasionally degenerate (char enumeration); trajectory length is runtime-kernel-chaotic (3803 vs 958 chars across builds with identical prompts)",
+    "rejected": ["A MODEL_BEHAVIOR_CONFIRMED", "C TEMPLATE_CONFIGURATION_ERROR", "D REASONING_PARSER_ERROR", "E MTP_SPECIFIC", "F LLAMA_CPP_RUNTIME_SPECIFIC"],
+    "g_sampling": "documented as contributing factor, not sole cause; primary classification per rule = B"
+  },
+  "supersedes": {
+    "ISTA_FATAL_BEHAVIOR_DEFECT": "REVOKED -> ISTA_REASONING_ANOMALY_RESOLVED (TOKEN_BUDGET_EXHAUSTION + greedy amplification)",
+    "stage1_A_zh_pass0_semantics": "pass=0 now reads 'thinking budget exhausted at 3072' (raw JSON untouched)",
+    "reports_to_amend": ["PRODUCTION-RECOMMENDATION.md", "model-profiles.json", "README.md"]
+  },
+  "still_valid": [
+    "A needle battery (128K 94.4% multi4-d98 miss = real retrieval boundary; unrelated to budget)",
+    "A vision results (cpu/gpu 2/3)",
+    "all B/C/D data, all perf/opt/concurrency/soak data, License Gate"
+  ],
+  "impact_on_recommendation": {
+    "PRIMARY": "Swift 1.5 Q5_K_M @2x4090 MAINTAINED — now on corrected grounds: full-suite coding 9/13, longcode 4/8, dual-GPU 256K prefill 1721 tok/s, thinking-token efficiency (78-586 chars vs ISTA 298-6622) are real performance advantages, independent of ISTA's budget issue",
+    "ISTA": "re-enters Pareto as legitimate Apache-2.0 candidate/fallback: peer-level on probes (needle 128K 94.4% < 100%, agent dependent fail, no full-13 coding evidence), higher thinking cost; enable_thinking=false / --reasoning-budget are efficiency options, not defect workarounds",
+    "LONGCTX": "unchanged (Swift1.5 GSQ IQ3_S-mtp)"
+  }
+}

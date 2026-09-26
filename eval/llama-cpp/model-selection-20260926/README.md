@@ -6,7 +6,7 @@
 
 1. **Runtime 冻结 = `llama-server:cuda12.4-b10715`**（与生产同二进制）。官方 CUDA13 镜像在 R580(CUDA13.0) 上全线不可启动；本地 CUDA13.0-sm89(master) prefill 回调 → 弃。官方 CUDA12.8 decode 更快、prefill 略慢，留档待拍板。
 2. **PRIMARY（技术胜者）= Swift 1.5 Q5_K_M @ 2×4090 + 256K**（编程/长码/长上下文第一；needle 全深度 100%）；**LONGCTX-ECONOMY = Swift 1.5 GSQ IQ3_S-mtp @ 1×4090 + 256K**（思考 token 最省、C8 134 tok/s）。
-3. **License 双双为 Swift Open License v1.0（$1M 收入门槛）→ 部署前必须人工拍板**；Apache 回落方案 = ISTA GSQ IQ3_S-mtp（有默认模板无限思考缺陷，见 PRODUCTION-RECOMMENDATION 附录 A）。
+3. **License 双双为 Swift Open License v1.0（$1M 收入门槛）→ 部署前必须人工拍板**；Apache 回落方案 = ISTA GSQ IQ3_S-mtp【2026-09-26 修订：原"默认模板无限思考缺陷"经专项复核撤销，根因为 harness 预算不足（3072）+贪心放大；足额预算下 ISTA 正常收束答题、needle 128K/256K 补测全过，作为 Apache-2.0 回落候选保留，思考成本高于 Swift】。复核全档见 `reconciliation/ISTA-REASONING-RECONCILIATION.md`。
 4. FA=on 强制（off ≥131K 不可部署）；KV=q4_0（vs f16/q8 差 <3%）；MTP decode +34~37% 换 prefill -17~-25%（按负载取舍）；CPU mmproj 可用（省 1.16GB，+0.6s/图）。
 
 ## 目录

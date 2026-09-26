@@ -1,0 +1,30 @@
+[
+ {
+  "ctx": 131072,
+  "mode": "single",
+  "hits": "1/1",
+  "pass": 1,
+  "wall_s": 70.82
+ },
+ {
+  "ctx": 131072,
+  "mode": "multi4",
+  "hits": "4/4",
+  "pass": 1,
+  "wall_s": 76.663
+ },
+ {
+  "ctx": 262144,
+  "mode": "single",
+  "hits": "1/1",
+  "pass": 1,
+  "wall_s": 200.369
+ },
+ {
+  "ctx": 262144,
+  "mode": "multi4",
+  "hits": "4/4",
+  "pass": 1,
+  "wall_s": 210.007
+ }
+]
