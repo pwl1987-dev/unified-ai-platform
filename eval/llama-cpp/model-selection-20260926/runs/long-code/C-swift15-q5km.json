@@ -1,0 +1,232 @@
+{
+ "model": "C-swift15-q5km",
+ "ctx": 131072,
+ "image": "llama-server:cuda12.4-b10715",
+ "tasks": [
+  {
+   "part": "real-repo",
+   "q": "生产 llama-server 容器（qwen27b）加载的 GGUF 文件名是什么？只输出文件名。",
+   "pass": 0,
+   "answer": "Qwen3.8-27B-Heretic-Ara-iq4_xs-3.0-mtp.gguf",
+   "wall_s": 35.945,
+   "reasoning_chars": 419
+  },
+  {
+   "part": "real-repo",
+   "q": "生产 llama-server 的 KV cache 的 K 和 V 分别用的什么量化类型？按 'K=x,V=y' 格式输出。",
+   "pass": 1,
+   "answer": "K=q4_0,V=q4_0",
+   "wall_s": 23.149,
+   "reasoning_chars": 1199
+  },
+  {
+   "part": "real-repo",
+   "q": "OpenResty LB 的路由逻辑在哪个 lua 文件？只输出文件名。",
+   "pass": 1,
+   "answer": "route.lua",
+   "wall_s": 12.286,
+   "reasoning_chars": 643
+  },
+  {
+   "part": "real-repo",
+   "q": "eval/spec_sandbox.sh 里 IMG 变量指定的镜像 tag 是什么？只输出 tag。",
+   "pass": 0,
+   "answer": "",
+   "wall_s": 23.685,
+   "reasoning_chars": 2226
+  },
+  {
+   "part": "real-repo",
+   "q": "本仓库脱敏替换表一共有几条规则？只输出数字。",
+   "pass": 1,
+   "answer": "8",
+   "wall_s": 6.251,
+   "reasoning_chars": 389
+  },
+  {
+   "part": "real-repo",
+   "q": "生产栈里 OpenResty 容器名和监控容器名分别是什么？按 'lb=X,mon=Y' 输出。",
+   "pass": 0,
+   "answer": "",
+   "wall_s": 23.717,
+   "reasoning_chars": 1953
+  },
+  {
+   "part": "real-repo",
+   "q": "docker-compose.yml 中 llama-server 的 --spec-type 是什么？只输出值。",
+   "pass": 0,
+   "answer": "draft-mtp",
+   "wall_s": 17.045,
+   "reasoning_chars": 1126
+  },
+  {
+   "part": "real-repo",
+   "q": "生产 llama-server 的草稿模型（-md）文件名是什么？只输出文件名。",
+   "pass": 1,
+   "answer": "Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+   "wall_s": 18.335,
+   "reasoning_chars": 1491
+  },
+  {
+   "part": "synth-locate",
+   "q": "这个工程里 calculate_retry_backoff 定义在哪个文件？只输出文件路径。",
+   "pass": 1,
+   "answer": "src/utils/backoff.py",
+   "wall_s": 10.243
+  },
+  {
+   "part": "synth-locate",
+   "q": "calculate_retry_backoff 的规格：attempt=1 应返回 base_ms 本身。当前实现有什么",
+   "pass": 1,
+   "answer": "在 `src/utils/backoff.py` 中，`calculate_retry_backoff` 当前返回 `base_ms * (2 ** attempt)`，所以 `attempt=1` 时会返回 `2 * base_ms`，不符合规格。\n\n应该改成 `base_ms * (2 ** (",
+   "wall_s": 11.777
+  },
+  {
+   "part": "synth-locate",
+   "q": "src/pool.py 导入的配置键与 config/settings.py 中实际定义的键不一致。分别指出导入的键名和",
+   "pass": 1,
+   "answer": "imported=MAX_CONNECTIONS, defined=MAX_CONN",
+   "wall_s": 4.892
+  },
+  {
+   "part": "synth-locate",
+   "q": "列出 mod_00 到 mod_05 中函数名前缀为 dispatch 的函数名（带下标）。",
+   "pass": 1,
+   "answer": "- `dispatch_0_5`\n- `dispatch_1_4`\n- `dispatch_2_3`\n- `dispatch_3_2`\n- `dispatch_4_1`\n- `dispatch_5_0`",
+   "wall_s": 14.75
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 25826,
+  "gpu_util_pct": 0,
+  "power_w": 75.37,
+  "temp_c": 46,
+  "per_gpu": [
+   {
+    "vram_used_mib": 13056
+   },
+   {
+    "vram_used_mib": 12770
+   }
+  ]
+ },
+ "repo_doc_tokens": 92955,
+ "synth_doc_tokens": 27143,
+ "patch": {
+  "pass": 1,
+  "detail": "PATCH_OK",
+  "wall_s": 8.404
+ },
+ "tps": {
+  "prompt_tps": [
+   170.77,
+   3419.89,
+   1199.96,
+   1100.35,
+   836.31,
+   1059.6,
+   804.52,
+   1071.68,
+   1109.74,
+   4131.53,
+   1710.82,
+   1668.97,
+   1662.98,
+   398.61
+  ],
+  "decode_tps": [
+   38.97,
+   31.33,
+   31.34,
+   31.33,
+   31.33,
+   31.33,
+   31.34,
+   31.35,
+   31.37,
+   36.9,
+   36.92,
+   36.89,
+   36.89,
+   39.98
+  ],
+  "prompt_tokens": [
+   53,
+   92989,
+   1031,
+   1011,
+   1013,
+   1007,
+   1020,
+   1012,
+   1011,
+   27171,
+   1055,
+   1016,
+   1002,
+   106
+  ],
+  "gen_tokens": [
+   16,
+   263,
+   694,
+   352,
+   700,
+   162,
+   700,
+   501,
+   543,
+   84,
+   412,
+   158,
+   522,
+   298
+  ],
+  "prompt_ms": [
+   310.35,
+   27190.65,
+   859.19,
+   918.8,
+   1211.28,
+   950.36,
+   1267.83,
+   944.32,
+   911.02,
+   6576.5,
+   616.66,
+   608.76,
+   602.53,
+   265.93
+  ],
+  "eval_ms": [
+   384.95,
+   8363.92,
+   22109.05,
+   11202.94,
+   22312.7,
+   5138.13,
+   22301.13,
+   15950.91,
+   17278.52,
+   2249.6,
+   11132.94,
+   4256.14,
+   14121.58,
+   7428.16
+  ]
+ },
+ "vram_peak": {
+  "vram_used_mib": 25910,
+  "gpu_util_pct": 12,
+  "power_w": 211.61,
+  "temp_c": 50,
+  "per_gpu": [
+   {
+    "vram_used_mib": 13098
+   },
+   {
+    "vram_used_mib": 12812
+   }
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+  "captured_at": "2026-09-26T09:05:00+08:00",
+  "hf_access": "via https://hf-mirror.com (huggingface.co blocked on host)",
+  "repos": {
+    "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF": {
+      "role": "BASE CONTROL (Swift 微调对照基线)",
+      "revision_sha": "d562806dbafae37109975e970aae91b43e73b440",
+      "last_modified": "2026-09-02T09:11:34Z",
+      "license": "apache-2.0 (front-matter); weights inherit Qwen3.8-27B Apache-2.0",
+      "gated": false,
+      "pipeline_tag": "image-text-to-text",
+      "base_model": "Qwen/Qwen3.8-27B",
+      "method": "GSQ (Gumbel-Softmax Quantization, arXiv 2604.18556) + RCO (Riemannian Constrained Optimization, arXiv 2605.00649); per-tensor mixed-precision allocation under size budget",
+      "quants": {
+        "IQ2_XS": {"bpw": 2.50, "gb": 8.4}, "IQ2_S": {"bpw": 2.75, "gb": 9.3},
+        "IQ3_XXS": {"bpw": 3.00, "gb": 10.1}, "IQ3_S": {"bpw": 3.50, "gb": 11.8, "recommended": "task-lossless"}
+      },
+      "mtp_variant": "each tier +0.35GB '-mtp' build (MTP head, quality unchanged by README claim)",
+      "mmproj": "mmproj-Qwen3.8-27B-BF16.gguf (0.93GB, sha256 13cb7beb..., downloaded, 'converted from base checkpoint, verified against these quantizations')",
+      "reported_benchmarks (vendor, vs own BF16 base)": {
+        "IQ3_S": {"AIME25": 100.0, "GPQA-D": 89.39, "LCB_v6": 85.71, "task_avg_recovery": "99.8%"},
+        "IQ2_S": {"AIME25": 100.0, "GPQA-D": 86.36, "LCB_v6": 82.29},
+        "IQ3_XXS": {"AIME25": 100.0, "GPQA-D": 88.89, "LCB_v6": 84.57}
+      },
+      "downloaded": {
+        "Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf": {"bytes": 12993461000, "sha256": "58fd826723939933dc86f45b7fe04545cbc2de1c70f6fe2cdd3858c87a98c12f", "note": "repo publishes no SHA256SUMS; this hash is our recorded identity"},
+        "mmproj-Qwen3.8-27B-BF16.gguf": {"sha256": "13cb7bebccbd04afc8f4090cb949ecf8937cdf7377c5799b1a0c594e7c0d3e16"},
+        "README.md": "archived"
+      }
+    },
+    "ukisai/Swift-1.5-Qwen3.8-27B-GSQ-RCO-GGUF": {
+      "role": "LONGCTX CANDIDATE (单卡 128K/256K 经济档)",
+      "revision_sha": "d74895bbe5db4bec1e0024e7cc87d59c02d7631a",
+      "last_modified": "2026-09-24T16:14:33Z",
+      "license": "swift-open-license-1.0 (custom, revenue threshold US$1M, see licenses/)",
+      "gated": false, "pipeline_tag": "text-generation",
+      "base_model": "ukisai/Swift-1.5-Qwen3.8-27b (post-training on Swift 1.0 on Qwen3.8-27B)",
+      "method": "reuses ISTA GSQ-RCO per-tensor allocations; Swift V1MIX imatrix (fineweb-edu/OpenThoughts3/multilingual-wiki/code/Platypus, 309 chunks); GSQ refinement; llama-quantize --tensor-type-file at llama.cpp fee39dd",
+      "quants": ["IQ2_XS", "IQ2_S", "IQ3_XXS", "IQ3_S"] ,
+      "kld_vs_swift_bf16": {"IQ3_S": 0.051265, "IQ3_XXS": 0.097774, "IQ2_S": 0.134751, "IQ2_XS": 0.189979},
+      "mmproj": "none ('A Swift 27B vision projector has not been verified for this release')",
+      "downloaded": {
+        "Swift-1.5-Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf": {"bytes": 12120016896, "sha256": "9aecf1cd41b2cb2f32a74e0d889e33855ebef43b26f43b43feb5720239e677e5", "matches_manifest": true}
+      },
+      "notes": "Swift 1.5 claims 58.5% fewer thinking tokens, +0.35% score vs base; MTP packages are 'packaging counterparts; MTP generation not independently evaluated'"
+    },
+    "ukisai/Swift-1.5-Qwen3.8-27B-GGUF": {
+      "role": "QUALITY/CODING PRIMARY CANDIDATE",
+      "revision_sha": "a1614465cfa35d04d3e8575d713fa779662b5eab",
+      "last_modified": "2026-09-24T18:18:13Z",
+      "license": "other (LICENSE file = Swift Open License v1.0 assumed same as GSQ repo; verifying)",
+      "quants": "full ladder IQ2_M..Q8_0 incl Q4_K_M 17.44GB, Q5_K_M 20.92GB, Q6_K 23.86GB",
+      "mmproj": "mmproj-Swift-1.5-Qwen3.8-27B-F16.gguf (0.93GB)",
+      "downloaded": {"Q5_K_M": "downloading", "Q6_K": "downloading", "mmproj": "queued"}
+    },
+    "ukisai/Swift-Qwen3.8-27B-GGUF": {
+      "role": "REGRESSION CONTROL (Swift 1.0, 早退候选)",
+      "revision_sha": "f8b396d5df72de36889bd572f3117c2bf70e4911",
+      "last_modified": "2026-09-24T16:17:02Z",
+      "license": "other (Swift Open License, verifying)",
+      "downloads_count": 181565,
+      "quants": "F16 shards + full ladder + Q4_0/Q4_1; Q4_K_M 18.02GB",
+      "downloaded": {"Q4_K_M": "downloading"}
+    }
+  },
+  "fair_quant_pairs": {"ISTA IQ3_S-mtp vs Swift1.5-GSQ IQ3_S-mtp": "same ISTA allocation lineage, 12.99GB vs 12.12GB"},
+  "open_questions": [
+    "Swift 1.5 normal-GGUF repo LICENSE text fetch pending (download lane2)",
+    "Swift 1.0 README pending",
+    "llama.cpp support: qwen35 arch + GSQ tensor types must load on b10715 AND chosen runtime (verified in Stage-1)"
+  ]
+}

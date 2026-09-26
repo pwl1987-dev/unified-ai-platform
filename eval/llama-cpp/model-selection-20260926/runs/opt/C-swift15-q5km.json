@@ -1,0 +1,401 @@
+{
+ "model": "C-swift15-q5km",
+ "path": "/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf",
+ "ctx": 262144,
+ "configs": [
+  {
+   "id": "kv-f16_fa-on",
+   "ctx": 131072,
+   "health_s": 6.6,
+   "vram_after_load": {
+    "vram_used_mib": 30858,
+    "gpu_util_pct": 0,
+    "power_w": 73.27,
+    "temp_c": 32,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15572
+     },
+     {
+      "vram_used_mib": 15286
+     }
+    ]
+   },
+   "correctness": {
+    "needle128k": 1,
+    "needle128k_wall": 44.684,
+    "json_ok": 1,
+    "coding_lite": 1
+   },
+   "ladder": [
+    {
+     "ctx": 32768,
+     "n": 28590,
+     "ttft_s": 6.865,
+     "wall_s": 11.147,
+     "ptps": 4286.69,
+     "dtps": 37.14
+    },
+    {
+     "ctx": 131072,
+     "n": 126924,
+     "ttft_s": 34.201,
+     "wall_s": 39.598,
+     "ptps": 2924.37,
+     "dtps": 29.48
+    }
+   ],
+   "vram_peak": {
+    "vram_used_mib": 30942,
+    "gpu_util_pct": 48,
+    "power_w": 202.42,
+    "temp_c": 52,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15614
+     },
+     {
+      "vram_used_mib": 15328
+     }
+    ]
+   },
+   "spec_lines": []
+  },
+  {
+   "id": "kv-q8_fa-on",
+   "ctx": 262144,
+   "health_s": 7.0,
+   "vram_after_load": {
+    "vram_used_mib": 35302,
+    "gpu_util_pct": 0,
+    "power_w": 74.62,
+    "temp_c": 44,
+    "per_gpu": [
+     {
+      "vram_used_mib": 17794
+     },
+     {
+      "vram_used_mib": 17508
+     }
+    ]
+   },
+   "correctness": {
+    "needle128k": 1,
+    "needle128k_wall": 45.979,
+    "json_ok": 1,
+    "coding_lite": 1
+   },
+   "ladder": [
+    {
+     "ctx": 32768,
+     "n": 28665,
+     "ttft_s": 7.127,
+     "wall_s": 11.426,
+     "ptps": 4135.81,
+     "dtps": 36.99
+    },
+    {
+     "ctx": 131072,
+     "n": 126582,
+     "ttft_s": 35.297,
+     "wall_s": 40.455,
+     "ptps": 2820.7,
+     "dtps": 29.48
+    },
+    {
+     "ctx": 262144,
+     "n": 256805,
+     "ttft_s": 77.497,
+     "wall_s": 84.328,
+     "ptps": 1703.85,
+     "dtps": 23.3
+    }
+   ],
+   "vram_peak": {
+    "vram_used_mib": 35386,
+    "gpu_util_pct": 31,
+    "power_w": 249.68,
+    "temp_c": 57,
+    "per_gpu": [
+     {
+      "vram_used_mib": 17836
+     },
+     {
+      "vram_used_mib": 17550
+     }
+    ]
+   },
+   "spec_lines": []
+  },
+  {
+   "id": "kv-q4_fa-on",
+   "ctx": 262144,
+   "health_s": 6.7,
+   "vram_after_load": {
+    "vram_used_mib": 31206,
+    "gpu_util_pct": 0,
+    "power_w": 74.71,
+    "temp_c": 48,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15746
+     },
+     {
+      "vram_used_mib": 15460
+     }
+    ]
+   },
+   "correctness": {
+    "needle128k": 1,
+    "needle128k_wall": 45.913,
+    "json_ok": 1,
+    "coding_lite": 1
+   },
+   "ladder": [
+    {
+     "ctx": 32768,
+     "n": 28665,
+     "ttft_s": 7.103,
+     "wall_s": 11.425,
+     "ptps": 4147.04,
+     "dtps": 36.8
+    },
+    {
+     "ctx": 131072,
+     "n": 126582,
+     "ttft_s": 35.031,
+     "wall_s": 40.447,
+     "ptps": 2842.61,
+     "dtps": 29.01
+    },
+    {
+     "ctx": 262144,
+     "n": 256805,
+     "ttft_s": 76.643,
+     "wall_s": 83.65,
+     "ptps": 1722.49,
+     "dtps": 22.71
+    }
+   ],
+   "vram_peak": {
+    "vram_used_mib": 31290,
+    "gpu_util_pct": 43,
+    "power_w": 254.84,
+    "temp_c": 54,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15788
+     },
+     {
+      "vram_used_mib": 15502
+     }
+    ]
+   },
+   "spec_lines": []
+  },
+  {
+   "id": "kv-q4_fa-off",
+   "ctx": 131072,
+   "error": "server opt-C-swift15-q5km-kv-q4_fa-off did not become healthy; status='Exited (1) 19 minutes ago'; logs:\n",
+   "logs_tail": "0.00.122.274 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)\n0.00.122.430 W srv  llama_server: -----------------\n0.00.122.432 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set\n0.00.122.433 W srv  llama_server: this can be a security risk (cross-origin attacks)\n0.00.122.433 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655\n0.00.122.434 W srv  llama_server: -----------------\n0.00.123.799 I srv    load_model: loading model '/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf'\n0.00.811.041 E llama_init_from_model: quantized V cache requires flash_attn to be enabled\n0.00.860.019 E common_fit_params: encountered an error while trying to fit params to free device memory: failed to create llama_context from model\n0.01.309.935 W model has unused tensor blk.64.attn_norm.weight (size = 20480 bytes) -- ignoring\n0.01.309.943 W model has unused tensor blk.64.post_attention_norm.weight (size = 20480 bytes) -- ignoring\n0.01.309.953 W model has unused tensor blk.64.attn_q.weight (size = 35389440 bytes) -- ignoring\n0.01.309.957 W model has unused tensor blk.64.attn_k.weight (size = 2949120 bytes) -- ignoring\n0.01.309.962 W model has unused tensor blk.64.attn_v.weight (size = 2949120 bytes) -- ignoring\n0.01.309.975 W model has unused tensor blk.64.attn_output.weight (size = 17694720 bytes) -- ignoring\n0.01.309.981 W model has unused tensor blk.64.attn_q_norm.weight (size = 1024 bytes) -- ignoring\n0.01.309.985 W model has unused tensor blk.64.attn_k_norm.weight (size = 1024 bytes) -- ignoring\n0.01.309.988 W model has unused tensor blk.64.ffn_gate.weight (size = 50135040 bytes) -- ignoring\n0.01.309.992 W model has unused tensor blk.64.ffn_down.weight (size = 50135040 bytes) -- ignoring\n0.01.309.998 W model has unused tensor blk.64.ffn_up.weight (size = 50135040 bytes) -- ignoring\n0.01.310.004 W model has unused tensor blk.64.nextn.eh_proj.weight (size = 29491200 bytes) -- ignoring\n0.01.310.009 W model has unused tensor blk.64.nextn.enorm.weight (size = 20480 bytes) -- ignoring\n0.01.310.014 W model has unused tensor blk.64.nextn.hnorm.weight (size = 20480 bytes) -- ignoring\n0.01.310.026 W model has unused tensor blk.64.nextn.shared_head_norm.weight (size = 20480 bytes) -- ignoring\n0.03.591.090 E llama_init_from_model: quantized V cache requires flash_attn to be enabled\n0.03.591.096 E cmn  common_init_: failed to create context with model '/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf'\n0.03.591.099 E cmn  common_init_: failed to create context with model '/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf'\n0.03.591.103 E srv    load_model: failed to create_context with model '/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf'\n0.03.591.105 I srv    operator(): operator(): cleaning up before exit...\n0.03.598.409 E srv  llama_server: exiting due to model loading error\n"
+  },
+  {
+   "id": "kv-q4_mtp",
+   "ctx": 262144,
+   "health_s": 8.4,
+   "vram_after_load": {
+    "vram_used_mib": 35378,
+    "gpu_util_pct": 0,
+    "power_w": 64.05,
+    "temp_c": 32,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15986
+     },
+     {
+      "vram_used_mib": 19392
+     }
+    ]
+   },
+   "correctness": {
+    "needle128k": 1,
+    "needle128k_wall": 78.1,
+    "json_ok": 1,
+    "coding_lite": 1
+   },
+   "ladder": [
+    {
+     "ctx": 32768,
+     "n": 28665,
+     "ttft_s": 12.425,
+     "wall_s": 14.889,
+     "ptps": 2384.25,
+     "dtps": 64.57
+    },
+    {
+     "ctx": 131072,
+     "n": 126582,
+     "ttft_s": 62.97,
+     "wall_s": 66.804,
+     "ptps": 1576.88,
+     "dtps": 41.5
+    },
+    {
+     "ctx": 262144,
+     "n": 256805,
+     "ttft_s": 138.297,
+     "wall_s": 143.435,
+     "ptps": 952.1,
+     "dtps": 30.98
+    }
+   ],
+   "vram_peak": {
+    "vram_used_mib": 35484,
+    "gpu_util_pct": 35,
+    "power_w": 191.73,
+    "temp_c": 47,
+    "per_gpu": [
+     {
+      "vram_used_mib": 16028
+     },
+     {
+      "vram_used_mib": 19456
+     }
+    ]
+   },
+   "spec_lines": []
+  },
+  {
+   "id": "kv-q4_dflash",
+   "ctx": 262144,
+   "health_s": 6.4,
+   "vram_after_load": {
+    "vram_used_mib": 35072,
+    "gpu_util_pct": 0,
+    "power_w": 72.16,
+    "temp_c": 43,
+    "per_gpu": [
+     {
+      "vram_used_mib": 17378
+     },
+     {
+      "vram_used_mib": 17694
+     }
+    ]
+   },
+   "correctness": {
+    "needle128k": 1,
+    "needle128k_wall": 80.989,
+    "json_ok": 1,
+    "coding_lite": 1
+   },
+   "ladder": [
+    {
+     "ctx": 32768,
+     "n": 28665,
+     "ttft_s": 13.739,
+     "wall_s": 16.46,
+     "ptps": 2150.41,
+     "dtps": 58.46
+    },
+    {
+     "ctx": 131072,
+     "n": 126582,
+     "ttft_s": 67.358,
+     "wall_s": 70.842,
+     "ptps": 1477.73,
+     "dtps": 44.82
+    },
+    {
+     "ctx": 262144,
+     "n": 256805,
+     "ttft_s": 139.645,
+     "wall_s": 145.934,
+     "ptps": 942.86,
+     "dtps": 25.31
+    }
+   ],
+   "vram_peak": {
+    "vram_used_mib": 35316,
+    "gpu_util_pct": 33,
+    "power_w": 198.12,
+    "temp_c": 49,
+    "per_gpu": [
+     {
+      "vram_used_mib": 17476
+     },
+     {
+      "vram_used_mib": 17840
+     }
+    ]
+   },
+   "spec_lines": []
+  },
+  {
+   "id": "kv-q4_ngram",
+   "ctx": 262144,
+   "health_s": 6.7,
+   "vram_after_load": {
+    "vram_used_mib": 31206,
+    "gpu_util_pct": 0,
+    "power_w": 73.93,
+    "temp_c": 44,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15746
+     },
+     {
+      "vram_used_mib": 15460
+     }
+    ]
+   },
+   "correctness": {
+    "needle128k": 1,
+    "needle128k_wall": 45.478,
+    "json_ok": 1,
+    "coding_lite": 1
+   },
+   "ladder": [
+    {
+     "ctx": 32768,
+     "n": 28665,
+     "ttft_s": 7.324,
+     "wall_s": 12.863,
+     "ptps": 4144.66,
+     "dtps": 28.71
+    },
+    {
+     "ctx": 131072,
+     "n": 126582,
+     "ttft_s": 35.068,
+     "wall_s": 41.856,
+     "ptps": 2839.74,
+     "dtps": 23.14
+    },
+    {
+     "ctx": 262144,
+     "n": 256805,
+     "ttft_s": 76.832,
+     "wall_s": 85.668,
+     "ptps": 1718.25,
+     "dtps": 18.01
+    }
+   ],
+   "vram_peak": {
+    "vram_used_mib": 31290,
+    "gpu_util_pct": 36,
+    "power_w": 224.52,
+    "temp_c": 56,
+    "per_gpu": [
+     {
+      "vram_used_mib": 15788
+     },
+     {
+      "vram_used_mib": 15502
+     }
+    ]
+   },
+   "spec_lines": []
+  }
+ ]
+}

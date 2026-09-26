@@ -1,0 +1,248 @@
+{
+ "model": "C-swift15-q5km",
+ "path": "/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf",
+ "repo": "ukisai/Swift-1.5-Qwen3.8-27B-GGUF@a161446",
+ "quant": "Q5_K_M 5.5bpw",
+ "role": "QUALITY/CODING PRIMARY",
+ "image": "llama-server:cuda12.4-b10715",
+ "gpu": "4",
+ "ctx": 65536,
+ "probes": {
+  "zh": {
+   "key": "zh",
+   "pass": 1,
+   "han_chars": 145,
+   "loop": 0,
+   "content_empty": 0,
+   "reasoning_chars": 586,
+   "text_head": "KV cache 是大模型逐字生成时，把已经算过的每个 token 的 Key 和 Value 向量存下来，避免每生成一个新 token 都重算历史注意力。因为 Transformer 的注意力需要当前 token 与前面所有 token 的 K/V 做计算，缓存后推理更快。但它会随序列长度、层数、",
+   "usage": {
+    "completion_tokens": 498,
+    "prompt_tokens": 82,
+    "total_tokens": 580,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   },
+   "wall_s": 12.7
+  },
+  "zh_nothink": {
+   "key": "zh_nothink",
+   "pass": 1,
+   "han_chars": 159,
+   "loop": 0,
+   "content_empty": 0,
+   "reasoning_chars": 0,
+   "text_head": "KV Cache 是大语言模型生成文本时的“记忆库”。每生成一个新词，模型需回顾之前所有词的键（Key）和值（Value）向量，这些历史数据会被缓存下来，避免重复计算。随着对话变长，缓存占用显存巨大。\n\n量化则是将这些高精度的浮点数（如 FP16）压缩为低精度格式（如 INT8 或 INT4）。因为",
+   "usage": {
+    "completion_tokens": 140,
+    "prompt_tokens": 42,
+    "total_tokens": 182,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "wall_s": 4.059
+  },
+  "coding_roman": {
+   "pass": 1,
+   "detail": "ALL_OK",
+   "wall_s": 6.318,
+   "usage": {
+    "completion_tokens": 236,
+    "prompt_tokens": 95,
+    "total_tokens": 331,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 270
+  },
+  "json_strict": {
+   "pass": 1,
+   "err": "",
+   "text_head": "{\"ok\":true,\"count\":7,\"items\":[\"x\",\"y\",\"z\"],\"nested\":{\"flag\":false}}",
+   "wall_s": 3.744
+  },
+  "tool_call": {
+   "pass": 1,
+   "detail": {
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "get_weather",
+       "arguments": "{\"city\":\"北京\",\"unit\":\"c\"}"
+      },
+      "id": "BB9sm2viCHGCuHHIgGy1uOVL3UlovPkA"
+     }
+    ]
+   }
+  },
+  "math": {
+   "pass": 1,
+   "expected": 4193,
+   "nums_seen": [
+    "4193"
+   ],
+   "reasoning_chars": 399,
+   "usage": {
+    "completion_tokens": 179,
+    "prompt_tokens": 103,
+    "total_tokens": 282,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "wall_s": 4.977
+  },
+  "needle_32k_d50": {
+   "pass": 1,
+   "prompt_tokens": 31700,
+   "depth": 0.5,
+   "ttft_s": 12.882,
+   "wall_s": 15.408,
+   "answer_head": "X7K9-42ZQ",
+   "usage": {
+    "completion_tokens": 93,
+    "prompt_tokens": 31791,
+    "total_tokens": 31884,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   }
+  },
+  "needle_64k_d50": {
+   "pass": 1,
+   "prompt_tokens": 63422,
+   "depth": 0.5,
+   "ttft_s": 29.037,
+   "wall_s": 31.543,
+   "answer_head": "X7K9-42ZQ",
+   "usage": {
+    "completion_tokens": 85,
+    "prompt_tokens": 63513,
+    "total_tokens": 63598,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   }
+  }
+ },
+ "restart": [
+  {
+   "cycle": 1,
+   "health_s": 4.5,
+   "sanity_ok": 1,
+   "vram": {
+    "vram_used_mib": 21086,
+    "gpu_util_pct": 97,
+    "power_w": 289.29,
+    "temp_c": 57
+   }
+  },
+  {
+   "cycle": 2,
+   "health_s": 4.5,
+   "sanity_ok": 1,
+   "vram": {
+    "vram_used_mib": 21086,
+    "gpu_util_pct": 97,
+    "power_w": 292.37,
+    "temp_c": 56
+   }
+  },
+  {
+   "cycle": 3,
+   "health_s": 4.5,
+   "sanity_ok": 1,
+   "vram": {
+    "vram_used_mib": 21086,
+    "gpu_util_pct": 97,
+    "power_w": 283.07,
+    "temp_c": 55
+   }
+  }
+ ],
+ "tps": {
+  "prompt_tps": [
+   156.43,
+   162.81,
+   254.82,
+   371.14,
+   210.47,
+   1041.66,
+   399.0,
+   2525.73,
+   2257.29
+  ],
+  "decode_tps": [
+   38.61,
+   39.93,
+   39.96,
+   39.92,
+   39.93,
+   39.77,
+   39.91,
+   36.43,
+   33.54
+  ],
+  "prompt_tokens": [
+   53,
+   40,
+   42,
+   95,
+   51,
+   326,
+   103,
+   31749,
+   63471
+  ],
+  "gen_tokens": [
+   16,
+   498,
+   140,
+   236,
+   129,
+   67,
+   179,
+   93,
+   85
+  ],
+  "prompt_ms": [
+   338.81,
+   245.69,
+   164.82,
+   255.97,
+   242.32,
+   312.96,
+   258.14,
+   12570.25,
+   28118.25
+  ],
+  "eval_ms": [
+   388.54,
+   12446.35,
+   3478.64,
+   5886.33,
+   3206.0,
+   1659.4,
+   4460.24,
+   2525.08,
+   2504.52
+  ]
+ },
+ "first_health_s": 4.5,
+ "vram_after_load": {
+  "vram_used_mib": 21086,
+  "gpu_util_pct": 84,
+  "power_w": 125.85,
+  "temp_c": 42
+ },
+ "vram_peak": {
+  "vram_used_mib": 21092,
+  "gpu_util_pct": 98,
+  "power_w": 365.46,
+  "temp_c": 62
+ }
+}

@@ -1,0 +1,216 @@
+{
+ "model": "B-swift15-gsq-iq3s-mtp",
+ "ctx": 131072,
+ "image": "llama-server:cuda12.4-b10715",
+ "tasks": [
+  {
+   "part": "real-repo",
+   "q": "生产 llama-server 容器（qwen27b）加载的 GGUF 文件名是什么？只输出文件名。",
+   "pass": 0,
+   "answer": "Qwen3.8-27B-Heretic-Ara-iq4_xs-3.0-mtp.gguf",
+   "wall_s": 48.164,
+   "reasoning_chars": 312
+  },
+  {
+   "part": "real-repo",
+   "q": "生产 llama-server 的 KV cache 的 K 和 V 分别用的什么量化类型？按 'K=x,V=y' 格式输出。",
+   "pass": 1,
+   "answer": "K=q4_0,V=q4_0",
+   "wall_s": 13.704,
+   "reasoning_chars": 861
+  },
+  {
+   "part": "real-repo",
+   "q": "OpenResty LB 的路由逻辑在哪个 lua 文件？只输出文件名。",
+   "pass": 1,
+   "answer": "route.lua",
+   "wall_s": 6.169,
+   "reasoning_chars": 422
+  },
+  {
+   "part": "real-repo",
+   "q": "eval/spec_sandbox.sh 里 IMG 变量指定的镜像 tag 是什么？只输出 tag。",
+   "pass": 0,
+   "answer": "",
+   "wall_s": 17.649,
+   "reasoning_chars": 1439
+  },
+  {
+   "part": "real-repo",
+   "q": "本仓库脱敏替换表一共有几条规则？只输出数字。",
+   "pass": 1,
+   "answer": "8",
+   "wall_s": 4.51,
+   "reasoning_chars": 241
+  },
+  {
+   "part": "real-repo",
+   "q": "生产栈里 OpenResty 容器名和监控容器名分别是什么？按 'lb=X,mon=Y' 输出。",
+   "pass": 0,
+   "answer": "",
+   "wall_s": 17.635,
+   "reasoning_chars": 1397
+  },
+  {
+   "part": "real-repo",
+   "q": "docker-compose.yml 中 llama-server 的 --spec-type 是什么？只输出值。",
+   "pass": 0,
+   "answer": "draft-mtp",
+   "wall_s": 16.872,
+   "reasoning_chars": 2435
+  },
+  {
+   "part": "real-repo",
+   "q": "生产 llama-server 的草稿模型（-md）文件名是什么？只输出文件名。",
+   "pass": 0,
+   "answer": "",
+   "wall_s": 17.346,
+   "reasoning_chars": 1328
+  },
+  {
+   "part": "synth-locate",
+   "q": "这个工程里 calculate_retry_backoff 定义在哪个文件？只输出文件路径。",
+   "pass": 1,
+   "answer": "src/utils/backoff.py",
+   "wall_s": 13.008
+  },
+  {
+   "part": "synth-locate",
+   "q": "calculate_retry_backoff 的规格：attempt=1 应返回 base_ms 本身。当前实现有什么",
+   "pass": 1,
+   "answer": "当前 bug 在 `src/utils/backoff.py`：\n\n```python\nreturn base_ms * (2 ** attempt)\n```\n\n按规格 `attempt=1` 应返回 `base_ms` 本身，但当前实现会返回 `base_ms * 2`，例如 `base_ms=1",
+   "wall_s": 7.556
+  },
+  {
+   "part": "synth-locate",
+   "q": "src/pool.py 导入的配置键与 config/settings.py 中实际定义的键不一致。分别指出导入的键名和",
+   "pass": 1,
+   "answer": "imported=MAX_CONNECTIONS, defined=MAX_CONN",
+   "wall_s": 3.332
+  },
+  {
+   "part": "synth-locate",
+   "q": "列出 mod_00 到 mod_05 中函数名前缀为 dispatch 的函数名（带下标）。",
+   "pass": 1,
+   "answer": "- `dispatch_0_5`\n- `dispatch_1_4`\n- `dispatch_2_3`\n- `dispatch_3_2`\n- `dispatch_4_1`\n- `dispatch_5_0`",
+   "wall_s": 5.883
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 14700,
+  "gpu_util_pct": 0,
+  "power_w": 72.63,
+  "temp_c": 29
+ },
+ "repo_doc_tokens": 92955,
+ "synth_doc_tokens": 27143,
+ "patch": {
+  "pass": 1,
+  "detail": "PATCH_OK",
+  "wall_s": 3.62
+ },
+ "tps": {
+  "prompt_tps": [
+   261.08,
+   2150.98,
+   1296.73,
+   1159.88,
+   854.39,
+   1147.82,
+   871.79,
+   1140.26,
+   1157.26,
+   2673.44,
+   1823.95,
+   1777.96,
+   1762.98,
+   504.17
+  ],
+  "decode_tps": [
+   56.22,
+   42.82,
+   42.9,
+   42.82,
+   42.86,
+   42.85,
+   42.84,
+   42.84,
+   42.81,
+   53.98,
+   54.09,
+   54.11,
+   54.07,
+   60.58
+  ],
+  "prompt_tokens": [
+   53,
+   92989,
+   1031,
+   1011,
+   1013,
+   1007,
+   1020,
+   1012,
+   1011,
+   27171,
+   1055,
+   1016,
+   1002,
+   106
+  ],
+  "gen_tokens": [
+   16,
+   202,
+   548,
+   221,
+   700,
+   150,
+   700,
+   679,
+   700,
+   83,
+   377,
+   149,
+   287,
+   167
+  ],
+  "prompt_ms": [
+   203.0,
+   43230.89,
+   795.08,
+   871.64,
+   1185.64,
+   877.31,
+   1170.01,
+   887.52,
+   873.62,
+   10163.31,
+   578.42,
+   571.44,
+   568.36,
+   210.25
+  ],
+  "eval_ms": [
+   266.82,
+   4694.16,
+   12750.5,
+   5137.87,
+   16308.9,
+   3477.28,
+   16317.78,
+   15826.91,
+   16326.89,
+   1519.0,
+   6950.97,
+   2735.09,
+   5288.97,
+   2740.32
+  ]
+ },
+ "vram_peak": {
+  "vram_used_mib": 14920,
+  "gpu_util_pct": 96,
+  "power_w": 381.19,
+  "temp_c": 62
+ }
+}

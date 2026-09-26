@@ -1,0 +1,38 @@
+{
+ "model": "A-ista-gsq-iq3s-mtp",
+ "mmproj_mode": "cpu",
+ "cases": [
+  {
+   "id": "terminal_shot",
+   "pass": 1,
+   "ttft_s": 1.086,
+   "wall_s": 7.109,
+   "img_kb": 7.3,
+   "answer_head": "这张终端截图里共有 **4 行**内容，分别是：\n\n1. `$ llama-server --version`\n2. `version: 0.3.0-dev (build 10715)`\n3. `CUDA devices: 1 comput"
+  },
+  {
+   "id": "table_shot",
+   "pass": 1,
+   "ttft_s": 1.133,
+   "wall_s": 2.619,
+   "img_kb": 6.7,
+   "answer_head": "处于 **STOPPED** 状态的服务是 **qwen27b-mon**，其端口为 **9000**。"
+  },
+  {
+   "id": "flow_diagram",
+   "pass": 0,
+   "ttft_s": 1.204,
+   "wall_s": 11.12,
+   "img_kb": 3.2,
+   "answer_head": "**请求路径：**\n\n`Client` —(HTTP)→ `OpenResty` → `llama.cpp` 实例\n\n- 第一步：Client 通过 **HTTP** 把请求发给 **OpenResty**（图中带 \"HTTP\" 标注的箭头"
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 12468,
+  "gpu_util_pct": 81,
+  "power_w": 384.72,
+  "temp_c": 58
+ },
+ "ram_note": "mmproj on CPU keeps VRAM for LM+KV; RSS impact visible in docker stats",
+ "container_mem": "3.026GiB / 503.5GiB"
+}

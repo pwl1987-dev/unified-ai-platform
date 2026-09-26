@@ -1,0 +1,230 @@
+{
+ "model": "A-ista-gsq-iq3s-mtp",
+ "path": "/labmodels/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf",
+ "repo": "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF@d562806",
+ "quant": "GSQ-RCO IQ3_S(-mtp) 3.50bpw",
+ "role": "BASE CONTROL",
+ "image": "llama-server:cuda12.4-b10715",
+ "gpu": "4",
+ "ctx": 65536,
+ "probes": {
+  "zh": {
+   "key": "zh",
+   "pass": 0,
+   "han_chars": 0,
+   "loop": 0,
+   "content_empty": 1,
+   "reasoning_chars": 4229,
+   "text_head": "",
+   "usage": {
+    "completion_tokens": 3072,
+    "prompt_tokens": 82,
+    "total_tokens": 3154,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   },
+   "wall_s": 51.161
+  },
+  "zh_nothink": {
+   "key": "zh_nothink",
+   "pass": 1,
+   "han_chars": 152,
+   "loop": 0,
+   "content_empty": 0,
+   "reasoning_chars": 0,
+   "text_head": "KV Cache 是大语言模型生成文本时，为了加速计算而缓存的键值对矩阵。随着对话变长，这些缓存数据会迅速膨胀，成为显存占用的主要瓶颈。\n\n量化技术通过降低数据的精度（例如从 16 位浮点降至 8 位或 4 位整数），在几乎不损失模型效果的前提下，大幅压缩了每个数值所占的存储空间。这意味着同样的显存",
+   "usage": {
+    "completion_tokens": 111,
+    "prompt_tokens": 42,
+    "total_tokens": 153,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "wall_s": 2.472
+  },
+  "coding_roman": {
+   "pass": 1,
+   "detail": "ALL_OK",
+   "wall_s": 6.488,
+   "usage": {
+    "completion_tokens": 368,
+    "prompt_tokens": 95,
+    "total_tokens": 463,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "reasoning_chars": 754
+  },
+  "json_strict": {
+   "pass": 1,
+   "err": "",
+   "text_head": "{\"ok\": true, \"count\": 7, \"items\": [\"x\",\"y\",\"z\"], \"nested\": {\"flag\": false}}",
+   "wall_s": 2.966
+  },
+  "tool_call": {
+   "pass": 1,
+   "detail": {
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "get_weather",
+       "arguments": "{\"city\":\"北京\",\"unit\":\"c\"}"
+      },
+      "id": "4rsNm8532VhdVPA7Rdh3ovxVExrTJo4D"
+     }
+    ]
+   }
+  },
+  "math": {
+   "pass": 1,
+   "expected": 4193,
+   "nums_seen": [
+    "4193"
+   ],
+   "reasoning_chars": 434,
+   "usage": {
+    "completion_tokens": 207,
+    "prompt_tokens": 103,
+    "total_tokens": 310,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "wall_s": 3.924
+  },
+  "needle_32k_d50": {
+   "pass": 1,
+   "prompt_tokens": 32737,
+   "depth": 0.5,
+   "ttft_s": 13.022,
+   "wall_s": 14.914,
+   "answer_head": "X7K9-42ZQ",
+   "usage": {
+    "completion_tokens": 100,
+    "prompt_tokens": 32828,
+    "total_tokens": 32928,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   }
+  },
+  "needle_64k_d50": {
+   "pass": 0,
+   "error": "Client error '400 Bad Request' for url 'http://127.0.0.1:18111/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400"
+  }
+ },
+ "restart": [
+  {
+   "cycle": 1,
+   "health_s": 4.5,
+   "sanity_ok": 1,
+   "vram": {
+    "vram_used_mib": 13194,
+    "gpu_util_pct": 96,
+    "power_w": 226.46,
+    "temp_c": 58
+   }
+  },
+  {
+   "cycle": 2,
+   "health_s": 4.5,
+   "sanity_ok": 1,
+   "vram": {
+    "vram_used_mib": 13194,
+    "gpu_util_pct": 94,
+    "power_w": 212.25,
+    "temp_c": 57
+   }
+  },
+  {
+   "cycle": 3,
+   "health_s": 4.5,
+   "sanity_ok": 1,
+   "vram": {
+    "vram_used_mib": 13194,
+    "gpu_util_pct": 96,
+    "power_w": 232.99,
+    "temp_c": 56
+   }
+  }
+ ],
+ "tps": {
+  "prompt_tps": [
+   171.95,
+   163.68,
+   262.08,
+   382.57,
+   213.98,
+   1027.78,
+   410.61,
+   2580.34
+  ],
+  "decode_tps": [
+   55.28,
+   60.32,
+   60.4,
+   60.56,
+   60.51,
+   60.02,
+   60.39,
+   52.35
+  ],
+  "prompt_tokens": [
+   53,
+   40,
+   42,
+   95,
+   51,
+   326,
+   103,
+   32786
+  ],
+  "gen_tokens": [
+   16,
+   3072,
+   111,
+   368,
+   150,
+   62,
+   207,
+   100
+  ],
+  "prompt_ms": [
+   308.23,
+   244.38,
+   160.25,
+   248.32,
+   238.34,
+   317.19,
+   250.85,
+   12706.08
+  ],
+  "eval_ms": [
+   271.37,
+   50908.43,
+   1821.12,
+   6060.44,
+   2462.28,
+   1016.3,
+   3411.28,
+   1891.27
+  ]
+ },
+ "first_health_s": 4.5,
+ "vram_after_load": {
+  "vram_used_mib": 13194,
+  "gpu_util_pct": 87,
+  "power_w": 114.67,
+  "temp_c": 40
+ },
+ "vram_peak": {
+  "vram_used_mib": 13220,
+  "gpu_util_pct": 0,
+  "power_w": 69.66,
+  "temp_c": 48
+ }
+}

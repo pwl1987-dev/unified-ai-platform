@@ -1,0 +1,30 @@
+# llama-cpp-model-lab — isolated test runtime for model-selection-2026-09
+# Parameterized single server; driven by env: LAB_IMAGE/LAB_NAME/LAB_PORT/LAB_GPU/LAB_CMD
+# Prod (/data/models) is mounted READ-ONLY. Prod ports untouched (test ports 18101+).
+# No docker socket, no privileged, restart=no, removed after each round by harness.
+networks:
+  labnet:
+    external: true
+    name: llama-cpp-model-lab
+
+services:
+  server:
+    image: ${LAB_IMAGE}
+    container_name: ${LAB_NAME}
+    ports:
+      - "127.0.0.1:${LAB_PORT}:8080"
+    volumes:
+      - /data/models:/prodmodels:ro
+      - /data/tasks/qwen-model-lab/ops/llama-cpp-model-lab/models:/labmodels:ro
+      - /data/tasks/qwen-model-lab/benchmarks/llama-cpp/model-selection-2026-09:/evidence:rw
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              device_ids: ["${LAB_GPU}"]
+    restart: "no"
+    command: ${LAB_CMD}
+    networks:
+      - labnet

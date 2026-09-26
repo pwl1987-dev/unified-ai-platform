@@ -1,0 +1,151 @@
+{
+ "model": "B-swift15-gsq-iq3s-mtp",
+ "cases": [
+  {
+   "id": "strict_flat",
+   "wall_s": 1.285,
+   "reasoning_chars": 100,
+   "pass": 1,
+   "schema_ok": 1,
+   "no_prose_ok": 1,
+   "head": "{\"ok\":true,\"n\":42,\"tags\":[\"a\",\"b\"]}"
+  },
+  {
+   "id": "nested_deep",
+   "wall_s": 5.357,
+   "reasoning_chars": 378,
+   "pass": 0,
+   "schema_ok": 0,
+   "err": "schema: 'name' is a required property\n\nFailed validating 'required' in schema:\n    {'type': 'object',\n     'properties': {'name'",
+   "head": "{\n  \"姓名\": \"张伟\",\n  \"年龄\": 34,\n  \"地址\": {\n    \"省\": \"山东\",\n    \"市\": \"临沂\",\n    \"街道\": \"兰山路人行\"\n  },\n  \"联系人\": [\n    {\n      \"姓名\": "
+  },
+  {
+   "id": "enum_array_nullable",
+   "wall_s": 2.303,
+   "reasoning_chars": 266,
+   "pass": 1,
+   "schema_ok": 1,
+   "head": "{\"level\":\"warn\",\"items\":[1,2,3],\"note\":null,\"ratio\":0.5}"
+  },
+  {
+   "id": "optional_field",
+   "wall_s": 1.566,
+   "reasoning_chars": 147,
+   "pass": 1,
+   "schema_ok": 1,
+   "head": "{\"id\":\"x1\",\"status\":\"done\"}"
+  },
+  {
+   "id": "markdown_fenced",
+   "wall_s": 1.723,
+   "reasoning_chars": 288,
+   "pass": 1,
+   "schema_ok": 1,
+   "no_prose_ok": 1,
+   "head": "```json\n{\"a\":1}\n```"
+  },
+  {
+   "id": "xml_like",
+   "wall_s": 1.673,
+   "reasoning_chars": 121,
+   "pass": 1,
+   "no_prose_ok": 1,
+   "head": "<result><code>200</code><items>3</items></result>"
+  },
+  {
+   "id": "big_array_50",
+   "wall_s": 13.24,
+   "reasoning_chars": 235,
+   "pass": 1,
+   "schema_ok": 1,
+   "head": "[\n  {\"id\": 1, \"flag\": true},\n  {\"id\": 2, \"flag\": true},\n  {\"id\": 3, \"flag\": true},\n  {\"id\": 4, \"flag\": true},\n  {\"id\": 5"
+  }
+ ],
+ "nested_tool_args": {
+  "pass": 1,
+  "raw": [
+   {
+    "type": "function",
+    "function": {
+     "name": "deploy_stack",
+     "arguments": "{\"name\":\"api\",\"replicas\":3,\"resources\":{\"cpu\": 1.5, \"mem_gb\": 8},\"env\":{\"LOG_LEVEL\": \"debug\", \"TZ\": \"Asia/Shanghai\"}}"
+    },
+    "id": "SNmj0JceNZIUmclArbd2pb5gL5srkCRf"
+   }
+  ]
+ },
+ "score": {
+  "cases_pass": 6,
+  "n": 7,
+  "json_valid": 5,
+  "nested_tool": 1
+ },
+ "tps": {
+  "prompt_tps": [
+   254.76,
+   254.48,
+   606.13,
+   388.29,
+   307.25,
+   257.26,
+   302.75,
+   277.68,
+   1717.66
+  ],
+  "decode_tps": [
+   56.19,
+   60.76,
+   60.85,
+   60.68,
+   60.79,
+   60.87,
+   60.86,
+   60.83,
+   60.71
+  ],
+  "prompt_tokens": [
+   53,
+   36,
+   93,
+   58,
+   44,
+   36,
+   43,
+   39,
+   414
+  ],
+  "gen_tokens": [
+   16,
+   70,
+   309,
+   123,
+   79,
+   89,
+   81,
+   774,
+   181
+  ],
+  "prompt_ms": [
+   208.04,
+   141.46,
+   153.43,
+   149.37,
+   143.21,
+   139.93,
+   142.03,
+   140.45,
+   241.03
+  ],
+  "eval_ms": [
+   266.96,
+   1135.61,
+   5061.65,
+   2010.65,
+   1283.1,
+   1445.67,
+   1314.46,
+   12707.96,
+   2965.01
+  ]
+ }
+}

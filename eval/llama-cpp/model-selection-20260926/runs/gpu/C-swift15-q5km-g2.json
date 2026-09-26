@@ -1,0 +1,42 @@
+{
+ "model": "C-swift15-q5km",
+ "gpus": "4,7",
+ "ctx": 262144,
+ "tensor_split": "--tensor-split 1,1",
+ "health_s": 6.8,
+ "vram_after_load": {
+  "4": 15746,
+  "7": 15460
+ },
+ "ladder": [
+  {
+   "ctx": 32768,
+   "n": 28665,
+   "ttft_s": 7.234,
+   "wall_s": 11.556,
+   "ptps": 4003.03,
+   "dtps": 36.79
+  },
+  {
+   "ctx": 131072,
+   "n": 126582,
+   "ttft_s": 35.067,
+   "wall_s": 40.483,
+   "ptps": 2839.76,
+   "dtps": 29.01
+  },
+  {
+   "ctx": 262144,
+   "n": 256805,
+   "ttft_s": 76.733,
+   "wall_s": 83.74,
+   "ptps": 1720.66,
+   "dtps": 22.71
+  }
+ ],
+ "vram_peak": {
+  "4": 15786,
+  "7": 15502
+ },
+ "offload_line": null
+}

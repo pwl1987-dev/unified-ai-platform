@@ -1,0 +1,29 @@
+{
+ "hard_gates": {
+  "A-ista-gsq-iq3s-mtp": {
+   "128K": 0.944,
+   "256K": 1.0,
+   "zh_default": 0,
+   "json_tool_stage1": null
+  },
+  "B-swift15-gsq-iq3s-mtp": {
+   "128K": 1.0,
+   "256K": 1.0,
+   "zh_default": 1,
+   "json_tool_stage1": null
+  },
+  "C-swift15-q5km": {
+   "128K": 1.0,
+   "256K": 1.0,
+   "zh_default": 1,
+   "json_tool_stage1": null
+  },
+  "D-swift10-q4km": {
+   "128K": null,
+   "256K": null,
+   "zh_default": 1,
+   "json_tool_stage1": null
+  }
+ },
+ "frontier_notes": []
+}

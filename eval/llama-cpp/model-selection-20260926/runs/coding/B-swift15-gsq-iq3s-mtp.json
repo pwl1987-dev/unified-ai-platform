@@ -1,0 +1,214 @@
+{
+ "model": "B-swift15-gsq-iq3s-mtp",
+ "image": "llama-server:cuda12.4-b10715",
+ "ctx": 32768,
+ "tasks": [
+  {
+   "id": "py_merge",
+   "pass": 1,
+   "detail": "ALL_OK",
+   "wall_s": 7.602,
+   "reasoning_chars": 1235,
+   "usage": {
+    "completion_tokens": 454,
+    "prompt_tokens": 95,
+    "total_tokens": 549,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   }
+  },
+  {
+   "id": "py_lru",
+   "pass": 1,
+   "detail": "ALL_OK",
+   "wall_s": 9.059,
+   "usage": {
+    "completion_tokens": 534,
+    "prompt_tokens": 97,
+    "total_tokens": 631,
+    "prompt_tokens_details": {
+     "cached_tokens": 42
+    }
+   }
+  },
+  {
+   "id": "py_bugfix",
+   "pass": 1,
+   "detail": "ALL_OK",
+   "wall_s": 10.906
+  },
+  {
+   "id": "py_regex_log",
+   "pass": 0,
+   "detail": "Traceback (most recent call last):\n  File \"<string>\", line 7, in <module>\n    m=parse('1.2.3.4 - - [26/Sep/2026:08:00:01 +0800] \"GET /a HTTP/1.1\" 200 512');assert m==('1.2.3.4','/a','200'),m;print('ALL_OK')\n      ^^^^^\nNameError: name 'parse' is not defined. Did you mean: 'vars'?",
+   "wall_s": 10.03
+  },
+  {
+   "id": "bash_top3",
+   "pass": 1,
+   "detail": "900 q\n700 m\n500 x | ",
+   "wall_s": 12.954
+  },
+  {
+   "id": "task_sql_monthly",
+   "pass": 0,
+   "error": "[Errno 2] No such file or directory: 'sqlite3'"
+  },
+  {
+   "id": "dockerfile_multistage",
+   "pass": 0,
+   "detail": "",
+   "wall_s": 15.2
+  },
+  {
+   "id": "compose_healthcheck",
+   "pass": 1,
+   "detail": "services:\n  web:\n    image: nginx:alpine\n    ports:\n      - \"8080:80\"\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"-qO-\", \"http://localhost/health\"]\n      interval: 30s\n      timeout: 5s\n      retrie",
+   "wall_s": 5.383
+  },
+  {
+   "id": "git_soft_reset",
+   "pass": 1,
+   "detail": "git reset --soft HEAD~1",
+   "wall_s": 1.694
+  },
+  {
+   "id": "review_div0",
+   "pass": 1,
+   "detail": "BUG: 非空列表时除数误用 `len(xs) - 1`，导致平均值计算错误，且当 `len(xs) == 1` 时会发生除零错误。",
+   "wall_s": 4.388
+  },
+  {
+   "id": "ts_debounce",
+   "pass": 0,
+   "detail": "no block",
+   "wall_s": 15.241,
+   "note": "structural check (no node on host)"
+  },
+  {
+   "id": "c_reverse",
+   "pass": 0,
+   "detail": "/tmp/lc_c_1790388546.c: In function ‘main’:\n/tmp/lc_c_1790388546.c:28:23: warning: implicit declaration of function ‘strcpy’ [-Wimplicit-function-declaration]\n   28 | int main(){char b[16];strcpy(b,\"a",
+   "wall_s": 10.87,
+   "note": "gcc host compile"
+  },
+  {
+   "id": "ci_workflow",
+   "pass": 0,
+   "detail": "structural",
+   "wall_s": 15.257
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 12284,
+  "gpu_util_pct": 0,
+  "power_w": 83.25,
+  "temp_c": 39
+ },
+ "score": 7,
+ "tps": {
+  "prompt_tps": [
+   255.43,
+   365.5,
+   376.23,
+   512.46,
+   637.4,
+   395.66,
+   393.67,
+   488.03,
+   521.24,
+   250.11,
+   619.73,
+   376.75,
+   354.99,
+   498.18
+  ],
+  "decode_tps": [
+   56.18,
+   60.82,
+   60.78,
+   60.87,
+   60.81,
+   60.86,
+   60.81,
+   60.92,
+   60.83,
+   60.48,
+   60.83,
+   60.91,
+   60.89,
+   60.88
+  ],
+  "prompt_tokens": [
+   53,
+   53,
+   55,
+   76,
+   97,
+   57,
+   57,
+   70,
+   75,
+   35,
+   91,
+   52,
+   50,
+   73
+  ],
+  "gen_tokens": [
+   16,
+   454,
+   534,
+   647,
+   593,
+   772,
+   227,
+   900,
+   298,
+   74,
+   238,
+   900,
+   633,
+   900
+  ],
+  "prompt_ms": [
+   207.49,
+   145.01,
+   146.19,
+   148.31,
+   152.18,
+   144.06,
+   144.79,
+   143.44,
+   143.89,
+   139.94,
+   146.84,
+   138.02,
+   140.85,
+   146.53
+  ],
+  "eval_ms": [
+   266.99,
+   7448.01,
+   8769.91,
+   10613.32,
+   9734.7,
+   12669.33,
+   3716.36,
+   14757.35,
+   4882.59,
+   1206.94,
+   3896.14,
+   14758.96,
+   10378.53,
+   14766.14
+  ]
+ },
+ "vram_peak": {
+  "vram_used_mib": 12464,
+  "gpu_util_pct": 96,
+  "power_w": 393.98,
+  "temp_c": 56
+ }
+}

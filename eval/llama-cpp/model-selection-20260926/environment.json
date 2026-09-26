@@ -1,0 +1,22 @@
+{
+  "captured_at": "2026-09-26T08:35:00+08:00",
+  "source": "same capture as control-prod.json; this file is the host-level subset",
+  "hostname": "lytv-H3C-UniServer-R5300-G6",
+  "os": "Ubuntu 24.04, kernel 7.0.0-30-generic",
+  "cpu": "2x Xeon Gold 6530 (64C/128T, 2 NUMA nodes)",
+  "ram_gib": 503,
+  "disk_data": {"fs": "/dev/md0", "size": "7.0T", "free": "5.1T", "mount": "/data"},
+  "driver": "580.173.02",
+  "driver_cuda_capability": "13.0",
+  "host_cuda_toolkit": "none (no nvcc)",
+  "nvidia_container_toolkit": "1.20.0",
+  "docker": "29.1.3 / compose 2.40.3",
+  "gpus": "8x RTX 4090 24GB (sm_89 Ada); UUIDs in control-prod.json",
+  "gpu_allocation_policy": {
+    "production_zero_touch": [0, 1],
+    "other_resident": {"5": "vLLM Qwen3.5-2B :8010 (not llama.cpp stack)"},
+    "lab_idle_pool": [2, 3, 4, 6, 7],
+    "test_port_base": 18101
+  },
+  "egress": {"huggingface.co": "blocked", "hf-mirror.com": "ok (HF_ENDPOINT override)", "ghcr.io": "TBD", "docker_hub": "via docker.m.daocloud.io mirror"}
+}

@@ -1,0 +1,38 @@
+{
+ "model": "A-ista-gsq-iq3s-mtp",
+ "mmproj_mode": "gpu",
+ "cases": [
+  {
+   "id": "terminal_shot",
+   "pass": 1,
+   "ttft_s": 0.427,
+   "wall_s": 6.586,
+   "img_kb": 7.3,
+   "answer_head": "这张终端截图里共有 **4 行**内容，分别是：\n\n1. `$ llama-server --version`\n2. `version: 0.3.0-dev (build 10715)`\n3. `CUDA devices: 1 comput"
+  },
+  {
+   "id": "table_shot",
+   "pass": 1,
+   "ttft_s": 0.592,
+   "wall_s": 2.077,
+   "img_kb": 6.7,
+   "answer_head": "处于 **STOPPED** 状态的服务是 **qwen27b-mon**，其端口为 **9000**。"
+  },
+  {
+   "id": "flow_diagram",
+   "pass": 0,
+   "ttft_s": 0.803,
+   "wall_s": 10.713,
+   "img_kb": 3.2,
+   "answer_head": ""
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 13630,
+  "gpu_util_pct": 96,
+  "power_w": 388.9,
+  "temp_c": 57
+ },
+ "ram_note": "mmproj on CPU keeps VRAM for LM+KV; RSS impact visible in docker stats",
+ "container_mem": "2.103GiB / 503.5GiB"
+}

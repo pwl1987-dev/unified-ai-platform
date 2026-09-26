@@ -1,0 +1,498 @@
+{
+ "C-swift15-q5km": {
+  "model": "C-swift15-q5km",
+  "path": "/labmodels/ukisai-swift15/Swift-1.5-Qwen3.8-27B-Q5_K_M.gguf",
+  "repo": "ukisai/Swift-1.5-Qwen3.8-27B-GGUF@a161446",
+  "quant": "Q5_K_M 5.5bpw",
+  "role": "QUALITY/CODING PRIMARY",
+  "image": "llama-server:cuda12.4-b10715",
+  "gpu": "4",
+  "ctx": 65536,
+  "probes": {
+   "zh": {
+    "key": "zh",
+    "pass": 1,
+    "han_chars": 145,
+    "loop": 0,
+    "content_empty": 0,
+    "reasoning_chars": 586,
+    "text_head": "KV cache 是大模型逐字生成时，把已经算过的每个 token 的 Key 和 Value 向量存下来，避免每生成一个新 token 都重算历史注意力。因为 Transformer 的注意力需要当前 token 与前面所有 token 的 K/V 做计算，缓存后推理更快。但它会随序列长度、层数、",
+    "usage": {
+     "completion_tokens": 498,
+     "prompt_tokens": 82,
+     "total_tokens": 580,
+     "prompt_tokens_details": {
+      "cached_tokens": 42
+     }
+    },
+    "wall_s": 12.7
+   },
+   "zh_nothink": {
+    "key": "zh_nothink",
+    "pass": 1,
+    "han_chars": 159,
+    "loop": 0,
+    "content_empty": 0,
+    "reasoning_chars": 0,
+    "text_head": "KV Cache 是大语言模型生成文本时的“记忆库”。每生成一个新词，模型需回顾之前所有词的键（Key）和值（Value）向量，这些历史数据会被缓存下来，避免重复计算。随着对话变长，缓存占用显存巨大。\n\n量化则是将这些高精度的浮点数（如 FP16）压缩为低精度格式（如 INT8 或 INT4）。因为",
+    "usage": {
+     "completion_tokens": 140,
+     "prompt_tokens": 42,
+     "total_tokens": 182,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "wall_s": 4.059
+   },
+   "coding_roman": {
+    "pass": 1,
+    "detail": "ALL_OK",
+    "wall_s": 6.318,
+    "usage": {
+     "completion_tokens": 236,
+     "prompt_tokens": 95,
+     "total_tokens": 331,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 270
+   },
+   "json_strict": {
+    "pass": 1,
+    "err": "",
+    "text_head": "{\"ok\":true,\"count\":7,\"items\":[\"x\",\"y\",\"z\"],\"nested\":{\"flag\":false}}",
+    "wall_s": 3.744
+   },
+   "tool_call": {
+    "pass": 1,
+    "detail": {
+     "tool_calls": [
+      {
+       "type": "function",
+       "function": {
+        "name": "get_weather",
+        "arguments": "{\"city\":\"北京\",\"unit\":\"c\"}"
+       },
+       "id": "BB9sm2viCHGCuHHIgGy1uOVL3UlovPkA"
+      }
+     ]
+    }
+   },
+   "math": {
+    "pass": 1,
+    "expected": 4193,
+    "nums_seen": [
+     "4193"
+    ],
+    "reasoning_chars": 399,
+    "usage": {
+     "completion_tokens": 179,
+     "prompt_tokens": 103,
+     "total_tokens": 282,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "wall_s": 4.977
+   },
+   "needle_32k_d50": {
+    "pass": 1,
+    "prompt_tokens": 31700,
+    "depth": 0.5,
+    "ttft_s": 12.882,
+    "wall_s": 15.408,
+    "answer_head": "X7K9-42ZQ",
+    "usage": {
+     "completion_tokens": 93,
+     "prompt_tokens": 31791,
+     "total_tokens": 31884,
+     "prompt_tokens_details": {
+      "cached_tokens": 42
+     }
+    }
+   },
+   "needle_64k_d50": {
+    "pass": 1,
+    "prompt_tokens": 63422,
+    "depth": 0.5,
+    "ttft_s": 29.037,
+    "wall_s": 31.543,
+    "answer_head": "X7K9-42ZQ",
+    "usage": {
+     "completion_tokens": 85,
+     "prompt_tokens": 63513,
+     "total_tokens": 63598,
+     "prompt_tokens_details": {
+      "cached_tokens": 42
+     }
+    }
+   }
+  },
+  "restart": [
+   {
+    "cycle": 1,
+    "health_s": 4.5,
+    "sanity_ok": 1,
+    "vram": {
+     "vram_used_mib": 21086,
+     "gpu_util_pct": 97,
+     "power_w": 289.29,
+     "temp_c": 57
+    }
+   },
+   {
+    "cycle": 2,
+    "health_s": 4.5,
+    "sanity_ok": 1,
+    "vram": {
+     "vram_used_mib": 21086,
+     "gpu_util_pct": 97,
+     "power_w": 292.37,
+     "temp_c": 56
+    }
+   },
+   {
+    "cycle": 3,
+    "health_s": 4.5,
+    "sanity_ok": 1,
+    "vram": {
+     "vram_used_mib": 21086,
+     "gpu_util_pct": 97,
+     "power_w": 283.07,
+     "temp_c": 55
+    }
+   }
+  ],
+  "tps": {
+   "prompt_tps": [
+    156.43,
+    162.81,
+    254.82,
+    371.14,
+    210.47,
+    1041.66,
+    399.0,
+    2525.73,
+    2257.29
+   ],
+   "decode_tps": [
+    38.61,
+    39.93,
+    39.96,
+    39.92,
+    39.93,
+    39.77,
+    39.91,
+    36.43,
+    33.54
+   ],
+   "prompt_tokens": [
+    53,
+    40,
+    42,
+    95,
+    51,
+    326,
+    103,
+    31749,
+    63471
+   ],
+   "gen_tokens": [
+    16,
+    498,
+    140,
+    236,
+    129,
+    67,
+    179,
+    93,
+    85
+   ],
+   "prompt_ms": [
+    338.81,
+    245.69,
+    164.82,
+    255.97,
+    242.32,
+    312.96,
+    258.14,
+    12570.25,
+    28118.25
+   ],
+   "eval_ms": [
+    388.54,
+    12446.35,
+    3478.64,
+    5886.33,
+    3206.0,
+    1659.4,
+    4460.24,
+    2525.08,
+    2504.52
+   ]
+  },
+  "first_health_s": 4.5,
+  "vram_after_load": {
+   "vram_used_mib": 21086,
+   "gpu_util_pct": 84,
+   "power_w": 125.85,
+   "temp_c": 42
+  },
+  "vram_peak": {
+   "vram_used_mib": 21092,
+   "gpu_util_pct": 98,
+   "power_w": 365.46,
+   "temp_c": 62
+  }
+ },
+ "D-swift10-q4km": {
+  "model": "D-swift10-q4km",
+  "path": "/labmodels/ukisai-swift10/Swift-Qwen3.8-27B-Q4_K_M.gguf",
+  "repo": "ukisai/Swift-Qwen3.8-27B-GGUF@f8b396d",
+  "quant": "Q4_K_M ~4.8bpw",
+  "role": "REGRESSION CONTROL",
+  "image": "llama-server:cuda12.4-b10715",
+  "gpu": "4",
+  "ctx": 65536,
+  "probes": {
+   "zh": {
+    "key": "zh",
+    "pass": 1,
+    "han_chars": 125,
+    "loop": 0,
+    "content_empty": 0,
+    "reasoning_chars": 542,
+    "text_head": "KV cache 是大模型逐字生成时，把已经算过的每个 token 的 Key 和 Value 存下来，避免下一步重复计算历史内容。因为要缓存所有层、所有注意力头、所有历史 token，序列越长、并发越大，显存占用越高。量化就是把原本 FP16/BF16 的 K/V 数值压缩成 INT8/INT4 ",
+    "usage": {
+     "completion_tokens": 451,
+     "prompt_tokens": 82,
+     "total_tokens": 533,
+     "prompt_tokens_details": {
+      "cached_tokens": 42
+     }
+    },
+    "wall_s": 10.048
+   },
+   "zh_nothink": {
+    "key": "zh_nothink",
+    "pass": 1,
+    "han_chars": 174,
+    "loop": 0,
+    "content_empty": 0,
+    "reasoning_chars": 0,
+    "text_head": "KV Cache 是大语言模型生成文本时的“记忆库”。每生成一个新词，模型需回顾之前所有词的 Key 和 Value 向量，将其缓存下来以避免重复计算。随着对话变长，这些缓存会迅速占用大量显存。\n\n量化之所以能省显存，是因为它将原本占用空间较大的高精度浮点数（如 FP16）转换为低精度格式（如 IN",
+    "usage": {
+     "completion_tokens": 132,
+     "prompt_tokens": 42,
+     "total_tokens": 174,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "wall_s": 3.273
+   },
+   "coding_roman": {
+    "pass": 1,
+    "detail": "ALL_OK",
+    "wall_s": 8.923,
+    "usage": {
+     "completion_tokens": 393,
+     "prompt_tokens": 95,
+     "total_tokens": 488,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "reasoning_chars": 840
+   },
+   "json_strict": {
+    "pass": 1,
+    "err": "",
+    "text_head": "{\"ok\":true,\"count\":7,\"items\":[\"x\",\"y\",\"z\"],\"nested\":{\"flag\":false}}",
+    "wall_s": 2.731
+   },
+   "tool_call": {
+    "pass": 1,
+    "detail": {
+     "tool_calls": [
+      {
+       "type": "function",
+       "function": {
+        "name": "get_weather",
+        "arguments": "{\"city\":\"北京\",\"unit\":\"c\"}"
+       },
+       "id": "hKACYpPk5dywyD7joQwKJ4dEd299TCrs"
+      }
+     ]
+    }
+   },
+   "math": {
+    "pass": 1,
+    "expected": 4193,
+    "nums_seen": [
+     "4193"
+    ],
+    "reasoning_chars": 308,
+    "usage": {
+     "completion_tokens": 186,
+     "prompt_tokens": 103,
+     "total_tokens": 289,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     }
+    },
+    "wall_s": 4.452
+   },
+   "needle_32k_d50": {
+    "pass": 1,
+    "prompt_tokens": 31700,
+    "depth": 0.5,
+    "ttft_s": 12.959,
+    "wall_s": 15.748,
+    "answer_head": "X7K9-42ZQ",
+    "usage": {
+     "completion_tokens": 116,
+     "prompt_tokens": 31791,
+     "total_tokens": 31907,
+     "prompt_tokens_details": {
+      "cached_tokens": 42
+     }
+    }
+   },
+   "needle_64k_d50": {
+    "pass": 1,
+    "prompt_tokens": 63422,
+    "depth": 0.5,
+    "ttft_s": 29.103,
+    "wall_s": 31.265,
+    "answer_head": "X7K9-42ZQ",
+    "usage": {
+     "completion_tokens": 82,
+     "prompt_tokens": 63513,
+     "total_tokens": 63595,
+     "prompt_tokens_details": {
+      "cached_tokens": 42
+     }
+    }
+   }
+  },
+  "restart": [
+   {
+    "cycle": 1,
+    "health_s": 4.5,
+    "sanity_ok": 1,
+    "vram": {
+     "vram_used_mib": 18112,
+     "gpu_util_pct": 97,
+     "power_w": 286.13,
+     "temp_c": 60
+    }
+   },
+   {
+    "cycle": 2,
+    "health_s": 4.5,
+    "sanity_ok": 1,
+    "vram": {
+     "vram_used_mib": 18112,
+     "gpu_util_pct": 97,
+     "power_w": 285.52,
+     "temp_c": 59
+    }
+   },
+   {
+    "cycle": 3,
+    "health_s": 4.4,
+    "sanity_ok": 1,
+    "vram": {
+     "vram_used_mib": 18112,
+     "gpu_util_pct": 97,
+     "power_w": 271.97,
+     "temp_c": 58
+    }
+   }
+  ],
+  "tps": {
+   "prompt_tps": [
+    217.09,
+    187.71,
+    407.08,
+    470.55,
+    210.94,
+    1361.79,
+    667.96,
+    2511.83,
+    2241.37
+   ],
+   "decode_tps": [
+    44.19,
+    45.79,
+    45.82,
+    45.79,
+    45.69,
+    45.62,
+    45.64,
+    41.25,
+    37.48
+   ],
+   "prompt_tokens": [
+    53,
+    40,
+    42,
+    95,
+    51,
+    326,
+    103,
+    31749,
+    63471
+   ],
+   "gen_tokens": [
+    16,
+    451,
+    132,
+    393,
+    103,
+    71,
+    186,
+    116,
+    82
+   ],
+   "prompt_ms": [
+    244.14,
+    213.09,
+    103.17,
+    201.89,
+    241.78,
+    239.39,
+    154.2,
+    12639.8,
+    28317.96
+   ],
+   "eval_ms": [
+    339.44,
+    9826.6,
+    2858.71,
+    8561.05,
+    2232.5,
+    1534.48,
+    4053.18,
+    2787.86,
+    2161.05
+   ]
+  },
+  "first_health_s": 4.5,
+  "vram_after_load": {
+   "vram_used_mib": 18112,
+   "gpu_util_pct": 84,
+   "power_w": 143.99,
+   "temp_c": 54
+  },
+  "vram_peak": {
+   "vram_used_mib": 18118,
+   "gpu_util_pct": 98,
+   "power_w": 408.57,
+   "temp_c": 62
+  }
+ }
+}

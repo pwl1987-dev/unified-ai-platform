@@ -1,0 +1,81 @@
+{
+ "model": "B-swift15-gsq-iq3s-mtp",
+ "ctx_total": 262144,
+ "np": 8,
+ "waves": [
+  {
+   "n": 1,
+   "ok": 1,
+   "errors": [],
+   "wall_s": 2.95,
+   "aggregate_tps": 54.5,
+   "per_req_tps": 54.54,
+   "ttft_p50": 2.16,
+   "ttft_p95": 2.16,
+   "ttft_p99": 2.16,
+   "vram": {
+    "vram_used_mib": 18434,
+    "gpu_util_pct": 96,
+    "power_w": 383.98,
+    "temp_c": 50
+   }
+  },
+  {
+   "n": 2,
+   "ok": 2,
+   "errors": [],
+   "wall_s": 4.67,
+   "aggregate_tps": 79.0,
+   "per_req_tps": 44.05,
+   "ttft_p50": 3.75,
+   "ttft_p95": 3.75,
+   "ttft_p99": 3.75,
+   "vram": {
+    "vram_used_mib": 18436,
+    "gpu_util_pct": 90,
+    "power_w": 371.76,
+    "temp_c": 53
+   }
+  },
+  {
+   "n": 4,
+   "ok": 4,
+   "errors": [],
+   "wall_s": 5.82,
+   "aggregate_tps": 115.2,
+   "per_req_tps": 30.91,
+   "ttft_p50": 4.3,
+   "ttft_p95": 4.96,
+   "ttft_p99": 4.96,
+   "vram": {
+    "vram_used_mib": 18436,
+    "gpu_util_pct": 90,
+    "power_w": 353.2,
+    "temp_c": 54
+   }
+  },
+  {
+   "n": 8,
+   "ok": 8,
+   "errors": [],
+   "wall_s": 9.67,
+   "aggregate_tps": 134.4,
+   "per_req_tps": 19.48,
+   "ttft_p50": 6.53,
+   "ttft_p95": 8.28,
+   "ttft_p99": 8.28,
+   "vram": {
+    "vram_used_mib": 18438,
+    "gpu_util_pct": 96,
+    "power_w": 364.33,
+    "temp_c": 56
+   }
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 18260,
+  "gpu_util_pct": 0,
+  "power_w": 84.1,
+  "temp_c": 33
+ }
+}

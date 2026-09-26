@@ -1,0 +1,6 @@
+FROM docker.m.daocloud.io/nvidia/cuda:13.0.1-runtime-ubuntu24.04
+RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 && rm -rf /var/lib/apt/lists/*
+COPY out/bin /app
+WORKDIR /app
+ENV LD_LIBRARY_PATH=/app
+ENTRYPOINT ["/app/llama-server"]

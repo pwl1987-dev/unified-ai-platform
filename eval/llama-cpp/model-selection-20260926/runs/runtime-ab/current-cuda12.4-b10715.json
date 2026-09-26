@@ -1,0 +1,265 @@
+{
+ "runtime": "current-cuda12.4-b10715",
+ "image": "llama-server:cuda12.4-b10715",
+ "digest": "",
+ "cuda_runtime": "12.4.1 (nvidia/cuda:12.4.1-runtime-ubuntu22.04)",
+ "gpu": "2",
+ "cmd": "-m /prodmodels/Qwen3.8-27B-coding-v1.1-iq4xs.gguf --host 0.0.0.0 --port 8080 -c 262144 -np 1 -ngl 999 --cache-type-k q4_0 --cache-type-v q4_0 --spec-draft-type-k q8_0 --spec-draft-type-v q8_0 -fa on --cache-reuse 2048 --jinja -a test --metrics --spec-type draft-dflash -md /prodmodels/Qwen3.8-27B-DFlash2-Q4_K_M.gguf --spec-draft-n-max 7",
+ "cold_starts": [
+  {
+   "cycle": 1,
+   "health_after_s": 6.5,
+   "model_load_ms": null,
+   "vram_after_load": {
+    "vram_used_mib": 22990,
+    "gpu_util_pct": 0,
+    "power_w": 67.42,
+    "temp_c": 32
+   }
+  },
+  {
+   "cycle": 2,
+   "health_after_s": 6.5,
+   "model_load_ms": null,
+   "vram_after_load": {
+    "vram_used_mib": 22990,
+    "gpu_util_pct": 0,
+    "power_w": 67.31,
+    "temp_c": 33
+   }
+  }
+ ],
+ "ladder": [
+  {
+   "ctx_target": 1024,
+   "prompt_tokens": 1012,
+   "ttft_s": 0.9,
+   "wall_s": 3.522,
+   "usage": {
+    "completion_tokens": 256,
+    "prompt_tokens": 1086,
+    "total_tokens": 1342,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "sha_output": "e3b0c44298fc1c14",
+   "server": {
+    "prompt_tps": [],
+    "decode_tps": [],
+    "prompt_tokens": [],
+    "gen_tokens": [],
+    "prompt_ms": [],
+    "eval_ms": []
+   },
+   "vram_peak": {
+    "vram_used_mib": 23122,
+    "gpu_util_pct": 85,
+    "power_w": 359.35,
+    "temp_c": 44
+   },
+   "answer_head": ""
+  },
+  {
+   "ctx_target": 32768,
+   "prompt_tokens": 32622,
+   "ttft_s": 13.722,
+   "wall_s": 15.959,
+   "usage": {
+    "completion_tokens": 166,
+    "prompt_tokens": 32696,
+    "total_tokens": 32862,
+    "prompt_tokens_details": {
+     "cached_tokens": 570
+    }
+   },
+   "sha_output": "e9fb919e7b4ccf0c",
+   "server": {
+    "prompt_tps": [
+     2377.84
+    ],
+    "decode_tps": [],
+    "prompt_tokens": [
+     32126
+    ],
+    "gen_tokens": [],
+    "prompt_ms": [
+     13510.59
+    ],
+    "eval_ms": []
+   },
+   "vram_peak": {
+    "vram_used_mib": 23122,
+    "gpu_util_pct": 92,
+    "power_w": 370.79,
+    "temp_c": 49
+   },
+   "answer_head": "主旨：上文反复记录 GPU 服务器日常巡检、推理服务缓存竞态修复、压测与长上下文回归安排，以及负载均衡异常时的会话排空与 llama-server 检查流程。最大编号数字：1029。"
+  },
+  {
+   "ctx_target": 131072,
+   "prompt_tokens": 130673,
+   "ttft_s": 62.793,
+   "wall_s": 64.912,
+   "usage": {
+    "completion_tokens": 125,
+    "prompt_tokens": 130746,
+    "total_tokens": 130871,
+    "prompt_tokens_details": {
+     "cached_tokens": 32180
+    }
+   },
+   "sha_output": "86bafecd3571a150",
+   "server": {
+    "prompt_tps": [
+     1575.5
+    ],
+    "decode_tps": [],
+    "prompt_tokens": [
+     98566
+    ],
+    "gen_tokens": [],
+    "prompt_ms": [
+     62561.87
+    ],
+    "eval_ms": []
+   },
+   "vram_peak": {
+    "vram_used_mib": 23124,
+    "gpu_util_pct": 91,
+    "power_w": 364.06,
+    "temp_c": 58
+   },
+   "answer_head": "上文主旨是反复记录 GPU 服务器日常巡检、推理服务发布修复、压测会议安排以及负载均衡异常处理等运维规范；看到的最大编号数字是 4023。"
+  },
+  {
+   "ctx_target": 262144,
+   "prompt_tokens": 262004,
+   "ttft_s": 134.557,
+   "wall_s": 136.61,
+   "usage": {
+    "completion_tokens": 66,
+    "prompt_tokens": 262078,
+    "total_tokens": 262144,
+    "prompt_tokens_details": {
+     "cached_tokens": 130230
+    }
+   },
+   "sha_output": "e3b0c44298fc1c14",
+   "server": {
+    "prompt_tps": [
+     983.17
+    ],
+    "decode_tps": [],
+    "prompt_tokens": [
+     131848
+    ],
+    "gen_tokens": [],
+    "prompt_ms": [
+     134105.67
+    ],
+    "eval_ms": []
+   },
+   "vram_peak": {
+    "vram_used_mib": 23124,
+    "gpu_util_pct": 79,
+    "power_w": 370.93,
+    "temp_c": 65
+   },
+   "answer_head": ""
+  }
+ ],
+ "smoke": {
+  "strict_json_valid": true,
+  "json_text_head": "{\"ok\":true,\"n\":42,\"tags\":[\"a\",\"b\"]}",
+  "tool_call_message": {
+   "role": "assistant",
+   "content": "",
+   "reasoning_content": "用户询问北京今天的天气，并要求调用工具查询。我需要调用 get_weather 工具，参数 city 设为 \"北京\"。\n",
+   "tool_calls": [
+    {
+     "type": "function",
+     "function": {
+      "name": "get_weather",
+      "arguments": "{\"city\":\"北京\"}"
+     },
+     "id": "oo0gYXSKnArO8yzLZ0QtvoPXzEbAfVaL"
+    }
+   ]
+  }
+ },
+ "log_facts": {
+  "ggml_cuda_init": null,
+  "device0": null,
+  "offload": null,
+  "flash_attn": null,
+  "kv_quant": null,
+  "spec": "speculative_init_result: loading draft model '/prodmodels/Qwen3.8-27B-DFlash2-Q4_K_M.gguf'"
+ },
+ "server_tps_backfill": {
+  "prompt": [
+   {
+    "ms": 888.82,
+    "tokens": 1086,
+    "tps": 1221.85
+   },
+   {
+    "ms": 13510.59,
+    "tokens": 32126,
+    "tps": 2377.84
+   },
+   {
+    "ms": 62561.87,
+    "tokens": 98566,
+    "tps": 1575.5
+   },
+   {
+    "ms": 134105.67,
+    "tokens": 131848,
+    "tps": 983.17
+   },
+   {
+    "ms": 250.56,
+    "tokens": 77,
+    "tps": 307.31
+   },
+   {
+    "ms": 274.75,
+    "tokens": 311,
+    "tps": 1131.93
+   }
+  ],
+  "decode": [
+   {
+    "ms": 2621.68,
+    "tokens": 256,
+    "tps": 97.27
+   },
+   {
+    "ms": 2235.94,
+    "tokens": 166,
+    "tps": 73.79
+   },
+   {
+    "ms": 2093.79,
+    "tokens": 125,
+    "tps": 59.22
+   },
+   {
+    "ms": 2047.97,
+    "tokens": 66,
+    "tps": 31.74
+   },
+   {
+    "ms": 394.6,
+    "tokens": 62,
+    "tps": 154.59
+   },
+   {
+    "ms": 426.3,
+    "tokens": 55,
+    "tps": 126.67
+   }
+  ]
+ }
+}

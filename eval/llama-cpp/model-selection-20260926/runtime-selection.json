@@ -1,0 +1,35 @@
+{
+  "decided_at": "2026-09-26T10:05:00+08:00",
+  "BENCHMARK_RUNTIME": {
+    "image": "llama-server:cuda12.4-b10715",
+    "digest": "sha256:cc0782dc7b595e34ca2611729d7d23e47db6aa3d09aff4f9a8ddc3fd45f751fa",
+    "llama_cpp": "b10715 (identical to CONTROL-PROD binary)",
+    "cuda_runtime": "12.4.1",
+    "frozen_until": "四模型主选型完成前不再升级 llama.cpp"
+  },
+  "evidence_summary_control_prod_model_gpu2_warm_nested_ladder": {
+    "cold_to_health_s": {"b10715": [6.5, 6.5], "official_cuda12_8": [6.5, 6.5], "local_sm89_cuda13_0": [6.0, 6.0]},
+    "prompt_tps": {
+      "32K": {"b10715": 2378, "official_cuda12_8": 2133, "local_sm89_cuda13_0": 1816},
+      "128K": {"b10715": 1576, "official_cuda12_8": 1494, "local_sm89_cuda13_0": 1343},
+      "256K": {"b10715": 983, "official_cuda12_8": 974, "local_sm89_cuda13_0": 906}
+    },
+    "decode_tps": {
+      "1K": {"b10715": 97.3, "official_cuda12_8": 105.2, "local_sm89_cuda13_0": 105.2},
+      "32K": {"b10715": 73.8, "official_cuda12_8": 88.2, "local_sm89_cuda13_0": 87.6},
+      "128K": {"b10715": 59.2, "official_cuda12_8": 59.7, "local_sm89_cuda13_0": 59.3},
+      "256K": {"b10715": 31.7, "official_cuda12_8": 35.4, "local_sm89_cuda13_0": 35.3}
+    },
+    "vram_mib_after_load": {"b10715": 22990, "official_cuda12_8": 22974, "local_sm89_cuda13_0": 22974},
+    "json_strict_and_toolcall": {"b10715": [1, 1], "official_cuda12_8": [1, 1], "local_sm89_cuda13_0": [1, 1]},
+    "logs": "runs/runtime-ab/*.json + lab-rt{1,2,3}-logs.txt"
+  },
+  "decision_rationale": [
+    "官方 CUDA13 镜像全线要求 driver CUDA>=13.1/13.4，本机 R580.173.02=13.0 -> 硬不兼容（task §7 允许回退 CUDA12）。",
+    "本地 CUDA13.0-sm89（master b11192）可运行：prefill -24%/-15%/-8% @32/128/256K，decode 持平官方 -> CUDA13 路线在本驱动上是 prefill 回归，不采用。",
+    "官方 CUDA12.8（master）: decode +8~19%，prefill -5~-10%@32/128K，256K prefill 持平(-1%)。",
+    "b10715 与生产二进制完全一致：模型横评结果对生产 1:1 可迁移；128K+ 长上下文场景 prefill/TTFT 是稀缺资源且全面领先；本阶段所需特性（--spec-type 组合、--mmproj、jinja、tools、response_format）齐备且已在生产验证。",
+    "官方 cuda12.8 / 本地 sm89 数据留档：作为'是否升级生产 runtime'的独立决策输入（部署拍板制，交用户）。"
+  ],
+  "production_runtime_upgrade_note": "本轮不改生产 runtime。若未来升级：候选=ghcr server-cuda(CUDA12.8, decode +10%, prefill -5~10%)，需用户拍板。"
+}

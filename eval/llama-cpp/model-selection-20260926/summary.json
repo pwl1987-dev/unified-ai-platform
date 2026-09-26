@@ -1,0 +1,806 @@
+{
+ "generated_at": "2026-09-26T12:51:09+08:00",
+ "stage1": {
+  "A-ista-gsq-iq3s-mtp": {
+   "stage1_pass": 0.75,
+   "zh_default_ok": 0,
+   "thinking_chars_zh": 4229,
+   "vram_1gpu_64k_mib": 13194
+  },
+  "B-swift15-gsq-iq3s-mtp": {
+   "stage1_pass": 1.0,
+   "zh_default_ok": 1,
+   "thinking_chars_zh": 78,
+   "vram_1gpu_64k_mib": 13194
+  },
+  "C-swift15-q5km": {
+   "stage1_pass": 1.0,
+   "zh_default_ok": 1,
+   "thinking_chars_zh": 586,
+   "vram_1gpu_64k_mib": 21086
+  },
+  "D-swift10-q4km": {
+   "stage1_pass": 1.0,
+   "zh_default_ok": 1,
+   "thinking_chars_zh": 542,
+   "vram_1gpu_64k_mib": 18112
+  }
+ },
+ "suites": {
+  "A-ista-gsq-iq3s-mtp": {
+   "needle_summary": {
+    "32768": {
+     "n": 6,
+     "pass_rate": 1.0
+    },
+    "131072": {
+     "n": 18,
+     "pass_rate": 0.944
+    },
+    "262144": {
+     "n": 9,
+     "pass_rate": 1.0
+    }
+   },
+   "vision": {
+    "cpu": {
+     "score": 2,
+     "n": 3,
+     "vram": 12468,
+     "mean_ttft": 1.14
+    },
+    "gpu": {
+     "score": 2,
+     "n": 3,
+     "vram": 13630,
+     "mean_ttft": 0.61
+    }
+   }
+  },
+  "B-swift15-gsq-iq3s-mtp": {
+   "needle_summary": {
+    "32768": {
+     "n": 6,
+     "pass_rate": 1.0
+    },
+    "131072": {
+     "n": 18,
+     "pass_rate": 1.0
+    },
+    "262144": {
+     "n": 9,
+     "pass_rate": 1.0
+    }
+   },
+   "longcode": {
+    "real": 3,
+    "real_n": 8,
+    "synth": 4,
+    "synth_n": 4,
+    "patch": 1
+   },
+   "coding": {
+    "score": 7,
+    "n": 13
+   },
+   "structured": {
+    "cases_pass": 6,
+    "n": 7,
+    "json_valid": 5,
+    "nested_tool": 1
+   },
+   "agent": {
+    "score": 9,
+    "n": 10
+   },
+   "writing": {
+    "score": 10,
+    "n": 12
+   },
+   "opt_configs": {
+    "kv-f16_fa-on": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 69.69,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28590,
+       "ttft_s": 11.211,
+       "wall_s": 14.154,
+       "ptps": 2649.11,
+       "dtps": 54.03
+      },
+      {
+       "ctx": 131072,
+       "n": 126924,
+       "ttft_s": 56.387,
+       "wall_s": 60.429,
+       "ptps": 1769.67,
+       "dtps": 39.37
+      }
+     ],
+     "vram": 20160,
+     "error": null
+    },
+    "kv-q8_fa-on": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 71.399,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 11.329,
+       "wall_s": 14.27,
+       "ptps": 2622.69,
+       "dtps": 54.06
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 57.358,
+       "wall_s": 61.415,
+       "ptps": 1731.82,
+       "dtps": 39.21
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 127.4,
+       "wall_s": 132.916,
+       "ptps": 1033.84,
+       "dtps": 28.86
+      }
+     ],
+     "vram": 21868,
+     "error": null
+    },
+    "kv-q4_fa-on": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 71.484,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 11.226,
+       "wall_s": 14.192,
+       "ptps": 2619.95,
+       "dtps": 53.61
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 56.857,
+       "wall_s": 61.01,
+       "ptps": 1746.98,
+       "dtps": 38.32
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 125.948,
+       "wall_s": 131.647,
+       "ptps": 1045.74,
+       "dtps": 27.93
+      }
+     ],
+     "vram": 17772,
+     "error": null
+    },
+    "kv-q4_fa-off": {
+     "corr": null,
+     "ladder": null,
+     "vram": null,
+     "error": "server opt-B-swift15-gsq-iq3s-mtp-kv-q4_fa-off did not become healthy; status='Exited (1) 19 minutes ago'; logs:\n"
+    },
+    "kv-q4_mtp": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 82.568,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 13.581,
+       "wall_s": 15.744,
+       "ptps": 2176.3,
+       "dtps": 73.54
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 66.431,
+       "wall_s": 69.775,
+       "ptps": 1494.42,
+       "dtps": 47.59
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 145.83,
+       "wall_s": 150.595,
+       "ptps": 902.73,
+       "dtps": 33.41
+      }
+     ],
+     "vram": 20238,
+     "error": null
+    },
+    "kv-q4_dflash": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 83.087,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 15.071,
+       "wall_s": 17.271,
+       "ptps": 1972.34,
+       "dtps": 72.3
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 68.053,
+       "wall_s": 71.41,
+       "ptps": 1458.68,
+       "dtps": 47.41
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 143.492,
+       "wall_s": 147.944,
+       "ptps": 917.47,
+       "dtps": 35.75
+      }
+     ],
+     "vram": 21024,
+     "error": null
+    },
+    "kv-q4_ngram": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 71.28,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 11.335,
+       "wall_s": 15.817,
+       "ptps": 2621.29,
+       "dtps": 35.48
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 56.862,
+       "wall_s": 62.82,
+       "ptps": 1746.87,
+       "dtps": 26.7
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 125.474,
+       "wall_s": 132.626,
+       "ptps": 1049.76,
+       "dtps": 22.25
+      }
+     ],
+     "vram": 17772,
+     "error": null
+    }
+   },
+   "concurrency": [
+    {
+     "n": 1,
+     "ok": 1,
+     "errors": [],
+     "wall_s": 2.95,
+     "aggregate_tps": 54.5,
+     "per_req_tps": 54.54,
+     "ttft_p50": 2.16,
+     "ttft_p95": 2.16,
+     "ttft_p99": 2.16,
+     "vram": {
+      "vram_used_mib": 18434,
+      "gpu_util_pct": 96,
+      "power_w": 383.98,
+      "temp_c": 50
+     }
+    },
+    {
+     "n": 2,
+     "ok": 2,
+     "errors": [],
+     "wall_s": 4.67,
+     "aggregate_tps": 79.0,
+     "per_req_tps": 44.05,
+     "ttft_p50": 3.75,
+     "ttft_p95": 3.75,
+     "ttft_p99": 3.75,
+     "vram": {
+      "vram_used_mib": 18436,
+      "gpu_util_pct": 90,
+      "power_w": 371.76,
+      "temp_c": 53
+     }
+    },
+    {
+     "n": 4,
+     "ok": 4,
+     "errors": [],
+     "wall_s": 5.82,
+     "aggregate_tps": 115.2,
+     "per_req_tps": 30.91,
+     "ttft_p50": 4.3,
+     "ttft_p95": 4.96,
+     "ttft_p99": 4.96,
+     "vram": {
+      "vram_used_mib": 18436,
+      "gpu_util_pct": 90,
+      "power_w": 353.2,
+      "temp_c": 54
+     }
+    },
+    {
+     "n": 8,
+     "ok": 8,
+     "errors": [],
+     "wall_s": 9.67,
+     "aggregate_tps": 134.4,
+     "per_req_tps": 19.48,
+     "ttft_p50": 6.53,
+     "ttft_p95": 8.28,
+     "ttft_p99": 8.28,
+     "vram": {
+      "vram_used_mib": 18438,
+      "gpu_util_pct": 96,
+      "power_w": 364.33,
+      "temp_c": 56
+     }
+    }
+   ]
+  },
+  "C-swift15-q5km": {
+   "needle_summary": {
+    "32768": {
+     "n": 6,
+     "pass_rate": 1.0
+    },
+    "131072": {
+     "n": 18,
+     "pass_rate": 1.0
+    },
+    "262144": {
+     "n": 9,
+     "pass_rate": 1.0
+    }
+   },
+   "longcode": {
+    "real": 4,
+    "real_n": 8,
+    "synth": 4,
+    "synth_n": 4,
+    "patch": 1
+   },
+   "coding": {
+    "score": 9,
+    "n": 13
+   },
+   "structured": {
+    "cases_pass": 6,
+    "n": 7,
+    "json_valid": 5,
+    "nested_tool": 1
+   },
+   "agent": {
+    "score": 8,
+    "n": 10
+   },
+   "writing": {
+    "score": 9,
+    "n": 12
+   },
+   "opt_configs": {
+    "kv-f16_fa-on": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 44.684,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28590,
+       "ttft_s": 6.865,
+       "wall_s": 11.147,
+       "ptps": 4286.69,
+       "dtps": 37.14
+      },
+      {
+       "ctx": 131072,
+       "n": 126924,
+       "ttft_s": 34.201,
+       "wall_s": 39.598,
+       "ptps": 2924.37,
+       "dtps": 29.48
+      }
+     ],
+     "vram": 30858,
+     "error": null
+    },
+    "kv-q8_fa-on": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 45.979,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 7.127,
+       "wall_s": 11.426,
+       "ptps": 4135.81,
+       "dtps": 36.99
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 35.297,
+       "wall_s": 40.455,
+       "ptps": 2820.7,
+       "dtps": 29.48
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 77.497,
+       "wall_s": 84.328,
+       "ptps": 1703.85,
+       "dtps": 23.3
+      }
+     ],
+     "vram": 35302,
+     "error": null
+    },
+    "kv-q4_fa-on": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 45.913,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 7.103,
+       "wall_s": 11.425,
+       "ptps": 4147.04,
+       "dtps": 36.8
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 35.031,
+       "wall_s": 40.447,
+       "ptps": 2842.61,
+       "dtps": 29.01
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 76.643,
+       "wall_s": 83.65,
+       "ptps": 1722.49,
+       "dtps": 22.71
+      }
+     ],
+     "vram": 31206,
+     "error": null
+    },
+    "kv-q4_fa-off": {
+     "corr": null,
+     "ladder": null,
+     "vram": null,
+     "error": "server opt-C-swift15-q5km-kv-q4_fa-off did not become healthy; status='Exited (1) 19 minutes ago'; logs:\n"
+    },
+    "kv-q4_mtp": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 78.1,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 12.425,
+       "wall_s": 14.889,
+       "ptps": 2384.25,
+       "dtps": 64.57
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 62.97,
+       "wall_s": 66.804,
+       "ptps": 1576.88,
+       "dtps": 41.5
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 138.297,
+       "wall_s": 143.435,
+       "ptps": 952.1,
+       "dtps": 30.98
+      }
+     ],
+     "vram": 35378,
+     "error": null
+    },
+    "kv-q4_dflash": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 80.989,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 13.739,
+       "wall_s": 16.46,
+       "ptps": 2150.41,
+       "dtps": 58.46
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 67.358,
+       "wall_s": 70.842,
+       "ptps": 1477.73,
+       "dtps": 44.82
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 139.645,
+       "wall_s": 145.934,
+       "ptps": 942.86,
+       "dtps": 25.31
+      }
+     ],
+     "vram": 35072,
+     "error": null
+    },
+    "kv-q4_ngram": {
+     "corr": {
+      "needle128k": 1,
+      "needle128k_wall": 45.478,
+      "json_ok": 1,
+      "coding_lite": 1
+     },
+     "ladder": [
+      {
+       "ctx": 32768,
+       "n": 28665,
+       "ttft_s": 7.324,
+       "wall_s": 12.863,
+       "ptps": 4144.66,
+       "dtps": 28.71
+      },
+      {
+       "ctx": 131072,
+       "n": 126582,
+       "ttft_s": 35.068,
+       "wall_s": 41.856,
+       "ptps": 2839.74,
+       "dtps": 23.14
+      },
+      {
+       "ctx": 262144,
+       "n": 256805,
+       "ttft_s": 76.832,
+       "wall_s": 85.668,
+       "ptps": 1718.25,
+       "dtps": 18.01
+      }
+     ],
+     "vram": 31206,
+     "error": null
+    }
+   },
+   "concurrency": [
+    {
+     "n": 1,
+     "ok": 1,
+     "errors": [],
+     "wall_s": 5.54,
+     "aggregate_tps": 38.7,
+     "per_req_tps": 38.65,
+     "ttft_p50": 4.2,
+     "ttft_p95": 4.2,
+     "ttft_p99": 4.2,
+     "vram": {
+      "vram_used_mib": 28218,
+      "gpu_util_pct": 49,
+      "power_w": 213.97,
+      "temp_c": 53,
+      "per_gpu": [
+       {
+        "vram_used_mib": 14274
+       },
+       {
+        "vram_used_mib": 13944
+       }
+      ]
+     }
+    },
+    {
+     "n": 2,
+     "ok": 2,
+     "errors": [],
+     "wall_s": 3.87,
+     "aggregate_tps": 68.2,
+     "per_req_tps": 34.35,
+     "ttft_p50": 2.73,
+     "ttft_p95": 2.73,
+     "ttft_p99": 2.73,
+     "vram": {
+      "vram_used_mib": 28218,
+      "gpu_util_pct": 53,
+      "power_w": 231.31,
+      "temp_c": 53,
+      "per_gpu": [
+       {
+        "vram_used_mib": 14274
+       },
+       {
+        "vram_used_mib": 13944
+       }
+      ]
+     }
+    },
+    {
+     "n": 4,
+     "ok": 4,
+     "errors": [],
+     "wall_s": 6.34,
+     "aggregate_tps": 92.7,
+     "per_req_tps": 28.44,
+     "ttft_p50": 3.86,
+     "ttft_p95": 5.24,
+     "ttft_p99": 5.24,
+     "vram": {
+      "vram_used_mib": 28220,
+      "gpu_util_pct": 49,
+      "power_w": 216.68,
+      "temp_c": 53,
+      "per_gpu": [
+       {
+        "vram_used_mib": 14274
+       },
+       {
+        "vram_used_mib": 13946
+       }
+      ]
+     }
+    },
+    {
+     "n": 8,
+     "ok": 8,
+     "errors": [],
+     "wall_s": 10.02,
+     "aggregate_tps": 123.5,
+     "per_req_tps": 18.76,
+     "ttft_p50": 6.08,
+     "ttft_p95": 8.76,
+     "ttft_p99": 8.76,
+     "vram": {
+      "vram_used_mib": 28230,
+      "gpu_util_pct": 50,
+      "power_w": 208.27,
+      "temp_c": 51,
+      "per_gpu": [
+       {
+        "vram_used_mib": 14280
+       },
+       {
+        "vram_used_mib": 13950
+       }
+      ]
+     }
+    }
+   ],
+   "gpu2": {
+    "ladder": [
+     {
+      "ctx": 32768,
+      "n": 28665,
+      "ttft_s": 7.234,
+      "wall_s": 11.556,
+      "ptps": 4003.03,
+      "dtps": 36.79
+     },
+     {
+      "ctx": 131072,
+      "n": 126582,
+      "ttft_s": 35.067,
+      "wall_s": 40.483,
+      "ptps": 2839.76,
+      "dtps": 29.01
+     },
+     {
+      "ctx": 262144,
+      "n": 256805,
+      "ttft_s": 76.733,
+      "wall_s": 83.74,
+      "ptps": 1720.66,
+      "dtps": 22.71
+     }
+    ],
+    "vram": {
+     "4": 15746,
+     "7": 15460
+    },
+    "error": null
+   },
+   "vision": {
+    "cpu": {
+     "score": 3,
+     "n": 3,
+     "vram": 20356,
+     "mean_ttft": 1.21
+    },
+    "gpu": {
+     "score": 2,
+     "n": 3,
+     "vram": 21518,
+     "mean_ttft": 0.63
+    }
+   }
+  },
+  "D-swift10-q4km": {
+   "coding": {
+    "score": 8,
+    "n": 13
+   },
+   "structured": {
+    "cases_pass": 5,
+    "n": 7,
+    "json_valid": 5,
+    "nested_tool": 1
+   }
+  }
+ }
+}

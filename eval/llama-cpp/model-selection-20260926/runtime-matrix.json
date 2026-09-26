@@ -1,0 +1,43 @@
+{
+  "captured_at": "2026-09-26T10:20:00+08:00",
+  "host_chain": "R580 Host Driver 580.173.02 (CUDA capability 13.0) -> NVIDIA Container Toolkit 1.20.0 -> container CUDA runtime -> llama.cpp",
+  "runtimes": {
+    "RUNTIME-CURRENT": {
+      "image": "llama-server:cuda12.4-b10715",
+      "digest": "sha256:cc0782dc7b595e34ca2611729d7d23e47db6aa3d09aff4f9a8ddc3fd45f751fa",
+      "llama_cpp": "b10715 (local build 2026-08-31 from /data/build/llama.cpp-new; binary reports build 0/commit unknown)",
+      "cuda_runtime": "12.4.1 (nvidia/cuda:12.4.1-runtime-ubuntu22.04)",
+      "arch_build": "default official-style build flags, unknown arch list",
+      "runs_on_host": true,
+      "role": "exact production reproduction"
+    },
+    "RUNTIME-CUDA13-OFFICIAL": {
+      "image_latest": "ghcr.io/ggml-org/llama.cpp:server-cuda13",
+      "digest_latest": "sha256:a9c7ab7212dae7c44b0a431a90e1f5b4cb1c8e84348277d10ad8cb933ff93914",
+      "cuda_runtime": "13.4.1, NVIDIA_REQUIRE_CUDA=cuda>=13.4",
+      "earliest_cuda13_tag": "server-cuda13-b7588 = sha256:187448c09813630e75ac7fbc4bac80f8aacf82ec90cd785efcf2ea62aa67aeb9, CUDA 13.1.0, requires cuda>=13.1",
+      "runs_on_host": false,
+      "blocker": "host driver capability 13.0 < required 13.1/13.4; driver upgrade forbidden (task rule 2)",
+      "verdict": "HARD-INCOMPATIBLE on R580@13.0. CUDA13 path exists only via local CUDA 13.0 toolchain build (RUNTIME-CUDA13-SM89)."
+    },
+    "RUNTIME-CUDA12-OFFICIAL": {
+      "image": "ghcr.io/ggml-org/llama.cpp:server-cuda",
+      "digest": "filled_after_ab",
+      "cuda_runtime": "TBD from image env",
+      "runs_on_host": true
+    },
+    "RUNTIME-CUDA13-SM89": {
+      "image": "local/llama.cpp:master-171e8846b4af-cuda13-sm89",
+      "digest": "sha256:954f780baf023e9e0731cf13b7a34dff9ca570f73545ec4a0663fad02e3561ae",
+      "llama_cpp": "0.5.0-dev build 11192 commit 171e8846b4af9766c354064cb776cb34a50f053f (master 2026-09-26)",
+      "cuda_runtime": "13.0.1 (nvidia/cuda:13.0.1-runtime-ubuntu24.04)",
+      "arch_build": "CMAKE_CUDA_ARCHITECTURES=89 (Ada only), GGML_CUDA=ON, LLAMA_CURL=ON, Release",
+      "build_recipe": "ops/llama-cpp-model-lab/build-sm89.sh + manual relink (CUDA stubs libcuda.so->libcuda.so.1 at link time)",
+      "runs_on_host": true
+    }
+  },
+  "notes": [
+    "Official CUDA13 line starts at build b7588 with CUDA 13.1; no CUDA 13.0-based official image exists; therefore 'official CUDA13 on R580(CUDA 13.0)' is impossible without driver change.",
+    "RUNTIME-CUDA13-SM89 = latest master (build 11192) vs prod b10715: 477 builds newer."
+  ]
+}

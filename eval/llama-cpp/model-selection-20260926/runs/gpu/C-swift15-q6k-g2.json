@@ -1,0 +1,42 @@
+{
+ "model": "C-swift15-q6k",
+ "gpus": "4,7",
+ "ctx": 262144,
+ "tensor_split": "--tensor-split 1,1",
+ "health_s": 6.4,
+ "vram_after_load": {
+  "4": 17038,
+  "7": 16808
+ },
+ "ladder": [
+  {
+   "ctx": 32768,
+   "n": 28665,
+   "ttft_s": 7.663,
+   "wall_s": 12.466,
+   "ptps": 3777.14,
+   "dtps": 33.11
+  },
+  {
+   "ctx": 131072,
+   "n": 126582,
+   "ttft_s": 36.587,
+   "wall_s": 42.56,
+   "ptps": 2721.13,
+   "dtps": 26.64
+  },
+  {
+   "ctx": 262144,
+   "n": 256805,
+   "ttft_s": 78.833,
+   "wall_s": 86.319,
+   "ptps": 1674.49,
+   "dtps": 21.26
+  }
+ ],
+ "vram_peak": {
+  "4": 17078,
+  "7": 16848
+ },
+ "offload_line": null
+}

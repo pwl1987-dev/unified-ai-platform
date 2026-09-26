@@ -1,0 +1,121 @@
+{
+ "model": "C-swift15-q5km",
+ "ctx_total": 262144,
+ "np": 8,
+ "waves": [
+  {
+   "n": 1,
+   "ok": 1,
+   "errors": [],
+   "wall_s": 5.54,
+   "aggregate_tps": 38.7,
+   "per_req_tps": 38.65,
+   "ttft_p50": 4.2,
+   "ttft_p95": 4.2,
+   "ttft_p99": 4.2,
+   "vram": {
+    "vram_used_mib": 28218,
+    "gpu_util_pct": 49,
+    "power_w": 213.97,
+    "temp_c": 53,
+    "per_gpu": [
+     {
+      "vram_used_mib": 14274
+     },
+     {
+      "vram_used_mib": 13944
+     }
+    ]
+   }
+  },
+  {
+   "n": 2,
+   "ok": 2,
+   "errors": [],
+   "wall_s": 3.87,
+   "aggregate_tps": 68.2,
+   "per_req_tps": 34.35,
+   "ttft_p50": 2.73,
+   "ttft_p95": 2.73,
+   "ttft_p99": 2.73,
+   "vram": {
+    "vram_used_mib": 28218,
+    "gpu_util_pct": 53,
+    "power_w": 231.31,
+    "temp_c": 53,
+    "per_gpu": [
+     {
+      "vram_used_mib": 14274
+     },
+     {
+      "vram_used_mib": 13944
+     }
+    ]
+   }
+  },
+  {
+   "n": 4,
+   "ok": 4,
+   "errors": [],
+   "wall_s": 6.34,
+   "aggregate_tps": 92.7,
+   "per_req_tps": 28.44,
+   "ttft_p50": 3.86,
+   "ttft_p95": 5.24,
+   "ttft_p99": 5.24,
+   "vram": {
+    "vram_used_mib": 28220,
+    "gpu_util_pct": 49,
+    "power_w": 216.68,
+    "temp_c": 53,
+    "per_gpu": [
+     {
+      "vram_used_mib": 14274
+     },
+     {
+      "vram_used_mib": 13946
+     }
+    ]
+   }
+  },
+  {
+   "n": 8,
+   "ok": 8,
+   "errors": [],
+   "wall_s": 10.02,
+   "aggregate_tps": 123.5,
+   "per_req_tps": 18.76,
+   "ttft_p50": 6.08,
+   "ttft_p95": 8.76,
+   "ttft_p99": 8.76,
+   "vram": {
+    "vram_used_mib": 28230,
+    "gpu_util_pct": 50,
+    "power_w": 208.27,
+    "temp_c": 51,
+    "per_gpu": [
+     {
+      "vram_used_mib": 14280
+     },
+     {
+      "vram_used_mib": 13950
+     }
+    ]
+   }
+  }
+ ],
+ "vram_after_load": {
+  "vram_used_mib": 28166,
+  "gpu_util_pct": 0,
+  "power_w": 74.81,
+  "temp_c": 48,
+  "per_gpu": [
+   {
+    "vram_used_mib": 14248
+   },
+   {
+    "vram_used_mib": 13918
+   }
+  ]
+ }
+}

@@ -1,0 +1,95 @@
+{
+  "captured_at": "2026-09-26T08:35:00+08:00",
+  "method": "read-only reconciliation: docker inspect / nvidia-smi / procfs / HTTP GET on health+metrics+props; no production process or config was touched",
+  "hostname": "lytv-H3C-UniServer-R5300-G6",
+  "host_ips": ["127.0.0.1/16 (ens3f1np1)", "127.0.0.2/16 (ens1f1np1)"],
+  "os": "Ubuntu 24.04 (kernel 7.0.0-30-generic #30~24.04.1-Ubuntu, PREEMPT_DYNAMIC)",
+  "cpu": "2x Intel Xeon Gold 6530, 64C/128T, NUMA x2",
+  "ram_total_gib": 503,
+  "gpus": [
+    {"index": 0, "uuid": "GPU-5197ebe7-2a96-b8df-3ceb-9618c3473540", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:08:00.0", "mem_mib": 24564},
+    {"index": 1, "uuid": "GPU-79be3c3c-7a80-d19e-d65c-990ea5c03646", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:09:00.0", "mem_mib": 24564},
+    {"index": 2, "uuid": "GPU-41a1986d-e745-9e40-c520-09490081fd44", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:0E:00.0", "mem_mib": 24564},
+    {"index": 3, "uuid": "GPU-5fa853cd-219a-5d4e-dd1d-6d6d1f1390ae", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:11:00.0", "mem_mib": 24564},
+    {"index": 4, "uuid": "GPU-aab40825-81bd-fb47-0bcf-a15cb19c2e7e", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:16:00.0", "mem_mib": 24564},
+    {"index": 5, "uuid": "GPU-b98c4a80-4488-5d95-92a4-a8b3a9a30950", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:1C:00.0", "mem_mib": 24564},
+    {"index": 6, "uuid": "GPU-30776c79-cd65-60d6-4b56-69c9b6979449", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:1F:00.0", "mem_mib": 24564},
+    {"index": 7, "uuid": "GPU-5cf0f8a6-26d7-5e3-a9f6-5d4d5211258e", "model": "NVIDIA GeForce RTX 4090", "pci": "00000000:20:00.0", "mem_mib": 24564}
+  ],
+  "driver": "580.173.02",
+  "driver_cuda_capability": "13.0 (nvidia-smi header; capability, NOT an installed toolkit)",
+  "host_cuda_toolkit": null,
+  "nvcc": "not present on host",
+  "nvidia_container_toolkit": "1.20.0 (commit 5505e2f94d9aaa08561490db974ba3cd676af209)",
+  "docker": {"client": "29.1.3", "server": "29.1.3", "compose": "2.40.3+ds1-0ubuntu1~24.04.1"},
+  "control_prod": {
+    "definition": "the live business llama.cpp serving stack behind OpenResty :8000",
+    "containers": ["qwen27b", "qwen27b-r1", "qwen27b-lb (OpenResty)", "qwen27b-mon"],
+    "llama_cpp": {
+      "image": "llama-server:cuda12.4-b10715",
+      "image_digest": "sha256:cc0782dc7b595e34ca2611729d7d23e47db6aa3d09aff4f9a8ddc3fd45f751fa",
+      "image_created": "2026-08-31T19:35:54+08:00",
+      "base_image": "nvidia/cuda:12.4.1-runtime-ubuntu22.04",
+      "cuda_runtime_in_container": "12.4.1",
+      "build": "b10715 (tag); binary self-reports '0.3.0-dev build 0 commit unknown' (build metadata not injected at compile time)",
+      "source_tree": "/data/build/llama.cpp-new (no .git; shipped as llama-src-new.tar.gz; Dockerfile /data/build/Dockerfile.llamacpp COPYs prebuilt /data/build/pkg-new/bin)",
+      "dockerfile": "FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04; COPY build/bin /app; ENTRYPOINT /app/llama-server"
+    },
+    "model": {
+      "repo": "local finetune lineage (coding-v1.1), see lab notes",
+      "gguf": "/data/models/Qwen3.8-27B-coding-v1.1-iq4xs.gguf",
+      "size_bytes": 15298043904,
+      "sha256": "397a7654436f05e4839f9b341e60f7b011e78535ecf56c6e4438896fcdf587fe",
+      "quant": "IQ4_XS - 4.25 bpw (mixed recipe avg ~4.20 bpw per lab analysis)",
+      "n_params": 27320697856,
+      "n_ctx_train": 262144,
+      "n_embd": 5120,
+      "n_vocab": 248320,
+      "architecture": "qwen35 hybrid linear attention: 64 layers, full_attention_interval=4 (16 full-attn + 48 GDN), GQA 24Q/4KV head_dim 256, nextn_predict_layers=1 (embedded MTP), native VL base (vision tokens in vocab), mRoPE sections [11,11,10] freq_base 10M"
+    },
+    "draft_model": {
+      "gguf": "/data/models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+      "size_bytes": 1181116006,
+      "sha256": "1a25c56858e1ebe93f2718ac1d49d1151f9323325c1bbfd6209370f4db131ebd"
+    },
+    "launch": {
+      "orchestration": "docker compose at /data/compose/qwen27b/docker-compose.yml (service qwen27b + qwen27b-r1; restart unless-stopped; no container-level healthcheck)",
+      "cmd": "/app/llama-server -m /models/Qwen3.8-27B-coding-v1.1-iq4xs.gguf --host 0.0.0.0 --port 8080 -c 262144 -np 1 -ngl 999 --cache-type-k q4_0 --cache-type-v q4_0 --spec-draft-type-k q8_0 --spec-draft-type-v q8_0 -fa on --cache-reuse 2048 --jinja -a qwen3.8-27b --metrics --spec-type draft-dflash -md /models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf --spec-draft-n-max 7",
+      "identical_for_r1": true,
+      "gpus": {"qwen27b": ["0"], "qwen27b-r1": ["1"]},
+      "mounts": "/data/models:/models:rw (shared host dir, no dedicated writable volume)",
+      "ports": {"qwen27b": "127.0.0.1:8081->8080", "qwen27b-r1": "127.0.0.1:8082->8080"}
+    },
+    "effective_config": {
+      "ctx_size": 262144,
+      "parallel": 1,
+      "n_gpu_layers": 999 (all),
+      "kv_cache_k": "q4_0",
+      "kv_cache_v": "q4_0",
+      "draft_kv_k": "q8_0",
+      "draft_kv_v": "q8_0",
+      "flash_attention": "on",
+      "cache_reuse": 2048,
+      "jinja": true,
+      "sampler_default": {"temperature": 1.0, "top_k": 20, "top_p": 0.95, "min_p": 0.05, "seed": 4294967295},
+      "spec_decoding": {"type": "draft-dflash (sidecar)", "draft": "DFlash2-Q4_K_M", "n_max": 7},
+      "mmproj": "none loaded; props modalities all false (text-only serving despite VL-capable template)",
+      "chat_template": "Qwen3.8-style jinja with reasoning + vision branches (captured in control-prod-props.json)",
+      "mmap/mlock": "defaults (not pinned)"
+    },
+    "max_verified_context": "256K claimed by config; lab analysis measured ~195K real decay (-60% tps) on the previous Heretic model; coding-v1.1 not re-measured",
+    "current_vram": {"gpu0_mib": 23142, "gpu1_mib": 23108},
+    "entry": {
+      "lb": "OpenResty 0.0.0.0:8000 (qwen27b-lb), sticky-session lua routing to backends llama/r1[/r2/r3], conf /data/compose/qwen27b/lb/qwen27b.conf",
+      "health": "GET /health -> 200 on 8081/8082/8000 (verified 2026-09-26 08:28)",
+      "metrics": "--metrics enabled on llama-server; mon container scrapes /_lbstats"
+    },
+    "real_traffic": "LB access log tail shows mon polling /_lbstats every 2s; llama-server /metrics counters queried read-only (see runs/control-prod-metrics.txt); ZxBench platform served on :8000/zx/",
+    "c1_c2_c4_c8": "2 replicas x -np 1 => C2 aggregate today; historical 4-replica C4 retired 2026-09-05 (compose backups)"
+  },
+  "other_gpu_residents_not_llama_cpp": [
+    {"gpu": 5, "pid": 2650489, "what": "vLLM EngineCore serving Qwen3.5-2B (parent vllm serve, port 8010, tools/vllm28-env), up 7d", "note": "utility multimodal service, NOT part of :8000 llama.cpp stack; do not touch"}
+  ],
+  "idle_gpus_at_capture": [2, 3, 4, 6, 7],
+  "forbidden_during_test": ["stop/replace/modify qwen27b*, lb, mon, :8000/:9000/:8081/:8082", "touch GPU0/1", "modify host driver", "modify /data/models/* prod files", "touch GPU5 vLLM (port 8010)"]
+}
